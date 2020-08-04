@@ -4,13 +4,22 @@
     <id>health</id>
     <name>Health</name>
     <summary>App about your personal health. All medical data at one point. Use the advantages of a trusted plattform.</summary>
-    <description><![CDATA[test]]></description>
+    <description><![CDATA[This app holds and manage data about your personal medical health.
+
+You can remember yourself for taking medicin or drink a glass water.
+
+Combine different health data and find dependencies.
+
+Track your weight or other things and export them for a doctor visit.
+Or just take a smooth view on your data.
+
+Health is everything.]]></description>
     <version>0.0.1</version>
     <licence>agpl</licence>
     <author mail="flost-dev@mailbox.org" >Florian Steffens</author>
     <namespace>Health</namespace>
     <category>tools</category>
-    <bugs>https://github.com</bugs>
+    <bugs>https://github.com/datenangebot/health/issues</bugs>
     <dependencies>
         <nextcloud min-version="18" max-version="18"/>
     </dependencies>

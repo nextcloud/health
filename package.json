@@ -12,13 +12,13 @@
 		"app"
 	],
 	"bugs": {
-		"url": "https://github.com/skjnldsv/vueexample/issues"
+		"url": "https://github.com/datenangebot/health/issues"
 	},
 	"repository": {
-		"url": "https://github.com/skjnldsv/vueexample",
+		"url": "https://github.com/datenangebot/health",
 		"type": "git"
 	},
-	"homepage": "https://github.com/skjnldsv/vueexample",
+	"homepage": "https://github.com/datenangebot/health",
 	"license": "agpl",
 	"private": true,
 	"scripts": {
