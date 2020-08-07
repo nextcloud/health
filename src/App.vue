@@ -3,7 +3,7 @@
 		<AppNavigation>
 			<ul id="app-vueexample-navigation">
 				<AppNavigationItem v-for="(person, index) in persons"
-					:key="person.id"
+					:key="index"
 					:title="person.name"
 					:allow-collapse="true"
 					:open="(index === 0)?true:false"
@@ -17,7 +17,7 @@
 						<ActionButton :close-after-click="true" icon="icon-detail" @click="activePersonId = index; showDetails = true">
 							Show details
 						</ActionButton>
-						<ActionButton icon="icon-delete" @click="personDelete">
+						<ActionButton icon="icon-delete" :close-after-click="true" @click="personDelete">
 							Delete
 						</ActionButton>
 					</template>
@@ -53,7 +53,7 @@
 					<div v-for="(message, index) in messages" :key="index" :class="{'message':true, 'error': message.type == 'error', 'warn': message.type == 'warn', 'hint': message.type == 'hint' }">
 						{{ message.message }}
 						<span>
-							<button @click="messagesDelete(index)">Ok, git it.</button>
+							<button @click="messagesDelete(index)">Ok, got it.</button>
 						</span>
 					</div>
 				</div>
@@ -69,15 +69,42 @@
 			subtitle="created 41 days ago"
 			@close="showDetails=false">
 			<template #primary-actions>
-				<div class="detailsMainInfo">
-					To go for weight target: 5kg
-				</div>
-				<div class="detailsMainInfo">
-					Drink some water
-				</div>
+				<ul>
+					<li v-for="(n, index) in persons[activePersonId].notifications" :key="index" :class="{'green': n.type == 'green', 'orange': n.type == 'orange', 'red': n.type == 'red'}">
+						{{ n.message }}
+					</li>
+				</ul>
 			</template>
 			<AppSidebarTab id="person" name="Person" icon="icon-user">
-				this is the activity tab
+				<ul>
+					<li><h4>Age</h4></li>
+					<ActionInput
+						type="number"
+						:value="persons[activePersonId].age"
+						icon="icon-user"
+						@submit="ageUpdate" />
+					<li><h4>Size<span>in cm</span></h4></li>
+					<ActionInput
+						type="number"
+						:value="persons[activePersonId].size"
+						icon="icon-fullscreen"
+						@submit="sizeUpdate" />
+					<li><h4>Sex</h4></li>
+					<ActionRadio
+						name="sex"
+						value="female"
+						:checked="persons[activePersonId].sex === 'female'"
+						@change="sexUpdate">
+						female
+					</ActionRadio>
+					<ActionRadio
+						name="sex"
+						value="male"
+						:checked="persons[activePersonId].sex === 'male'"
+						@change="sexUpdate">
+						male
+					</ActionRadio>
+				</ul>
 			</AppSidebarTab>
 			<AppSidebarTab id="weight" name="Weight" icon="icon-quota">
 				this is the activity tab
@@ -95,6 +122,8 @@ import AppSidebar from '@nextcloud/vue/dist/Components/AppSidebar'
 import AppSidebarTab from '@nextcloud/vue/dist/Components/AppSidebarTab'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import Actions from '@nextcloud/vue/dist/Components/Actions'
+import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
+import ActionRadio from '@nextcloud/vue/dist/Components/ActionRadio'
 
 export default {
 	name: 'App',
@@ -107,6 +136,8 @@ export default {
 		AppSidebarTab,
 		ActionButton,
 		Actions,
+		ActionInput,
+		ActionRadio,
 	},
 	data: function() {
 		return {
@@ -118,10 +149,34 @@ export default {
 				{
 					id: 1,
 					name: 'Me, Florian',
+					notifications: [
+						{
+							type: 'green',
+							message: 'test notofication',
+						},
+					],
+					age: 30,
+					sex: 'male',
+					size: 170,
+					enabledModules: [
+						'weight',
+					],
 				},
 				{
 					id: 2,
 					name: 'Madita',
+					notifications: [
+						{
+							type: 'green',
+							message: 'test notofication',
+						},
+					],
+					age: 21,
+					sex: 'female',
+					size: 175,
+					enabledModules: [
+						'weight',
+					],
 				},
 			],
 			activePersonId: 0,
@@ -168,7 +223,7 @@ export default {
 		personDelete(e) {
 			this.log('try to delete person: ' + this.persons[this.menuOpenPersonId].name)
 			if (this.persons.length === 1) {
-				this.messageAdd('warn', 'You can not delete the last person.')
+				this.notificationAdd('B', 'warn', 'You can not delete the last person.')
 				this.log('could not delete person, can not last person')
 			} else {
 				this.persons.splice(this.menuOpenPersonId, 1)
@@ -184,6 +239,40 @@ export default {
 		},
 		messagesDelete(index) {
 			this.messages.splice(index, 1)
+		},
+		notificationAdd(client, type, text) {
+			if (client === 'F' || client === 'FB') {
+				this.persons[this.activePersonId].notifications.push(
+					{
+						type: type,
+						message: text,
+					}
+				)
+				this.log('notification added F or FB')
+			} else if (client === 'B' || client === 'FB') {
+				let t
+				if (type === 'green') {
+					t = 'hint'
+				} else if (type === 'orange') {
+					t = 'warn'
+				} else {
+					t = 'error'
+				}
+				this.messageAdd(t, text)
+				this.log('notification added B or FB')
+			}
+		},
+		ageUpdate(e) {
+			this.persons[this.activePersonId].age = e.target[1].value
+			this.log('age updated')
+		},
+		sizeUpdate(e) {
+			this.persons[this.activePersonId].size = e.target[1].value
+			this.log('size updated')
+		},
+		sexUpdate(e) {
+			this.persons[this.activePersonId].sex = e.target.value
+			this.log('sex updated')
 		},
 	},
 }
@@ -219,5 +308,34 @@ export default {
 	}
 	.content-wrapper {
 		padding: 35px 10px 10px 10px;
+	}
+	button, .button, input[type='button'], input[type='submit'], input[type='reset'] {
+		min-height: auto;
+		border-radius: var(--border-radius);
+		padding: 4px;
+	}
+	.message {
+		padding: 7px;
+	}
+	.message span {
+		position: relative;
+		right: -20px;
+	}
+	.green {
+		color: green;
+	}
+	.orange {
+		color: orange;
+	}
+	.red {
+		color: red;
+	}
+	li h4 {
+		margin-top: 10px;
+	}
+	li h4 span {
+		opacity: .7;
+		font-size: 0.8em;
+		margin-left: 5px;
 	}
 </style>
