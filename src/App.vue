@@ -12,9 +12,12 @@
 					edit-label="edit name"
 					@update:menuOpen="menuOpenPersonId = index"
 					@update:title="personUpdateName"
-					@click="activePersonId = index">
+					@click="activePersonId = index; activeModule = 'person'">
 					<template slot="actions">
-						<ActionButton :close-after-click="true" icon="icon-detail" @click="activePersonId = index; showDetails = true">
+						<ActionButton
+							:close-after-click="true"
+							icon="icon-detail"
+							@click="activePersonId = index; showDetails = true">
 							Show details
 						</ActionButton>
 						<ActionButton icon="icon-delete" :close-after-click="true" @click="personDelete">
@@ -22,7 +25,11 @@
 						</ActionButton>
 					</template>
 					<template>
-						<AppNavigationItem title="Weight" icon="icon-quota" />
+						<AppNavigationItem
+							v-if="persons[index].enabledModules.weight"
+							title="Weight"
+							icon="icon-quota"
+							@click="activePersonId = index; activeModule = 'weight'" />
 					</template>
 				</AppNavigationItem>
 				<AppNavigationItem
@@ -60,7 +67,31 @@
 				<div>
 					menuOpenPersonId: {{ menuOpenPersonId }}<br>
 					activePersonId: {{ activePersonId }}<br>
-					showNewPersonForm: {{ showNewPersonForm }}
+					showNewPersonForm: {{ showNewPersonForm }}<br>
+					module weight: {{ persons[activePersonId].enabledModules.weight }}<br>
+					active module: {{ activeModule }}
+				</div>
+				<div
+					v-if="activeModule === 'weight' && persons[activePersonId].enabledModules.weight">
+					<h2>Weight<span>for {{ persons[activePersonId].name }}</span></h2>
+					<div v-if="persons[activePersonId].weight.target != ''">
+						<h3>Target</h3>
+						<p>Your actual weight is {{ persons[activePersonId].weight.data[(persons[activePersonId].weight.data.length - 1)].weight }} {{ persons[activePersonId].weight.target }} and your target values {{ persons[activePersonId].weight.target }} {{ persons[activePersonId].weight.unit }}.</p>
+						<p
+							v-if="persons[activePersonId].weight.data[(persons[activePersonId].weight.data.length - 1)].weight > persons[activePersonId].weight.target">
+							There are {{ persons[activePersonId].weight.data[(persons[activePersonId].weight.data.length - 1)].weight > persons[activePersonId].weight.target }} {{ persons[activePersonId].weight.unit }} to go.
+							<ProgressBar value="10" />
+						</p>
+						<p
+							v-else>
+							Good, you reached your target!
+						</p>
+					</div>
+					<h3>Chart</h3>
+					<h3>Data</h3>
+				</div>
+				<div v-else>
+					else
 				</div>
 			</div>
 		</AppContent>
@@ -104,10 +135,34 @@
 						@change="sexUpdate">
 						male
 					</ActionRadio>
+					<li><h4>Manage modules</h4></li>
+					<ActionCheckbox
+						:checked="persons[activePersonId].enabledModules.weight"
+						value="weight"
+						@change="persons[activePersonId].enabledModules.weight = !persons[activePersonId].enabledModules.weight">
+						Weight
+					</ActionCheckbox>
 				</ul>
 			</AppSidebarTab>
-			<AppSidebarTab id="weight" name="Weight" icon="icon-quota">
-				this is the activity tab
+			<AppSidebarTab
+				v-if="persons[activePersonId].enabledModules.weight"
+				id="weight"
+				name="Weight"
+				icon="icon-quota">
+				<ul>
+					<li><h4>Unit for weight</h4></li>
+					<ActionInput
+						type="text"
+						:value="persons[activePersonId].weight.unit"
+						icon="icon-category-customization"
+						@submit="weightUnitUpdate" />
+					<li><h4>Weight target<span>in {{ persons[activePersonId].weight.unit }}<br>blank for none</span></h4></li>
+					<ActionInput
+						type="number"
+						:value="persons[activePersonId].weight.target"
+						icon="icon-category-monitoring"
+						@submit="weightTargetUpdate" />
+				</ul>
 			</AppSidebarTab>
 		</AppSidebar>
 	</Content>
@@ -124,6 +179,8 @@ import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
 import ActionRadio from '@nextcloud/vue/dist/Components/ActionRadio'
+import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
+import ProgressBar from '@nextcloud/vue/dist/Components/ProgressBar'
 
 export default {
 	name: 'App',
@@ -138,6 +195,8 @@ export default {
 		Actions,
 		ActionInput,
 		ActionRadio,
+		ActionCheckbox,
+		ProgressBar,
 	},
 	data: function() {
 		return {
@@ -145,6 +204,18 @@ export default {
 			showDetails: true,
 			showNewPersonForm: false,
 			menuOpenPersonId: 0,
+			activePersonId: 0,
+			activeModule: 'person',
+			messages: [
+				{
+					type: 'hint',
+					message: 'succesfully loaded',
+				},
+				{
+					type: 'error',
+					message: 'test error',
+				},
+			],
 			persons: [
 				{
 					id: 1,
@@ -158,9 +229,39 @@ export default {
 					age: 30,
 					sex: 'male',
 					size: 170,
-					enabledModules: [
-						'weight',
-					],
+					enabledModules: {
+						weight: true,
+					},
+					weight: {
+						unit: 'kg',
+						target: '70',
+						data: [
+							{
+								date: '',
+								weight: 80,
+								armleft: 0,
+								armright: 0,
+								chest: 0,
+								waist: 0,
+								hips: 0,
+								thighleft: 0,
+								thighricht: 0,
+								bodyfat: 10,
+							},
+							{
+								date: '',
+								weight: 82,
+								armleft: 0,
+								armright: 0,
+								chest: 0,
+								waist: 0,
+								hips: 0,
+								thighleft: 0,
+								thighricht: 0,
+								bodyfat: 10,
+							},
+						],
+					},
 				},
 				{
 					id: 2,
@@ -174,20 +275,27 @@ export default {
 					age: 21,
 					sex: 'female',
 					size: 175,
-					enabledModules: [
-						'weight',
-					],
-				},
-			],
-			activePersonId: 0,
-			messages: [
-				{
-					type: 'hint',
-					message: 'succesfully loaded',
-				},
-				{
-					type: 'error',
-					message: 'test error',
+					enabledModules: {
+						weight: true,
+					},
+					weight: {
+						unit: 'kg',
+						target: '70',
+						data: [
+							{
+								date: '',
+								weight: 0,
+								armleft: 0,
+								armright: 0,
+								chest: 0,
+								waist: 0,
+								hips: 0,
+								thighleft: 0,
+								thighricht: 0,
+								bodyfat: 10,
+							},
+						],
+					},
 				},
 			],
 		}
@@ -274,6 +382,14 @@ export default {
 			this.persons[this.activePersonId].sex = e.target.value
 			this.log('sex updated')
 		},
+		weightTargetUpdate(e) {
+			this.persons[this.activePersonId].weight.target = e.target[1].value
+			this.log('weight target updated')
+		},
+		weightUnitUpdate(e) {
+			this.persons[this.activePersonId].weight.unit = e.target[1].value
+			this.log('weight unit updated')
+		},
 	},
 }
 </script>
@@ -333,7 +449,7 @@ export default {
 	li h4 {
 		margin-top: 10px;
 	}
-	li h4 span {
+	span {
 		opacity: .7;
 		font-size: 0.8em;
 		margin-left: 5px;
