@@ -7,7 +7,20 @@
 					:title="person.name"
 					:allow-collapse="true"
 					:open="(index === 0)?true:false"
-					icon="icon-user">
+					icon="icon-user"
+					:editable="true"
+					edit-label="edit name"
+					@update:menuOpen="menuOpenPersonId = index"
+					@update:title="personUpdateName"
+					@click="activePersonId = index">
+					<template slot="actions">
+						<ActionButton :close-after-click="true" icon="icon-detail" @click="activePersonId = index; showDetails = true">
+							Show details
+						</ActionButton>
+						<ActionButton icon="icon-delete" @click="personDelete">
+							Delete
+						</ActionButton>
+					</template>
 					<template>
 						<AppNavigationItem title="Weight" icon="icon-quota" />
 					</template>
@@ -16,14 +29,18 @@
 					title="New person"
 					icon="icon-add"
 					:pinned="true"
-					@click.prevent.stop="showNewPersonForm = !showNewPersonForm">
+					@click.prevent.stop="createPersonOpen">
 					<div v-show="showNewPersonForm" class="person-create">
 						<form
 							@submit.prevent.stop="createPerson">
-							<input :placeholder="'Name'" type="text" required>
+							<input
+								ref="newPersonName"
+								:placeholder="'Name'"
+								type="text"
+								required>
 							<input type="submit" value="" class="icon-confirm">
 							<Actions>
-								<ActionButton :class="ab-integrated" icon="icon-close" @click.stop.prevent="createPersonAbbord" />
+								<ActionButton class="ab-integrated" icon="icon-close" @click.stop.prevent="createPersonAbbord" />
 							</Actions>
 						</form>
 					</div>
@@ -31,54 +48,39 @@
 			</ul>
 		</AppNavigation>
 		<AppContent>
-			<span>This is the content</span>
-			<button @click="show = !show">
-				Toggle sidebar
-			</button>
-			<div style="background-color: red;">
-				<button @click="alert();">
-					Toggle sidebar 2
-				</button>
+			<div class="content-wrapper">
+				<div class="messages">
+					<div v-for="(message, index) in messages" :key="index" :class="{'message':true, 'error': message.type == 'error', 'warn': message.type == 'warn', 'hint': message.type == 'hint' }">
+						{{ message.message }}
+						<span>
+							<button @click="messagesDelete(index)">Ok, git it.</button>
+						</span>
+					</div>
+				</div>
+				<div>
+					menuOpenPersonId: {{ menuOpenPersonId }}<br>
+					activePersonId: {{ activePersonId }}<br>
+					showNewPersonForm: {{ showNewPersonForm }}
+				</div>
 			</div>
 		</AppContent>
-		<AppSidebar v-show="show"
-			:title="persons[1].name"
-			subtitle="4,3 MB, last edited 41 days ago"
-			:starred.sync="starred"
-			@close="show=false">
+		<AppSidebar v-show="showDetails"
+			:title="persons[activePersonId].name"
+			subtitle="created 41 days ago"
+			@close="showDetails=false">
 			<template #primary-actions>
-				<button class="primary">
-					Button 1
-				</button>
-				<input id="link-checkbox"
-					name="link-checkbox"
-					class="checkbox link-checkbox"
-					type="checkbox">
-				<label for="link-checkbox" class="link-checkbox-label">Do something</label>
+				<div class="detailsMainInfo">
+					To go for weight target: 5kg
+				</div>
+				<div class="detailsMainInfo">
+					Drink some water
+				</div>
 			</template>
-			<template #secondary-actions>
-				<ActionButton icon="icon-edit" @click="alert('Edit')">
-					Edit
-				</ActionButton>
-				<ActionButton icon="icon-delete" @click="alert('Delete')">
-					Delete
-				</ActionButton>
-				<ActionLink icon="icon-external" title="Link" href="https://nextcloud.com" />
-			</template>
-			<AppSidebarTab id="vueexample" name="Vueexample" icon="icon-vueexample">
-				this is the vueexample tab
-			</AppSidebarTab>
-			<AppSidebarTab id="activity" name="Activity" icon="icon-activity">
+			<AppSidebarTab id="person" name="Person" icon="icon-user">
 				this is the activity tab
 			</AppSidebarTab>
-			<AppSidebarTab id="comments" name="Comments" icon="icon-comment">
-				this is the comments tab
-			</AppSidebarTab>
-			<AppSidebarTab id="sharing" name="Sharing" icon="icon-shared">
-				this is the sharing tab
-			</AppSidebarTab>
-			<AppSidebarTab id="versions" name="Versions" icon="icon-history">
-				this is the versions tab
+			<AppSidebarTab id="weight" name="Weight" icon="icon-quota">
+				this is the activity tab
 			</AppSidebarTab>
 		</AppSidebar>
 	</Content>
@@ -92,7 +94,6 @@ import AppNavigationItem from '@nextcloud/vue/dist/Components/AppNavigationItem'
 import AppSidebar from '@nextcloud/vue/dist/Components/AppSidebar'
 import AppSidebarTab from '@nextcloud/vue/dist/Components/AppSidebarTab'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
-import ActionLink from '@nextcloud/vue/dist/Components/ActionLink'
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 
 export default {
@@ -105,17 +106,14 @@ export default {
 		AppSidebar,
 		AppSidebarTab,
 		ActionButton,
-		ActionLink,
 		Actions,
 	},
 	data: function() {
 		return {
 			loading: false,
-			date: Date.now() + 86400000 * 3,
-			date2: Date.now() + 86400000 * 3 + Math.floor(Math.random() * 86400000 / 2),
-			show: true,
+			showDetails: true,
 			showNewPersonForm: false,
-			starred: false,
+			menuOpenPersonId: 0,
 			persons: [
 				{
 					id: 1,
@@ -126,41 +124,66 @@ export default {
 					name: 'Madita',
 				},
 			],
+			activePersonId: 0,
+			messages: [
+				{
+					type: 'hint',
+					message: 'succesfully loaded',
+				},
+				{
+					type: 'error',
+					message: 'test error',
+				},
+			],
 		}
 	},
 	methods: {
-		addOption(val) {
-			this.options.push(val)
-			this.select.push(val)
-		},
-		previous(data) {
-			console.debug(data)
-		},
-		next(data) {
-			console.debug(data)
-		},
-		close(data) {
-			console.debug(data)
-		},
-		newButtonAction(e) {
-			console.debug(e)
-		},
 		log(e) {
 			console.debug(e)
-		},
-		alert(e) {
-			alert('Alert: ' + this.show)
 		},
 		createPerson(e) {
 			const newId = this.persons.length + 1
 			this.persons.push({ id: newId, name: e.currentTarget.childNodes[0].value })
-			this.showNewPersonForm = !this.showNewPersonForm
+			this.showNewPersonForm = false
+			this.showDetails = true
+			this.activePersonId = this.persons.length - 1
 			e.currentTarget.childNodes[0].value = ''
-			window.console.log(this.persons)
+			this.log('createPerson new person added')
+			this.log(this.persons)
 		},
 		createPersonAbbord(e) {
 			this.showNewPersonForm = !this.showNewPersonForm
 			e.currentTarget.childNodes[0].value = ''
+			this.log('createPersonAbbord close form')
+		},
+		createPersonOpen(e) {
+			this.showNewPersonForm = !this.showNewPersonForm
+			this.$refs.newPersonName.focus()
+			this.log('createPerson open form')
+		},
+		personUpdateName(e) {
+			this.persons[this.menuOpenPersonId].name = e
+			this.log('update name => id: ' + this.menuOpenPersonId + 'new name: ' + e)
+		},
+		personDelete(e) {
+			this.log('try to delete person: ' + this.persons[this.menuOpenPersonId].name)
+			if (this.persons.length === 1) {
+				this.messageAdd('warn', 'You can not delete the last person.')
+				this.log('could not delete person, can not last person')
+			} else {
+				this.persons.splice(this.menuOpenPersonId, 1)
+				this.activePersonId = 0
+				this.log(this.persons)
+			}
+		},
+		messageAdd(type, text) {
+			this.messages.push({
+				type: type,
+				message: text,
+			})
+		},
+		messagesDelete(index) {
+			this.messages.splice(index, 1)
 		},
 	},
 }
@@ -178,5 +201,23 @@ export default {
 				flex-grow: 1;
 			}
 		}
+	}
+	.detailsMainInfo {
+		padding: 10px;
+	}
+	.message {
+		margin-bottom: 5px;
+	}
+	.error {
+		border: 1px solid red;
+	}
+	.hint {
+		border: 1px solid green;
+	}
+	.warn {
+		border: 1px solid orange;
+	}
+	.content-wrapper {
+		padding: 35px 10px 10px 10px;
 	}
 </style>
