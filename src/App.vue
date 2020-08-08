@@ -76,11 +76,17 @@
 					<h2>Weight<span>for {{ persons[activePersonId].name }}</span></h2>
 					<div v-if="persons[activePersonId].weight.target != ''">
 						<h3>Target</h3>
-						<p>Your actual weight is {{ persons[activePersonId].weight.data[(persons[activePersonId].weight.data.length - 1)].weight }} {{ persons[activePersonId].weight.target }} and your target values {{ persons[activePersonId].weight.target }} {{ persons[activePersonId].weight.unit }}.</p>
+						<p>You started with {{ weightGetTargetInitialWeight }}{{ weightGetUnit }} for your target. Your actual weight is now {{ weightGetLast }}{{ weightGetUnit }} and your target values {{ persons[activePersonId].weight.target }}{{ persons[activePersonId].weight.unit }}.</p>
 						<p
-							v-if="persons[activePersonId].weight.data[(persons[activePersonId].weight.data.length - 1)].weight > persons[activePersonId].weight.target">
-							There are {{ persons[activePersonId].weight.data[(persons[activePersonId].weight.data.length - 1)].weight > persons[activePersonId].weight.target }} {{ persons[activePersonId].weight.unit }} to go.
-							<ProgressBar value="10" />
+							v-if="weightTargetReached">
+							So you lost already {{ weightGetTargetInitialWeight - weightGetLast }}{{ weightGetUnit }} and you have {{ weightGetLast - weightGetTarget }}{{ weightGetUnit }} to go.
+						</p>
+						<p
+							v-if="weightTargetReached">
+							Go on and eliminate the blue bar:
+							<ProgressBar
+								:value="weightProgressbarValue"
+								:class="{'small':true}" />
 						</p>
 						<p
 							v-else>
@@ -156,7 +162,7 @@
 						:value="persons[activePersonId].weight.unit"
 						icon="icon-category-customization"
 						@submit="weightUnitUpdate" />
-					<li><h4>Weight target<span>in {{ persons[activePersonId].weight.unit }}<br>blank for none</span></h4></li>
+					<li><h4>Weight target<span>in {{ persons[activePersonId].weight.unit }}<br>blank for none<br>On update the initial weight for the target will be {{ weightGetLast }}{{ weightGetUnit }}</span></h4></li>
 					<ActionInput
 						type="number"
 						:value="persons[activePersonId].weight.target"
@@ -234,7 +240,8 @@ export default {
 					},
 					weight: {
 						unit: 'kg',
-						target: '70',
+						target: 70,
+						targetInitialWeight: 99,
 						data: [
 							{
 								date: '',
@@ -280,7 +287,8 @@ export default {
 					},
 					weight: {
 						unit: 'kg',
-						target: '70',
+						target: 70,
+						targetInitialWeight: 99,
 						data: [
 							{
 								date: '',
@@ -299,6 +307,26 @@ export default {
 				},
 			],
 		}
+	},
+	computed: {
+		weightProgressbarValue: function() {
+			return (this.weightGetLast - this.weightGetTarget) / (this.weightGetTargetInitialWeight - this.weightGetTarget) * 100
+		},
+		weightTargetReached: function() {
+			return this.persons[this.activePersonId].weight.data[(this.persons[this.activePersonId].weight.data.length - 1)].weight > this.persons[this.activePersonId].weight.target
+		},
+		weightGetLast: function() {
+			return this.persons[this.activePersonId].weight.data[(this.persons[this.activePersonId].weight.data.length - 1)].weight
+		},
+		weightGetUnit: function() {
+			return this.persons[this.activePersonId].weight.unit
+		},
+		weightGetTarget: function() {
+			return this.persons[this.activePersonId].weight.target
+		},
+		weightGetTargetInitialWeight: function() {
+			return this.persons[this.activePersonId].weight.targetInitialWeight
+		},
 	},
 	methods: {
 		log(e) {
@@ -384,6 +412,7 @@ export default {
 		},
 		weightTargetUpdate(e) {
 			this.persons[this.activePersonId].weight.target = e.target[1].value
+			this.persons[this.activePersonId].weight.targetInitialWeight = this.weightGetLast
 			this.log('weight target updated')
 		},
 		weightUnitUpdate(e) {
@@ -453,5 +482,8 @@ export default {
 		opacity: .7;
 		font-size: 0.8em;
 		margin-left: 5px;
+	}
+	.progress-bar.small {
+		width: 35%;
 	}
 </style>
