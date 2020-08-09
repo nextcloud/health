@@ -88,7 +88,6 @@
 						</p>
 					</div>
 					<h3>Chart</h3>
-					<h3>Data</h3>
 					<button
 						@click="weightAddRow">
 						add row
@@ -98,10 +97,25 @@
 							<LineChart :chart-data="weight.chartData" :height="200" />
 						</div>
 					</template>
+					<h3>Data</h3>
+					<button
+						@click="weightDataAdd">
+						add row
+					</button>
+
+					<template>
+						<div class="base-demo" style="width: 400px">
+							<VueTableDynamic
+								ref="table"
+								:params="params"
+								@cell-change="onCellChange" />
+						</div>
+					</template>
 				</div>
 				<div v-else>
 					else
 				</div>
+
 				<div>
 					menuOpenPersonId: {{ menuOpenPersonId }}<br>
 					activePersonId: {{ activePersonId }}<br>
@@ -198,6 +212,7 @@ import ActionRadio from '@nextcloud/vue/dist/Components/ActionRadio'
 import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
 import ProgressBar from '@nextcloud/vue/dist/Components/ProgressBar'
 import LineChart from './LineChart.js'
+import VueTableDynamic from 'vue-table-dynamic'
 
 export default {
 	name: 'App',
@@ -215,15 +230,32 @@ export default {
 		ActionCheckbox,
 		ProgressBar,
 		LineChart,
+		VueTableDynamic,
 	},
 	data: function() {
 		return {
+			params: {
+				data: [
+					['zeile 1', 'z2', 'letzeres'],
+					['Cell-1', 'Cell-2', 'Cell-3'],
+					['Cell-4', 'Cell-5', 'Cell-6'],
+					['Cell-7', 'Cell-8', 'Cell-9'],
+				],
+				header: 'row',
+				border: true,
+				stripe: true,
+				sort: [0, 1, 2],
+				pagination: true,
+				pageSize: 10,
+				pageSizes: [10, 20, 50],
+				edit: { row: 'all' },
+			},
 			loading: false,
-			showDetails: true,
+			showDetails: false,
 			showNewPersonForm: false,
 			menuOpenPersonId: 0,
 			activePersonId: 0,
-			activeModule: 'person',
+			activeModule: 'weight',
 			weight: {
 				chartData: null,
 			},
@@ -347,6 +379,13 @@ export default {
 		this.weightChartData()
 	},
 	methods: {
+		onCellChange(rowIndex, columnIndex, data) {
+			this.log('onCellChange: ' + rowIndex + ':' + columnIndex + ' -> ' + data)
+			this.log('table data: ' + this.$refs.table.getData())
+		},
+		weightDataAdd: function() {
+			this.params.data.push(['1', '2', '3'])
+		},
 		weightAddRow: function() {
 			this.persons[this.activePersonId].weight.data.push(
 				{
