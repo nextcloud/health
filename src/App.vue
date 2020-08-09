@@ -17,7 +17,7 @@
 						<ActionButton
 							:close-after-click="true"
 							icon="icon-detail"
-							@click="activePersonId = index; showDetails = true">
+							@click="setActualPerson(index); showDetails = true">
 							Show details
 						</ActionButton>
 						<ActionButton icon="icon-delete" :close-after-click="true" @click="personDelete">
@@ -29,7 +29,7 @@
 							v-if="persons[index].enabledModules.weight"
 							title="Weight"
 							icon="icon-quota"
-							@click="activePersonId = index; activeModule = 'weight'" />
+							@click="setActualPerson(index); activeModule = 'weight'" />
 					</template>
 				</AppNavigationItem>
 				<AppNavigationItem
@@ -55,6 +55,7 @@
 			</ul>
 		</AppNavigation>
 		<AppContent>
+			<div class="top-bar" />
 			<div class="content-wrapper">
 				<div class="messages">
 					<div v-for="(message, index) in messages" :key="index" :class="{'message':true, 'error': message.type == 'error', 'warn': message.type == 'warn', 'hint': message.type == 'hint' }">
@@ -63,13 +64,6 @@
 							<button @click="messagesDelete(index)">Ok, got it.</button>
 						</span>
 					</div>
-				</div>
-				<div>
-					menuOpenPersonId: {{ menuOpenPersonId }}<br>
-					activePersonId: {{ activePersonId }}<br>
-					showNewPersonForm: {{ showNewPersonForm }}<br>
-					module weight: {{ persons[activePersonId].enabledModules.weight }}<br>
-					active module: {{ activeModule }}
 				</div>
 				<div
 					v-if="activeModule === 'weight' && persons[activePersonId].enabledModules.weight">
@@ -95,9 +89,25 @@
 					</div>
 					<h3>Chart</h3>
 					<h3>Data</h3>
+					<button
+						@click="weightAddRow">
+						add row
+					</button>
+					<template>
+						<div class="small">
+							<LineChart :chart-data="weight.chartData" :height="200" />
+						</div>
+					</template>
 				</div>
 				<div v-else>
 					else
+				</div>
+				<div>
+					menuOpenPersonId: {{ menuOpenPersonId }}<br>
+					activePersonId: {{ activePersonId }}<br>
+					showNewPersonForm: {{ showNewPersonForm }}<br>
+					module weight: {{ persons[activePersonId].enabledModules.weight }}<br>
+					active module: {{ activeModule }}
 				</div>
 			</div>
 		</AppContent>
@@ -187,6 +197,7 @@ import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
 import ActionRadio from '@nextcloud/vue/dist/Components/ActionRadio'
 import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
 import ProgressBar from '@nextcloud/vue/dist/Components/ProgressBar'
+import LineChart from './LineChart.js'
 
 export default {
 	name: 'App',
@@ -203,6 +214,7 @@ export default {
 		ActionRadio,
 		ActionCheckbox,
 		ProgressBar,
+		LineChart,
 	},
 	data: function() {
 		return {
@@ -212,6 +224,9 @@ export default {
 			menuOpenPersonId: 0,
 			activePersonId: 0,
 			activeModule: 'person',
+			weight: {
+				chartData: null,
+			},
 			messages: [
 				{
 					type: 'hint',
@@ -244,7 +259,7 @@ export default {
 						targetInitialWeight: 99,
 						data: [
 							{
-								date: '',
+								date: '02/08/2020',
 								weight: 80,
 								armleft: 0,
 								armright: 0,
@@ -256,7 +271,7 @@ export default {
 								bodyfat: 10,
 							},
 							{
-								date: '',
+								date: '03/08/2020',
 								weight: 82,
 								armleft: 0,
 								armright: 0,
@@ -291,7 +306,7 @@ export default {
 						targetInitialWeight: 99,
 						data: [
 							{
-								date: '',
+								date: '05/08/2020',
 								weight: 0,
 								armleft: 0,
 								armright: 0,
@@ -328,9 +343,63 @@ export default {
 			return this.persons[this.activePersonId].weight.targetInitialWeight
 		},
 	},
+	mounted() {
+		this.weightChartData()
+	},
 	methods: {
+		weightAddRow: function() {
+			this.persons[this.activePersonId].weight.data.push(
+				{
+					date: '03/08/2020',
+					weight: 88,
+					armleft: 0,
+					armright: 0,
+					chest: 0,
+					waist: 0,
+					hips: 0,
+					thighleft: 0,
+					thighricht: 0,
+					bodyfat: 10,
+				}
+			)
+			this.weightChartData()
+		},
+		weightChartData: function() {
+			const data = []
+			for (let i = 0; i < this.persons[this.activePersonId].weight.data.length; i++) {
+				data.push({
+					t: this.persons[this.activePersonId].weight.data[i].date,
+					y: this.persons[this.activePersonId].weight.data[i].weight,
+				})
+			}
+			this.log('computed array for weight-chart')
+			this.log(data)
+
+			this.weight.chartData = {
+				labels: [
+					'01.08.',
+					'02.08.',
+					'03.08.',
+					'04.08.',
+					'05.08.',
+				],
+				datasets: [
+					{
+						label: 'My First dataset',
+						backgroundColor: '#ffeeee',
+						borderColor: 'red',
+						fill: false,
+						data: data,
+					},
+				],
+			}
+		},
 		log(e) {
 			console.debug(e)
+		},
+		setActualPerson: function(id) {
+			this.activePersonId = id
+			this.weightChartData()
 		},
 		createPerson(e) {
 			const newId = this.persons.length + 1
@@ -423,6 +492,16 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+	.content-wrapper {
+		padding: 35px 10px 10px 10px;
+	}
+	.top-bar {
+		width: 100%;
+		height: 35px;
+		position: fixed;
+		z-index: inherit;
+		background: var(--color-main-background);
+	}
 	.person-create {
 		order: 1;
 		display: flex;
@@ -450,9 +529,6 @@ export default {
 	}
 	.warn {
 		border: 1px solid orange;
-	}
-	.content-wrapper {
-		padding: 35px 10px 10px 10px;
 	}
 	button, .button, input[type='button'], input[type='submit'], input[type='reset'] {
 		min-height: auto;
