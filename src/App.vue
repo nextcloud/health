@@ -9,14 +9,10 @@
 		<AppContent>
 			<div class="top-bar" />
 			<div class="content-wrapper">
-				<div class="messages">
-					<div v-for="(message, index) in notifications" :key="index" :class="{'message':true, 'error': message.type == 'error', 'warn': message.type == 'warn', 'hint': message.type == 'hint' }">
-						{{ message.text }}
-						<span>
-							<button @click="messagesDelete(index)">Ok, got it.</button>
-						</span>
-					</div>
-				</div>
+				<Notifications
+					:persons.sync="persons"
+					:active-person-id.sync="activePersonId"
+					:notifications.sync="notifications" />
 				<div>
 					menuOpenPersonId: {{ menuOpenPersonId }}<br>
 					activePersonId: {{ activePersonId }}<br>
@@ -112,6 +108,7 @@ import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
 // import VueTableDynamic from 'vue-table-dynamic'
 // import SettingsGroup from './components/SettingsGroup'
 import PersonNavigation from './modules/persons/PersonNavigation'
+import Notifications from './Notifications'
 
 export default {
 	name: 'App',
@@ -128,6 +125,7 @@ export default {
 		// VueTableDynamic,
 		// SettingsGroup,
 		PersonNavigation,
+		Notifications,
 	},
 	data: function() {
 		return {
@@ -135,7 +133,12 @@ export default {
 			showSidebar: false,
 			activePersonId: 0,
 			activeModule: 'persons',
-			notifications: [],
+			notifications: [
+				{
+					type: 'hint',
+					text: 'TEST',
+				},
+			],
 			THISISASEPERATORANDISVERYLONGFORNONEUSE: null,
 			params: {
 				data: [
@@ -164,8 +167,8 @@ export default {
 					name: 'Me, Florian',
 					notifications: [
 						{
-							type: 'green',
-							message: 'test notofication',
+							type: 'good',
+							text: 'test notofication',
 						},
 					],
 					age: 30,
@@ -211,8 +214,8 @@ export default {
 					name: 'Madita',
 					notifications: [
 						{
-							type: 'green',
-							message: 'test notofication',
+							type: 'good',
+							text: 'test notofication madita',
 						},
 					],
 					age: 21,
@@ -249,8 +252,8 @@ export default {
 	},
 	methods: {
 		onCellChange(rowIndex, columnIndex, data) {
-			this.log('onCellChange: ' + rowIndex + ':' + columnIndex + ' -> ' + data)
-			this.log('table data: ' + this.$refs.table.getData())
+			// this.log('onCellChange: ' + rowIndex + ':' + columnIndex + ' -> ' + data)
+			// this.log('table data: ' + this.$refs.table.getData())
 		},
 		weightDataAdd: function() {
 			this.params.data.push(['1', '2', '3'])
@@ -339,39 +342,6 @@ export default {
 	}
 	.detailsMainInfo {
 		padding: 10px;
-	}
-	.message {
-		margin-bottom: 5px;
-	}
-	.error {
-		border: 1px solid red;
-	}
-	.hint {
-		border: 1px solid green;
-	}
-	.warn {
-		border: 1px solid orange;
-	}
-	button, .button, input[type='button'], input[type='submit'], input[type='reset'] {
-		min-height: auto;
-		border-radius: var(--border-radius);
-		padding: 4px;
-	}
-	.message {
-		padding: 7px;
-	}
-	.message span {
-		position: relative;
-		right: -20px;
-	}
-	.green {
-		color: green;
-	}
-	.orange {
-		color: orange;
-	}
-	.red {
-		color: red;
 	}
 	li h4 {
 		margin-top: 10px;
