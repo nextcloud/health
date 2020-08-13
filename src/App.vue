@@ -121,7 +121,10 @@
 					activePersonId: {{ activePersonId }}<br>
 					showNewPersonForm: {{ showNewPersonForm }}<br>
 					module weight: {{ persons[activePersonId].enabledModules.weight }}<br>
-					active module: {{ activeModule }}
+					active module: {{ activeModule }}<br>
+					<hr>
+					mytest: {{ mytest }}<br>
+					<SettingsGroup :test.sync="activePersonId" />
 				</div>
 			</div>
 		</AppContent>
@@ -213,6 +216,7 @@ import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
 import ProgressBar from '@nextcloud/vue/dist/Components/ProgressBar'
 import LineChart from './LineChart.js'
 import VueTableDynamic from 'vue-table-dynamic'
+import SettingsGroup from './components/SettingsGroup'
 
 export default {
 	name: 'App',
@@ -231,6 +235,7 @@ export default {
 		ProgressBar,
 		LineChart,
 		VueTableDynamic,
+		SettingsGroup,
 	},
 	data: function() {
 		return {
@@ -250,6 +255,7 @@ export default {
 				pageSizes: [10, 20, 50],
 				edit: { row: 'all' },
 			},
+			mytest: 'aha',
 			loading: false,
 			showDetails: false,
 			showNewPersonForm: false,
