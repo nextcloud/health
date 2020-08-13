@@ -1,137 +1,35 @@
 <template>
 	<Content :class="{'icon-loading': loading}" app-name="health">
-		<AppNavigation>
-			<ul id="app-vueexample-navigation">
-				<AppNavigationItem v-for="(person, index) in persons"
-					:key="index"
-					:title="person.name"
-					:allow-collapse="true"
-					:open="(index === 0)?true:false"
-					icon="icon-user"
-					:editable="true"
-					edit-label="edit name"
-					@update:menuOpen="menuOpenPersonId = index"
-					@update:title="personUpdateName"
-					@click="activePersonId = index; activeModule = 'person'">
-					<template slot="actions">
-						<ActionButton
-							:close-after-click="true"
-							icon="icon-detail"
-							@click="setActualPerson(index); showDetails = true">
-							Show details
-						</ActionButton>
-						<ActionButton icon="icon-delete" :close-after-click="true" @click="personDelete">
-							Delete
-						</ActionButton>
-					</template>
-					<template>
-						<AppNavigationItem
-							v-if="persons[index].enabledModules.weight"
-							title="Weight"
-							icon="icon-quota"
-							@click="setActualPerson(index); activeModule = 'weight'" />
-					</template>
-				</AppNavigationItem>
-				<AppNavigationItem
-					title="New person"
-					icon="icon-add"
-					:pinned="true"
-					@click.prevent.stop="createPersonOpen">
-					<div v-show="showNewPersonForm" class="person-create">
-						<form
-							@submit.prevent.stop="createPerson">
-							<input
-								ref="newPersonName"
-								:placeholder="'Name'"
-								type="text"
-								required>
-							<input type="submit" value="" class="icon-confirm">
-							<Actions>
-								<ActionButton class="ab-integrated" icon="icon-close" @click.stop.prevent="createPersonAbbord" />
-							</Actions>
-						</form>
-					</div>
-				</AppNavigationItem>
-			</ul>
-		</AppNavigation>
+		<PersonNavigation
+			:persons="persons"
+			:active-person-id.sync="activePersonId"
+			:active-module.sync="activeModule"
+			:show-sidebar.sync="showSidebar"
+			:notifications.sync="notifications" />
 		<AppContent>
 			<div class="top-bar" />
 			<div class="content-wrapper">
 				<div class="messages">
-					<div v-for="(message, index) in messages" :key="index" :class="{'message':true, 'error': message.type == 'error', 'warn': message.type == 'warn', 'hint': message.type == 'hint' }">
-						{{ message.message }}
+					<div v-for="(message, index) in notifications" :key="index" :class="{'message':true, 'error': message.type == 'error', 'warn': message.type == 'warn', 'hint': message.type == 'hint' }">
+						{{ message.text }}
 						<span>
 							<button @click="messagesDelete(index)">Ok, got it.</button>
 						</span>
 					</div>
 				</div>
-				<div
-					v-if="activeModule === 'weight' && persons[activePersonId].enabledModules.weight">
-					<h2>Weight<span>for {{ persons[activePersonId].name }}</span></h2>
-					<div v-if="persons[activePersonId].weight.target != ''">
-						<h3>Target</h3>
-						<p>You started with {{ weightGetTargetInitialWeight }}{{ weightGetUnit }} for your target. Your actual weight is now {{ weightGetLast }}{{ weightGetUnit }} and your target values {{ persons[activePersonId].weight.target }}{{ persons[activePersonId].weight.unit }}.</p>
-						<p
-							v-if="weightTargetReached">
-							So you lost already {{ weightGetTargetInitialWeight - weightGetLast }}{{ weightGetUnit }} and you have {{ weightGetLast - weightGetTarget }}{{ weightGetUnit }} to go.
-						</p>
-						<p
-							v-if="weightTargetReached">
-							Go on and eliminate the blue bar:
-							<ProgressBar
-								:value="weightProgressbarValue"
-								:class="{'small':true}" />
-						</p>
-						<p
-							v-else>
-							Good, you reached your target!
-						</p>
-					</div>
-					<h3>Chart</h3>
-					<button
-						@click="weightAddRow">
-						add row
-					</button>
-					<template>
-						<div class="small">
-							<LineChart :chart-data="weight.chartData" :height="200" />
-						</div>
-					</template>
-					<h3>Data</h3>
-					<button
-						@click="weightDataAdd">
-						add row
-					</button>
-
-					<template>
-						<div class="base-demo" style="width: 400px">
-							<VueTableDynamic
-								ref="table"
-								:params="params"
-								@cell-change="onCellChange" />
-						</div>
-					</template>
-				</div>
-				<div v-else>
-					else
-				</div>
-
 				<div>
 					menuOpenPersonId: {{ menuOpenPersonId }}<br>
 					activePersonId: {{ activePersonId }}<br>
 					showNewPersonForm: {{ showNewPersonForm }}<br>
 					module weight: {{ persons[activePersonId].enabledModules.weight }}<br>
 					active module: {{ activeModule }}<br>
-					<hr>
-					mytest: {{ mytest }}<br>
-					<SettingsGroup :test.sync="activePersonId" />
 				</div>
 			</div>
 		</AppContent>
-		<AppSidebar v-show="showDetails"
+		<AppSidebar v-show="showSidebar"
 			:title="persons[activePersonId].name"
 			subtitle="created 41 days ago"
-			@close="showDetails=false">
+			@close="showSidebar=false">
 			<template #primary-actions>
 				<ul>
 					<li v-for="(n, index) in persons[activePersonId].notifications" :key="index" :class="{'green': n.type == 'green', 'orange': n.type == 'orange', 'red': n.type == 'red'}">
@@ -204,41 +102,41 @@
 <script>
 import Content from '@nextcloud/vue/dist/Components/Content'
 import AppContent from '@nextcloud/vue/dist/Components/AppContent'
-import AppNavigation from '@nextcloud/vue/dist/Components/AppNavigation'
-import AppNavigationItem from '@nextcloud/vue/dist/Components/AppNavigationItem'
 import AppSidebar from '@nextcloud/vue/dist/Components/AppSidebar'
 import AppSidebarTab from '@nextcloud/vue/dist/Components/AppSidebarTab'
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
-import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
 import ActionRadio from '@nextcloud/vue/dist/Components/ActionRadio'
 import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
-import ProgressBar from '@nextcloud/vue/dist/Components/ProgressBar'
-import LineChart from './LineChart.js'
-import VueTableDynamic from 'vue-table-dynamic'
-import SettingsGroup from './components/SettingsGroup'
+// import ProgressBar from '@nextcloud/vue/dist/Components/ProgressBar'
+// import LineChart from './LineChart.js'
+// import VueTableDynamic from 'vue-table-dynamic'
+// import SettingsGroup from './components/SettingsGroup'
+import PersonNavigation from './modules/persons/PersonNavigation'
 
 export default {
 	name: 'App',
 	components: {
 		Content,
 		AppContent,
-		AppNavigation,
-		AppNavigationItem,
 		AppSidebar,
 		AppSidebarTab,
-		ActionButton,
-		Actions,
 		ActionInput,
 		ActionRadio,
 		ActionCheckbox,
-		ProgressBar,
-		LineChart,
-		VueTableDynamic,
-		SettingsGroup,
+		// ProgressBar,
+		// LineChart,
+		// VueTableDynamic,
+		// SettingsGroup,
+		PersonNavigation,
 	},
 	data: function() {
 		return {
+			loading: false,
+			showSidebar: false,
+			activePersonId: 0,
+			activeModule: 'persons',
+			notifications: [],
+			THISISASEPERATORANDISVERYLONGFORNONEUSE: null,
 			params: {
 				data: [
 					['zeile 1', 'z2', 'letzeres'],
@@ -255,26 +153,11 @@ export default {
 				pageSizes: [10, 20, 50],
 				edit: { row: 'all' },
 			},
-			mytest: 'aha',
-			loading: false,
-			showDetails: false,
 			showNewPersonForm: false,
 			menuOpenPersonId: 0,
-			activePersonId: 0,
-			activeModule: 'weight',
 			weight: {
 				chartData: null,
 			},
-			messages: [
-				{
-					type: 'hint',
-					message: 'succesfully loaded',
-				},
-				{
-					type: 'error',
-					message: 'test error',
-				},
-			],
 			persons: [
 				{
 					id: 1,
@@ -361,26 +244,6 @@ export default {
 			],
 		}
 	},
-	computed: {
-		weightProgressbarValue: function() {
-			return (this.weightGetLast - this.weightGetTarget) / (this.weightGetTargetInitialWeight - this.weightGetTarget) * 100
-		},
-		weightTargetReached: function() {
-			return this.persons[this.activePersonId].weight.data[(this.persons[this.activePersonId].weight.data.length - 1)].weight > this.persons[this.activePersonId].weight.target
-		},
-		weightGetLast: function() {
-			return this.persons[this.activePersonId].weight.data[(this.persons[this.activePersonId].weight.data.length - 1)].weight
-		},
-		weightGetUnit: function() {
-			return this.persons[this.activePersonId].weight.unit
-		},
-		weightGetTarget: function() {
-			return this.persons[this.activePersonId].weight.target
-		},
-		weightGetTargetInitialWeight: function() {
-			return this.persons[this.activePersonId].weight.targetInitialWeight
-		},
-	},
 	mounted() {
 		this.weightChartData()
 	},
@@ -439,79 +302,6 @@ export default {
 				],
 			}
 		},
-		log(e) {
-			console.debug(e)
-		},
-		setActualPerson: function(id) {
-			this.activePersonId = id
-			this.weightChartData()
-		},
-		createPerson(e) {
-			const newId = this.persons.length + 1
-			this.persons.push({ id: newId, name: e.currentTarget.childNodes[0].value })
-			this.showNewPersonForm = false
-			this.showDetails = true
-			this.activePersonId = this.persons.length - 1
-			e.currentTarget.childNodes[0].value = ''
-			this.log('createPerson new person added')
-			this.log(this.persons)
-		},
-		createPersonAbbord(e) {
-			this.showNewPersonForm = !this.showNewPersonForm
-			e.currentTarget.childNodes[0].value = ''
-			this.log('createPersonAbbord close form')
-		},
-		createPersonOpen(e) {
-			this.showNewPersonForm = !this.showNewPersonForm
-			this.$refs.newPersonName.focus()
-			this.log('createPerson open form')
-		},
-		personUpdateName(e) {
-			this.persons[this.menuOpenPersonId].name = e
-			this.log('update name => id: ' + this.menuOpenPersonId + 'new name: ' + e)
-		},
-		personDelete(e) {
-			this.log('try to delete person: ' + this.persons[this.menuOpenPersonId].name)
-			if (this.persons.length === 1) {
-				this.notificationAdd('B', 'warn', 'You can not delete the last person.')
-				this.log('could not delete person, can not last person')
-			} else {
-				this.persons.splice(this.menuOpenPersonId, 1)
-				this.activePersonId = 0
-				this.log(this.persons)
-			}
-		},
-		messageAdd(type, text) {
-			this.messages.push({
-				type: type,
-				message: text,
-			})
-		},
-		messagesDelete(index) {
-			this.messages.splice(index, 1)
-		},
-		notificationAdd(client, type, text) {
-			if (client === 'F' || client === 'FB') {
-				this.persons[this.activePersonId].notifications.push(
-					{
-						type: type,
-						message: text,
-					}
-				)
-				this.log('notification added F or FB')
-			} else if (client === 'B' || client === 'FB') {
-				let t
-				if (type === 'green') {
-					t = 'hint'
-				} else if (type === 'orange') {
-					t = 'warn'
-				} else {
-					t = 'error'
-				}
-				this.messageAdd(t, text)
-				this.log('notification added B or FB')
-			}
-		},
 		ageUpdate(e) {
 			this.persons[this.activePersonId].age = e.target[1].value
 			this.log('age updated')
@@ -546,19 +336,6 @@ export default {
 		position: fixed;
 		z-index: inherit;
 		background: var(--color-main-background);
-	}
-	.person-create {
-		order: 1;
-		display: flex;
-		height: 44px;
-		padding-left: 10px;
-		form {
-			display: flex;
-			flex-grow: 1;
-			input[type='text'] {
-				flex-grow: 1;
-			}
-		}
 	}
 	.detailsMainInfo {
 		padding: 10px;
