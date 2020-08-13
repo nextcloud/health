@@ -22,13 +22,13 @@
 
 <template>
 	<div class="notifications">
-		<div v-for="(message, index) in notifications" :key="index" :class="{'notification':true, 'error': message.type == 'error', 'warn': message.type == 'warn', 'hint': message.type == 'hint', 'good': message.type == 'good' }">
+		<div v-for="(message, index) in notifications" :key="'public' + index" :class="{ 'notification': true, 'error': message.type == 'error', 'warn': message.type == 'warn', 'hint': message.type == 'hint', 'good': message.type == 'good' }">
 			{{ message.text }}
 			<span>
 				<button @click="deleteNotification(index)">Ok, got it.</button>
 			</span>
 		</div>
-		<div v-for="(message, index) in persons[activePersonId].notifications" :key="index" :class="{'notification':true, 'error': message.type == 'error', 'warn': message.type == 'warn', 'hint': message.type == 'hint', 'good': message.type == 'good' }">
+		<div v-for="(message, index) in persons[activePersonId].notifications" :key="'private' + index" :class="{ 'notification': true, 'error': message.type == 'error', 'warn': message.type == 'warn', 'hint': message.type == 'hint', 'good': message.type == 'good' }">
 			{{ message.text }}
 			<span>
 				<button @click="deletePrivateNotification(index)">Ok, got it.</button>
@@ -50,7 +50,7 @@ export default {
 		},
 		activePersonId: {
 			type: Number,
-			default: 0,
+			default: null,
 		},
 		notifications: {
 			type: Array,
