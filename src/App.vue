@@ -1,6 +1,6 @@
 <template>
 	<Content :class="{'icon-loading': loading}" app-name="health">
-		<PersonNavigation
+		<PersonsNavigation
 			:persons="persons"
 			:active-person-id.sync="activePersonId"
 			:active-module.sync="activeModule"
@@ -8,6 +8,11 @@
 			:notifications.sync="notifications" />
 		<AppContent>
 			<div class="top-bar" />
+			<div class="content-menu-topright">
+				<Actions :title="'Details'">
+					<ActionButton icon="icon-menu-sidebar" @click="showSidebar = !showSidebar" />
+				</Actions>
+			</div>
 			<div class="content-wrapper">
 				<Notifications
 					:persons.sync="persons"
@@ -24,72 +29,17 @@
 		</AppContent>
 		<AppSidebar v-show="showSidebar"
 			:title="persons[activePersonId].name"
-			subtitle="created 41 days ago"
 			@close="showSidebar=false">
-			<template #primary-actions>
-				<ul>
-					<li v-for="(n, index) in persons[activePersonId].notifications" :key="index" :class="{'green': n.type == 'green', 'orange': n.type == 'orange', 'red': n.type == 'red'}">
-						{{ n.message }}
-					</li>
-				</ul>
-			</template>
+			<template #primary-actions />
 			<AppSidebarTab id="person" name="Person" icon="icon-user">
-				<ul>
-					<li><h4>Age</h4></li>
-					<ActionInput
-						type="number"
-						:value="persons[activePersonId].age"
-						icon="icon-user"
-						@submit="ageUpdate" />
-					<li><h4>Size<span>in cm</span></h4></li>
-					<ActionInput
-						type="number"
-						:value="persons[activePersonId].size"
-						icon="icon-fullscreen"
-						@submit="sizeUpdate" />
-					<li><h4>Sex</h4></li>
-					<ActionRadio
-						name="sex"
-						value="female"
-						:checked="persons[activePersonId].sex === 'female'"
-						@change="sexUpdate">
-						female
-					</ActionRadio>
-					<ActionRadio
-						name="sex"
-						value="male"
-						:checked="persons[activePersonId].sex === 'male'"
-						@change="sexUpdate">
-						male
-					</ActionRadio>
-					<li><h4>Manage modules</h4></li>
-					<ActionCheckbox
-						:checked="persons[activePersonId].enabledModules.weight"
-						value="weight"
-						@change="persons[activePersonId].enabledModules.weight = !persons[activePersonId].enabledModules.weight">
-						Weight
-					</ActionCheckbox>
-				</ul>
+				<PersonsSidebar
+					:person.sync="persons[activePersonId]" />
 			</AppSidebarTab>
-			<AppSidebarTab
-				v-if="persons[activePersonId].enabledModules.weight"
-				id="weight"
-				name="Weight"
-				icon="icon-quota">
-				<ul>
-					<li><h4>Unit for weight</h4></li>
-					<ActionInput
-						type="text"
-						:value="persons[activePersonId].weight.unit"
-						icon="icon-category-customization"
-						@submit="weightUnitUpdate" />
-					<li><h4>Weight target<span>in {{ persons[activePersonId].weight.unit }}<br>blank for none<br>On update the initial weight for the target will be {{ weightGetLast }}{{ weightGetUnit }}</span></h4></li>
-					<ActionInput
-						type="number"
-						:value="persons[activePersonId].weight.target"
-						icon="icon-category-monitoring"
-						@submit="weightTargetUpdate" />
-				</ul>
+			<AppSidebarTab id="weight" name="Weight" icon="icon-quota">
+				<WeightSidebar
+					v-if="persons[activePersonId].enabledModules.weight"
+					:person.sync="persons[activePersonId]"
+					:last-weight="persons[activePersonId].weight.lastWeight" />
 			</AppSidebarTab>
 		</AppSidebar>
 	</Content>
@@ -100,15 +50,15 @@ import Content from '@nextcloud/vue/dist/Components/Content'
 import AppContent from '@nextcloud/vue/dist/Components/AppContent'
 import AppSidebar from '@nextcloud/vue/dist/Components/AppSidebar'
 import AppSidebarTab from '@nextcloud/vue/dist/Components/AppSidebarTab'
-import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
-import ActionRadio from '@nextcloud/vue/dist/Components/ActionRadio'
-import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
 // import ProgressBar from '@nextcloud/vue/dist/Components/ProgressBar'
 // import LineChart from './LineChart.js'
 // import VueTableDynamic from 'vue-table-dynamic'
-// import SettingsGroup from './components/SettingsGroup'
-import PersonNavigation from './modules/persons/PersonNavigation'
+import PersonsNavigation from './modules/persons/PersonsNavigation'
 import Notifications from './Notifications'
+import PersonsSidebar from './modules/persons/PersonsSidebar'
+import WeightSidebar from './modules/weight/WeightSidebar'
+import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
+import Actions from '@nextcloud/vue/dist/Components/Actions'
 
 export default {
 	name: 'App',
@@ -117,20 +67,17 @@ export default {
 		AppContent,
 		AppSidebar,
 		AppSidebarTab,
-		ActionInput,
-		ActionRadio,
-		ActionCheckbox,
-		// ProgressBar,
-		// LineChart,
-		// VueTableDynamic,
-		// SettingsGroup,
-		PersonNavigation,
+		ActionButton,
+		Actions,
+		PersonsNavigation,
 		Notifications,
+		WeightSidebar,
+		PersonsSidebar,
 	},
 	data: function() {
 		return {
 			loading: false,
-			showSidebar: false,
+			showSidebar: true,
 			activePersonId: 0,
 			activeModule: 'persons',
 			notifications: [
@@ -176,11 +123,14 @@ export default {
 					size: 170,
 					enabledModules: {
 						weight: true,
+						breaks: false,
+						tracking: false,
 					},
 					weight: {
 						unit: 'kg',
-						target: 70,
-						targetInitialWeight: 99,
+						weightTarget: 70,
+						weightTargetInitialWeight: 99,
+						lastWeight: 10,
 						data: [
 							{
 								date: '02/08/2020',
@@ -223,11 +173,14 @@ export default {
 					size: 175,
 					enabledModules: {
 						weight: true,
+						breaks: false,
+						tracking: false,
 					},
 					weight: {
 						unit: 'kg',
-						target: 70,
-						targetInitialWeight: 99,
+						weightTarget: 70,
+						weightTargetInitialWeight: 99,
+						lastWeight: 10,
 						data: [
 							{
 								date: '05/08/2020',
@@ -246,9 +199,6 @@ export default {
 				},
 			],
 		}
-	},
-	mounted() {
-		this.weightChartData()
 	},
 	methods: {
 		onCellChange(rowIndex, columnIndex, data) {
@@ -305,27 +255,6 @@ export default {
 				],
 			}
 		},
-		ageUpdate(e) {
-			this.persons[this.activePersonId].age = e.target[1].value
-			this.log('age updated')
-		},
-		sizeUpdate(e) {
-			this.persons[this.activePersonId].size = e.target[1].value
-			this.log('size updated')
-		},
-		sexUpdate(e) {
-			this.persons[this.activePersonId].sex = e.target.value
-			this.log('sex updated')
-		},
-		weightTargetUpdate(e) {
-			this.persons[this.activePersonId].weight.target = e.target[1].value
-			this.persons[this.activePersonId].weight.targetInitialWeight = this.weightGetLast
-			this.log('weight target updated')
-		},
-		weightUnitUpdate(e) {
-			this.persons[this.activePersonId].weight.unit = e.target[1].value
-			this.log('weight unit updated')
-		},
 	},
 }
 </script>
@@ -343,15 +272,12 @@ export default {
 	.detailsMainInfo {
 		padding: 10px;
 	}
-	li h4 {
-		margin-top: 10px;
-	}
-	span {
-		opacity: .7;
-		font-size: 0.8em;
-		margin-left: 5px;
-	}
 	.progress-bar.small {
 		width: 35%;
+	}
+	.content-menu-topright {
+		position: fixed;
+		right: 0px;
+		z-index: 1001;
 	}
 </style>

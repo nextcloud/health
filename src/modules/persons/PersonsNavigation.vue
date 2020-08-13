@@ -53,6 +53,16 @@
 					title="Weight"
 					icon="icon-quota"
 					@click="$emit('update:activePersonId', index); $emit('update:activeModule', 'weight')" />
+				<AppNavigationItem
+					v-if="persons[index].enabledModules.breaks"
+					title="Breaks"
+					icon="icon-pause"
+					@click="$emit('update:activePersonId', index); $emit('update:activeModule', 'breaks')" />
+				<AppNavigationItem
+					v-if="persons[index].enabledModules.tracking"
+					title="Tracking"
+					icon="icon-category-monitoring"
+					@click="$emit('update:activePersonId', index); $emit('update:activeModule', 'tracking')" />
 			</AppNavigationItem>
 		</ul>
 		<ul>
@@ -87,7 +97,7 @@ import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 
 export default {
-	name: 'PersonNavigation',
+	name: 'PersonsNavigation',
 	components: {
 		AppNavigation,
 		AppNavigationItem,
@@ -139,9 +149,10 @@ export default {
 				size: null,
 				weight: {
 					data: null,
-					target: null,
-					targetInitialWeight: null,
+					weightTarget: null,
+					weightTargetInitialWeight: null,
 					unit: 'kg',
+					lastWeight: null,
 				},
 			})
 			this.showNewPersonForm = false

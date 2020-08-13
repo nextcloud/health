@@ -46,9 +46,6 @@ export default {
 			type: String,
 			default: 'SettingsGroup Title',
 		},
-		//	{
-		//		type: text | radio | check
-		//	}
 		fields: {
 			type: Object,
 			default: null,
