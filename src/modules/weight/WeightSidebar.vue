@@ -48,6 +48,16 @@
 			:value="(person.weight.weightTargetInitialWeight !== null )? person.weight.weightTargetInitialWeight: lastWeight"
 			icon="icon-quota"
 			@submit="updateWeightTargetInitialWeight" />
+		<li>
+			<h4>
+				Measurement Name<span><br>What else do you want to track? Set here a name for it and you can add data in the data-table. The values have to be numbers.</span>
+			</h4>
+		</li>
+		<ActionInput
+			type="text"
+			:value="person.weight.measurementName"
+			icon="icon-rename"
+			@submit="updateMeasurementName" />
 	</ul>
 </template>
 
@@ -87,6 +97,11 @@ export default {
 		updateWeightTargetInitialWeight: function(e) {
 			const p = this.person
 			p.weight.weightTargetInitialWeight = e.target[1].value
+			this.$emit('update:person', p)
+		},
+		updateMeasurementName: function(e) {
+			const p = this.person
+			p.weight.measurementName = e.target[1].value
 			this.$emit('update:person', p)
 		},
 	},

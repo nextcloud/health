@@ -127,7 +127,7 @@ export default {
 	li h4 {
 		margin-top: 10px;
 	}
-	span {
+	h4 span {
 		opacity: .7;
 		font-size: 0.8em;
 		margin-left: 5px;

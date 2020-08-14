@@ -19,12 +19,11 @@
 					:active-person-id.sync="activePersonId"
 					:notifications.sync="notifications" />
 				<div>
-					menuOpenPersonId: {{ menuOpenPersonId }}<br>
 					activePersonId: {{ activePersonId }}<br>
-					showNewPersonForm: {{ showNewPersonForm }}<br>
-					module weight: {{ persons[activePersonId].enabledModules.weight }}<br>
 					active module: {{ activeModule }}<br>
 				</div>
+				<WeightContent v-if="activeModule === 'weight' && persons[activePersonId].enabledModules.weight"
+					:person.sync="persons[activePersonId]" />
 			</div>
 		</AppContent>
 		<AppSidebar v-show="showSidebar"
@@ -59,6 +58,7 @@ import PersonsSidebar from './modules/persons/PersonsSidebar'
 import WeightSidebar from './modules/weight/WeightSidebar'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import Actions from '@nextcloud/vue/dist/Components/Actions'
+import WeightContent from './modules/weight/WeightContent'
 
 export default {
 	name: 'App',
@@ -73,11 +73,12 @@ export default {
 		Notifications,
 		WeightSidebar,
 		PersonsSidebar,
+		WeightContent,
 	},
 	data: function() {
 		return {
 			loading: false,
-			showSidebar: true,
+			showSidebar: false,
 			activePersonId: 0,
 			activeModule: 'persons',
 			notifications: [
@@ -87,24 +88,6 @@ export default {
 				},
 			],
 			THISISASEPERATORANDISVERYLONGFORNONEUSE: null,
-			params: {
-				data: [
-					['zeile 1', 'z2', 'letzeres'],
-					['Cell-1', 'Cell-2', 'Cell-3'],
-					['Cell-4', 'Cell-5', 'Cell-6'],
-					['Cell-7', 'Cell-8', 'Cell-9'],
-				],
-				header: 'row',
-				border: true,
-				stripe: true,
-				sort: [0, 1, 2],
-				pagination: true,
-				pageSize: 10,
-				pageSizes: [10, 20, 50],
-				edit: { row: 'all' },
-			},
-			showNewPersonForm: false,
-			menuOpenPersonId: 0,
 			weight: {
 				chartData: null,
 			},
@@ -131,32 +114,7 @@ export default {
 						weightTarget: 70,
 						weightTargetInitialWeight: 99,
 						lastWeight: 10,
-						data: [
-							{
-								date: '02/08/2020',
-								weight: 80,
-								armleft: 0,
-								armright: 0,
-								chest: 0,
-								waist: 0,
-								hips: 0,
-								thighleft: 0,
-								thighricht: 0,
-								bodyfat: 10,
-							},
-							{
-								date: '03/08/2020',
-								weight: 82,
-								armleft: 0,
-								armright: 0,
-								chest: 0,
-								waist: 0,
-								hips: 0,
-								thighleft: 0,
-								thighricht: 0,
-								bodyfat: 10,
-							},
-						],
+						measurementName: 'test',
 					},
 				},
 				{
@@ -181,20 +139,7 @@ export default {
 						weightTarget: 70,
 						weightTargetInitialWeight: 99,
 						lastWeight: 10,
-						data: [
-							{
-								date: '05/08/2020',
-								weight: 0,
-								armleft: 0,
-								armright: 0,
-								chest: 0,
-								waist: 0,
-								hips: 0,
-								thighleft: 0,
-								thighricht: 0,
-								bodyfat: 10,
-							},
-						],
+						measurementName: null,
 					},
 				},
 			],
@@ -271,9 +216,6 @@ export default {
 	}
 	.detailsMainInfo {
 		padding: 10px;
-	}
-	.progress-bar.small {
-		width: 35%;
 	}
 	.content-menu-topright {
 		position: fixed;
