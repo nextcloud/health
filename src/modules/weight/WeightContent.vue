@@ -46,22 +46,28 @@
 			If you want, you can set a target for your weight. Do this in the settings in the sidebar. You will see right here how much you lost and what is left. Maybe you can be motivated this way.
 		</div>
 		<h3>Chart</h3>
+		<LineChart :chart-data="getChartData" :height="200" />
 		<h3>Data</h3>
-		<VueTableDynamic
-			ref="table"
-			:params="getDatatableData" />
+		<p v-show="dataInsertInfo" class="dataInsertInfo">
+			{{ dataInsertInfo }}
+		</p>
+		<WeightTable :data="data" :measurement-name="person.weight.measurementName" :weight-unit="person.weight.unit" />
 	</div>
 </template>
 
 <script>
 import ProgressBar from '@nextcloud/vue/dist/Components/ProgressBar'
-import VueTableDynamic from 'vue-table-dynamic'
+// import VueTableDynamic from 'vue-table-dynamic'
+import LineChart from './LineChart.js'
+import WeightTable from './WeightTable.vue'
 
 export default {
 	name: 'WeightContent',
 	components: {
 		ProgressBar,
-		VueTableDynamic,
+		// VueTableDynamic,
+		LineChart,
+		WeightTable,
 	},
 	props: {
 		person: {
@@ -71,49 +77,35 @@ export default {
 	},
 	data: function() {
 		return {
-			params: {
-				data: [
-					['zeile 1', 'z2', 'letzeres'],
-					['Cell-1', 'Cell-2', 'Cell-3'],
-					['Cell-4', 'Cell-5', 'Cell-6'],
-					['Cell-7', 'Cell-8', 'Cell-9'],
-				],
-				header: 'row',
-				border: true,
-				stripe: true,
-				sort: [0, 1, 2],
-				pagination: true,
-				pageSize: 10,
-				pageSizes: [10, 20, 50],
-				edit: { row: 'all' },
-			},
+			dataInsertInfo: '',
+			dataTableHighlight: null,
 			data: [
 				{
-					date: '01/08/2020',
+					date: '2020-08-01',
 					weight: 80,
 					measurement: 30,
 					bodyfat: 20,
 				},
 				{
-					date: '02/08/2020',
+					date: '2020-08-02',
 					weight: 80,
 					measurement: 30,
 					bodyfat: 17,
 				},
 				{
-					date: '03/08/2020',
+					date: '2020-08-03',
 					weight: 82,
 					measurement: 29,
 					bodyfat: 17,
 				},
 				{
-					date: '04/08/2020',
+					date: '2020-08-04',
 					weight: 81,
 					measurement: 15,
 					bodyfat: 16,
 				},
 				{
-					date: '05/08/2020',
+					date: '2020-08-05',
 					weight: 79.5,
 					measurement: 16,
 					bodyfat: 15,
@@ -128,34 +120,54 @@ export default {
 		getProgressbarValue: function() {
 			return 40
 		},
-		getDatatableData: function() {
+		getChartData: function() {
 			const data = []
-			if (this.person.weight.measurementName) {
-				data.push(['Date', 'Weight', this.person.weight.measurementName, 'Bodyfat'])
-			} else {
-				data.push(['Date', 'Weight', 'Bodyfat'])
-			}
-			for (let i = 0; i < this.data.length; ++i) {
-				if (this.person.weight.measurementName) {
-					data.push([this.data[i].date, this.data[i].weight, this.data[i].measurement, this.data[i].bodyfat])
-				} else {
-					data.push([this.data[i].date, this.data[i].weight, this.data[i].bodyfat])
+			for (let i = 0; i < this.data.length; i++) {
+				if (this.data[i].weight !== '' && this.data[i].weight !== null) {
+					data.push({
+						t: this.data[i].date,
+						y: this.data[i].weight,
+					})
 				}
 			}
 			return {
-				header: 'row',
-				border: true,
-				stripe: true,
-				sort: [0, 1, 2],
-				pagination: true,
-				pageSize: 10,
-				pageSizes: [10, 20, 50],
-				edit: { row: 'all' },
-				data: data,
+				labels: [
+					'01.08.',
+					'02.08.',
+					'03.08.',
+					'04.08.',
+					'05.08.',
+				],
+				datasets: [
+					{
+						label: 'My First dataset',
+						backgroundColor: '#ffeeee',
+						borderColor: 'red',
+						fill: false,
+						data: data,
+					},
+				],
 			}
 		},
 	},
 	methods: {
+		changeCell: function(rowIndex, columnIndex, value) {
+			const dataIndex = rowIndex - 1
+			console.debug('cell change on row/column/value: ' + rowIndex + ' ' + columnIndex + ' ' + value)
+			if (columnIndex === 0) {
+				this.data[dataIndex].date = value
+			} else if (columnIndex === 1) {
+				this.data[dataIndex].weight = value
+			} else if (columnIndex === 2) {
+				if (this.person.weight.measurementName) {
+					this.data[dataIndex].measurement = value
+				} else {
+					this.data[dataIndex].bodyfat = value
+				}
+			} else if (columnIndex === 3) {
+				this.data[dataIndex].bodyfat = value
+			}
+		},
 	},
 }
 </script>
