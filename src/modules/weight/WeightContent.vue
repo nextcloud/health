@@ -27,11 +27,12 @@
 			<h3>Target</h3>
 			<p>You started with {{ person.weight.weightTargetInitialWeight }}{{ person.weight.unit }} for your target. Your actual weight is now {{ getLastWeight }}{{ person.weight.unit }} and your target values {{ person.weight.weightTarget }}{{ person.weight.unit }}.</p>
 			<p
-				v-if="getLastWeight - person.weight.weightTarget >= 0">
+				v-if="getLastWeight - person.weight.weightTarget > 0">
 				So you lost already {{ person.weight.weightTargetInitialWeight - getLastWeight }}{{ person.weight.unit }} and you have {{ getLastWeight - person.weight.weightTarget }}{{ person.weight.unit }} to go.
 			</p>
 			<p
 				v-if="getLastWeight - person.weight.weightTarget >= 0">
+				<br>
 				Go on and eliminate the blue bar:
 				<ProgressBar
 					:value="getProgressbarValue"
@@ -116,10 +117,12 @@ export default {
 	},
 	computed: {
 		getLastWeight: function() {
-			return 80
+			return this.data[0].weight
 		},
 		getProgressbarValue: function() {
-			return 40
+			const lostAlready = this.person.weight.weightTargetInitialWeight - this.getLastWeight
+			const wantToLost = this.person.weight.weightTargetInitialWeight - this.person.weight.weightTarget
+			return 100 - ((lostAlready / wantToLost) * 100)
 		},
 	},
 	methods: {
