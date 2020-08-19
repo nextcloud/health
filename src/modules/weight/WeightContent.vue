@@ -46,12 +46,38 @@
 			If you want, you can set a target for your weight. Do this in the settings in the sidebar. You will see right here how much you lost and what is left. Maybe you can be motivated this way.
 		</div>
 		<h3>Chart</h3>
-		<LineChart :chart-data="getChartData" :height="200" />
+		<div class="chartDataRangeSelector">
+			<select
+				id="chartDataRangeSelector"
+				v-model="chartDateRange"
+				name="chartDataRangeSelector">
+				<option value="week">
+					Show chart for the last week
+				</option>
+				<option value="month">
+					Show chart for the last month
+				</option>
+				<option value="year">
+					Show chart for the last year
+				</option>
+				<option value="all">
+					Show all
+				</option>
+			</select>
+		</div>
+		<LineChart
+			v-show="getChartData.datasets[0].data.length !== 0"
+			:chart-data="getChartData"
+			:height="200"
+			:range="chartDateRange" />
+		<p v-show="getChartData.datasets[0].data.length === 0">
+			No data to show you :(
+		</p>
 		<h3>Data</h3>
 		<p v-show="dataInsertInfo" class="dataInsertInfo">
 			{{ dataInsertInfo }}
 		</p>
-		<WeightTable :data="data" :measurement-name="person.weight.measurementName" :weight-unit="person.weight.unit" />
+		<WeightTable :data.sync="data" :measurement-name="person.weight.measurementName" :weight-unit="person.weight.unit" />
 	</div>
 </template>
 
@@ -60,6 +86,7 @@ import ProgressBar from '@nextcloud/vue/dist/Components/ProgressBar'
 // import VueTableDynamic from 'vue-table-dynamic'
 import LineChart from './LineChart.js'
 import WeightTable from './WeightTable.vue'
+import moment from '@nextcloud/moment'
 
 export default {
 	name: 'WeightContent',
@@ -79,6 +106,7 @@ export default {
 		return {
 			dataInsertInfo: '',
 			dataTableHighlight: null,
+			chartDateRange: 'week',
 			data: [
 				{
 					date: '2020-08-01',
@@ -124,23 +152,27 @@ export default {
 			const data = []
 			for (let i = 0; i < this.data.length; i++) {
 				if (this.data[i].weight !== '' && this.data[i].weight !== null) {
-					data.push({
-						t: this.data[i].date,
-						y: this.data[i].weight,
-					})
+					console.debug(Math.abs(moment(this.data[i].date).diff(moment(), 'days')))
+					let diff = null
+					if (this.chartDateRange === 'week') {
+						diff = 7
+					} else if (this.chartDateRange === 'month') {
+						diff = 31
+					} else if (this.chartDateRange === 'year') {
+						diff = 365
+					}
+					if (diff === null || Math.abs(moment(this.data[i].date).diff(moment(), 'days')) <= diff) {
+						data.push({
+							t: moment(this.data[i].date),
+							y: this.data[i].weight,
+						})
+					}
 				}
 			}
 			return {
-				labels: [
-					'01.08.',
-					'02.08.',
-					'03.08.',
-					'04.08.',
-					'05.08.',
-				],
 				datasets: [
 					{
-						label: 'My First dataset',
+						label: 'Weight',
 						backgroundColor: '#ffeeee',
 						borderColor: 'red',
 						fill: false,

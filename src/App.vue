@@ -80,7 +80,7 @@ export default {
 			loading: false,
 			showSidebar: false,
 			activePersonId: 0,
-			activeModule: 'persons',
+			activeModule: 'weight', // persons
 			notifications: [
 				{
 					type: 'hint',

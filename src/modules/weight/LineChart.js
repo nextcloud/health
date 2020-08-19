@@ -39,10 +39,13 @@ export default {
 				],
 			},
 			tooltips: {
-				enabled: false,
+				enabled: true,
+				position: 'nearest',
+				mode: 'nearest',
+				intersect: false,
 			},
 			layout: {
-			   padding: {
+				padding: {
 					right: 20,
 				},
 			},

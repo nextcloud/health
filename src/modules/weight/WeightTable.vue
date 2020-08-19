@@ -88,7 +88,7 @@
 						<button
 							v-if="editRowId === i"
 							class="icon-checkmark"
-							@click="editRowId = null" />
+							@click="editRowId = null; updateTableData()" />
 						<button
 							v-if="editRowId === null"
 							class="icon-rename"
@@ -112,6 +112,11 @@ export default {
 	name: 'WeightTable',
 	components: {
 		// ActionInput,
+	},
+	filters: {
+		formatMyDate: function(v) {
+			return moment(v).format('DD.MM.YYYY')
+		},
 	},
 	props: {
 		data: {
@@ -137,20 +142,36 @@ export default {
 			return (this.measurementName !== '' && this.measurementName !== null)
 		},
 	},
+	mounted: function() {
+		this.updateTableData()
+	},
 	methods: {
 		addDataRow: function() {
-			this.data.unshift({
+			const d = this.data
+			d.unshift({
 				date: moment().format('YYYY-MM-DD'),
 				weight: null,
 				measurement: null,
 				bodyfat: null,
 			})
+			this.$emit('update:data', d)
 			this.editRowId = 0
 		},
-	},
-	filter: {
-		formatMyDate: function(v) {
-			return moment(v).format('DD.MM.YYYY')
+		updateTableData: function() {
+			const d = this.data
+			d.sort(this.dataCompare)
+			this.$emit('update:data', d)
+		},
+		dataCompare: function(data1, data2) {
+			const d1 = moment(data1.date)
+			const d2 = moment(data2.date)
+			if (d1 < d2) {
+				return 1
+			} else if (d1 > d2) {
+				return -1
+			} else {
+				return 0
+			}
 		},
 	},
 }
