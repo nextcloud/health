@@ -8,32 +8,45 @@ export default {
 	mounted() {
 		// this.chartData is created in the mixin.
 		// If you want to pass options please create a local options object
-		const timeFormat = 'DD/MM/YYYY'
+		// const timeFormat = 'DD/MM/YYYY'
 		const options = {
 			title: {
-				text: 'Chart.js Time Scale',
+				text: 'Weight Chart',
 			},
 			scales: {
 				xAxes: [
 					{
+						gridLines: {
+							display: true,
+							lineWidth: 1,
+						},
 						type: 'time',
-						time: {
-							parser: timeFormat,
-							// round: 'day'
-							// tooltipFormat: 'll HH:mm',
-							// unit: 'month',
-						},
-						scaleLabel: {
-							display: false,
-							// labelString: 'Date',
-						},
+						// time: {
+						// parser: timeFormat,
+						// round: 'day',
+						// tooltipFormat: 'll DD.MM.',
+						// unit: 'month',
+						// },
+						// scaleLabel: {
+						// display: false,
+						// labelString: 'Date',
+						// },
 					},
 				],
 				yAxes: [
 					{
+						gridLines: {
+							display: true,
+							lineWidth: 1,
+						},
 						scaleLabel: {
 							display: true,
 							labelString: 'weight',
+						},
+						ticks: {
+							beginAtZero: true,
+							min: 1,
+							sampleSize: 10,
 						},
 					},
 				],
