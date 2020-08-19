@@ -22,7 +22,7 @@
 
 <template>
 	<div>
-		<h2>Weight<span>for {{ person.name }}</span></h2>
+		<h2>Weight <span>for {{ person.name }}</span></h2>
 		<div v-if="person.weight.weightTarget != ''">
 			<h3>Target</h3>
 			<p>You started with {{ person.weight.weightTargetInitialWeight }}{{ person.weight.unit }} for your target. Your actual weight is now {{ getLastWeight }}{{ person.weight.unit }} and your target values {{ person.weight.weightTarget }}{{ person.weight.unit }}.</p>
@@ -146,5 +146,9 @@ export default {
 <style lang="scss" scoped>
 	.progress-bar.small {
 		width: 35%;
+	}
+	h3 {
+	    font-size: 20px;
+	    margin-top: 40px;
 	}
 </style>

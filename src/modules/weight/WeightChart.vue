@@ -87,6 +87,7 @@ export default {
 		getChartData: function() {
 			const data = []
 			const targetData = []
+			const targetInitialData = []
 			for (let i = 0; i < this.data.length; i++) {
 				if (this.data[i].weight !== '' && this.data[i].weight !== null) {
 					// console.debug(Math.abs(moment(this.data[i].date).diff(moment(), 'days')))
@@ -107,6 +108,10 @@ export default {
 							t: moment(this.data[i].date),
 							y: this.person.weight.weightTarget,
 						})
+						targetInitialData.push({
+							t: moment(this.data[i].date),
+							y: this.person.weight.weightTargetInitialWeight,
+						})
 					}
 				}
 			}
@@ -114,7 +119,7 @@ export default {
 				datasets: [
 					{
 						label: 'Weight',
-						borderColor: 'red',
+						borderColor: 'blue',
 						fill: false,
 						data: data,
 					},
@@ -125,6 +130,16 @@ export default {
 						data: targetData,
 						borderDash: [
 							2,
+							5,
+						],
+					},
+					{
+						label: 'Target initial weight',
+						borderColor: 'red',
+						fill: false,
+						data: targetInitialData,
+						borderDash: [
+							8,
 							5,
 						],
 					},
