@@ -50,6 +50,7 @@ persons
 			weightTarget: number
 			weightTargetInitialWeight: number
 			measurementName: string
+			lastWeight: number
 
 ## persons
 
