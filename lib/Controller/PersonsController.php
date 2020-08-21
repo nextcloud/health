@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>
  *
@@ -21,12 +22,32 @@
  *
  */
 
-return [
-	'resources' => [
-        'persons' => ['url' => '/persons'],
-    ],
-    'routes' => [
-	   ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
-	   ['name' => 'page#mail', 'url' => '/mail', 'verb' => 'GET'],
-    ]
-];
+namespace OCA\Health\Controller;
+
+use OCP\IRequest;
+use OCP\AppFramework\Http\TemplateResponse;
+use OCP\AppFramework\Controller;
+use OCP\Util;
+use OCP\AppFramework\Http\JSONResponse;
+use OCA\Health\Services\PersonsService;
+
+class PersonsController extends Controller {
+
+	protected $appName;
+
+	protected $personsService;
+
+	public function __construct($appName, IRequest $request, PersonsService $pS) {
+		parent::__construct($appName, $request);
+		$this->appName = $appName;
+		$this->personsService = $pS;
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+	public function index() {
+        return new JSONResponse($this->personsService->getAllPersons());
+	}
+}
