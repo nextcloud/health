@@ -14,18 +14,10 @@
 				</Actions>
 			</div>
 			<div class="content-wrapper">
-				<button
-					@click="axGetPersons">
-					Load Persons via ajax
-				</button>
 				<Notifications
 					:persons.sync="persons"
 					:active-person-id.sync="activePersonId"
 					:notifications.sync="notifications" />
-				<div>
-					activePersonId: {{ activePersonId }}<br>
-					active module: {{ activeModule }}<br>
-				</div>
 				<WeightContent v-if="activeModule === 'weight' && persons[activePersonId].enabledModules.weight"
 					:person.sync="persons[activePersonId]" />
 			</div>
@@ -53,9 +45,6 @@ import Content from '@nextcloud/vue/dist/Components/Content'
 import AppContent from '@nextcloud/vue/dist/Components/AppContent'
 import AppSidebar from '@nextcloud/vue/dist/Components/AppSidebar'
 import AppSidebarTab from '@nextcloud/vue/dist/Components/AppSidebarTab'
-// import ProgressBar from '@nextcloud/vue/dist/Components/ProgressBar'
-// import LineChart from './LineChart.js'
-// import VueTableDynamic from 'vue-table-dynamic'
 import PersonsNavigation from './modules/persons/PersonsNavigation'
 import Notifications from './Notifications'
 import PersonsSidebar from './modules/persons/PersonsSidebar'
@@ -80,8 +69,6 @@ export default {
 		WeightSidebar,
 		PersonsSidebar,
 		WeightContent,
-		// axios,
-		// generateUrl,
 	},
 	data: function() {
 		return {
@@ -90,10 +77,10 @@ export default {
 			activePersonId: 0,
 			activeModule: 'weight', // persons
 			notifications: [
-				{
-					type: 'hint',
-					text: 'TEST',
-				},
+				// {
+				// type: 'hint',
+				// text: 'TEST',
+				// },
 			],
 			persons: null,
 		}
@@ -110,8 +97,8 @@ export default {
 			return axios.get(this.getUrl('/persons'))
 				.then(
 					(response) => {
-						console.debug('debug axGetPersons SUCCESS-------------')
-						console.debug(response)
+						// console.debug('debug axGetPersons SUCCESS-------------')
+						// console.debug(response)
 						this.persons = response.data
 					},
 					(err) => {
@@ -128,7 +115,7 @@ export default {
 	},
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 	.content-wrapper {
 		padding: 35px 10px 10px 10px;
 	}
@@ -146,5 +133,17 @@ export default {
 		position: fixed;
 		right: 0px;
 		z-index: 1001;
+	}
+	h3 {
+	    font-size: 20px;
+	    margin-top: 40px;
+	}
+	.content-wrapper h3:first-child {
+		margin-top: 2px;
+	}
+	span {
+		opacity: .7;
+		font-size: 0.8em;
+		margin-left: 5px;
 	}
 </style>

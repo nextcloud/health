@@ -207,9 +207,4 @@ export default {
 	button {
 		padding: 13px 20px 13px 20px;
 	}
-	span {
-		opacity: .7;
-		font-size: 0.8em;
-		margin-left: 5px;
-	}
 </style>

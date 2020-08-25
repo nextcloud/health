@@ -13,6 +13,7 @@ export default {
 			title: {
 				text: 'Weight Chart',
 			},
+			responsive: true,
 			scales: {
 				xAxes: [
 					{

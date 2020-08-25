@@ -44,7 +44,6 @@
 		<LineChart
 			v-show="getChartData.datasets[0].data.length !== 0"
 			:chart-data="getChartData"
-			:height="200"
 			:range="chartDateRange" />
 		<EmptyContent
 			v-show="getChartData.datasets[0].data.length === 0"
@@ -80,7 +79,7 @@ export default {
 	},
 	data: function() {
 		return {
-			chartDateRange: 'week',
+			chartDateRange: 'month',
 		}
 	},
 	computed: {
@@ -146,8 +145,6 @@ export default {
 				],
 			}
 		},
-	},
-	methods: {
 	},
 }
 </script>

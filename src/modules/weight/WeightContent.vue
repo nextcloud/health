@@ -150,8 +150,4 @@ export default {
 	.progress-bar.small {
 		width: 35%;
 	}
-	h3 {
-	    font-size: 20px;
-	    margin-top: 40px;
-	}
 </style>
