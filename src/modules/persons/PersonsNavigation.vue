@@ -33,18 +33,19 @@
 				edit-label="edit name"
 				@update:menuOpen="menuOpenPersonId = index"
 				@update:title="personUpdateName"
-				@click="$emit('update:activePersonId', index); $emit('update:activeModule', 'persons')">
+				@click="$store.commit('activePersonId', index); $store.commit('activeModule', 'person')">
 				<template slot="actions">
 					<ActionButton
 						:close-after-click="true"
 						icon="icon-detail"
-						@click="$emit('update:showSidebar', true); $emit('update:activePersonId', index)">
+						@click="$store.commit('showSidebar', true)">
 						Show details
 					</ActionButton>
 					<ActionButton
+						v-show="!isLastPerson"
 						:close-after-click="true"
 						icon="icon-delete"
-						@click="personDelete">
+						@click="$store.commit('deletePerson', menuOpenPersonId)">
 						Delete
 					</ActionButton>
 				</template>
@@ -52,17 +53,17 @@
 					v-if="persons[index].enabledModules.weight"
 					title="Weight"
 					icon="icon-quota"
-					@click="$emit('update:activePersonId', index); $emit('update:activeModule', 'weight')" />
+					@click="$store.commit('activePersonId', index); $store.commit('activeModule', 'weight')" />
 				<AppNavigationItem
 					v-if="persons[index].enabledModules.breaks"
 					title="Breaks"
 					icon="icon-pause"
-					@click="$emit('update:activePersonId', index); $emit('update:activeModule', 'breaks')" />
+					@click="$store.commit('activePersonId', index); $store.commit('activeModule', 'breaks')" />
 				<AppNavigationItem
 					v-if="persons[index].enabledModules.tracking"
 					title="Tracking"
 					icon="icon-category-monitoring"
-					@click="$emit('update:activePersonId', index); $emit('update:activeModule', 'tracking')" />
+					@click="$store.commit('activePersonId', index); $store.commit('activeModule', 'tracking')" />
 			</AppNavigationItem>
 		</ul>
 		<ul>
@@ -104,39 +105,33 @@ export default {
 		ActionButton,
 		Actions,
 	},
-	props: {
-		persons: {
-			type: Array,
-			default: null,
-		},
-		activePersonId: {
-			type: Number,
-			default: 0,
-		},
-		activeModule: {
-			type: String,
-			default: 'persons',
-		},
-		showSidebar: {
-			type: Boolean,
-		},
-		notifications: {
-			type: Array,
-			default: null,
-		},
-	},
 	data: function() {
 		return {
 			menuOpenPersonId: 0,
 			showNewPersonForm: false,
 		}
 	},
+	computed: {
+		persons: function() {
+			return this.$store.state.persons
+		},
+		activePersonId: function() {
+			return this.$store.state.activePersonId
+		},
+		activeModule: function() {
+			return this.$store.state.activeModule
+		},
+		showSidebar: function() {
+			return this.$store.state.showSidebar
+		},
+		isLastPerson: function() {
+			return (this.$store.state.persons.length === 1)
+		},
+	},
 	methods: {
 		createPerson: function(e) {
-			const p = this.persons
-			const newId = this.persons.length + 1
-			p.push({
-				id: newId,
+			const p = {
+				id: null,
 				name: e.currentTarget.childNodes[0].value,
 				age: null,
 				enabledModules: {
@@ -154,29 +149,14 @@ export default {
 					unit: 'kg',
 					lastWeight: null,
 				},
-			})
+			}
+			this.$store.dispatch('addPerson', p)
+			this.$store.commit('showSidebar', true)
 			this.showNewPersonForm = false
-			this.$emit('update:showSidebar', true)
-			this.$emit('update:activePersonId', this.persons.length - 1)
 			e.currentTarget.childNodes[0].value = ''
 		},
-		personDelete(e) {
-			if (this.persons.length === 1) {
-				this.notifications.push(
-					{
-						type: 'warn',
-						text: 'You can not delete the last person.',
-					})
-			} else {
-				const p = this.persons
-				p.splice(this.menuOpenPersonId, 1)
-				this.$emit('update:persons', p)
-			}
-		},
 		personUpdateName: function(v) {
-			const p = this.persons
-			p[this.menuOpenPersonId].name = v
-			this.$emit('update:persons', p)
+			this.$store.commit('updatePersonName', { id: this.menuOpenPersonId, name: v })
 		},
 		closeNewPersonForm: function() {
 			this.$refs.newPersonName.value = ''
