@@ -25,48 +25,36 @@
 		<li><h4>Age</h4></li>
 		<ActionInput
 			type="number"
-			:value="person.age"
+			:value="personAge"
 			icon="icon-user"
 			@submit="updateAge" />
 		<li><h4>Size<span>in cm</span></h4></li>
 		<ActionInput
 			type="number"
-			:value="person.size"
+			:value="personSize"
 			icon="icon-fullscreen"
 			@submit="updateSize" />
 		<li><h4>Sex</h4></li>
 		<ActionRadio
 			name="sex"
 			value="female"
-			:checked="person.sex === 'female'"
+			:checked="personSex === 'female'"
 			@change="updateSex('female')">
 			female
 		</ActionRadio>
 		<ActionRadio
 			name="sex"
 			value="male"
-			:checked="person.sex === 'male'"
+			:checked="personSex === 'male'"
 			@change="updateSex('male')">
 			male
 		</ActionRadio>
 		<li><h4>Manage modules</h4></li>
 		<ActionCheckbox
-			:checked="person.enabledModules.weight"
+			:checked="personModuleWeight"
 			value="weight"
 			@change="updateEnabledModules">
 			Weight
-		</ActionCheckbox>
-		<ActionCheckbox
-			:checked="person.enabledModules.breaks"
-			value="breaks"
-			@change="updateEnabledModules">
-			Breaks
-		</ActionCheckbox>
-		<ActionCheckbox
-			:checked="person.enabledModules.tracking"
-			value="tracking"
-			@change="updateEnabledModules">
-			Tracking
 		</ActionCheckbox>
 	</ul>
 </template>
@@ -75,6 +63,7 @@
 import ActionRadio from '@nextcloud/vue/dist/Components/ActionRadio'
 import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
 import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
 	name: 'PersonsSidebar',
@@ -83,42 +72,24 @@ export default {
 		ActionRadio,
 		ActionInput,
 	},
-	props: {
-		person: {
-			type: Object,
-			default: null,
-		},
-	},
-	data: function() {
-		return {
-		}
+	computed: {
+		...mapState(['activeModule', 'showSidebar', 'persons']),
+		...mapGetters(['person', 'personModuleWeight', 'personName', 'personAge', 'personSex', 'personSize']),
 	},
 	methods: {
 		updateAge: function(e) {
-			const p = this.person
-			p.age = e.target[1].value
-			this.$emit('update:person', p)
+			this.$store.commit('updatePersonAge', e.target[1].value)
 		},
 		updateSize: function(e) {
-			const p = this.person
-			p.size = e.target[1].value
-			this.$emit('update:person', p)
+			this.$store.commit('updatePersonSize', e.target[1].value)
 		},
 		updateSex: function(e) {
-			const p = this.person
-			p.sex = e
-			this.$emit('update:person', p)
+			this.$store.commit('updatePersonSex', e)
 		},
 		updateEnabledModules: function(e) {
-			const p = this.person
 			if (e.target.value === 'weight') {
-				p.enabledModules.weight = !p.enabledModules.weight
-			} else if (e.target.value === 'breaks') {
-				p.enabledModules.breaks = !p.enabledModules.breaks
-			} else if (e.target.value === 'tracking') {
-				p.enabledModules.tracking = !p.enabledModules.tracking
+				this.$store.commit('updatePersonEnabledModuleWeight', !this.personModuleWeight)
 			}
-			this.$emit('update:person', p)
 		},
 	},
 }

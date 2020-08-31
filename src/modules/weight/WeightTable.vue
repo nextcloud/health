@@ -31,7 +31,7 @@
 					Weight <span>in {{ weightUnit }}</span>
 				</th>
 				<th v-if="hasMeasurement">
-					{{ measurementName }}
+					{{ weightMeasurementName }}
 				</th>
 				<th>
 					Bodyfat <span>in %</span>
@@ -96,7 +96,7 @@
 						<button
 							v-if="editRowId === null"
 							class="icon-delete"
-							@click="data.splice(i, 1)" />
+							@click="deleteDataRow(i)" />
 					</td>
 				</tr>
 			</tbody>
@@ -107,6 +107,7 @@
 <script>
 // import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
 import moment from '@nextcloud/moment'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
 	name: 'WeightTable',
@@ -118,28 +119,19 @@ export default {
 			return moment(v).format('DD.MM.YYYY')
 		},
 	},
-	props: {
-		data: {
-			type: Array,
-			default: null,
-		},
-		weightUnit: {
-			type: String,
-			default: 'kg',
-		},
-		measurementName: {
-			type: String,
-			default: null,
-		},
-	},
 	data: function() {
 		return {
 			editRowId: null,
 		}
 	},
 	computed: {
+		...mapState(['activeModule', 'showSidebar']),
+		...mapGetters(['person', 'lastWeight', 'weightTarget', 'weightTargetInitialWeight', 'weightUnit', 'weightMeasurementName', 'personName']),
+		data: function() {
+			return this.person.weight.data
+		},
 		hasMeasurement: function() {
-			return (this.measurementName !== '' && this.measurementName !== null)
+			return (this.weightMeasurementName !== '' && this.weightMeasurementName !== null)
 		},
 	},
 	mounted: function() {
@@ -147,31 +139,20 @@ export default {
 	},
 	methods: {
 		addDataRow: function() {
-			const d = this.data
-			d.unshift({
+			const d = {
 				date: moment().format('YYYY-MM-DD'),
 				weight: null,
 				measurement: null,
 				bodyfat: null,
-			})
-			this.$emit('update:data', d)
+			}
+			this.$store.dispatch('addWeightData', d)
 			this.editRowId = 0
 		},
 		updateTableData: function() {
-			const d = this.data
-			d.sort(this.dataCompare)
-			this.$emit('update:data', d)
+			this.$store.dispatch('sortWeightData')
 		},
-		dataCompare: function(data1, data2) {
-			const d1 = moment(data1.date)
-			const d2 = moment(data2.date)
-			if (d1 < d2) {
-				return 1
-			} else if (d1 > d2) {
-				return -1
-			} else {
-				return 0
-			}
+		deleteDataRow: function(i) {
+			this.$store.dispatch('deleteWeightDataRow', i)
 		},
 	},
 }

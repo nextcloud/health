@@ -42,11 +42,19 @@
 			</select>
 		</div>
 		<LineChart
-			v-show="getChartData.datasets[0].data.length !== 0"
+			v-show="getChartData.datasets[0].data.length > 1"
+			:height="200"
 			:chart-data="getChartData"
 			:range="chartDateRange" />
+		<p
+			v-show="getChartData.datasets[0].data.length > 1"
+			class="chartLegend">
+			<span class="green">Green</span> striped line is your target value.<br>
+			<span class="darkred">Red</span> dotted is your initial start weight for targetting.<br>
+			And <span class="gray">gray</span> shows the weight you inserted.
+		</p>
 		<EmptyContent
-			v-show="getChartData.datasets[0].data.length === 0"
+			v-show="getChartData.datasets[0].data.length <= 1"
 			icon="icon-category-monitoring">
 			No data for a chart
 			<template #desc>
@@ -83,6 +91,12 @@ export default {
 		}
 	},
 	computed: {
+		chartStyles: function() {
+			return {
+				height: '200px',
+				position: 'relative',
+			}
+		},
 		getChartData: function() {
 			const data = []
 			const targetData = []
@@ -118,27 +132,27 @@ export default {
 				datasets: [
 					{
 						label: 'Weight',
-						borderColor: 'blue',
+						borderColor: 'gray',
 						fill: false,
 						data: data,
 					},
 					{
 						label: 'Target',
-						borderColor: 'gray',
+						borderColor: 'green',
 						fill: false,
 						data: targetData,
 						borderDash: [
-							2,
+							8,
 							5,
 						],
 					},
 					{
 						label: 'Target initial weight',
-						borderColor: 'red',
+						borderColor: 'darkred',
 						fill: false,
 						data: targetInitialData,
 						borderDash: [
-							8,
+							2,
 							5,
 						],
 					},
@@ -152,5 +166,23 @@ export default {
 	.empty-content {
 		margin-top: 0px !important;
 		margin-bottom: 20px;
+	}
+	.chartLegend {
+		font-size: 0.8em;
+	}
+	.chartLegend .green {
+		font-weight: bold;
+		color: green;
+	}
+	.chartLegend .gray {
+		font-weight: bold;
+		color: gray;
+	}
+	.chartLegend .darkred {
+		font-weight: bold;
+		color: darkred;
+	}
+	.weight-chart {
+		width: 70%;
 	}
 </style>

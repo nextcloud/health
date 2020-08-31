@@ -4,7 +4,7 @@ const { reactiveProp } = mixins
 export default {
 	extends: Line,
 	mixins: [reactiveProp],
-	props: ['options'],
+	props: ['options', 'range'],
 	mounted() {
 		// this.chartData is created in the mixin.
 		// If you want to pass options please create a local options object
@@ -22,16 +22,20 @@ export default {
 							lineWidth: 1,
 						},
 						type: 'time',
-						// time: {
+						time: {
 						// parser: timeFormat,
 						// round: 'day',
 						// tooltipFormat: 'll DD.MM.',
-						// unit: 'month',
-						// },
+							minUnit: 'day',
+						// stepsize: 50,
+						},
 						// scaleLabel: {
 						// display: false,
 						// labelString: 'Date',
 						// },
+						ticks: {
+							stepSize: 7,
+						},
 					},
 				],
 				yAxes: [
@@ -39,14 +43,14 @@ export default {
 						gridLines: {
 							display: true,
 							lineWidth: 1,
+							drawOnChartArea: true,
+							drawTicks: true,
 						},
 						scaleLabel: {
 							display: true,
 							labelString: 'weight',
 						},
 						ticks: {
-							beginAtZero: true,
-							min: 1,
 							sampleSize: 10,
 						},
 					},
@@ -65,5 +69,10 @@ export default {
 			},
 		}
 		this.renderChart(this.chartData, options)
+	},
+	computed: {
+		getTicksUnit: function() {
+			return (this.range === 'year') ? 'month' : 'day'
+		},
 	},
 }

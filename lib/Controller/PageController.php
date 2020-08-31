@@ -47,7 +47,7 @@ class PageController extends Controller {
 		Util::addScript($this->appName, 'Chart');
 		Util::addScript($this->appName, 'vueexample');
 		Util::addStyle($this->appName, 'icons');
-		//Util::addStyle($this->appName, 'style');
+		//Util::addStyle($this->appName, 'bulma.min');
 
 		$response = new TemplateResponse($this->appName, 'main');
 		return $response;

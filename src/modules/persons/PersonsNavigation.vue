@@ -23,9 +23,9 @@
 <template>
 	<AppNavigation>
 		<ul>
-			<AppNavigationItem v-for="(person, index) in persons"
+			<AppNavigationItem v-for="(p, index) in persons"
 				:key="index"
-				:title="person.name"
+				:title="p.name"
 				:allow-collapse="true"
 				:open="(index === 0)?true:false"
 				icon="icon-user"
@@ -38,11 +38,11 @@
 					<ActionButton
 						:close-after-click="true"
 						icon="icon-detail"
-						@click="$store.commit('showSidebar', true)">
+						@click="$store.commit('showSidebar', true); $store.commit('activePersonId', index)">
 						Show details
 					</ActionButton>
 					<ActionButton
-						v-show="!isLastPerson"
+						v-show="personsLength != 1"
 						:close-after-click="true"
 						icon="icon-delete"
 						@click="$store.commit('deletePerson', menuOpenPersonId)">
@@ -50,17 +50,17 @@
 					</ActionButton>
 				</template>
 				<AppNavigationItem
-					v-if="persons[index].enabledModules.weight"
+					v-if="p.enabledModules.weight"
 					title="Weight"
 					icon="icon-quota"
 					@click="$store.commit('activePersonId', index); $store.commit('activeModule', 'weight')" />
 				<AppNavigationItem
-					v-if="persons[index].enabledModules.breaks"
+					v-if="p.enabledModules.breaks"
 					title="Breaks"
 					icon="icon-pause"
 					@click="$store.commit('activePersonId', index); $store.commit('activeModule', 'breaks')" />
 				<AppNavigationItem
-					v-if="persons[index].enabledModules.tracking"
+					v-if="p.enabledModules.tracking"
 					title="Tracking"
 					icon="icon-category-monitoring"
 					@click="$store.commit('activePersonId', index); $store.commit('activeModule', 'tracking')" />
@@ -96,6 +96,7 @@ import AppNavigation from '@nextcloud/vue/dist/Components/AppNavigation'
 import AppNavigationItem from '@nextcloud/vue/dist/Components/AppNavigationItem'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import Actions from '@nextcloud/vue/dist/Components/Actions'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
 	name: 'PersonsNavigation',
@@ -112,21 +113,8 @@ export default {
 		}
 	},
 	computed: {
-		persons: function() {
-			return this.$store.state.persons
-		},
-		activePersonId: function() {
-			return this.$store.state.activePersonId
-		},
-		activeModule: function() {
-			return this.$store.state.activeModule
-		},
-		showSidebar: function() {
-			return this.$store.state.showSidebar
-		},
-		isLastPerson: function() {
-			return (this.$store.state.persons.length === 1)
-		},
+		...mapState(['activePersonId', 'activeModule', 'showSidebar', 'persons']),
+		...mapGetters(['person', 'personsLength']),
 	},
 	methods: {
 		createPerson: function(e) {
@@ -143,11 +131,10 @@ export default {
 				sex: null,
 				size: null,
 				weight: {
-					data: null,
 					weightTarget: null,
 					weightTargetInitialWeight: null,
 					unit: 'kg',
-					lastWeight: null,
+					data: [],
 				},
 			}
 			this.$store.dispatch('addPerson', p)

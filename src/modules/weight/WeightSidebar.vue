@@ -63,46 +63,29 @@
 
 <script>
 import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
 	name: 'WeightSidebar',
 	components: {
 		ActionInput,
 	},
-	props: {
-		person: {
-			type: Object,
-			default: null,
-		},
-		lastWeight: {
-			type: Number,
-			default: 0,
-		},
-	},
-	data: function() {
-		return {
-		}
+	computed: {
+		...mapState(['activeModule', 'showSidebar']),
+		...mapGetters(['person', 'lastWeight']),
 	},
 	methods: {
 		updateWeightUnit: function(e) {
-			const p = this.person
-			p.weight.unit = e.target[1].value
-			this.$emit('update:person', p)
+			this.$store.commit('updateWeightUnit', e.target[1].value)
 		},
 		updateWeightTarget: function(e) {
-			const p = this.person
-			p.weight.weightTarget = e.target[1].value
-			this.$emit('update:person', p)
+			this.$store.commit('updateWeightTarget', e.target[1].value)
 		},
 		updateWeightTargetInitialWeight: function(e) {
-			const p = this.person
-			p.weight.weightTargetInitialWeight = e.target[1].value
-			this.$emit('update:person', p)
+			this.$store.commit('updateWeightTargetInitialWeight', e.target[1].value)
 		},
 		updateMeasurementName: function(e) {
-			const p = this.person
-			p.weight.measurementName = e.target[1].value
-			this.$emit('update:person', p)
+			this.$store.commit('updateWeightMeasurementName', e.target[1].value)
 		},
 	},
 }
