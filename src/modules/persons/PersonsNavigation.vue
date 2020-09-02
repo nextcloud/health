@@ -50,17 +50,17 @@
 					</ActionButton>
 				</template>
 				<AppNavigationItem
-					v-if="p.enabledModules.weight"
+					v-if="p.enabledModuleWeight"
 					title="Weight"
 					icon="icon-quota"
 					@click="$store.commit('activePersonId', index); $store.commit('activeModule', 'weight')" />
 				<AppNavigationItem
-					v-if="p.enabledModules.breaks"
+					v-if="p.enabledModuleBreaks"
 					title="Breaks"
 					icon="icon-pause"
 					@click="$store.commit('activePersonId', index); $store.commit('activeModule', 'breaks')" />
 				<AppNavigationItem
-					v-if="p.enabledModules.tracking"
+					v-if="p.enabledModuleTracking"
 					title="Tracking"
 					icon="icon-category-monitoring"
 					@click="$store.commit('activePersonId', index); $store.commit('activeModule', 'tracking')" />

@@ -52,6 +52,7 @@ export default {
 						},
 						ticks: {
 							sampleSize: 10,
+							beginAtZero: true,
 						},
 					},
 				],

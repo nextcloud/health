@@ -24,10 +24,30 @@ declare(strict_types=1);
 
 namespace OCA\Health\Services;
 
+use OCA\Health\Db\PersonMapper;
+use OCA\Health\Db\WeightdataMapper;
 
 class PersonsService {
 
+	protected $personMapper;
+	protected $weightdataMapper;
+	protected $userId;
+
+	public function __construct(PersonMapper $pM, $userId, WeightdataMapper $wdM) {
+		$this->personMapper = $pM;
+		$this->userId = $userId;
+		$this->weightdataMapper = $wdM;
+	}
+
 	public function getAllPersons($full=true) {
+		$persons = $this->personMapper->findAll($this->userId);
+		foreach($persons as $i => $p) {
+			$p->setWeightdata($this->weightdataMapper->findAll($p->id));
+		}
+		// var_dump($persons); die();
+
+		return $persons;
+
 		return [
 			[
 				'id' 		=> 1,

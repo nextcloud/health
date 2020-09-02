@@ -119,11 +119,11 @@ export default {
 						})
 						targetData.push({
 							t: moment(this.data[i].date),
-							y: this.person.weight.weightTarget,
+							y: this.person.weightTarget,
 						})
 						targetInitialData.push({
 							t: moment(this.data[i].date),
-							y: this.person.weight.weightTargetInitialWeight,
+							y: this.person.weightTargetInitialWeight,
 						})
 					}
 				}

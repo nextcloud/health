@@ -128,7 +128,7 @@ export default {
 		...mapState(['activeModule', 'showSidebar']),
 		...mapGetters(['person', 'lastWeight', 'weightTarget', 'weightTargetInitialWeight', 'weightUnit', 'weightMeasurementName', 'personName']),
 		data: function() {
-			return this.person.weight.data
+			return this.person.weightdata
 		},
 		hasMeasurement: function() {
 			return (this.weightMeasurementName !== '' && this.weightMeasurementName !== null)

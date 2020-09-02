@@ -25,27 +25,27 @@
 		<li><h4>Unit for weight</h4></li>
 		<ActionInput
 			type="text"
-			:value="person.weight.unit"
+			:value="person.weightUnit"
 			icon="icon-category-customization"
 			@submit="updateWeightUnit" />
 		<li>
 			<h4>
-				Weight target<span>in {{ person.weight.unit }}<br>blank for none<br>On update the initial weight for the target will be ???</span>
+				Weight target<span>in {{ person.weightUnit }}<br>blank for none<br>On update the initial weight for the target will be ???</span>
 			</h4>
 		</li>
 		<ActionInput
 			type="number"
-			:value="person.weight.weightTarget"
+			:value="person.weightTarget"
 			icon="icon-category-monitoring"
 			@submit="updateWeightTarget" />
 		<li>
 			<h4>
-				Weight target start weight<span>in {{ person.weight.unit }}<br>your reference weight for the target</span>
+				Weight target start weight<span>in {{ person.weightUnit }}<br>your reference weight for the target</span>
 			</h4>
 		</li>
 		<ActionInput
 			type="number"
-			:value="(person.weight.weightTargetInitialWeight !== null )? person.weight.weightTargetInitialWeight: lastWeight"
+			:value="(person.weightTargetInitialWeight !== null )? person.weightTargetInitialWeight: lastWeight"
 			icon="icon-quota"
 			@submit="updateWeightTargetInitialWeight" />
 		<li>
@@ -55,7 +55,7 @@
 		</li>
 		<ActionInput
 			type="text"
-			:value="person.weight.measurementName"
+			:value="person.weightMeasurementName"
 			icon="icon-rename"
 			@submit="updateMeasurementName" />
 	</ul>

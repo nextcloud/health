@@ -53,7 +53,7 @@
 		<h3>Chart</h3>
 		<WeightChart
 			:person="person"
-			:data="person.weight.data" />
+			:data="person.weightdata" />
 		<h3>Data</h3>
 		<WeightTable />
 		<p v-show="dataInsertInfo" class="dataInsertInfo">
@@ -92,7 +92,7 @@ export default {
 			return (result > 100) ? 100 : result
 		},
 		data: function() {
-			return this.person.weight.data
+			return this.person.weightdata
 		},
 	},
 	methods: {

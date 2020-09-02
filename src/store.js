@@ -40,21 +40,17 @@ export default new Vuex.Store({
 		personSize: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].size : null,
 		personSex: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].sex : '',
 		personsLength: state => state.persons ? state.persons.length : 0,
-		personModuleWeight: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].enabledModules.weight : false,
+		personModuleWeight: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].enabledModuleWeight : false,
 		lastWeight: state => {
-			if (state.persons && state.persons[state.activePersonId] && state.persons[state.activePersonId].weight.data[0]) {
-				return state.persons[state.activePersonId].weight.data[0].weight
-				// const l = state.persons[state.activePersonId].weight.data.length
-				// if (l > 0) {
-				// return state.persons[state.activePersonId].weight.data[(l - 1)].weight
-				// }
+			if (state.persons && state.persons[state.activePersonId] && state.persons[state.activePersonId].weightdata[0]) {
+				return state.persons[state.activePersonId].weightdata[0].weight
 			}
 			return null
 		},
-		weightTarget: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weight.weightTarget : null,
-		weightUnit: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weight.unit : null,
-		weightTargetInitialWeight: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weight.weightTargetInitialWeight : null,
-		weightMeasurementName: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weight.measurementName : null,
+		weightTarget: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightTarget : null,
+		weightUnit: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightUnit : null,
+		weightTargetInitialWeight: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightTargetInitialWeight : null,
+		weightMeasurementName: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightMeasurementName : null,
 	},
 	mutations: {
 		persons(state, persons) {
@@ -92,22 +88,22 @@ export default new Vuex.Store({
 			state.persons[state.activePersonId].size = parseInt(size, 0)
 		},
 		updatePersonEnabledModuleWeight(state, value) {
-			state.persons[state.activePersonId].enabledModules.weight = value
+			state.persons[state.activePersonId].enabledModuleWeight = value
 		},
 		updateWeightUnit(state, value) {
-			state.persons[state.activePersonId].weight.unit = value
+			state.persons[state.activePersonId].weightUnit = value
 		},
 		updateWeightTarget(state, value) {
-			state.persons[state.activePersonId].weight.weightTarget = parseInt(value)
+			state.persons[state.activePersonId].weightTarget = parseInt(value)
 		},
 		updateWeightTargetInitialWeight(state, value) {
-			state.persons[state.activePersonId].weight.weightTargetInitialWeight = parseInt(value)
+			state.persons[state.activePersonId].weightTargetInitialWeight = parseInt(value)
 		},
 		updateWeightMeasurementName(state, value) {
-			state.persons[state.activePersonId].weight.measurementName = value
+			state.persons[state.activePersonId].weightMeasurementName = value
 		},
 		setWeightData(state, value) {
-			state.persons[state.activePersonId].weight.data = value
+			state.persons[state.activePersonId].weightdata = value
 		},
 	},
 	actions: {
@@ -118,12 +114,12 @@ export default new Vuex.Store({
 			commit('activePersonId', id - 1)
 		},
 		addWeightData: function({ context, getters, commit }, data) {
-			const d = getters.person.weight.data
+			const d = getters.person.weightdata
 			d.unshift(data)
 			commit('setWeightData', d)
 		},
 		sortWeightData: function({ context, getters, commit }) {
-			const d = getters.person.weight.data
+			const d = getters.person.weightdata
 			d.sort(function(a, b) {
 				if (moment(a.date) > moment(b.date)) {
 					return -1
@@ -136,7 +132,7 @@ export default new Vuex.Store({
 			commit('setWeightData', d)
 		},
 		deleteWeightDataRow: function({ context, getters, commit }, i) {
-			const d = getters.person.weight.data
+			const d = getters.person.weightdata
 			d.splice(i, 1)
 			commit('setWeightData', d)
 		},
