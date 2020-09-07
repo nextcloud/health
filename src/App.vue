@@ -72,10 +72,10 @@ export default {
 		return axios.get(generateUrl('/apps/health/persons'))
 			.then(
 				(response) => {
-					console.debug('debug axGetPersons SUCCESS-------------')
-					console.debug(response)
+					// console.debug('debug axGetPersons SUCCESS-------------')
+					// console.debug(response)
 					this.$store.commit('persons', response.data)
-					if (response.data.length > 0) {
+					if (response.data && response.data.length > 0) {
 						this.$store.commit('activePersonId', 0)
 					}
 				},
@@ -85,7 +85,6 @@ export default {
 				}
 			)
 			.catch((err) => {
-				// return Promise.reject(err)
 				console.debug('error detected')
 				console.debug(err)
 			})

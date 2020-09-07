@@ -26,6 +26,7 @@ namespace OCA\Health\Services;
 
 use OCA\Health\Db\PersonMapper;
 use OCA\Health\Db\WeightdataMapper;
+use OCA\Health\Db\Person;
 
 class PersonsService {
 
@@ -44,66 +45,71 @@ class PersonsService {
 		foreach($persons as $i => $p) {
 			$p->setWeightdata($this->weightdataMapper->findAll($p->id));
 		}
-		// var_dump($persons); die();
-
 		return $persons;
+	}
 
-		return [
-			[
-				'id' 		=> 1,
-				'name' 		=> 'First remote person',
-				'notifications'	=> [],
-				'age'		=> 18,
-				'sex'		=> 'female',
-				'size'		=> 155,
-				'enabledModules'	=> [
-					'weight'	=> true,
-				],
-				'weight'	=> [
-					'unit'			=> 'kg',
-					'weightTarget'	=> 70,
-					'weightTargetInitialWeight'	=> 85,
-					'data'	=> [
-						[
-							'date' => '2020-08-01',
-							'weight' => 82,
-							'measurement' => 30,
-							'bodyfat' => 10,
-						],
-						[
-							'date' => '2020-08-02',
-							'weight' => 83,
-							'measurement' => 30,
-							'bodyfat' => 20,
-						],
-						[
-							'date' => '2020-08-03',
-							'weight' => 88,
-							'measurement' => 30,
-							'bodyfat' => 30,
-						],
-					],
-					'measurementName'	=> 'my measure',
-				],
-			],
-			[
-				'id' 		=> 8,
-				'name' 		=> 'Second remote person',
-				'notifications'	=> [],
-				'age'		=> 18,
-				'sex'		=> 'male',
-				'size'		=> 155,
-				'enabledModules'	=> [
-					'weight'	=> true,
-				],
-				'weight'	=> [
-					'unit'			=> 'kg',
-					'weightTarget'	=> 70,
-					'weightTargetInitialWeight'	=> 85,
-					'data'	=> [],
-					'measurementName'	=> 'my measure',
-				],
-			],
-		];
+	public function createPerson($name) {
+		$time = new \DateTime();
+		$p = new Person();
+		$p->setInsertTime($time->format('Y-m-d H:i:s'));
+		$p->setLastupdateTime($time->format('Y-m-d H:i:s'));
+		$p->setUserId($this->userId);
+		$p->setName($name);
+		$p->setEnabledModuleWeight(true);
+		$p->setWeightUnit('kg');
+		return $this->personMapper->insert($p);
+	}
+
+	public function deletePerson($id) {
+		try {
+             $person = $this->personMapper->find($id, $this->userId);
+         } catch(Exception $e) {
+             return Http::STATUS_NOT_FOUND;
+         }
+         $this->personMapper->delete($person);
+         return new $person;
+	}
+
+	public function updatePerson($id, $key, $value) {
+		try {
+             $person = $this->personMapper->find($id, $this->userId);
+         } catch(Exception $e) {
+             return Http::STATUS_NOT_FOUND;
+         }
+
+         $method = 'set'.ucfirst($key);
+         $person->{$method}($this->typeCast($key, $value));
+         $this->personMapper->update($person);
+
+         return $person;
+	}
+
+	private function typeCast($key, $value) {
+		 $intData = ['age', 'size'];
+         if(in_array($key, $intData)) {
+         	$value = intval($value);
+         }
+
+         $doubleData = ['weightTarget', 'weightTargetInitialWeight'];
+         if(in_array($key, $doubleData)) {
+         	$value = floatval($value);
+         }
+
+         $booleanData = ['enabledModuleWeight'];
+         if(in_array($key, $booleanData)) {
+         	if( $value === true || $value === 'true' || $value === 1 || $value === '1') {
+         		$value = true;
+         	} else {
+         		$value = false;
+         	}
+         }
+
+         $datetimeData = ['weightTargetStartDate'];
+         if(in_array($key, $datetimeData)) {
+         	$dt = new \DateTime($value);
+         	$value = $dt->format('Y-m-d H:i:s');
+         }
+
+         return $value;
 	}
 }

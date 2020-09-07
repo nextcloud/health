@@ -23,6 +23,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import moment from '@nextcloud/moment'
+import axios from '@nextcloud/axios'
+import { generateUrl } from '@nextcloud/router'
 
 Vue.use(Vuex)
 
@@ -34,6 +36,8 @@ export default new Vuex.Store({
 		persons: null,
 	},
 	getters: {
+		activePersonId: state => state.activePersonId,
+		persons: state => (state.persons) ? state.persons : null,
 		person: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId] : null,
 		personName: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].name : '',
 		personAge: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].age : null,
@@ -59,6 +63,11 @@ export default new Vuex.Store({
 		addPerson(state, person) {
 			const p = state.persons
 			p.push(person)
+			state.persons = p
+		},
+		updatePerson(state, data) {
+			const p = state.persons
+			p[data.id] = data.person
 			state.persons = p
 		},
 		activePersonId(state, id) {
@@ -107,11 +116,70 @@ export default new Vuex.Store({
 		},
 	},
 	actions: {
-		addPerson: function({ context, getters, commit }, person) {
-			const id = getters.personsLength + 1
-			person.id = id
-			commit('addPerson', person)
-			commit('activePersonId', id - 1)
+		addPerson: function({ context, getters, commit }, name) {
+			axios.post(generateUrl('/apps/health/persons'), { name: name })
+				.then(
+					(response) => {
+						// console.debug('debug axPostPersons SUCCESS-------------')
+						// console.debug(response)
+						const p = response.data
+						commit('addPerson', p)
+						const id = getters.personsLength - 1
+						commit('activePersonId', id)
+					},
+					(err) => {
+						console.debug('debug axPostPersons ERROR-------------')
+						console.debug(err)
+					}
+				)
+				.catch((err) => {
+					console.debug('error detected')
+					console.debug(err)
+				})
+		},
+		deletePerson: function({ context, getters, commit }, id) {
+			const p = getters.persons[id]
+			axios.delete(generateUrl('/apps/health/persons/' + p.id))
+				.then(
+					(response) => {
+						// console.debug('debug axDeletePersons SUCCESS-------------')
+						// console.debug(response)
+						commit('deletePerson', id)
+						if (getters.activePersonId === id) {
+							commit('activePersonId', 0)
+						}
+					},
+					(err) => {
+						console.debug('debug axDeletePersons ERROR-------------')
+						console.debug(err)
+					}
+				)
+				.catch((err) => {
+					console.debug('error detected')
+					console.debug(err)
+				})
+		},
+		updatePerson: function({ context, getters, commit }, data) {
+			const p = getters.persons[data.id]
+			axios.put(generateUrl('/apps/health/persons/' + p.id), { key: data.key, value: data.value })
+				.then(
+					(response) => {
+						// console.debug('debug axUpdatePersons SUCCESS-------------')
+						// console.debug(response)
+						// commit('updatePerson', { id: data.id, person: response.data })
+						if (data.key === 'name') {
+							commit('updatePersonName', { id: data.id, name: data.value })
+						}
+					},
+					(err) => {
+						console.debug('debug axUpdatePersons ERROR-------------')
+						console.debug(err)
+					}
+				)
+				.catch((err) => {
+					console.debug('error detected')
+					console.debug(err)
+				})
 		},
 		addWeightData: function({ context, getters, commit }, data) {
 			const d = getters.person.weightdata

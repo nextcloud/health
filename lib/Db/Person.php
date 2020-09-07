@@ -31,10 +31,6 @@ class Person extends Entity implements JsonSerializable {
         $this->weightdata = [];
     }
 
-    public function setWeightdata($weightdata) {
-        $this->weightdata = $weightdata;
-    }
-
     public function jsonSerialize() {
         return [
             'id' => $this->id,

@@ -160,6 +160,7 @@ export default {
 <style lang="scss" scoped>
 	.responsive {
 		overflow-y: auto;
+		margin-bottom: 50px;
 	}
 	table {
 		min-width: 98%;

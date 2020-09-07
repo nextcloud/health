@@ -45,7 +45,7 @@
 						v-show="personsLength != 1"
 						:close-after-click="true"
 						icon="icon-delete"
-						@click="$store.commit('deletePerson', menuOpenPersonId)">
+						@click="$store.dispatch('deletePerson', menuOpenPersonId)">
 						Delete
 					</ActionButton>
 				</template>
@@ -113,37 +113,20 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['activePersonId', 'activeModule', 'showSidebar', 'persons']),
-		...mapGetters(['person', 'personsLength']),
+		...mapState(['activePersonId', 'activeModule', 'showSidebar']),
+		...mapGetters(['person', 'personsLength', 'persons']),
 	},
 	methods: {
 		createPerson: function(e) {
-			const p = {
-				id: null,
-				name: e.currentTarget.childNodes[0].value,
-				age: null,
-				enabledModules: {
-					weight: true,
-					breaks: false,
-					tracking: false,
-				},
-				notifications: null,
-				sex: null,
-				size: null,
-				weight: {
-					weightTarget: null,
-					weightTargetInitialWeight: null,
-					unit: 'kg',
-					data: [],
-				},
-			}
-			this.$store.dispatch('addPerson', p)
+			const name = e.currentTarget.childNodes[0].value
+			this.$store.dispatch('addPerson', name)
 			this.$store.commit('showSidebar', true)
 			this.showNewPersonForm = false
 			e.currentTarget.childNodes[0].value = ''
 		},
 		personUpdateName: function(v) {
-			this.$store.commit('updatePersonName', { id: this.menuOpenPersonId, name: v })
+			this.$store.dispatch('updatePerson', { id: this.menuOpenPersonId, key: 'name', value: v })
+			// this.$store.commit('updatePersonName', { id: this.menuOpenPersonId, name: v })
 		},
 		closeNewPersonForm: function() {
 			this.$refs.newPersonName.value = ''

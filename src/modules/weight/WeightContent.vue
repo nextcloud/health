@@ -23,7 +23,7 @@
 <template>
 	<div>
 		<h2>Weight <span>for {{ personName }}</span></h2>
-		<div v-if="weightTarget != ''">
+		<div v-if="weightTarget != '' && weightTarget != null">
 			<h3>Target</h3>
 			<div v-if="lastWeight">
 				<p>You started with {{ weightTargetInitialWeight }}{{ weightUnit }} for your target. Your actual weight is now {{ lastWeight }}{{ weightUnit }} and your target values {{ weightTarget }}{{ weightUnit }}.</p>

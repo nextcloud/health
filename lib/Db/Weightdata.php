@@ -20,6 +20,7 @@ class Weightdata extends Entity implements JsonSerializable {
     }
 
     public function jsonSerialize() {
+        $date = new \DateTime($this->date);
         return [
             'id' => $this->id,
             'insertTime' => $this->insertTime,
@@ -28,7 +29,7 @@ class Weightdata extends Entity implements JsonSerializable {
             'bodyfat' => $this->bodyfat,
             'measurement' => $this->measurement,
             'weight' => $this->weight,
-            'date' => $this->date,
+            'date' => $date->format('Y-m-d'),
         ];
     }
 }

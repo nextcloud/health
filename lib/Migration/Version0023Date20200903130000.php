@@ -89,9 +89,9 @@
             $table->addColumn('weight_unit', 'string', [
                 'length' => 20
             ]);
-            $table->addColumn('weight_target', 'integer', [
+            $table->addColumn('weight_target', 'float', [
             ]);
-            $table->addColumn('weight_target_initial_weight', 'integer', [
+            $table->addColumn('weight_target_initial_weight', 'float', [
             ]);
             $table->addColumn('weight_target_start_date', 'datetime', [
             ]);

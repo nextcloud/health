@@ -28,19 +28,22 @@ use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Controller;
 use OCP\Util;
-use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Http\DataResponse;
 use OCA\Health\Services\PersonsService;
 
 class PersonsController extends Controller {
 
 	protected $appName;
-
+	protected $userId;
 	protected $personsService;
+	protected $request;
 
-	public function __construct($appName, IRequest $request, PersonsService $pS) {
+	public function __construct($appName, IRequest $request, PersonsService $pS, $userId) {
 		parent::__construct($appName, $request);
 		$this->appName = $appName;
 		$this->personsService = $pS;
+		$this->userId = $userId;
+		$this->request = $request;
 	}
 
 	/**
@@ -48,6 +51,35 @@ class PersonsController extends Controller {
 	 * @NoCSRFRequired
 	 */
 	public function index() {
-        return new JSONResponse($this->personsService->getAllPersons());
+        return new DataResponse($this->personsService->getAllPersons());
+	}
+
+	/**
+	 * @NoAdminRequired
+	 *
+     * @param string $name
+	 */
+	public function create($name) {
+		return new DataResponse($this->personsService->createPerson($name));
+	}
+
+	/**
+	 * @NoAdminRequired
+	 *
+     * @param int $id
+	 */
+	public function destroy(int $id) {
+		return new DataResponse($this->personsService->deletePerson($id));
+	}
+
+	/**
+	 * @NoAdminRequired
+	 *
+     * @param int $id
+     * @param string $key
+     * @param string $value
+	 */
+	public function update(int $id, string $key, string $value) {
+		return new DataResponse($this->personsService->updatePerson($id, $key, $value));
 	}
 }
