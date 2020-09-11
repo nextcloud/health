@@ -78,17 +78,18 @@ export default {
 	},
 	methods: {
 		updateAge: function(e) {
-			this.$store.commit('updatePersonAge', e.target[1].value)
+			this.$store.dispatch('updatePerson', { key: 'age', value: e.target[1].value })
 		},
 		updateSize: function(e) {
-			this.$store.commit('updatePersonSize', e.target[1].value)
+			this.$store.dispatch('updatePerson', { key: 'size', value: e.target[1].value })
 		},
-		updateSex: function(e) {
-			this.$store.commit('updatePersonSex', e)
+		updateSex: function(sex) {
+			this.$store.dispatch('updatePerson', { key: 'sex', value: sex })
 		},
 		updateEnabledModules: function(e) {
+			console.debug(e)
 			if (e.target.value === 'weight') {
-				this.$store.commit('updatePersonEnabledModuleWeight', !this.personModuleWeight)
+				this.$store.dispatch('updatePerson', { key: 'enabledModuleWeight', value: e.target.checked })
 			}
 		},
 	},

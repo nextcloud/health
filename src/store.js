@@ -65,11 +65,6 @@ export default new Vuex.Store({
 			p.push(person)
 			state.persons = p
 		},
-		updatePerson(state, data) {
-			const p = state.persons
-			p[data.id] = data.person
-			state.persons = p
-		},
 		activePersonId(state, id) {
 			state.activePersonId = id
 		},
@@ -160,16 +155,17 @@ export default new Vuex.Store({
 				})
 		},
 		updatePerson: function({ context, getters, commit }, data) {
+			if (!('id' in data)) {
+				data.id = getters.activePersonId
+			}
 			const p = getters.persons[data.id]
-			axios.put(generateUrl('/apps/health/persons/' + p.id), { key: data.key, value: data.value })
+			axios.put(generateUrl('/apps/health/persons/' + p.id), { key: data.key, value: '' + data.value })
 				.then(
 					(response) => {
 						// console.debug('debug axUpdatePersons SUCCESS-------------')
 						// console.debug(response)
-						// commit('updatePerson', { id: data.id, person: response.data })
-						if (data.key === 'name') {
-							commit('updatePersonName', { id: data.id, name: data.value })
-						}
+						const method = 'updatePerson' + data.key[0].toUpperCase() + data.key.slice(1)
+						commit(method, data.value)
 					},
 					(err) => {
 						console.debug('debug axUpdatePersons ERROR-------------')
