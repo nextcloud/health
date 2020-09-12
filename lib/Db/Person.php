@@ -20,6 +20,7 @@ class Person extends Entity implements JsonSerializable {
     protected $weightTarget;
     protected $weightTargetInitialWeight;
     protected $weightTargetStartDate;
+    protected $weightTargetBounty;
     protected $personalMission;
     protected $weightdata;
 
@@ -47,6 +48,7 @@ class Person extends Entity implements JsonSerializable {
             'weightTarget' => $this->weightTarget,
             'weightTargetInitialWeight' => $this->weightTargetInitialWeight,
             'weightTargetStartDate' => $this->weightTargetStartDate,
+            'weightTargetBounty' => $this->weightTargetBounty,
             'personalMission' => $this->personalMission,
             'weightdata' => $this->weightdata,
         ];

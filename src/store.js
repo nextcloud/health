@@ -54,6 +54,7 @@ export default new Vuex.Store({
 		weightTarget: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightTarget : null,
 		weightUnit: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightUnit : null,
 		weightTargetInitialWeight: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightTargetInitialWeight : null,
+		weightTargetBounty: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightTargetBounty : null,
 		weightMeasurementName: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightMeasurementName : null,
 	},
 	mutations: {
@@ -94,16 +95,16 @@ export default new Vuex.Store({
 		updatePersonEnabledModuleWeight(state, value) {
 			state.persons[state.activePersonId].enabledModuleWeight = value
 		},
-		updateWeightUnit(state, value) {
+		updatePersonWeightUnit(state, value) {
 			state.persons[state.activePersonId].weightUnit = value
 		},
-		updateWeightTarget(state, value) {
+		updatePersonWeightTarget(state, value) {
 			state.persons[state.activePersonId].weightTarget = parseInt(value)
 		},
-		updateWeightTargetInitialWeight(state, value) {
+		updatePersonWeightTargetInitialWeight(state, value) {
 			state.persons[state.activePersonId].weightTargetInitialWeight = parseInt(value)
 		},
-		updateWeightMeasurementName(state, value) {
+		updatePersonWeightMeasurementName(state, value) {
 			state.persons[state.activePersonId].weightMeasurementName = value
 		},
 		setWeightData(state, value) {

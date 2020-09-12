@@ -86,6 +86,9 @@
             $table->addColumn('weight_measurement_name', 'string', [
                 'length' => 255
             ]);
+            $table->addColumn('weight_target_bounty', 'string', [
+                'length' => 600
+            ]);
             $table->addColumn('weight_unit', 'string', [
                 'length' => 20
             ]);

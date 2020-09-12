@@ -22,12 +22,29 @@
 
 <template>
 	<ul>
+		<li><h3>General settings</h3></li>
 		<li><h4>Unit for weight</h4></li>
 		<ActionInput
 			type="text"
 			:value="person.weightUnit"
 			icon="icon-category-customization"
 			@submit="updateWeightUnit" />
+		<li>
+			<h4>
+				Measurement Name<span><br>What else do you want to track? Set here a name for it and you can add data in the data-table. The values have to be numbers.</span>
+			</h4>
+		</li>
+		<ActionInput
+			type="text"
+			:value="person.weightMeasurementName"
+			icon="icon-rename"
+			@submit="updateMeasurementName" />
+		<li>
+			<h3 class="toggable"
+				@click="showTargetOptions = !showTargetOptions">
+				Target <span>{{ getTargetOptionText }}</span>
+			</h3>
+		</li>
 		<li>
 			<h4>
 				Weight target<span>in {{ person.weightUnit }}<br>blank for none<br>On update the initial weight for the target will be ???</span>
@@ -50,14 +67,13 @@
 			@submit="updateWeightTargetInitialWeight" />
 		<li>
 			<h4>
-				Measurement Name<span><br>What else do you want to track? Set here a name for it and you can add data in the data-table. The values have to be numbers.</span>
+				Weight target bounty
 			</h4>
 		</li>
-		<ActionInput
-			type="text"
-			:value="person.weightMeasurementName"
-			icon="icon-rename"
-			@submit="updateMeasurementName" />
+		<div class="textarea-sidebar">
+			<textarea ref="weightTargetBounty" v-model="weightTargetBounty" placeholder="Add some bounty to motivate yourself, if you like to." />
+		</div>
+		<button>Safe bounty</button>
 	</ul>
 </template>
 
@@ -70,22 +86,29 @@ export default {
 	components: {
 		ActionInput,
 	},
+	data: function() {
+		return {
+		}
+	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar']),
-		...mapGetters(['person', 'lastWeight']),
+		...mapGetters(['person', 'lastWeight', 'weightTargetBounty']),
 	},
 	methods: {
 		updateWeightUnit: function(e) {
-			this.$store.commit('updateWeightUnit', e.target[1].value)
+			this.$store.dispatch('updatePerson', { key: 'weightUnit', value: e.target[1].value })
 		},
 		updateWeightTarget: function(e) {
-			this.$store.commit('updateWeightTarget', e.target[1].value)
+			this.$store.dispatch('updatePerson', { key: 'weightTarget', value: e.target[1].value })
 		},
 		updateWeightTargetInitialWeight: function(e) {
-			this.$store.commit('updateWeightTargetInitialWeight', e.target[1].value)
+			this.$store.dispatch('updatePerson', { key: 'weightTargetInitialWeight', value: e.target[1].value })
 		},
 		updateMeasurementName: function(e) {
-			this.$store.commit('updateWeightMeasurementName', e.target[1].value)
+			this.$store.dispatch('updatePerson', { key: 'weightMeasurementName', value: e.target[1].value })
+		},
+		updateWeightTargetBounty: function() {
+			console.debug('weightTargetBounty: ' + this.$refs)
 		},
 	},
 }
