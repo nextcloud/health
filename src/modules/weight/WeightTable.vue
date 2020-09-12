@@ -30,10 +30,10 @@
 				<th>
 					Weight <span>in {{ weightUnit }}</span>
 				</th>
-				<th v-if="hasMeasurement">
+				<th v-if="hasMeasurement" class="hide-if-small">
 					{{ weightMeasurementName }}
 				</th>
-				<th>
+				<th class="hide-if-small">
 					Bodyfat <span>in %</span>
 				</th>
 				<th>
@@ -64,7 +64,7 @@
 							{{ v.weight }}
 						</div>
 					</td>
-					<td v-if="hasMeasurement">
+					<td v-if="hasMeasurement" class="hide-if-small">
 						<div v-if="editRowId === i">
 							<input v-model="v.measurement" type="Number">
 						</div>
@@ -72,7 +72,7 @@
 							{{ v.measurement }}
 						</div>
 					</td>
-					<td>
+					<td class="hide-if-small">
 						<div v-if="editRowId === i">
 							<input
 								v-model="v.bodyfat"
@@ -188,5 +188,10 @@ export default {
 	}
 	button {
 		padding: 13px 20px 13px 20px;
+	}
+	@media screen and (max-width: 500px) {
+		.hide-if-small {
+			display:none;
+		}
 	}
 </style>
