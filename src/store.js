@@ -186,6 +186,12 @@ export default new Vuex.Store({
 			d.unshift(data)
 			commit('setWeightData', d)
 		},
+		updateWeightData: function({ context, getters, commit }, data) {
+			// data.{id, column, value}
+			const d = getters.person.weightdata
+			d[data.id][data.column] = data.value
+			commit('setWeightData', d)
+		},
 		sortWeightData: function({ context, getters, commit }) {
 			const d = getters.person.weightdata
 			d.sort(function(a, b) {

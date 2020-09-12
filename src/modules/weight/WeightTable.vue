@@ -46,7 +46,7 @@
 					:key="i">
 					<td>
 						<div v-if="editRowId === i">
-							<input v-model="v.date" type="Date">
+							<input ref="weightinputdate" :value="v.date" type="Date">
 						</div>
 						<div v-else>
 							{{ v.date | formatMyDate }}
@@ -55,7 +55,8 @@
 					<td>
 						<div v-if="editRowId === i">
 							<input
-								v-model="v.weight"
+								ref="weightinputweight"
+								:value="v.weight"
 								type="Number"
 								min="1"
 								max="200">
@@ -66,7 +67,7 @@
 					</td>
 					<td v-if="hasMeasurement" class="hide-if-small">
 						<div v-if="editRowId === i">
-							<input v-model="v.measurement" type="Number">
+							<input ref="weightinputmeasurement" :value="v.measurement" type="Number">
 						</div>
 						<div v-else>
 							{{ v.measurement }}
@@ -75,7 +76,8 @@
 					<td class="hide-if-small">
 						<div v-if="editRowId === i">
 							<input
-								v-model="v.bodyfat"
+								ref="weightinputbodyfat"
+								:value="v.bodyfat"
 								type="Number"
 								min="0"
 								max="100">
@@ -88,7 +90,7 @@
 						<button
 							v-if="editRowId === i"
 							class="icon-checkmark"
-							@click="editRowId = null; updateTableData()" />
+							@click="insertTableData()" />
 						<button
 							v-if="editRowId === null"
 							class="icon-rename"
@@ -153,6 +155,14 @@ export default {
 		},
 		deleteDataRow: function(i) {
 			this.$store.dispatch('deleteWeightDataRow', i)
+		},
+		insertTableData: function() {
+			this.$store.dispatch('updateWeightData', { id: this.editRowId, column: 'weight', value: this.$refs.weightinputweight[0].value })
+			this.$store.dispatch('updateWeightData', { id: this.editRowId, column: 'measurement', value: this.$refs.weightinputmeasurement[0].value })
+			this.$store.dispatch('updateWeightData', { id: this.editRowId, column: 'date', value: this.$refs.weightinputdate[0].value })
+			this.$store.dispatch('updateWeightData', { id: this.editRowId, column: 'bodyfat', value: this.$refs.weightinputbodyfat[0].value })
+			this.editRowId = null
+			this.updateTableData()
 		},
 	},
 }
