@@ -101,6 +101,9 @@ export default new Vuex.Store({
 		updatePersonWeightTarget(state, value) {
 			state.persons[state.activePersonId].weightTarget = parseInt(value)
 		},
+		updatePersonWeightTargetBounty(state, value) {
+			state.persons[state.activePersonId].weightTargetBounty = value
+		},
 		updatePersonWeightTargetInitialWeight(state, value) {
 			state.persons[state.activePersonId].weightTargetInitialWeight = parseInt(value)
 		},

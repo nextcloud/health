@@ -42,7 +42,7 @@
 		<li>
 			<h3 class="toggable"
 				@click="showTargetOptions = !showTargetOptions">
-				Target <span>{{ getTargetOptionText }}</span>
+				Target
 			</h3>
 		</li>
 		<li>
@@ -71,9 +71,12 @@
 			</h4>
 		</li>
 		<div class="textarea-sidebar">
-			<textarea ref="weightTargetBounty" v-model="weightTargetBounty" placeholder="Add some bounty to motivate yourself, if you like to." />
+			<textarea ref="weightTargetBounty" :value="weightTargetBounty" placeholder="Add some bounty to motivate yourself, if you like to." />
 		</div>
-		<button>Safe bounty</button>
+		<button
+			@click="updateWeightTargetBounty">
+			Safe bounty
+		</button>
 	</ul>
 </template>
 
@@ -94,6 +97,9 @@ export default {
 		...mapState(['activeModule', 'showSidebar']),
 		...mapGetters(['person', 'lastWeight', 'weightTargetBounty']),
 	},
+	mounted: function() {
+		this.weightTargetBountyLocal = this.weightTargetBounty
+	},
 	methods: {
 		updateWeightUnit: function(e) {
 			this.$store.dispatch('updatePerson', { key: 'weightUnit', value: e.target[1].value })
@@ -108,7 +114,8 @@ export default {
 			this.$store.dispatch('updatePerson', { key: 'weightMeasurementName', value: e.target[1].value })
 		},
 		updateWeightTargetBounty: function() {
-			console.debug('weightTargetBounty: ' + this.$refs)
+			this.$store.dispatch('updatePerson', { key: 'weightTargetBounty', value: this.$refs.weightTargetBounty.value })
+			// console.debug('weightTargetBounty: ' + this.$refs.weightTargetBounty.value)
 		},
 	},
 }
