@@ -47,7 +47,7 @@
 		</li>
 		<li>
 			<h4>
-				Weight target<span>in {{ person.weightUnit }}<br>blank for none<br>On update the initial weight for the target will be ???</span>
+				Weight target<span>in {{ person.weightUnit }}<br>Leave blank for none.</span>
 			</h4>
 		</li>
 		<ActionInput
