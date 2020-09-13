@@ -34,7 +34,7 @@ export default {
 						// labelString: 'Date',
 						// },
 						ticks: {
-							stepSize: 7,
+							// stepSize: 7,
 						},
 					},
 				],
@@ -51,8 +51,8 @@ export default {
 							labelString: 'weight',
 						},
 						ticks: {
-							sampleSize: 10,
-							beginAtZero: true,
+							// sampleSize: 10,
+							// beginAtZero: true,
 						},
 					},
 				],
