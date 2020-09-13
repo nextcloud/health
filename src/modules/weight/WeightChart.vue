@@ -208,11 +208,11 @@ export default {
 		font-weight: bold;
 		color: green;
 	}
-	.chartLegend .gray {
+	.chartLegend .darkgray {
 		font-weight: bold;
 		color: gray;
 	}
-	.chartLegend .lightgray {
+	.chartLegend .gray {
 		font-weight: bold;
 		color: lightgray;
 	}

@@ -46,7 +46,11 @@
 					:key="i">
 					<td>
 						<div v-if="editRowId === i">
-							<input ref="weightinputdate" :value="v.date" type="Date">
+							<input
+								ref="weightinputdate"
+								:value="v.date"
+								type="Date"
+								class="widthfitcontent">
 						</div>
 						<div v-else>
 							{{ v.date | formatMyDate }}
@@ -146,13 +150,16 @@ export default {
 			this.editRowId = 0
 		},
 		async updateTableData() {
+			console.debug('updateTableData refs:')
+			console.debug(this.$refs)
 			const row = {
 				id: this.editRowId,
 				weight: this.$refs.weightinputweight[0].value,
-				measurement: this.$refs.weightinputmeasurement[0].value,
+				measurement: (this.$refs.weightinputmeasurement !== undefined) ? this.$refs.weightinputmeasurement[0].value : null,
 				date: this.$refs.weightinputdate[0].value,
 				bodyfat: this.$refs.weightinputbodyfat[0].value,
 			}
+			console.debug(row)
 			await this.$store.dispatch('updateWeightData', row)
 			await this.$store.dispatch('sortWeightData')
 			this.editRowId = null
@@ -199,5 +206,8 @@ export default {
 		.hide-if-small {
 			display:none;
 		}
+	}
+	.widthfitcontent {
+		min-width: fit-content;
 	}
 </style>

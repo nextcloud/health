@@ -18,8 +18,12 @@ export default {
 				xAxes: [
 					{
 						gridLines: {
-							display: true,
-							lineWidth: 1,
+							// display: true,
+							// color: 'gray',
+							// z: 100,
+							// lineWidth: 1,
+							// drawOnChartArea: true,
+							// drawTicks: true,
 						},
 						type: 'time',
 						time: {
@@ -43,27 +47,27 @@ export default {
 						id: 'weight',
 						gridLines: {
 							display: true,
+							color: 'gray',
+							z: 100,
 							lineWidth: 1,
-							drawOnChartArea: true,
-							drawTicks: true,
+							// drawOnChartArea: true,
+							// drawTicks: true,
+							// tickMarkLength: 100,
+							// offsetGridLines: true,
 						},
 						scaleLabel: {
 							display: true,
 							labelString: 'weight',
-						},
-						ticks: {
-							// sampleSize: 10,
-							// beginAtZero: true,
 						},
 					},
 					{
 						id: 'percent',
 						position: 'right',
 						gridLines: {
-							display: true,
-							lineWidth: 1,
-							drawOnChartArea: true,
-							drawTicks: true,
+							// display: true,
+							// lineWidth: 1,
+							// drawOnChartArea: true,
+							// drawTicks: true,
 						},
 						scaleLabel: {
 							display: true,
@@ -77,14 +81,15 @@ export default {
 				],
 			},
 			tooltips: {
-				enabled: true,
-				position: 'nearest',
-				mode: 'nearest',
-				intersect: false,
+				enabled: false,
+				// position: 'nearest',
+				// mode: 'nearest',
+				// intersect: false,
 			},
 			layout: {
 				padding: {
 					right: 20,
+					left: 20,
 				},
 			},
 		}

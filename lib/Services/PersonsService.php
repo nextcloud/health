@@ -28,25 +28,26 @@ use OCA\Health\Db\PersonMapper;
 use OCA\Health\Db\WeightdataMapper;
 use OCA\Health\Db\Person;
 use OCA\Health\Services\FormatHelperService;
+use OCA\Health\Services\WeightdataService;
 
 class PersonsService {
 
 	protected $personMapper;
-	protected $weightdataMapper;
+	protected $weightdataService;
 	protected $userId;
 	protected $formatHelperService;
 
-	public function __construct(PersonMapper $pM, $userId, WeightdataMapper $wdM, FormatHelperService $fhS) {
+	public function __construct(PersonMapper $pM, $userId, WeightdataService $wdS, FormatHelperService $fhS) {
 		$this->personMapper = $pM;
 		$this->userId = $userId;
-		$this->weightdataMapper = $wdM;
+		$this->weightdataService = $wdS;
 		$this->formatHelperService = $fhS;
 	}
 
 	public function getAllPersons($full=true) {
 		$persons = $this->personMapper->findAll($this->userId);
 		foreach($persons as $i => $p) {
-			$p->setWeightdata($this->weightdataMapper->findAll($p->id));
+			$p->setWeightdata($this->weightdataService->getAllByPersonId($p->id));
 		}
 		return $persons;
 	}
@@ -68,6 +69,10 @@ class PersonsService {
              $person = $this->personMapper->find($id, $this->userId);
          } catch(Exception $e) {
              return Http::STATUS_NOT_FOUND;
+         }
+         $wd = $this->weightdataService->getAllByPersonId($id);
+         foreach( $wd as $i ) {
+         	$this->weightdataService->delete($i->id);
          }
          $this->personMapper->delete($person);
          return new $person;

@@ -219,6 +219,7 @@ export default new Vuex.Store({
 						d.splice(data.id, 1)
 						d.unshift(response.data)
 						commit('setWeightData', d)
+						context.sortWeightData()
 					},
 					(err) => {
 						console.debug('debug axUpdateWeightData ERROR-------------')

@@ -40,6 +40,10 @@ class WeightdataService {
 		$this->formatHelperService = $fhS;
 	}
 
+	public function getAllByPersonId($personId) {
+		return $this->weightdataMapper->findAll($personId);
+	}
+
 	public function create($personId) {
 		$time = new \DateTime();
 		$wd = new Weightdata();
