@@ -51,7 +51,8 @@
 			class="chartLegend">
 			<span class="green">Green</span> striped line is your target value.<br>
 			<span class="darkred">Red</span> dotted is your initial start weight for targetting.<br>
-			And <span class="gray">gray</span> shows the weight you inserted.
+			And <span class="blue">blue</span> shows the weight you inserted.<br>
+			Your personal measure is <span class="darkgray">dark gray</span> and the bodyfat <span class="gray">lightgray</span>.
 		</p>
 		<EmptyContent
 			v-show="getChartData.datasets[0].data.length <= 1"
@@ -101,6 +102,8 @@ export default {
 			const data = []
 			const targetData = []
 			const targetInitialData = []
+			const measurement = []
+			const bodyfat = []
 			for (let i = 0; i < this.data.length; i++) {
 				if (this.data[i].weight !== '' && this.data[i].weight !== null) {
 					// console.debug(Math.abs(moment(this.data[i].date).diff(moment(), 'days')))
@@ -125,6 +128,14 @@ export default {
 							t: moment(this.data[i].date),
 							y: this.person.weightTargetInitialWeight,
 						})
+						measurement.push({
+							t: moment(this.data[i].date),
+							y: this.data[i].measurement,
+						})
+						bodyfat.push({
+							t: moment(this.data[i].date),
+							y: this.data[i].bodyfat,
+						})
 					}
 				}
 			}
@@ -132,9 +143,30 @@ export default {
 				datasets: [
 					{
 						label: 'Weight',
-						borderColor: 'gray',
+						borderColor: 'darkblue',
 						fill: false,
 						data: data,
+						yAxisID: 'weight',
+					},
+					{
+						label: this.person.weightMeasurementName,
+						backgroundColor: 'lightgray',
+						borderColor: 'gray',
+						borderWidth: 1,
+						fill: true,
+						data: measurement,
+						type: 'bar',
+						yAxisID: 'percent',
+					},
+					{
+						label: 'Bodyfat',
+						backgroundColor: 'gray',
+						borderColor: 'darkgray',
+						borderWidth: 1,
+						fill: false,
+						data: bodyfat,
+						type: 'bar',
+						yAxisID: 'percent',
 					},
 					{
 						label: 'Target',
@@ -145,6 +177,7 @@ export default {
 							8,
 							5,
 						],
+						yAxisID: 'weight',
 					},
 					{
 						label: 'Target initial weight',
@@ -155,6 +188,7 @@ export default {
 							2,
 							5,
 						],
+						yAxisID: 'weight',
 					},
 				],
 			}
@@ -177,6 +211,14 @@ export default {
 	.chartLegend .gray {
 		font-weight: bold;
 		color: gray;
+	}
+	.chartLegend .lightgray {
+		font-weight: bold;
+		color: lightgray;
+	}
+	.chartLegend .blue {
+		font-weight: bold;
+		color: darkblue;
 	}
 	.chartLegend .darkred {
 		font-weight: bold;

@@ -40,6 +40,7 @@ export default {
 				],
 				yAxes: [
 					{
+						id: 'weight',
 						gridLines: {
 							display: true,
 							lineWidth: 1,
@@ -49,6 +50,24 @@ export default {
 						scaleLabel: {
 							display: true,
 							labelString: 'weight',
+						},
+						ticks: {
+							// sampleSize: 10,
+							// beginAtZero: true,
+						},
+					},
+					{
+						id: 'percent',
+						position: 'right',
+						gridLines: {
+							display: true,
+							lineWidth: 1,
+							drawOnChartArea: true,
+							drawTicks: true,
+						},
+						scaleLabel: {
+							display: true,
+							labelString: 'Custom values',
 						},
 						ticks: {
 							// sampleSize: 10,
