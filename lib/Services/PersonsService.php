@@ -27,17 +27,20 @@ namespace OCA\Health\Services;
 use OCA\Health\Db\PersonMapper;
 use OCA\Health\Db\WeightdataMapper;
 use OCA\Health\Db\Person;
+use OCA\Health\Services\FormatHelperService;
 
 class PersonsService {
 
 	protected $personMapper;
 	protected $weightdataMapper;
 	protected $userId;
+	protected $formatHelperService;
 
-	public function __construct(PersonMapper $pM, $userId, WeightdataMapper $wdM) {
+	public function __construct(PersonMapper $pM, $userId, WeightdataMapper $wdM, FormatHelperService $fhS) {
 		$this->personMapper = $pM;
 		$this->userId = $userId;
 		$this->weightdataMapper = $wdM;
+		$this->formatHelperService = $fhS;
 	}
 
 	public function getAllPersons($full=true) {
@@ -78,38 +81,10 @@ class PersonsService {
          }
 
          $method = 'set'.ucfirst($key);
-         $person->{$method}($this->typeCast($key, $value));
+         $person->{$method}($this->formatHelperService->typeCast($key, $value));
          $this->personMapper->update($person);
 
          return $person;
 	}
 
-	private function typeCast($key, $value) {
-		 $intData = ['age', 'size'];
-         if(in_array($key, $intData)) {
-         	$value = intval($value);
-         }
-
-         $doubleData = ['weightTarget', 'weightTargetInitialWeight'];
-         if(in_array($key, $doubleData)) {
-         	$value = floatval($value);
-         }
-
-         $booleanData = ['enabledModuleWeight'];
-         if(in_array($key, $booleanData)) {
-         	if( $value === true || $value === 'true' || $value === 1 || $value === '1') {
-         		$value = true;
-         	} else {
-         		$value = false;
-         	}
-         }
-
-         $datetimeData = ['weightTargetStartDate'];
-         if(in_array($key, $datetimeData)) {
-         	$dt = new \DateTime($value);
-         	$value = $dt->format('Y-m-d H:i:s');
-         }
-
-         return $value;
-	}
 }

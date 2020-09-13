@@ -16,7 +16,7 @@ class WeightdataMapper extends QBMapper {
                     $qb->select('*')
                              ->from($this->getTableName())
                              ->where(
-                                     $qb->expr()->eq('id', $qb->createNamedParameter($personId))
+                                     $qb->expr()->eq('id', $qb->createNamedParameter($id))
                              );
 
         return $this->findEntity($qb);

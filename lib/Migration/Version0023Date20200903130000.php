@@ -42,12 +42,16 @@
             $table->addColumn('lastupdate_time', 'datetime', [
             ]);
             $table->addColumn('bodyfat', 'integer', [
+                'default' => null,
             ]);
             $table->addColumn('measurement', 'float', [
+                'default' => null,
             ]);
             $table->addColumn('weight', 'float', [
+                'default' => null,
             ]);
             $table->addColumn('date', 'datetime', [
+                'default' => null,
             ]);
 
             $table->setPrimaryKey(['id']);

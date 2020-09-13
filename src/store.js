@@ -181,18 +181,62 @@ export default new Vuex.Store({
 					console.debug(err)
 				})
 		},
-		addWeightData: function({ context, getters, commit }, data) {
-			const d = getters.person.weightdata
-			d.unshift(data)
-			commit('setWeightData', d)
+		async addWeightData({ context, getters, commit }) {
+			axios.post(generateUrl('/apps/health/weightdata/create'), { personid: getters.person.id })
+				.then(
+					(response) => {
+						console.debug('debug axCreateWeightdata SUCCESS-------------')
+						console.debug(response)
+						const d = getters.person.weightdata
+						d.unshift(response.data)
+						commit('setWeightData', d)
+						return true
+					},
+					(err) => {
+						console.debug('debug axCreateWeightdata ERROR-------------')
+						console.debug(err)
+					}
+				)
+				.catch((err) => {
+					console.debug('error detected')
+					console.debug(err)
+				})
+			return false
 		},
-		updateWeightData: function({ context, getters, commit }, data) {
-			// data.{id, column, value}
-			const d = getters.person.weightdata
-			d[data.id][data.column] = data.value
-			commit('setWeightData', d)
+		async updateWeightData({ context, getters, commit }, data) {
+			const axdata = {
+				weight: data.weight,
+				date: data.date,
+				bodyfat: data.bodyfat,
+				measurement: data.measurement,
+			}
+			axios.put(generateUrl('/apps/health/weightdata/update/' + getters.person.weightdata[data.id].id), axdata)
+				.then(
+					(response) => {
+						console.debug('debug axUpdateWeightData SUCCESS-------------')
+						console.debug(response)
+						const d = getters.person.weightdata
+						d.splice(data.id, 1)
+						d.unshift(response.data)
+						commit('setWeightData', d)
+					},
+					(err) => {
+						console.debug('debug axUpdateWeightData ERROR-------------')
+						console.debug(err)
+					}
+				)
+				.catch((err) => {
+					console.debug('error detected')
+					console.debug(err)
+				})
+			// const d = getters.person.weightdata
+			// d[data.id].weight = data.weight
+			// d[data.id].measurement = data.measurement
+			// d[data.id].date = data.date
+			// d[data.id].bodyfat = data.bodyfat
+			// commit('setWeightData', d)
 		},
-		sortWeightData: function({ context, getters, commit }) {
+		async sortWeightData({ context, getters, commit }) {
 			const d = getters.person.weightdata
 			d.sort(function(a, b) {
 				if (moment(a.date) > moment(b.date)) {
@@ -206,9 +250,24 @@ export default new Vuex.Store({
 			commit('setWeightData', d)
 		},
 		deleteWeightDataRow: function({ context, getters, commit }, i) {
-			const d = getters.person.weightdata
-			d.splice(i, 1)
-			commit('setWeightData', d)
+			axios.delete(generateUrl('/apps/health/weightdata/delete/' + getters.person.weightdata[i].id))
+				.then(
+					(response) => {
+						console.debug('debug axDeleteWeightData SUCCESS-------------')
+						console.debug(response)
+						const d = getters.person.weightdata
+						d.splice(i, 1)
+						commit('setWeightData', d)
+					},
+					(err) => {
+						console.debug('debug axDeleteWeightData ERROR-------------')
+						console.debug(err)
+					}
+				)
+				.catch((err) => {
+					console.debug('error detected')
+					console.debug(err)
+				})
 		},
 	},
 })

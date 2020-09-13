@@ -90,7 +90,7 @@
 						<button
 							v-if="editRowId === i"
 							class="icon-checkmark"
-							@click="insertTableData()" />
+							@click="updateTableData()" />
 						<button
 							v-if="editRowId === null"
 							class="icon-rename"
@@ -137,32 +137,28 @@ export default {
 		},
 	},
 	mounted: function() {
-		this.updateTableData()
+		this.$store.dispatch('sortWeightData')
 	},
 	methods: {
-		addDataRow: function() {
-			const d = {
-				date: moment().format('YYYY-MM-DD'),
-				weight: null,
-				measurement: null,
-				bodyfat: null,
-			}
-			this.$store.dispatch('addWeightData', d)
+		async addDataRow() {
+			await this.$store.dispatch('addWeightData')
+			console.debug('set editRow to 0')
 			this.editRowId = 0
 		},
-		updateTableData: function() {
-			this.$store.dispatch('sortWeightData')
+		async updateTableData() {
+			const row = {
+				id: this.editRowId,
+				weight: this.$refs.weightinputweight[0].value,
+				measurement: this.$refs.weightinputmeasurement[0].value,
+				date: this.$refs.weightinputdate[0].value,
+				bodyfat: this.$refs.weightinputbodyfat[0].value,
+			}
+			await this.$store.dispatch('updateWeightData', row)
+			await this.$store.dispatch('sortWeightData')
+			this.editRowId = null
 		},
 		deleteDataRow: function(i) {
 			this.$store.dispatch('deleteWeightDataRow', i)
-		},
-		insertTableData: function() {
-			this.$store.dispatch('updateWeightData', { id: this.editRowId, column: 'weight', value: this.$refs.weightinputweight[0].value })
-			this.$store.dispatch('updateWeightData', { id: this.editRowId, column: 'measurement', value: this.$refs.weightinputmeasurement[0].value })
-			this.$store.dispatch('updateWeightData', { id: this.editRowId, column: 'date', value: this.$refs.weightinputdate[0].value })
-			this.$store.dispatch('updateWeightData', { id: this.editRowId, column: 'bodyfat', value: this.$refs.weightinputbodyfat[0].value })
-			this.editRowId = null
-			this.updateTableData()
 		},
 	},
 }
