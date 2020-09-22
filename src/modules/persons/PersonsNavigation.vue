@@ -31,6 +31,7 @@
 				icon="icon-user"
 				:editable="true"
 				edit-label="edit name"
+				:class="(index === activePersonId)?'active':''"
 				@update:menuOpen="menuOpenPersonId = index"
 				@update:title="personUpdateName"
 				@click="$store.commit('activePersonId', index); $store.commit('activeModule', 'person')">
