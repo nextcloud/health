@@ -40,8 +40,6 @@ import WeightSidebar from './modules/weight/WeightSidebar'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import WeightContent from './modules/weight/WeightContent'
-import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
@@ -69,27 +67,7 @@ export default {
 		...mapGetters(['person', 'personName', 'personModuleWeight']),
 	},
 	created() {
-		return axios.get(generateUrl('/apps/health/persons'))
-			.then(
-				(response) => {
-					// console.debug('debug axGetPersons SUCCESS-------------')
-					// console.debug(response)
-					this.$store.commit('persons', response.data)
-					if (response.data && response.data.length > 0) {
-						this.$store.commit('activePersonId', 0)
-					}
-				},
-				(err) => {
-					console.debug('debug axGetPersons ERROR-------------')
-					console.debug(err)
-				}
-			)
-			.catch((err) => {
-				console.debug('error detected')
-				console.debug(err)
-			})
-	},
-	methods: {
+		return this.$store.dispatch('loadPersons')
 	},
 }
 </script>

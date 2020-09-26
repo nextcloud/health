@@ -1,7 +1,7 @@
 /*
- * @copyright Copyright (c) 2018 ...
+ * @copyright Copyright (c) 2020 Florian Steffens
  *
- * @author ...
+ * @author Florian Steffens <flost-online@mailbox.org>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -30,27 +30,36 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
+		// .
+		// managing data
 		activePersonId: null,
-		activeModule: 'weight', // persons
+		activeModule: 'weight', // {persons, weight}
 		showSidebar: false,
+		// .
+		// complete data
 		persons: null,
+		// .
+		// individual data for actual person
+		weightData: null,
 	},
 	getters: {
-		activePersonId: state => state.activePersonId,
-		persons: state => (state.persons) ? state.persons : null,
+		// NEW -----
 		person: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId] : null,
-		personName: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].name : '',
-		personAge: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].age : null,
-		personSize: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].size : null,
-		personSex: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].sex : '',
-		personsLength: state => state.persons ? state.persons.length : 0,
-		personModuleWeight: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].enabledModuleWeight : false,
 		lastWeight: state => {
 			if (state.persons && state.persons[state.activePersonId] && state.persons[state.activePersonId].weightdata[0]) {
 				return state.persons[state.activePersonId].weightdata[0].weight
 			}
 			return null
 		},
+		// OLD -----
+		activePersonId: state => state.activePersonId,
+		persons: state => (state.persons) ? state.persons : null,
+		personName: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].name : '',
+		personAge: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].age : null,
+		personSize: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].size : null,
+		personSex: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].sex : '',
+		personsLength: state => state.persons ? state.persons.length : 0,
+		personModuleWeight: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].enabledModuleWeight : false,
 		weightTarget: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightTarget : null,
 		weightUnit: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightUnit : null,
 		weightTargetInitialWeight: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightTargetInitialWeight : null,
@@ -115,7 +124,38 @@ export default new Vuex.Store({
 		},
 	},
 	actions: {
+		// NEW -----
+		loadPersons({ dispatch, state, getters, commit }) {
+			console.debug('debug: start loading persons')
+			axios.get(generateUrl('/apps/health/persons'))
+				.then(
+					(response) => {
+						console.debug('debug axLoadPersons SUCCESS-------------')
+						console.debug(response)
+						if (response.data && response.data.length > 0) {
+							commit('persons', response.data)
+							if (state.activePersonId === null) {
+								dispatch('setActivePerson', 0)
+							}
+						}
+					},
+					(err) => {
+						console.debug('debug axLoadPersons ERROR-------------')
+						console.debug(err)
+					}
+				)
+				.catch((err) => {
+					console.debug('error detected')
+					console.debug(err)
+				})
+		},
+		setActivePerson({ context, getters, commit }, id) {
+			commit('activePersonId', id)
+			// TODO: load weightData
+		},
+		// OLD -----
 		addPerson: function({ context, getters, commit }, name) {
+			console.debug('depricated function: addPerson')
 			axios.post(generateUrl('/apps/health/persons'), { name: name })
 				.then(
 					(response) => {
@@ -137,6 +177,7 @@ export default new Vuex.Store({
 				})
 		},
 		deletePerson: function({ context, getters, commit }, id) {
+			console.debug('depricated function: deletePerson')
 			const p = getters.persons[id]
 			axios.delete(generateUrl('/apps/health/persons/' + p.id))
 				.then(
@@ -159,6 +200,7 @@ export default new Vuex.Store({
 				})
 		},
 		updatePerson: function({ context, getters, commit }, data) {
+			console.debug('depricated function: updatePerson')
 			if (!('id' in data)) {
 				data.id = getters.activePersonId
 			}
@@ -167,9 +209,10 @@ export default new Vuex.Store({
 				.then(
 					(response) => {
 						// console.debug('debug axUpdatePersons SUCCESS-------------')
-						// console.debug(response)
+						console.debug(response)
 						const method = 'updatePerson' + data.key[0].toUpperCase() + data.key.slice(1)
 						commit(method, data.value)
+						// const p = response.data
 					},
 					(err) => {
 						console.debug('debug axUpdatePersons ERROR-------------')
@@ -182,6 +225,7 @@ export default new Vuex.Store({
 				})
 		},
 		async addWeightData({ context, getters, commit }) {
+			console.debug('depricated function: addWeightData')
 			axios.post(generateUrl('/apps/health/weightdata/create'), { personid: getters.person.id })
 				.then(
 					(response) => {
@@ -204,6 +248,7 @@ export default new Vuex.Store({
 			return false
 		},
 		async updateWeightData({ context, getters, commit }, data) {
+			console.debug('depricated function: updateWeightData')
 			const axdata = {
 				weight: data.weight,
 				date: data.date,
@@ -238,6 +283,7 @@ export default new Vuex.Store({
 			// commit('setWeightData', d)
 		},
 		async sortWeightData({ context, getters, commit }) {
+			console.debug('depricated function: sortWeightData')
 			const d = getters.person.weightdata
 			d.sort(function(a, b) {
 				if (moment(a.date) > moment(b.date)) {
@@ -251,6 +297,7 @@ export default new Vuex.Store({
 			commit('setWeightData', d)
 		},
 		deleteWeightDataRow: function({ context, getters, commit }, i) {
+			console.debug('depricated function: deleteWeightDatarow')
 			axios.delete(generateUrl('/apps/health/weightdata/delete/' + getters.person.weightdata[i].id))
 				.then(
 					(response) => {
