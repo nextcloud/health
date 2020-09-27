@@ -54,17 +54,17 @@
 					v-if="p.enabledModuleWeight"
 					title="Weight"
 					icon="icon-quota"
-					@click="$store.dispatch('setActivePersonId', index); $store.dispatch('setActiveModule', 'weight')" />
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'weight')" />
 				<AppNavigationItem
 					v-if="p.enabledModuleBreaks"
 					title="Breaks"
 					icon="icon-pause"
-					@click="$store.dispatch('setActivePersonId', index); $store.dispatch('setActiveModule', 'breaks')" />
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'breaks')" />
 				<AppNavigationItem
 					v-if="p.enabledModuleFeeling"
 					title="Feeling"
 					icon="icon-category-monitoring"
-					@click="$store.dispatch('setActivePersonId', index); $store.dispatch('setActiveModule', 'feeling')" />
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'feeling')" />
 			</AppNavigationItem>
 		</ul>
 		<ul>

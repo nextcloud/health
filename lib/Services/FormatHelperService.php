@@ -37,7 +37,7 @@ class FormatHelperService {
          	$value = floatval($value);
          }
 
-         $booleanData = ['enabledModuleWeight'];
+         $booleanData = ['enabledModuleWeight', 'enabledModuleBreaks', 'enabledModuleFeeling'];
          if(in_array($key, $booleanData)) {
          	if( $value === true || $value === 'true' || $value === 1 || $value === '1') {
          		$value = true;

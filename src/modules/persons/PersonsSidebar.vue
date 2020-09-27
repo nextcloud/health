@@ -26,36 +26,48 @@
 		<li><h4>Age</h4></li>
 		<ActionInput
 			type="number"
-			:value="personAge"
+			:value="person.age"
 			icon="icon-user"
 			@submit="updateAge" />
 		<li><h4>Size<span>in cm</span></h4></li>
 		<ActionInput
 			type="number"
-			:value="personSize"
+			:value="person.size"
 			icon="icon-fullscreen"
 			@submit="updateSize" />
 		<li><h4>Sex</h4></li>
 		<ActionRadio
 			name="sex"
 			value="female"
-			:checked="personSex === 'female'"
+			:checked="person.sex === 'female'"
 			@change="updateSex('female')">
 			female
 		</ActionRadio>
 		<ActionRadio
 			name="sex"
 			value="male"
-			:checked="personSex === 'male'"
+			:checked="person.sex === 'male'"
 			@change="updateSex('male')">
 			male
 		</ActionRadio>
 		<li><h3>Manage modules</h3></li>
 		<ActionCheckbox
-			:checked="personModuleWeight"
+			:checked="person.enabledModuleWeight"
 			value="weight"
 			@change="updateEnabledModules">
 			Weight
+		</ActionCheckbox>
+		<ActionCheckbox
+			:checked="person.enabledModuleBreaks"
+			value="breaks"
+			@change="updateEnabledModules">
+			Breaks
+		</ActionCheckbox>
+		<ActionCheckbox
+			:checked="person.enabledModuleFeeling"
+			value="feeling"
+			@change="updateEnabledModules">
+			Feeling
 		</ActionCheckbox>
 	</ul>
 </template>
@@ -75,23 +87,23 @@ export default {
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar', 'persons']),
-		...mapGetters(['person', 'personModuleWeight', 'personName', 'personAge', 'personSex', 'personSize']),
+		...mapGetters(['person']),
 	},
 	methods: {
 		updateAge: function(e) {
-			this.$store.dispatch('updatePerson', { key: 'age', value: e.target[1].value })
+			this.$store.dispatch('setValue', { key: 'age', value: e.target[1].value })
 		},
 		updateSize: function(e) {
-			this.$store.dispatch('updatePerson', { key: 'size', value: e.target[1].value })
+			this.$store.dispatch('setValue', { key: 'size', value: e.target[1].value })
 		},
 		updateSex: function(sex) {
-			this.$store.dispatch('updatePerson', { key: 'sex', value: sex })
+			this.$store.dispatch('setValue', { key: 'sex', value: sex })
 		},
 		updateEnabledModules: function(e) {
-			console.debug(e)
-			if (e.target.value === 'weight') {
-				this.$store.dispatch('updatePerson', { key: 'enabledModuleWeight', value: e.target.checked })
-			}
+			// console.debug(e)
+			const m = e.target.value
+			const key = 'enabledModule' + m[0].toUpperCase() + m.slice(1)
+			this.$store.dispatch('setValue', { key: key, value: e.target.checked })
 		},
 	},
 }

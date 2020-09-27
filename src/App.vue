@@ -10,7 +10,9 @@
 			</div>
 			<WeightContent v-if="activeModule === 'weight' && personModuleWeight" />
 		</AppContent>
-		<AppSidebar v-show="showSidebar"
+		<AppSidebar
+			v-show="showSidebar"
+			v-if="persons !== null"
 			:title="personName"
 			@close="$store.commit('showSidebar', false)">
 			<template #primary-actions />

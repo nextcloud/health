@@ -84,6 +84,10 @@
             ]);
             $table->addColumn('enabled_module_weight', 'boolean', [
             ]);
+            $table->addColumn('enabled_module_breaks', 'boolean', [
+            ]);
+            $table->addColumn('enabled_module_feeling', 'boolean', [
+            ]);
             $table->addColumn('sex', 'string', [
                 'length' => 6
             ]);
