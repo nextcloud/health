@@ -51,6 +51,7 @@ export default new Vuex.Store({
 			}
 			return null
 		},
+		personsLength: state => state.persons ? state.persons.length : 0,
 		// OLD -----
 		activePersonId: state => state.activePersonId,
 		persons: state => (state.persons) ? state.persons : null,
@@ -58,7 +59,6 @@ export default new Vuex.Store({
 		personAge: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].age : null,
 		personSize: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].size : null,
 		personSex: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].sex : '',
-		personsLength: state => state.persons ? state.persons.length : 0,
 		personModuleWeight: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].enabledModuleWeight : false,
 		weightTarget: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightTarget : null,
 		weightUnit: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightUnit : null,
@@ -67,13 +67,9 @@ export default new Vuex.Store({
 		weightMeasurementName: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightMeasurementName : null,
 	},
 	mutations: {
+		// NEW -----
 		persons(state, persons) {
-			state.persons = persons
-		},
-		addPerson(state, person) {
-			const p = state.persons
-			p.push(person)
-			state.persons = p
+			state.persons = persons.slice()
 		},
 		activePersonId(state, id) {
 			state.activePersonId = id
@@ -81,14 +77,11 @@ export default new Vuex.Store({
 		activeModule(state, module) {
 			state.activeModule = module
 		},
+		// directly called (without actions)
 		showSidebar(state, bool) {
 			state.showSidebar = bool
 		},
-		deletePerson(state, id) {
-			const p = state.persons
-			p.splice(id, 1)
-			state.persons = p
-		},
+		// OLD -----
 		updatePersonName(state, o) {
 			state.persons[o.id].name = o.name
 		},
@@ -149,22 +142,60 @@ export default new Vuex.Store({
 					console.debug(err)
 				})
 		},
-		setActivePerson({ context, getters, commit }, id) {
+		setActivePerson({ dispatch, commit }, id) {
 			commit('activePersonId', id)
+			dispatch('loadModuleContentForPerson')
+		},
+		setActiveModule({ dispatch, commit }, module) {
+			commit('activeModule', module)
+			dispatch('loadModuleContentForPerson')
+		},
+		loadModuleContentForPerson({ commit }) {
+			// this ist called if the active person or module changed
+			// it should load all data, that is neccessary for the active module
 			// TODO: load weightData
 		},
-		// OLD -----
-		addPerson: function({ context, getters, commit }, name) {
-			console.debug('depricated function: addPerson')
+		setValue({ commit, state }, data) {
+			// data: {key, value, [id]}
+			console.debug('start setValue')
+			console.debug(data)
+
+			if (!('id' in data)) {
+				data.id = state.activePersonId
+			}
+
+			const p = state.persons[data.id]
+			axios.put(generateUrl('/apps/health/persons/' + p.id), { key: data.key, value: '' + data.value })
+				.then(
+					(response) => {
+						console.debug('debug axSetValue SUCCESS-------------')
+						console.debug(response)
+						const persons = state.persons
+						persons[data.id] = response.data
+						commit('persons', persons)
+					},
+					(err) => {
+						console.debug('debug axUpdatePersons ERROR-------------')
+						console.debug(err)
+					}
+				)
+				.catch((err) => {
+					console.debug('error detected')
+					console.debug(err)
+				})
+		},
+		addPerson: function({ state, dispatch, commit }, name) {
+			console.debug('debug start addPerson')
 			axios.post(generateUrl('/apps/health/persons'), { name: name })
 				.then(
 					(response) => {
-						// console.debug('debug axPostPersons SUCCESS-------------')
-						// console.debug(response)
-						const p = response.data
-						commit('addPerson', p)
-						const id = getters.personsLength - 1
-						commit('activePersonId', id)
+						console.debug('debug axPostPersons SUCCESS-------------')
+						console.debug(response)
+						const persons = state.persons
+						persons.push(response.data)
+						commit('persons', persons)
+						const id = state.persons.length - 1
+						dispatch('setActivePerson', id)
 					},
 					(err) => {
 						console.debug('debug axPostPersons ERROR-------------')
@@ -176,17 +207,19 @@ export default new Vuex.Store({
 					console.debug(err)
 				})
 		},
-		deletePerson: function({ context, getters, commit }, id) {
-			console.debug('depricated function: deletePerson')
-			const p = getters.persons[id]
+		deletePerson: function({ state, dispatch, commit }, id) {
+			console.debug('debug deletePerson')
+			const p = state.persons[id]
 			axios.delete(generateUrl('/apps/health/persons/' + p.id))
 				.then(
 					(response) => {
-						// console.debug('debug axDeletePersons SUCCESS-------------')
-						// console.debug(response)
-						commit('deletePerson', id)
-						if (getters.activePersonId === id) {
-							commit('activePersonId', 0)
+						console.debug('debug axDeletePersons SUCCESS-------------')
+						console.debug(response)
+						const persons = state.persons
+						persons.splice(id, 1)
+						commit('persons', persons)
+						if (state.activePersonId === id) {
+							dispatch('setActivePerson', 0)
 						}
 					},
 					(err) => {
@@ -199,6 +232,7 @@ export default new Vuex.Store({
 					console.debug(err)
 				})
 		},
+		// OLD -----
 		updatePerson: function({ context, getters, commit }, data) {
 			console.debug('depricated function: updatePerson')
 			if (!('id' in data)) {

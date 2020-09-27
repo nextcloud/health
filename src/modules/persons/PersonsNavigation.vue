@@ -34,12 +34,12 @@
 				:class="(index === activePersonId)?'active':''"
 				@update:menuOpen="menuOpenPersonId = index"
 				@update:title="personUpdateName"
-				@click="$store.commit('activePersonId', index); $store.commit('activeModule', 'person')">
+				@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'person')">
 				<template slot="actions">
 					<ActionButton
 						:close-after-click="true"
 						icon="icon-detail"
-						@click="$store.commit('showSidebar', true); $store.commit('activePersonId', index)">
+						@click="$store.commit('showSidebar', true); $store.dispatch('setActivePerson', index)">
 						Show details
 					</ActionButton>
 					<ActionButton
@@ -54,17 +54,17 @@
 					v-if="p.enabledModuleWeight"
 					title="Weight"
 					icon="icon-quota"
-					@click="$store.commit('activePersonId', index); $store.commit('activeModule', 'weight')" />
+					@click="$store.dispatch('setActivePersonId', index); $store.dispatch('setActiveModule', 'weight')" />
 				<AppNavigationItem
 					v-if="p.enabledModuleBreaks"
 					title="Breaks"
 					icon="icon-pause"
-					@click="$store.commit('activePersonId', index); $store.commit('activeModule', 'breaks')" />
+					@click="$store.dispatch('setActivePersonId', index); $store.dispatch('setActiveModule', 'breaks')" />
 				<AppNavigationItem
-					v-if="p.enabledModuleTracking"
-					title="Tracking"
+					v-if="p.enabledModuleFeeling"
+					title="Feeling"
 					icon="icon-category-monitoring"
-					@click="$store.commit('activePersonId', index); $store.commit('activeModule', 'tracking')" />
+					@click="$store.dispatch('setActivePersonId', index); $store.dispatch('setActiveModule', 'feeling')" />
 			</AppNavigationItem>
 		</ul>
 		<ul>
@@ -114,8 +114,8 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['activePersonId', 'activeModule', 'showSidebar']),
-		...mapGetters(['person', 'personsLength', 'persons']),
+		...mapState(['activePersonId', 'activeModule', 'showSidebar', 'persons']),
+		...mapGetters(['person', 'personsLength']),
 	},
 	methods: {
 		createPerson: function(e) {
@@ -126,8 +126,7 @@ export default {
 			e.currentTarget.childNodes[0].value = ''
 		},
 		personUpdateName: function(v) {
-			this.$store.dispatch('updatePerson', { id: this.menuOpenPersonId, key: 'name', value: v })
-			// this.$store.commit('updatePersonName', { id: this.menuOpenPersonId, name: v })
+			this.$store.dispatch('setValue', { id: this.menuOpenPersonId, key: 'name', value: v })
 		},
 		closeNewPersonForm: function() {
 			this.$refs.newPersonName.value = ''
