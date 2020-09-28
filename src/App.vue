@@ -8,19 +8,19 @@
 					<ActionButton icon="icon-menu-sidebar" @click="$store.commit('showSidebar', !showSidebar)" />
 				</Actions>
 			</div>
-			<WeightContent v-if="activeModule === 'weight' && personModuleWeight" />
+			<WeightContent v-if="person && activeModule === 'weight' && person.enabledModuleWeight" />
 		</AppContent>
 		<AppSidebar
 			v-show="showSidebar"
 			v-if="persons !== null"
-			:title="personName"
+			:title="person.name"
 			@close="$store.commit('showSidebar', false)">
 			<template #primary-actions />
 			<AppSidebarTab id="person" name="Person" icon="icon-user">
 				<PersonsSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
-				v-if="personModuleWeight"
+				v-if="person"
 				id="weight"
 				name="Weight"
 				icon="icon-quota">
@@ -66,7 +66,7 @@ export default {
 	},
 	computed: {
 		...mapState(['activePersonId', 'activeModule', 'showSidebar', 'persons']),
-		...mapGetters(['person', 'personName', 'personModuleWeight']),
+		...mapGetters(['person']),
 	},
 	created() {
 		return this.$store.dispatch('loadPersons')

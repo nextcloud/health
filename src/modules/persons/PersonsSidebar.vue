@@ -52,18 +52,21 @@
 		</ActionRadio>
 		<li><h3>Manage modules</h3></li>
 		<ActionCheckbox
+			v-if="person"
 			:checked="person.enabledModuleWeight"
 			value="weight"
 			@change="updateEnabledModules">
 			Weight
 		</ActionCheckbox>
 		<ActionCheckbox
+			v-if="person"
 			:checked="person.enabledModuleBreaks"
 			value="breaks"
 			@change="updateEnabledModules">
 			Breaks
 		</ActionCheckbox>
 		<ActionCheckbox
+			v-if="person"
 			:checked="person.enabledModuleFeeling"
 			value="feeling"
 			@change="updateEnabledModules">
@@ -100,7 +103,6 @@ export default {
 			this.$store.dispatch('setValue', { key: 'sex', value: sex })
 		},
 		updateEnabledModules: function(e) {
-			// console.debug(e)
 			const m = e.target.value
 			const key = 'enabledModule' + m[0].toUpperCase() + m.slice(1)
 			this.$store.dispatch('setValue', { key: key, value: e.target.checked })

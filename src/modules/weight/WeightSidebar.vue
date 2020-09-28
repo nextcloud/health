@@ -71,7 +71,7 @@
 			</h4>
 		</li>
 		<div class="textarea-sidebar">
-			<textarea ref="weightTargetBounty" :value="weightTargetBounty" placeholder="Add some bounty to motivate yourself, if you like to." />
+			<textarea ref="weightTargetBounty" :value="person.weightTargetBounty" placeholder="Add some bounty to motivate yourself, if you like to." />
 		</div>
 		<button
 			@click="updateWeightTargetBounty">
@@ -95,10 +95,7 @@ export default {
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar']),
-		...mapGetters(['person', 'lastWeight', 'weightTargetBounty']),
-	},
-	mounted: function() {
-		this.weightTargetBountyLocal = this.weightTargetBounty
+		...mapGetters(['person', 'lastWeight']),
 	},
 	methods: {
 		updateWeightUnit: function(e) {
@@ -114,8 +111,7 @@ export default {
 			this.$store.dispatch('updatePerson', { key: 'weightMeasurementName', value: e.target[1].value })
 		},
 		updateWeightTargetBounty: function() {
-			this.$store.dispatch('updatePerson', { key: 'weightTargetBounty', value: this.$refs.weightTargetBounty.value })
-			// console.debug('weightTargetBounty: ' + this.$refs.weightTargetBounty.value)
+			this.$store.dispatch('setValue', { key: 'weightTargetBounty', value: this.$refs.weightTargetBounty.value })
 		},
 	},
 }
