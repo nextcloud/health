@@ -28,10 +28,10 @@
 					Date
 				</th>
 				<th>
-					Weight <span>in {{ weightUnit }}</span>
+					Weight <span>in {{ person.weightUnit }}</span>
 				</th>
 				<th v-if="hasMeasurement" class="hide-if-small">
-					{{ weightMeasurementName }}
+					{{ person.weightMeasurementName }}
 				</th>
 				<th class="hide-if-small">
 					Bodyfat <span>in %</span>
@@ -131,10 +131,10 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['activeModule', 'showSidebar']),
-		...mapGetters(['person', 'lastWeight', 'weightTarget', 'weightTargetInitialWeight', 'weightUnit', 'weightMeasurementName', 'personName']),
+		...mapState(['activeModule', 'showSidebar', 'weightData']),
+		...mapGetters(['person']),
 		data: function() {
-			return this.person.weightdata
+			return this.weightData
 		},
 		hasMeasurement: function() {
 			return (this.weightMeasurementName !== '' && this.weightMeasurementName !== null)

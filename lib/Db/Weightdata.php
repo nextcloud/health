@@ -17,6 +17,10 @@ class Weightdata extends Entity implements JsonSerializable {
 
     public function __construct() {
         $this->addType('id','integer');
+        $this->addType('personId','integer');
+        $this->addType('bodyfat','float');
+        $this->addType('measurement','float');
+        $this->addType('weight','float');
     }
 
     public function jsonSerialize() {

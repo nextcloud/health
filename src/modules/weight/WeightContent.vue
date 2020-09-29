@@ -22,13 +22,13 @@
 
 <template>
 	<div>
-		<h2>Weight <span>for {{ personName }}</span></h2>
-		<div v-if="weightTarget != '' && weightTarget != null">
+		<h2>Weight <span>for {{ person.name }}</span></h2>
+		<div v-if="person.weightTarget != '' && person.weightTarget != null">
 			<h3>Target</h3>
 			<div v-if="lastWeight">
-				<p>You started with {{ weightTargetInitialWeight }}{{ weightUnit }} for your target. Your actual weight is now {{ lastWeight }}{{ weightUnit }} and your target values {{ weightTarget }}{{ weightUnit }}.</p>
-				<p v-if="lastWeight > weightTarget && lastWeight < weightTargetInitialWeight">
-					So you lost already {{ weightTargetInitialWeight - lastWeight }}{{ weightUnit }} and you have {{ lastWeight - weightTarget }}{{ weightUnit }} to go.
+				<p>You started with {{ person.weightTargetInitialWeight }}{{ person.weightUnit }} for your target. Your actual weight is now {{ lastWeight }}{{ person.weightUnit }} and your target values {{ person.weightTarget }}{{ person.weightUnit }}.</p>
+				<p v-if="lastWeight > person.weightTarget && lastWeight < person.weightTargetInitialWeight">
+					So you lost already {{ person.weightTargetInitialWeight - lastWeight }}{{ person.weightUnit }} and you have {{ lastWeight - person.weightTarget }}{{ person.weightUnit }} to go.
 					<br>
 					<br>
 					Go on and eliminate the blue bar:
@@ -36,10 +36,10 @@
 						:value="getProgressbarValue"
 						:class="{'small':true}" />
 				</p>
-				<p v-if="lastWeight > weightTarget && lastWeight > weightTargetInitialWeight">
+				<p v-if="lastWeight > person.weightTarget && lastWeight > person.weightTargetInitialWeight">
 					Ups, you become more and more. Be careful!
 				</p>
-				<p v-if="lastWeight <= weightTarget">
+				<p v-if="lastWeight <= person.weightTarget">
 					Good, you reached your target!
 				</p>
 			</div>
@@ -53,7 +53,7 @@
 		<h3>Chart</h3>
 		<WeightChart
 			:person="person"
-			:data="person.weightdata" />
+			:data="weightData" />
 		<h3>Data</h3>
 		<WeightTable />
 		<p v-show="dataInsertInfo" class="dataInsertInfo">
@@ -83,19 +83,20 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['activeModule', 'showSidebar']),
-		...mapGetters(['person', 'lastWeight', 'weightTarget', 'weightTargetInitialWeight', 'weightUnit', 'weightMeasurementName', 'personName']),
+		...mapState(['activeModule', 'showSidebar', 'weightData']),
+		...mapGetters(['person']),
 		getProgressbarValue: function() {
-			const lostAlready = this.weightTargetInitialWeight - this.lastWeight
-			const wantToLost = this.weightTargetInitialWeight - this.weightTarget
+			const lostAlready = this.person.weightTargetInitialWeight - this.lastWeight
+			const wantToLost = this.person.weightTargetInitialWeight - this.person.weightTarget
 			const result = 100 - ((lostAlready / wantToLost) * 100)
 			return (result > 100) ? 100 : result
 		},
-		data: function() {
-			return this.person.weightdata
+		lastWeight: function() {
+			if (this.weightData && this.weightData.length > 1) {
+				return this.weightData[0].weight
+			}
+			return null
 		},
-	},
-	methods: {
 	},
 }
 </script>

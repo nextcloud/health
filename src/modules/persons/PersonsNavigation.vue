@@ -66,12 +66,10 @@
 					icon="icon-category-monitoring"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'feeling')" />
 			</AppNavigationItem>
-		</ul>
-		<ul>
 			<AppNavigationItem
 				title="New person"
 				icon="icon-add"
-				:pinned="true"
+				:pinned="false"
 				@click.prevent.stop="showNewPersonForm = true">
 				<div v-show="showNewPersonForm" class="person-create">
 					<form
@@ -153,5 +151,8 @@ export default {
 		min-height: auto;
 		border-radius: var(--border-radius);
 		padding: 4px;
+	}
+	.app-navigation__list {
+		display: none;
 	}
 </style>

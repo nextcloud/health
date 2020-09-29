@@ -46,9 +46,9 @@ class PersonsService {
 
 	public function getAllPersons($full=true) {
 		$persons = $this->personMapper->findAll($this->userId);
-		foreach($persons as $i => $p) {
-			$p->setWeightdata($this->weightdataService->getAllByPersonId($p->id));
-		}
+		// foreach($persons as $i => $p) {
+		// $p->setWeightdata($this->weightdataService->getAllByPersonId($p->id));
+		// }
 		return $persons;
 	}
 

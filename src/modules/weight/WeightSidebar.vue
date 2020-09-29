@@ -57,7 +57,7 @@
 			@submit="updateWeightTarget" />
 		<li>
 			<h4>
-				Weight target start weight<span>in {{ person.weightUnit }}<br>your reference weight for the target</span>
+				Weight target initial weight<span>in {{ person.weightUnit }}<br>your reference weight for the target</span>
 			</h4>
 		</li>
 		<ActionInput
@@ -99,16 +99,16 @@ export default {
 	},
 	methods: {
 		updateWeightUnit: function(e) {
-			this.$store.dispatch('updatePerson', { key: 'weightUnit', value: e.target[1].value })
+			this.$store.dispatch('setValue', { key: 'weightUnit', value: e.target[1].value })
 		},
 		updateWeightTarget: function(e) {
-			this.$store.dispatch('updatePerson', { key: 'weightTarget', value: e.target[1].value })
+			this.$store.dispatch('setValue', { key: 'weightTarget', value: e.target[1].value })
 		},
 		updateWeightTargetInitialWeight: function(e) {
-			this.$store.dispatch('updatePerson', { key: 'weightTargetInitialWeight', value: e.target[1].value })
+			this.$store.dispatch('setValue', { key: 'weightTargetInitialWeight', value: e.target[1].value })
 		},
 		updateMeasurementName: function(e) {
-			this.$store.dispatch('updatePerson', { key: 'weightMeasurementName', value: e.target[1].value })
+			this.$store.dispatch('setValue', { key: 'weightMeasurementName', value: e.target[1].value })
 		},
 		updateWeightTargetBounty: function() {
 			this.$store.dispatch('setValue', { key: 'weightTargetBounty', value: this.$refs.weightTargetBounty.value })

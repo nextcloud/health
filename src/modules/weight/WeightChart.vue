@@ -42,7 +42,7 @@
 			</select>
 		</div>
 		<LineChart
-			v-show="getChartData.datasets[0].data.length > 1"
+			v-if="data && getChartData.datasets[0].data.length > 1"
 			:height="200"
 			:chart-data="getChartData"
 			:range="chartDateRange" />
@@ -55,7 +55,7 @@
 			Your personal measure is <span class="darkgray">dark gray</span> and the bodyfat <span class="gray">lightgray</span>.
 		</p>
 		<EmptyContent
-			v-show="getChartData.datasets[0].data.length <= 1"
+			v-if="data && getChartData.datasets[0].data.length <= 1"
 			icon="icon-category-monitoring">
 			No data for a chart
 			<template #desc>
@@ -104,38 +104,40 @@ export default {
 			const targetInitialData = []
 			const measurement = []
 			const bodyfat = []
-			for (let i = 0; i < this.data.length; i++) {
-				if (this.data[i].weight !== '' && this.data[i].weight !== null) {
-					// console.debug(Math.abs(moment(this.data[i].date).diff(moment(), 'days')))
-					let diff = null
-					if (this.chartDateRange === 'week') {
-						diff = 7
-					} else if (this.chartDateRange === 'month') {
-						diff = 31
-					} else if (this.chartDateRange === 'year') {
-						diff = 365
-					}
-					if (diff === null || Math.abs(moment(this.data[i].date).diff(moment(), 'days')) <= diff) {
-						data.push({
-							t: moment(this.data[i].date),
-							y: this.data[i].weight,
-						})
-						targetData.push({
-							t: moment(this.data[i].date),
-							y: this.person.weightTarget,
-						})
-						targetInitialData.push({
-							t: moment(this.data[i].date),
-							y: this.person.weightTargetInitialWeight,
-						})
-						measurement.push({
-							t: moment(this.data[i].date),
-							y: this.data[i].measurement,
-						})
-						bodyfat.push({
-							t: moment(this.data[i].date),
-							y: this.data[i].bodyfat,
-						})
+			if (this.data !== null && this.data !== undefined) {
+				for (let i = 0; i < this.data.length; i++) {
+					if (this.data[i].weight !== '' && this.data[i].weight !== null) {
+						// console.debug(Math.abs(moment(this.data[i].date).diff(moment(), 'days')))
+						let diff = null
+						if (this.chartDateRange === 'week') {
+							diff = 7
+						} else if (this.chartDateRange === 'month') {
+							diff = 31
+						} else if (this.chartDateRange === 'year') {
+							diff = 365
+						}
+						if (diff === null || Math.abs(moment(this.data[i].date).diff(moment(), 'days')) <= diff) {
+							data.push({
+								t: moment(this.data[i].date),
+								y: this.data[i].weight,
+							})
+							targetData.push({
+								t: moment(this.data[i].date),
+								y: this.person.weightTarget,
+							})
+							targetInitialData.push({
+								t: moment(this.data[i].date),
+								y: this.person.weightTargetInitialWeight,
+							})
+							measurement.push({
+								t: moment(this.data[i].date),
+								y: this.data[i].measurement,
+							})
+							bodyfat.push({
+								t: moment(this.data[i].date),
+								y: this.data[i].bodyfat,
+							})
+						}
 					}
 				}
 			}

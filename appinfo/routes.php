@@ -28,7 +28,8 @@ return [
     ],
     'routes' => [
 	   ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
-	   ['name' => 'weightdata#create', 'url' => '/weightdata/create', 'verb' => 'POST'],
+	   ['name' => 'weightdata#index', 'url' => '/weightdata/person/{personId}', 'verb' => 'GET'],
+	   ['name' => 'weightdata#create', 'url' => '/weightdata/person/{personId}/create', 'verb' => 'POST'],
 	   ['name' => 'weightdata#destroy', 'url' => '/weightdata/delete/{id}', 'verb' => 'DELETE'],
 	   ['name' => 'weightdata#update', 'url' => '/weightdata/update/{id}', 'verb' => 'PUT'],
     ]

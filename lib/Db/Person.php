@@ -24,16 +24,16 @@ class Person extends Entity implements JsonSerializable {
     protected $weightTargetStartDate;
     protected $weightTargetBounty;
     protected $personalMission;
-    protected $weightdata;
 
     public function __construct() {
         $this->addType('id','integer');
         $this->addType('age','integer');
         $this->addType('size','integer');
+        $this->addType('weightTarget', 'float');
+        $this->addType('weightTargetInitialWeight', 'float');
         $this->addType('enabledModuleWeight', 'boolean');
         $this->addType('enabledModuleBreaks', 'boolean');
         $this->addType('enabledModuleFeeling', 'boolean');
-        $this->weightdata = [];
     }
 
     public function jsonSerialize() {
@@ -56,7 +56,6 @@ class Person extends Entity implements JsonSerializable {
             'weightTargetStartDate' => $this->weightTargetStartDate,
             'weightTargetBounty' => $this->weightTargetBounty,
             'personalMission' => $this->personalMission,
-            'weightdata' => $this->weightdata,
         ];
     }
 }

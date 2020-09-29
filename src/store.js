@@ -45,12 +45,6 @@ export default new Vuex.Store({
 	getters: {
 		// NEW -----
 		person: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId] : null,
-		lastWeight: state => {
-			if (state.persons && state.persons[state.activePersonId] && state.persons[state.activePersonId].weightdata[0]) {
-				return state.persons[state.activePersonId].weightdata[0].weight
-			}
-			return null
-		},
 		personsLength: state => state.persons ? state.persons.length : 0,
 		// OLD -----
 		activePersonId: state => state.activePersonId,
@@ -76,6 +70,9 @@ export default new Vuex.Store({
 		},
 		activeModule(state, module) {
 			state.activeModule = module
+		},
+		weightData(state, data) {
+			state.weightData = data
 		},
 		// directly called (without actions)
 		showSidebar(state, bool) {
@@ -130,6 +127,7 @@ export default new Vuex.Store({
 							if (state.activePersonId === null) {
 								dispatch('setActivePerson', 0)
 							}
+							dispatch('loadModuleContentForPerson')
 						}
 					},
 					(err) => {
@@ -150,10 +148,31 @@ export default new Vuex.Store({
 			commit('activeModule', module)
 			dispatch('loadModuleContentForPerson')
 		},
-		loadModuleContentForPerson({ commit }) {
+		loadModuleContentForPerson({ state, getters, commit, dispatch }) {
 			// this ist called if the active person or module changed
 			// it should load all data, that is neccessary for the active module
-			// TODO: load weightData
+			console.debug('debug: start loading loadModuleContentForPerson')
+
+			if (state.activeModule === 'weight') {
+				console.debug('debug: start loading weightdata')
+				axios.get(generateUrl('/apps/health/weightdata/person/' + getters.person.id))
+					.then(
+						(response) => {
+							console.debug('debug axLoadWeightdata SUCCESS-------------')
+							console.debug(response)
+							commit('weightData', response.data)
+							dispatch('sortWeightData')
+						},
+						(err) => {
+							console.debug('debug axLoadWeightdata ERROR-------------')
+							console.debug(err)
+						}
+					)
+					.catch((err) => {
+						console.debug('error detected')
+						console.debug(err)
+					})
+			}
 		},
 		setValue({ commit, state }, data) {
 			// data: {key, value, [id]}
@@ -316,9 +335,12 @@ export default new Vuex.Store({
 			// d[data.id].bodyfat = data.bodyfat
 			// commit('setWeightData', d)
 		},
-		async sortWeightData({ context, getters, commit }) {
+		async sortWeightData({ state, getters, commit }) {
 			console.debug('depricated function: sortWeightData')
-			const d = getters.person.weightdata
+			const d = state.weightData
+			if (!d) {
+				return null
+			}
 			d.sort(function(a, b) {
 				if (moment(a.date) > moment(b.date)) {
 					return -1

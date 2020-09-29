@@ -48,6 +48,16 @@ class WeightdataController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * 
+	 * @param int $personId
+	 */
+	public function index(int $personId) {
+        return new DataResponse($this->weightdataService->getAllByPersonId($personId));
+	}
+
+	/**
+	 * @NoAdminRequired
 	 *
      * @param int $personid
 	 */
