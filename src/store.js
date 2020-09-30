@@ -114,7 +114,6 @@ export default new Vuex.Store({
 		},
 	},
 	actions: {
-		// NEW -----
 		loadPersons({ dispatch, state, getters, commit }) {
 			console.debug('debug: start loading persons')
 			axios.get(generateUrl('/apps/health/persons'))
@@ -251,6 +250,23 @@ export default new Vuex.Store({
 					console.debug(err)
 				})
 		},
+		async sortWeightData({ state, getters, commit }) {
+			console.debug('start function: sortWeightData')
+			const d = state.weightData
+			if (!d) {
+				return null
+			}
+			d.sort(function(a, b) {
+				if (moment(a.date) > moment(b.date)) {
+					return -1
+				} else if (moment(a.date) < moment(b.date)) {
+					return 1
+				} else {
+					return 0
+				}
+			})
+			commit('setWeightData', d)
+		},
 		// OLD -----
 		updatePerson: function({ context, getters, commit }, data) {
 			console.debug('depricated function: updatePerson')
@@ -277,17 +293,17 @@ export default new Vuex.Store({
 					console.debug(err)
 				})
 		},
-		async addWeightData({ context, getters, commit }) {
-			console.debug('depricated function: addWeightData')
-			axios.post(generateUrl('/apps/health/weightdata/create'), { personid: getters.person.id })
+		insertWeightData({ dispatch, getters, commit }, row) {
+			console.debug('start function: insertWeightData')
+			axios.post(generateUrl('/apps/health/weightdata/person/' + getters.person.id + '/create'), row)
 				.then(
 					(response) => {
-						console.debug('debug axCreateWeightdata SUCCESS-------------')
+						console.debug('debug axInsertWeightData SUCCESS-------------')
 						console.debug(response)
 						const d = getters.person.weightdata
 						d.unshift(response.data)
 						commit('setWeightData', d)
-						return true
+						dispatch('sortWeightData')
 					},
 					(err) => {
 						console.debug('debug axCreateWeightdata ERROR-------------')
@@ -334,23 +350,6 @@ export default new Vuex.Store({
 			// d[data.id].date = data.date
 			// d[data.id].bodyfat = data.bodyfat
 			// commit('setWeightData', d)
-		},
-		async sortWeightData({ state, getters, commit }) {
-			console.debug('depricated function: sortWeightData')
-			const d = state.weightData
-			if (!d) {
-				return null
-			}
-			d.sort(function(a, b) {
-				if (moment(a.date) > moment(b.date)) {
-					return -1
-				} else if (moment(a.date) < moment(b.date)) {
-					return 1
-				} else {
-					return 0
-				}
-			})
-			commit('setWeightData', d)
 		},
 		deleteWeightDataRow: function({ context, getters, commit }, i) {
 			console.debug('depricated function: deleteWeightDatarow')

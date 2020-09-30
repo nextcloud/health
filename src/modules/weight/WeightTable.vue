@@ -38,10 +38,44 @@
 				</th>
 				<th>
 					Actions
-					<button class="icon-add" @click="addDataRow" />
+					<button class="icon-add" @click="showAddRow = true" />
 				</th>
 			</thead>
 			<tbody>
+				<tr v-show="showAddRow">
+					<td>
+						<input
+							ref="weightinsertdate"
+							:value="today"
+							type="Date"
+							class="widthfitcontent">
+					</td>
+					<td>
+						<input
+							ref="weightinsertweight"
+							type="Number"
+							min="1"
+							max="200">
+					</td>
+					<td v-if="hasMeasurement" class="hide-if-small">
+						<input ref="weightinsertmeasurement" type="Number">
+					</td>
+					<td class="hide-if-small">
+						<input
+							ref="weightinsertbodyfat"
+							type="Number"
+							min="0"
+							max="100">
+					</td>
+					<td>
+						<button
+							class="icon-checkmark"
+							@click="insertTableData()" />
+						<button
+							class="icon-close"
+							@click="showAddRow = false" />
+					</td>
+				</tr>
 				<tr v-for="(v, i) in data"
 					:key="i">
 					<td>
@@ -128,6 +162,7 @@ export default {
 	data: function() {
 		return {
 			editRowId: null,
+			showAddRow: false,
 		}
 	},
 	computed: {
@@ -139,9 +174,9 @@ export default {
 		hasMeasurement: function() {
 			return (this.weightMeasurementName !== '' && this.weightMeasurementName !== null)
 		},
-	},
-	mounted: function() {
-		this.$store.dispatch('sortWeightData')
+		today: function() {
+			return moment().format('YYYY-MM-DD')
+		},
 	},
 	methods: {
 		async addDataRow() {
@@ -163,6 +198,23 @@ export default {
 			await this.$store.dispatch('updateWeightData', row)
 			await this.$store.dispatch('sortWeightData')
 			this.editRowId = null
+		},
+		insertTableData: function() {
+			console.debug('insertTableData refs:')
+			console.debug(this.$refs)
+			const row = {
+				weight: this.$refs.weightinsertweight.value,
+				measurement: (this.$refs.weightinsertmeasurement !== undefined) ? this.$refs.weightinsertmeasurement.value : null,
+				date: this.$refs.weightinsertdate.value,
+				bodyfat: this.$refs.weightinsertbodyfat.value,
+			}
+			this.$refs.weightinsertweight.value = ''
+			this.$refs.weightinsertmeasurement.value = ''
+			this.$refs.weightinsertdate.value = ''
+			this.$refs.weightinsertbodyfat.value = ''
+			console.debug(row)
+			this.$store.dispatch('insertWeightData', row)
+			this.showAddRow = false
 		},
 		deleteDataRow: function(i) {
 			this.$store.dispatch('deleteWeightDataRow', i)

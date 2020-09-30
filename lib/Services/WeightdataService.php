@@ -44,13 +44,17 @@ class WeightdataService {
 		return $this->weightdataMapper->findAll($personId);
 	}
 
-	public function create($personId) {
+	public function create($personId, $weight, $measurement, $bodyfat, $date) {
 		$time = new \DateTime();
+		$date = new \DateTime($date);
 		$wd = new Weightdata();
-		$wd->setDate($time->format('Y-m-d H:i:s'));
+		$wd->setDate($date->format('Y-m-d H:i:s'));
 		$wd->setInsertTime($time->format('Y-m-d H:i:s'));
 		$wd->setLastupdateTime($time->format('Y-m-d H:i:s'));
 		$wd->setPersonId($personId);
+		$wd->setWeight($weight);
+		$wd->setMeasurement($measurement);
+		$wd->setBodyfat($bodyfat);
 		error_log(print_r($wd, true));
 		return $this->weightdataMapper->insert($wd);
 	}

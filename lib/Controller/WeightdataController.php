@@ -60,9 +60,13 @@ class WeightdataController extends Controller {
 	 * @NoAdminRequired
 	 *
      * @param int $personid
+     * @param float $weight
+     * @param float $measurement
+     * @param float $bodyfat
+     * @param string $date
 	 */
-	public function create($personid) {
-		return new DataResponse($this->weightdataService->create($personid));
+	public function create($personId, $weight, $measurement, $bodyfat, $date) {
+		return new DataResponse($this->weightdataService->create($personId, $weight, $measurement, $bodyfat, $date));
 	}
 
 	/**
