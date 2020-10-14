@@ -77,7 +77,7 @@
 				<AppNavigationItem
 					v-if="p.enabledModuleActivities"
 					title="Activities"
-					icon="icon-user"
+					icon="icon-user-admin"
 					:class="(activeModule === 'activities' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'activities')" />
 			</AppNavigationItem>
