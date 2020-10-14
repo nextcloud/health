@@ -75,7 +75,7 @@
 		</div>
 		<button
 			@click="updateWeightTargetBounty">
-			Safe bounty
+			Save bounty
 		</button>
 	</ul>
 </template>

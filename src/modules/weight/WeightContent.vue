@@ -22,7 +22,7 @@
 
 <template>
 	<div>
-		<h2 class="first-h2">
+		<h2>
 			Weight <span>for {{ person.name }}</span>
 		</h2>
 		<div>
@@ -132,11 +132,5 @@ export default {
 		border: 1px solid #80808073;
 		margin: 20px;
 		width: min-content;
-	}
-	.first-h3 {
-		margin-top: 0px;
-	}
-	.first-h2 {
-		margin-top: 40px;
 	}
 </style>

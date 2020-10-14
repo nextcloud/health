@@ -8,6 +8,7 @@
 					<ActionButton icon="icon-menu-sidebar" @click="$store.commit('showSidebar', !showSidebar)" />
 				</Actions>
 			</div>
+			<PersonsContent v-if="person && activeModule === 'person'" />
 			<WeightContent v-if="person && activeModule === 'weight' && person.enabledModuleWeight" />
 		</AppContent>
 		<AppSidebar
@@ -43,6 +44,7 @@ import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import WeightContent from './modules/weight/WeightContent'
 import { mapState, mapGetters } from 'vuex'
+import PersonsContent from './modules/persons/PersonsContent'
 
 export default {
 	name: 'App',
@@ -58,6 +60,7 @@ export default {
 		WeightSidebar,
 		PersonsSidebar,
 		WeightContent,
+		PersonsContent,
 	},
 	data: function() {
 		return {
@@ -91,6 +94,9 @@ export default {
 		position: fixed;
 		right: 0px;
 		z-index: 1001;
+	}
+	h2 {
+		margin-top: 40px;
 	}
 	h3 {
 		font-size: 20px;

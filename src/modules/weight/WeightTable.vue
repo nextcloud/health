@@ -205,11 +205,13 @@ export default {
 				date: this.$refs.weightinsertdate.value,
 				bodyfat: this.$refs.weightinsertbodyfat.value,
 			}
+			console.debug(row)
 			this.$refs.weightinsertweight.value = ''
-			this.$refs.weightinsertmeasurement.value = ''
+			if (this.$refs.weightinsertmeasurement !== undefined) {
+				this.$refs.weightinsertmeasurement.value = ''
+			}
 			this.$refs.weightinsertdate.value = ''
 			this.$refs.weightinsertbodyfat.value = ''
-			console.debug(row)
 			this.$store.dispatch('insertWeightData', row)
 			this.showAddRow = false
 		},
