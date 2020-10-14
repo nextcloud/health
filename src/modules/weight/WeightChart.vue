@@ -59,7 +59,8 @@
 			icon="icon-category-monitoring">
 			No data for a chart
 			<template #desc>
-				More than one dataset is required.
+				More than one dataset is required.<br>
+				<span v-if="data.length > 1">You selected to show only data from the last {{ chartDateRange }}.</span>
 			</template>
 		</EmptyContent>
 	</div>
@@ -145,30 +146,10 @@ export default {
 				datasets: [
 					{
 						label: 'Weight',
-						borderColor: 'darkblue',
+						borderColor: '#0082c9',
 						fill: false,
 						data: data,
 						yAxisID: 'weight',
-					},
-					{
-						label: this.person.weightMeasurementName,
-						backgroundColor: 'lightgray',
-						borderColor: 'gray',
-						borderWidth: 1,
-						fill: true,
-						data: measurement,
-						type: 'bar',
-						yAxisID: 'percent',
-					},
-					{
-						label: 'Bodyfat',
-						backgroundColor: 'gray',
-						borderColor: 'darkgray',
-						borderWidth: 1,
-						fill: false,
-						data: bodyfat,
-						type: 'bar',
-						yAxisID: 'percent',
 					},
 					{
 						label: 'Target',
@@ -191,6 +172,26 @@ export default {
 							5,
 						],
 						yAxisID: 'weight',
+					},
+					{
+						label: this.person.weightMeasurementName,
+						backgroundColor: 'lightgray',
+						// borderColor: 'gray',
+						borderWidth: 1,
+						fill: true,
+						data: measurement,
+						type: 'bar',
+						yAxisID: 'percent',
+					},
+					{
+						label: 'Bodyfat',
+						backgroundColor: 'gray',
+						// borderColor: 'darkgray',
+						borderWidth: 1,
+						fill: false,
+						data: bodyfat,
+						type: 'bar',
+						yAxisID: 'percent',
 					},
 				],
 			}

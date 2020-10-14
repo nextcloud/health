@@ -31,7 +31,7 @@
 				icon="icon-user"
 				:editable="true"
 				edit-label="edit name"
-				:class="(index === activePersonId)?'active':''"
+				:class="(index === activePersonId)?'active-person':''"
 				@update:menuOpen="menuOpenPersonId = index"
 				@update:title="personUpdateName"
 				@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'person')">
@@ -54,16 +54,19 @@
 					v-if="p.enabledModuleWeight"
 					title="Weight"
 					icon="icon-quota"
+					:class="(activeModule === 'weight' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'weight')" />
 				<AppNavigationItem
 					v-if="p.enabledModuleBreaks"
 					title="Breaks"
 					icon="icon-pause"
+					:class="(activeModule === 'breaks' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'breaks')" />
 				<AppNavigationItem
 					v-if="p.enabledModuleFeeling"
 					title="Feeling"
 					icon="icon-category-monitoring"
+					:class="(activeModule === 'feeling' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'feeling')" />
 			</AppNavigationItem>
 			<AppNavigationItem
@@ -154,5 +157,17 @@ export default {
 	}
 	.app-navigation__list {
 		display: none;
+	}
+	.active-person {
+		background-color: var(--color-background-dark);
+	}
+	.active-person:hover {
+		background-color: var(--color-background-darker);
+	}
+	.active-module {
+		background-color: var(--color-background-darker);
+	}
+	.active-module:hover {
+		background-color: var(--color-text-maxcontrast);
 	}
 </style>

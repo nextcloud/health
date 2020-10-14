@@ -31,7 +31,7 @@
 			@submit="updateWeightUnit" />
 		<li>
 			<h4>
-				Measurement Name<span><br>What else do you want to track? Set here a name for it and you can add data in the data-table. The values have to be numbers.</span>
+				Measurement Name<span><br>What else do you want to track? Set here a name and you can add data in the data-table. The values have to be numbers.</span>
 			</h4>
 		</li>
 		<ActionInput

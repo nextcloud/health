@@ -172,19 +172,17 @@ export default {
 			return this.weightData
 		},
 		hasMeasurement: function() {
-			return (this.weightMeasurementName !== '' && this.weightMeasurementName !== null)
+			if (this.person.weightMeasurementName === '' || this.person.weightMeasurementName === null) {
+				return false
+			}
+			return true
 		},
 		today: function() {
 			return moment().format('YYYY-MM-DD')
 		},
 	},
 	methods: {
-		async addDataRow() {
-			await this.$store.dispatch('addWeightData')
-			console.debug('set editRow to 0')
-			this.editRowId = 0
-		},
-		async updateTableData() {
+		updateTableData() {
 			console.debug('updateTableData refs:')
 			console.debug(this.$refs)
 			const row = {
@@ -195,8 +193,7 @@ export default {
 				bodyfat: this.$refs.weightinputbodyfat[0].value,
 			}
 			console.debug(row)
-			await this.$store.dispatch('updateWeightData', row)
-			await this.$store.dispatch('sortWeightData')
+			this.$store.dispatch('updateWeightData', row)
 			this.editRowId = null
 		},
 		insertTableData: function() {

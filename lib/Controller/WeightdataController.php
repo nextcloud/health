@@ -82,10 +82,10 @@ class WeightdataController extends Controller {
 	 * @NoAdminRequired
 	 *
      * @param int $id
+     * @param float $weight
+     * @param float $measurement
+     * @param float $bodyfat
      * @param string $date
-     * @param string $weight
-     * @param string $measurement
-     * @param string $bodyfat
 	 */
 	public function update($id, $date, $weight, $measurement, $bodyfat) {
 		return new DataResponse($this->weightdataService->update($id, $date, $weight, $measurement, $bodyfat));

@@ -22,7 +22,15 @@
 
 <template>
 	<div>
-		<h2>Weight <span>for {{ person.name }}</span></h2>
+		<h2 class="first-h2">
+			Weight <span>for {{ person.name }}</span>
+		</h2>
+		<div>
+			<WeightBmi
+				:size="person.size"
+				:age="person.age"
+				:weight="lastWeight" />
+		</div>
 		<div v-if="person.weightTarget != '' && person.weightTarget != null">
 			<h3>Target</h3>
 			<div v-if="lastWeight">
@@ -39,8 +47,11 @@
 				<p v-if="lastWeight > person.weightTarget && lastWeight > person.weightTargetInitialWeight">
 					Ups, you become more and more. Be careful!
 				</p>
-				<p v-if="lastWeight <= person.weightTarget">
+				<p v-if="lastWeight <= person.weightTarget" class="green">
 					Good, you reached your target!
+				</p>
+				<p v-if="lastWeight <= person.weightTarget" class="bountybox">
+					{{ person.weightTargetBounty }}
 				</p>
 			</div>
 			<div v-else>
@@ -52,10 +63,12 @@
 		</div>
 		<h3>Chart</h3>
 		<WeightChart
+			v-show="weightData"
 			:person="person"
 			:data="weightData" />
 		<h3>Data</h3>
-		<WeightTable />
+		<WeightTable
+			v-show="weightData" />
 		<p v-show="dataInsertInfo" class="dataInsertInfo">
 			{{ dataInsertInfo }}
 		</p>
@@ -67,6 +80,7 @@ import ProgressBar from '@nextcloud/vue/dist/Components/ProgressBar'
 import WeightTable from './WeightTable.vue'
 import WeightChart from './WeightChart'
 import { mapState, mapGetters } from 'vuex'
+import WeightBmi from './WeightBmi'
 
 export default {
 	name: 'WeightContent',
@@ -74,6 +88,7 @@ export default {
 		ProgressBar,
 		WeightTable,
 		WeightChart,
+		WeightBmi,
 	},
 	data: function() {
 		return {
@@ -104,5 +119,24 @@ export default {
 	.progress-bar.small {
 		width: 35%;
 		height: 6px !important;
+	}
+	.green {
+		color: green;
+		font-weight: 500;
+		padding-left: 20px;
+		padding-right: 20px;
+		padding-top: 20px;
+	}
+	.bountybox {
+		padding: 10px;
+		border: 1px solid #80808073;
+		margin: 20px;
+		width: min-content;
+	}
+	.first-h3 {
+		margin-top: 0px;
+	}
+	.first-h2 {
+		margin-top: 40px;
 	}
 </style>

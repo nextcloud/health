@@ -43,25 +43,10 @@ export default new Vuex.Store({
 		weightData: null,
 	},
 	getters: {
-		// NEW -----
 		person: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId] : null,
 		personsLength: state => state.persons ? state.persons.length : 0,
-		// OLD -----
-		activePersonId: state => state.activePersonId,
-		persons: state => (state.persons) ? state.persons : null,
-		personName: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].name : '',
-		personAge: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].age : null,
-		personSize: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].size : null,
-		personSex: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].sex : '',
-		personModuleWeight: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].enabledModuleWeight : false,
-		weightTarget: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightTarget : null,
-		weightUnit: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightUnit : null,
-		weightTargetInitialWeight: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightTargetInitialWeight : null,
-		weightTargetBounty: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightTargetBounty : null,
-		weightMeasurementName: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId].weightMeasurementName : null,
 	},
 	mutations: {
-		// NEW -----
 		persons(state, persons) {
 			state.persons = persons.slice()
 		},
@@ -74,43 +59,12 @@ export default new Vuex.Store({
 		weightData(state, data) {
 			state.weightData = data
 		},
+		setWeightData(state, value) {
+			state.persons[state.activePersonId].weightdata = value
+		},
 		// directly called (without actions)
 		showSidebar(state, bool) {
 			state.showSidebar = bool
-		},
-		// OLD -----
-		updatePersonName(state, o) {
-			state.persons[o.id].name = o.name
-		},
-		updatePersonAge(state, age) {
-			state.persons[state.activePersonId].age = parseInt(age, 0)
-		},
-		updatePersonSex(state, sex) {
-			state.persons[state.activePersonId].sex = sex
-		},
-		updatePersonSize(state, size) {
-			state.persons[state.activePersonId].size = parseInt(size, 0)
-		},
-		updatePersonEnabledModuleWeight(state, value) {
-			state.persons[state.activePersonId].enabledModuleWeight = value
-		},
-		updatePersonWeightUnit(state, value) {
-			state.persons[state.activePersonId].weightUnit = value
-		},
-		updatePersonWeightTarget(state, value) {
-			state.persons[state.activePersonId].weightTarget = parseInt(value)
-		},
-		updatePersonWeightTargetBounty(state, value) {
-			state.persons[state.activePersonId].weightTargetBounty = value
-		},
-		updatePersonWeightTargetInitialWeight(state, value) {
-			state.persons[state.activePersonId].weightTargetInitialWeight = parseInt(value)
-		},
-		updatePersonWeightMeasurementName(state, value) {
-			state.persons[state.activePersonId].weightMeasurementName = value
-		},
-		setWeightData(state, value) {
-			state.persons[state.activePersonId].weightdata = value
 		},
 	},
 	actions: {
@@ -267,40 +221,14 @@ export default new Vuex.Store({
 			})
 			commit('setWeightData', d)
 		},
-		// OLD -----
-		updatePerson: function({ context, getters, commit }, data) {
-			console.debug('depricated function: updatePerson')
-			if (!('id' in data)) {
-				data.id = getters.activePersonId
-			}
-			const p = getters.persons[data.id]
-			axios.put(generateUrl('/apps/health/persons/' + p.id), { key: data.key, value: '' + data.value })
-				.then(
-					(response) => {
-						// console.debug('debug axUpdatePersons SUCCESS-------------')
-						console.debug(response)
-						const method = 'updatePerson' + data.key[0].toUpperCase() + data.key.slice(1)
-						commit(method, data.value)
-						// const p = response.data
-					},
-					(err) => {
-						console.debug('debug axUpdatePersons ERROR-------------')
-						console.debug(err)
-					}
-				)
-				.catch((err) => {
-					console.debug('error detected')
-					console.debug(err)
-				})
-		},
-		insertWeightData({ dispatch, getters, commit }, row) {
+		insertWeightData({ dispatch, getters, commit, state }, row) {
 			console.debug('start function: insertWeightData')
 			axios.post(generateUrl('/apps/health/weightdata/person/' + getters.person.id + '/create'), row)
 				.then(
 					(response) => {
 						console.debug('debug axInsertWeightData SUCCESS-------------')
 						console.debug(response)
-						const d = getters.person.weightdata
+						const d = state.weightData
 						d.unshift(response.data)
 						commit('setWeightData', d)
 						dispatch('sortWeightData')
@@ -316,24 +244,21 @@ export default new Vuex.Store({
 				})
 			return false
 		},
-		async updateWeightData({ context, getters, commit }, data) {
-			console.debug('depricated function: updateWeightData')
-			const axdata = {
-				weight: data.weight,
-				date: data.date,
-				bodyfat: data.bodyfat,
-				measurement: data.measurement,
-			}
-			axios.put(generateUrl('/apps/health/weightdata/update/' + getters.person.weightdata[data.id].id), axdata)
+		updateWeightData({ dispatch, state, commit }, data) {
+			console.debug('start function: updateWeightData')
+			const serverId = state.weightData[data.id].id
+			const clientId = data.id
+			delete data.id
+			axios.put(generateUrl('/apps/health/weightdata/update/' + serverId), data)
 				.then(
 					(response) => {
 						console.debug('debug axUpdateWeightData SUCCESS-------------')
 						console.debug(response)
-						const d = getters.person.weightdata
-						d.splice(data.id, 1)
+						const d = state.weightData
+						d.splice(clientId, 1)
 						d.unshift(response.data)
 						commit('setWeightData', d)
-						context.sortWeightData()
+						dispatch('sortWeightData')
 					},
 					(err) => {
 						console.debug('debug axUpdateWeightData ERROR-------------')
@@ -344,21 +269,15 @@ export default new Vuex.Store({
 					console.debug('error detected')
 					console.debug(err)
 				})
-			// const d = getters.person.weightdata
-			// d[data.id].weight = data.weight
-			// d[data.id].measurement = data.measurement
-			// d[data.id].date = data.date
-			// d[data.id].bodyfat = data.bodyfat
-			// commit('setWeightData', d)
 		},
-		deleteWeightDataRow: function({ context, getters, commit }, i) {
+		deleteWeightDataRow: function({ context, state, commit }, i) {
 			console.debug('depricated function: deleteWeightDatarow')
-			axios.delete(generateUrl('/apps/health/weightdata/delete/' + getters.person.weightdata[i].id))
+			axios.delete(generateUrl('/apps/health/weightdata/delete/' + state.weightData[i].id))
 				.then(
 					(response) => {
 						console.debug('debug axDeleteWeightData SUCCESS-------------')
 						console.debug(response)
-						const d = getters.person.weightdata
+						const d = state.weightData
 						d.splice(i, 1)
 						commit('setWeightData', d)
 					},
