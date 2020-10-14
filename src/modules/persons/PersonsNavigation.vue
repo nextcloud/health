@@ -22,7 +22,7 @@
 
 <template>
 	<AppNavigation>
-		<ul>
+		<template #list>
 			<AppNavigationItem v-for="(p, index) in persons"
 				:key="index"
 				:title="p.name"
@@ -101,7 +101,7 @@
 					</form>
 				</div>
 			</AppNavigationItem>
-		</ul>
+		</template>
 	</AppNavigation>
 </template>
 

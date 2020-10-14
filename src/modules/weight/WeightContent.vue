@@ -31,8 +31,8 @@
 				:age="person.age"
 				:weight="lastWeight" />
 		</div>
+		<h3>Target</h3>
 		<div v-if="person.weightTarget != '' && person.weightTarget != null">
-			<h3>Target</h3>
 			<div v-if="lastWeight">
 				<p>You started with {{ person.weightTargetInitialWeight }}{{ person.weightUnit }} for your target. Your actual weight is now {{ lastWeight }}{{ person.weightUnit }} and your target values {{ person.weightTarget }}{{ person.weightUnit }}.</p>
 				<p v-if="lastWeight > person.weightTarget && lastWeight < person.weightTargetInitialWeight">
@@ -59,7 +59,7 @@
 			</div>
 		</div>
 		<div v-else>
-			If you want, you can set a target for your weight. Do this in the settings in the sidebar. You will see right here how much you lost and what is left. Maybe you can be motivated this way.
+			<p>If you want, you can set a target for your weight. Do this in the settings in the sidebar. You will see right here how much you lost and what is left. Maybe you can be motivated this way.</p>
 		</div>
 		<h3>Chart</h3>
 		<WeightChart
