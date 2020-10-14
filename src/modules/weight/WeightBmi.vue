@@ -23,7 +23,7 @@
 <template>
 	<div>
 		<h3>
-			Body mass index (BMI)
+			{{ t('health', 'Body mass index (BMI)') }}
 		</h3>
 		<div v-if="bmi">
 			<div class="bmi" :class="statusClass">
@@ -33,11 +33,11 @@
 				{{ status }}
 			</div>
 			<p class="hint">
-				The calculated value is valid only for adults. Its base are the tables from the WHO.
+				{{ t('health', 'The calculated value is valid only for adults. Its base are the tables from the WHO.') }}
 			</p>
 		</div>
 		<p v-if="!bmi">
-			To calculate your BMI, please set your weight in the table below and you age and size in the person settings.
+			{{ t('health', 'To calculate your BMI, please set your weight in the table below and you age and size in the person settings.') }}
 		</p>
 	</div>
 </template>
@@ -83,17 +83,17 @@ export default {
 			}
 
 			if (bmi < 18.5) {
-				return 'Underweight'
+				return t('health', 'Underweight')
 			} else if (bmi >= 18.5 && bmi < 25) {
-				return 'Normal weight'
+				return t('health', 'Normal weight')
 			} else if (bmi >= 25 && bmi < 30) {
-				return 'Pre-obesity'
+				return t('health', 'Pre-obesity')
 			} else if (bmi >= 30 && bmi < 35) {
-				return 'Obesity class I'
+				return t('health', 'Obesity class I')
 			} else if (bmi >= 35 && bmi < 40) {
-				return 'Obesity class II'
+				return t('health', 'Obesity class II')
 			} else {
-				return 'Obesity class III'
+				return t('health', 'Obesity class III')
 			}
 		},
 		statusClass: function() {

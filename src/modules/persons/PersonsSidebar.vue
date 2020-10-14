@@ -22,14 +22,14 @@
 
 <template>
 	<ul>
-		<li><h3>General settings</h3></li>
-		<li><h4>Age</h4></li>
+		<li><h3>{{ t('health', 'General settings') }}</h3></li>
+		<li><h4>{{ t('health', 'Age') }}</h4></li>
 		<ActionInput
 			type="number"
 			:value="person.age"
 			icon="icon-user"
 			@submit="updateAge" />
-		<li><h4>Size<span>in cm</span></h4></li>
+		<li><h4>{{ t('health', 'Size') }}<span>{{ t('health', 'in cm') }}</span></h4></li>
 		<ActionInput
 			type="number"
 			:value="person.size"
@@ -50,43 +50,42 @@
 			@change="updateSex('male')">
 			male
 		</ActionRadio>
-		<li><h3>Manage modules</h3></li>
+		<li><h3>{{ t('health', 'Manage modules') }}</h3></li>
 		<ActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleWeight"
 			value="weight"
 			@change="updateEnabledModules">
-			Weight
+			{{ t('health', 'Weight') }}
 		</ActionCheckbox>
-		<h4>coming soon</h4>
-		<hr>
+		<h4>{{ t('health', 'coming soon') }}</h4>
 		<ActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleBreaks"
 			value="breaks"
 			@change="updateEnabledModules">
-			Breaks
+			{{ t('health', 'Breaks') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleFeeling"
 			value="feeling"
 			@change="updateEnabledModules">
-			Feeling
+			{{ t('health', 'Feeling') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleMedicin"
 			value="medicin"
 			@change="updateEnabledModules">
-			Medicin
+			{{ t('health', 'Medicin') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleActivities"
 			value="activities"
 			@change="updateEnabledModules">
-			Activities
+			{{ t('health', 'Activities') }}
 		</ActionCheckbox>
 	</ul>
 </template>

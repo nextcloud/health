@@ -30,7 +30,7 @@
 				:open="(index === 0)?true:false"
 				icon="icon-user"
 				:editable="true"
-				edit-label="edit name"
+				:edit-label="t('health', 'edit name')"
 				:class="(index === activePersonId)?'active-person':''"
 				@update:menuOpen="menuOpenPersonId = index"
 				@update:title="personUpdateName"
@@ -40,49 +40,49 @@
 						:close-after-click="true"
 						icon="icon-detail"
 						@click="$store.commit('showSidebar', true); $store.dispatch('setActivePerson', index)">
-						Show details
+						{{ t('health', 'Show details') }}
 					</ActionButton>
 					<ActionButton
 						v-show="personsLength != 1"
 						:close-after-click="true"
 						icon="icon-delete"
 						@click="$store.dispatch('deletePerson', menuOpenPersonId)">
-						Delete
+						{{ t('health', 'Delete') }}
 					</ActionButton>
 				</template>
 				<AppNavigationItem
 					v-if="p.enabledModuleWeight"
-					title="Weight"
+					:title="t('health', 'Weight')"
 					icon="icon-quota"
 					:class="(activeModule === 'weight' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'weight')" />
 				<AppNavigationItem
 					v-if="p.enabledModuleBreaks"
-					title="Breaks"
+					:title="t('health', 'Breaks')"
 					icon="icon-pause"
 					:class="(activeModule === 'breaks' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'breaks')" />
 				<AppNavigationItem
 					v-if="p.enabledModuleFeeling"
-					title="Feeling"
+					:title="t('health', 'Feeling')"
 					icon="icon-category-monitoring"
 					:class="(activeModule === 'feeling' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'feeling')" />
 				<AppNavigationItem
 					v-if="p.enabledModuleMedicin"
-					title="Medicin"
+					:title="t('health', 'Medicin')"
 					icon="icon-toggle-filelist"
 					:class="(activeModule === 'medicin' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'medicin')" />
 				<AppNavigationItem
 					v-if="p.enabledModuleActivities"
-					title="Activities"
+					:title="t('health', 'Activities')"
 					icon="icon-user-admin"
 					:class="(activeModule === 'activities' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'activities')" />
 			</AppNavigationItem>
 			<AppNavigationItem
-				title="New person"
+				:title="t('health', 'New person')"
 				icon="icon-add"
 				:pinned="false"
 				@click.prevent.stop="showNewPersonForm = true">
@@ -91,7 +91,7 @@
 						@submit.prevent.stop="createPerson">
 						<input
 							ref="newPersonName"
-							:placeholder="'Name'"
+							:placeholder="t('health', 'Name')"
 							type="text"
 							required>
 						<input type="submit" value="" class="icon-confirm">

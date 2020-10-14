@@ -22,13 +22,13 @@
 
 <template>
 	<div class="content-wrapper-health">
-		<h2>Welcome to your health center</h2>
-		<p>You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if the things getting worth is also a good idea...</p>
+		<h2>{{ t('health', 'Welcome to your health center') }}</h2>
+		<p>{{ t('health', 'You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if the things getting worth is also a good idea...') }}</p>
 		<textarea ref="mission" class="textarea-mission" :value="person.personalMission" />
 		<br>
 		<button
 			@click="updateMission">
-			Save
+			{{ t('health', 'Save') }}
 		</button>
 	</div>
 </template>

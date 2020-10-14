@@ -11,7 +11,7 @@ export default {
 		// const timeFormat = 'DD/MM/YYYY'
 		const options = {
 			title: {
-				text: 'Weight Chart',
+				text: t('health', 'Weight Chart'),
 			},
 			responsive: true,
 			scales: {
@@ -57,7 +57,7 @@ export default {
 						},
 						scaleLabel: {
 							display: true,
-							labelString: 'weight',
+							labelString: t('health', 'weight'),
 						},
 					},
 					{
@@ -71,7 +71,7 @@ export default {
 						},
 						scaleLabel: {
 							display: true,
-							labelString: 'Custom values',
+							labelString: t('health', 'Custom values'),
 						},
 						ticks: {
 							// sampleSize: 10,

@@ -28,16 +28,16 @@
 				v-model="chartDateRange"
 				name="chartDataRangeSelector">
 				<option value="week">
-					Show chart for the last week
+					{{ t('health', 'Show chart for the last week') }}
 				</option>
 				<option value="month">
-					Show chart for the last month
+					{{ t('health', 'Show chart for the last month') }}
 				</option>
 				<option value="year">
-					Show chart for the last year
+					{{ t('health', 'Show chart for the last year') }}
 				</option>
 				<option value="all">
-					Show all
+					{{ t('health', 'Show all') }}
 				</option>
 			</select>
 		</div>
@@ -49,18 +49,18 @@
 		<p
 			v-show="getChartData.datasets[0].data.length > 1"
 			class="chartLegend">
-			<span class="green">Green</span> striped line is your target value.<br>
-			<span class="darkred">Red</span> dotted is your initial start weight for targetting.<br>
-			And <span class="blue">blue</span> shows the weight you inserted.<br>
-			Your personal measure is <span class="darkgray">dark gray</span> and the bodyfat <span class="gray">lightgray</span>.
+			{{ t('health', 'Green striped line is your target value.') }}<br>
+			{{ t('health', 'Red dotted is your initial start weight for targetting.') }}<br>
+			{{ t('health', 'And blue shows the weight you inserted.') }}<br>
+			{{ t('health', 'Your personal measure is dark gray and the bodyfat lightgray.') }}
 		</p>
 		<EmptyContent
 			v-if="data && getChartData.datasets[0].data.length <= 1"
 			icon="icon-category-monitoring">
 			No data for a chart
 			<template #desc>
-				More than one dataset is required.<br>
-				<span v-if="data.length > 1">You selected to show only data from the last {{ chartDateRange }}.</span>
+				{{ t('health', 'More than one dataset is required.') }}<br>
+				<span v-if="data.length > 1">{{ t('health', 'You selected to show only data from the last {chartDateRange}.', {chartDateRange: chartDateRange}) }}</span>
 			</template>
 		</EmptyContent>
 	</div>

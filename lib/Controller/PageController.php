@@ -45,7 +45,7 @@ class PageController extends Controller {
 	public function index() {
 		Util::addScript($this->appName, 'vue-chartjs.min');
 		Util::addScript($this->appName, 'Chart');
-		Util::addScript($this->appName, 'vueexample');
+		Util::addScript($this->appName, 'health');
 		Util::addStyle($this->appName, 'icons');
 		//Util::addStyle($this->appName, 'bulma.min');
 
