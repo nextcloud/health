@@ -58,6 +58,8 @@
 			@change="updateEnabledModules">
 			Weight
 		</ActionCheckbox>
+		<h4>coming soon</h4>
+		<hr>
 		<ActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleBreaks"
@@ -71,6 +73,20 @@
 			value="feeling"
 			@change="updateEnabledModules">
 			Feeling
+		</ActionCheckbox>
+		<ActionCheckbox
+			v-if="person"
+			:checked="person.enabledModuleMedicin"
+			value="medicin"
+			@change="updateEnabledModules">
+			Medicin
+		</ActionCheckbox>
+		<ActionCheckbox
+			v-if="person"
+			:checked="person.enabledModuleActivities"
+			value="activities"
+			@change="updateEnabledModules">
+			Activities
 		</ActionCheckbox>
 	</ul>
 </template>

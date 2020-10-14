@@ -88,6 +88,10 @@
             ]);
             $table->addColumn('enabled_module_feeling', 'boolean', [
             ]);
+            $table->addColumn('enabled_module_medicin', 'boolean', [
+            ]);
+            $table->addColumn('enabled_module_activities', 'boolean', [
+            ]);
             $table->addColumn('sex', 'string', [
                 'length' => 6
             ]);

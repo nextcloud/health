@@ -68,6 +68,18 @@
 					icon="icon-category-monitoring"
 					:class="(activeModule === 'feeling' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'feeling')" />
+				<AppNavigationItem
+					v-if="p.enabledModuleMedicin"
+					title="Medicin"
+					icon="icon-toggle-filelist"
+					:class="(activeModule === 'medicin' && index === activePersonId)?'active-module':''"
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'medicin')" />
+				<AppNavigationItem
+					v-if="p.enabledModuleActivities"
+					title="Activities"
+					icon="icon-user"
+					:class="(activeModule === 'activities' && index === activePersonId)?'active-module':''"
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'activities')" />
 			</AppNavigationItem>
 			<AppNavigationItem
 				title="New person"
@@ -168,6 +180,6 @@ export default {
 		background-color: var(--color-background-darker);
 	}
 	.active-module:hover {
-		background-color: var(--color-text-maxcontrast);
+		background-color: var(--color-background-darker);
 	}
 </style>
