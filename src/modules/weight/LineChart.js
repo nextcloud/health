@@ -64,7 +64,7 @@ export default {
 						id: 'percent',
 						position: 'right',
 						gridLines: {
-							// display: true,
+							display: false,
 							// lineWidth: 1,
 							// drawOnChartArea: true,
 							// drawTicks: true,
@@ -81,7 +81,7 @@ export default {
 				],
 			},
 			tooltips: {
-				enabled: false,
+				enabled: true,
 				// position: 'nearest',
 				// mode: 'nearest',
 				// intersect: false,
