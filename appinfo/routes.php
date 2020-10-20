@@ -24,11 +24,12 @@
 return [
 	'resources' => [
         'persons' => ['url' => '/persons'],
-        // 'weightdata' => ['url' => '/weightdata']
     ],
-    'routes' => [
+    'routes' => [    	
 	   ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
+	   ['name' => 'persons#data', 'url' => '/person/{personId}/data', 'verb' => 'GET'],
 	   ['name' => 'weightdata#index', 'url' => '/weightdata/person/{personId}', 'verb' => 'GET'],
+	   // ['name' => 'weightdata#last', 'url' => '/weightdata/person/{personId}/last', 'verb' => 'GET'],
 	   ['name' => 'weightdata#create', 'url' => '/weightdata/person/{personId}/create', 'verb' => 'POST'],
 	   ['name' => 'weightdata#destroy', 'url' => '/weightdata/delete/{id}', 'verb' => 'DELETE'],
 	   ['name' => 'weightdata#update', 'url' => '/weightdata/update/{id}', 'verb' => 'PUT'],

@@ -41,6 +41,7 @@ export default new Vuex.Store({
 		// .
 		// individual data for actual person
 		weightData: null,
+		personData: null,
 	},
 	getters: {
 		person: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId] : null,
@@ -58,6 +59,9 @@ export default new Vuex.Store({
 		},
 		weightData(state, data) {
 			state.weightData = data
+		},
+		personData(state, data) {
+			state.personData = data
 		},
 		setWeightData(state, value) {
 			state.persons[state.activePersonId].weightdata = value
@@ -106,6 +110,9 @@ export default new Vuex.Store({
 			// it should load all data, that is neccessary for the active module
 			console.debug('debug: start loading loadModuleContentForPerson')
 
+			commit('weightData', null)
+			commit('personData', null)
+
 			if (state.activeModule === 'weight') {
 				console.debug('debug: start loading weightdata')
 				axios.get(generateUrl('/apps/health/weightdata/person/' + getters.person.id))
@@ -118,6 +125,24 @@ export default new Vuex.Store({
 						},
 						(err) => {
 							console.debug('debug axLoadWeightdata ERROR-------------')
+							console.debug(err)
+						}
+					)
+					.catch((err) => {
+						console.debug('error detected')
+						console.debug(err)
+					})
+			} else if (state.activeModule === 'person') {
+				console.debug('debug: start loading persondata')
+				axios.get(generateUrl('/apps/health/person/' + getters.person.id + '/data'))
+					.then(
+						(response) => {
+							console.debug('debug axLoadPersondata SUCCESS-------------')
+							console.debug(response)
+							commit('personData', response.data)
+						},
+						(err) => {
+							console.debug('debug axLoadPersondata ERROR-------------')
 							console.debug(err)
 						}
 					)

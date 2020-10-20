@@ -44,6 +44,10 @@ class WeightdataService {
 		return $this->weightdataMapper->findAll($personId);
 	}
 
+	public function getLastWeight($personId) {
+		return $this->weightdataMapper->findLast($personId);		
+	}
+
 	public function create($personId, $weight, $measurement, $bodyfat, $date) {
 		$time = new \DateTime();
 		$date = new \DateTime($date);

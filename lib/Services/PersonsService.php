@@ -92,4 +92,10 @@ class PersonsService {
          return $person;
 	}
 
+	public function getData($personId) {
+		return [
+			'lastWeight' => $this->weightdataService->getLastWeight($personId)
+		];
+	}
+
 }
