@@ -20,7 +20,6 @@
 	-
 	-->
 
-
 <template>
 	<Content :class="{'icon-loading': loading}" app-name="health">
 		<PersonsNavigation />
