@@ -24,7 +24,7 @@
 	<div class="content-wrapper-health">
 		<h2>{{ t('health', 'Welcome to your health center') }}</h2>
 		<div class="widgets">
-			<div v-if="person && personData" class="widget">
+			<div v-if="person && personData && personData.lastWeight" class="widget">
 				<h3>{{ t('health', 'Weight') }}</h3>
 				<div class="date">
 					{{ personData.lastWeight.date | formatMyDate }}

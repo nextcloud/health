@@ -1,6 +1,8 @@
 <?php
 namespace OCA\Health\Db;
 
+use OCP\AppFramework\Db\DoesNotExistException;
+use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCP\IDbConnection;
 use OCP\AppFramework\Db\QBMapper;
 
@@ -31,8 +33,14 @@ class WeightdataMapper extends QBMapper {
         );
         $qb->orderBy('date', 'desc');
         $qb->setMaxResults(1);
-        return $this->findEntity($qb);
-    }
+		try {
+			return $this->findEntity($qb);
+		} catch (DoesNotExistException $e) {
+			return null;
+		} catch (MultipleObjectsReturnedException $e) {
+			return null;
+		}
+	}
 
     public function findAll(int $personId) {
         $qb = $this->db->getQueryBuilder();
