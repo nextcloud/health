@@ -1,5 +1,5 @@
 <!--
-	- @copyright Copyright (c) 2019 Florian Steffens
+	- @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
 	-
 	- @author Florian Steffens
 	-

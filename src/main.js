@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2018 John Molakvoæ <skjnldsv@protonmail.com>
+ * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
  *
  * @author Florian Steffens <flost-dev@mailbox.org>
  *
@@ -19,6 +19,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { translate, translatePlural } from 'nextcloud-l10n'

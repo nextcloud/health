@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 /**
- * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>
+ * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
  *
  * @author Florian Steffens <flost-dev@mailbox.org>
  *

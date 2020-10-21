@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>
+ * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
  *
  * @author Florian Steffens <flost-dev@mailbox.org>
  *
@@ -25,7 +25,7 @@ return [
 	'resources' => [
         'persons' => ['url' => '/persons'],
     ],
-    'routes' => [    	
+    'routes' => [
 	   ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
 	   ['name' => 'persons#data', 'url' => '/person/{personId}/data', 'verb' => 'GET'],
 	   ['name' => 'weightdata#index', 'url' => '/weightdata/person/{personId}', 'verb' => 'GET'],
