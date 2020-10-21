@@ -296,7 +296,7 @@ export default new Vuex.Store({
 				})
 		},
 		deleteWeightDataRow: function({ context, state, commit }, i) {
-			console.debug('depricated function: deleteWeightDatarow')
+			console.debug('function: deleteWeightDatarow')
 			axios.delete(generateUrl('/apps/health/weightdata/delete/' + state.weightData[i].id))
 				.then(
 					(response) => {

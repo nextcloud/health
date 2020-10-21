@@ -32,7 +32,7 @@
 				<div class="firstNumber">
 					{{ personData.lastWeight.weight }}<span>kg</span>
 				</div>
-				<div class="secondNumber">
+				<div v-if="person.weightTarget" class="secondNumber">
 					<span>{{ t('health', 'Target') }}</span>{{ person.weightTarget }}<span>{{ person.weightUnit }}</span>
 				</div>
 			</div>

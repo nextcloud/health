@@ -228,6 +228,6 @@ export default {
 		color: darkred;
 	}
 	.weight-chart {
-		width: 70%;
+		width: 95%;
 	}
 </style>

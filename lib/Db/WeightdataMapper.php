@@ -23,14 +23,13 @@ class WeightdataMapper extends QBMapper {
     }
 
     public function findLast(int $personId) {
-
         $qb = $this->db->getQueryBuilder();
 
         $qb->select('*')
             ->from($this->getTableName())
             ->where($qb->expr()->eq('person_id', $qb->createNamedParameter($personId))
         );
-        $qb->orderBy('lastupdate_time', 'desc');
+        $qb->orderBy('date', 'desc');
         $qb->setMaxResults(1);
         return $this->findEntity($qb);
     }

@@ -182,4 +182,7 @@ export default {
 	.active-module:hover {
 		background-color: var(--color-background-darker);
 	}
+	.app-navigation-entry:hover {
+		background-color: var(--color-background-darker);
+	}
 </style>

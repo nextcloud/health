@@ -55,4 +55,9 @@ class PermissionService {
         return false;
 	}
 
+	public function weightData($id, $userId) {
+		// TODO
+		return true;
+	}
+
 }

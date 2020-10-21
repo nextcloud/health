@@ -59,7 +59,7 @@ class WeightdataService {
 	}
 
 	public function create($personId, $weight, $measurement, $bodyfat, $date) {
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+		if( !$this->permissionService->weightData($personId, $this->userId)) {
 			return null;
 		}
 		$time = new \DateTime();
@@ -87,7 +87,7 @@ class WeightdataService {
 	}
 
 	public function delete($id) {
-		if( !$this->permissionService->personData($id, $this->userId)) {
+		if( !$this->permissionService->weightData($id, $this->userId)) {
 			return null;
 		}
 		try {
@@ -99,7 +99,7 @@ class WeightdataService {
 	}
 
 	public function update($id, $date, $weight, $measurement, $bodyfat) {
-		if( !$this->permissionService->personData($id, $this->userId)) {
+		if( !$this->permissionService->weightData($id, $this->userId)) {
 			return null;
 		}
 		try {

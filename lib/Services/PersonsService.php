@@ -28,6 +28,8 @@ use OCA\Health\Db\PersonMapper;
 use OCA\Health\Db\Person;
 use Exception;
 use OCP\AppFramework\Http;
+use OCP\IUser;
+use OCP\IUserManager;
 
 class PersonsService {
 
@@ -36,17 +38,25 @@ class PersonsService {
 	protected String $userId;
 	protected FormatHelperService $formatHelperService;
 	protected PermissionService $permissionService;
+	protected IUserManager $userManager;
 
-	public function __construct(PersonMapper $pM, $userId, WeightdataService $wdS, FormatHelperService $fhS, PermissionService $permissionService) {
+	public function __construct(PersonMapper $pM, $userId, WeightdataService $wdS, FormatHelperService $fhS, PermissionService $permissionService, IUserManager $userManager) {
 		$this->personMapper = $pM;
 		$this->userId = $userId;
 		$this->weightdataService = $wdS;
 		$this->formatHelperService = $fhS;
 		$this->permissionService = $permissionService;
+		$this->userManager = $userManager;
 	}
 
-	public function getAllPersons($full=true) {
-		return $this->personMapper->findAll($this->userId);
+	public function getAllPersons() {
+		$persons = $this->personMapper->findAll($this->userId);
+		if( count($persons) === 0) {
+			$user = $this->userManager->get($this->userId);
+			$this->createPerson( $user->getDisplayName() );
+			$persons = $this->personMapper->findAll($this->userId);
+		}
+		return $persons;
 	}
 
 	public function createPerson($name) {
@@ -62,6 +72,14 @@ class PersonsService {
 		$p->setName($name);
 		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setEnabledModuleWeight(true);
+		/** @noinspection PhpUndefinedMethodInspection */
+		$p->setEnabledModuleBreaks(false);
+		/** @noinspection PhpUndefinedMethodInspection */
+		$p->setEnabledModuleFeeling(false);
+		/** @noinspection PhpUndefinedMethodInspection */
+		$p->setEnabledModuleMedicin(false);
+		/** @noinspection PhpUndefinedMethodInspection */
+		$p->setEnabledModuleActivities(false);
 		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setWeightUnit('kg');
 		return $this->personMapper->insert($p);
