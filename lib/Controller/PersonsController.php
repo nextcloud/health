@@ -56,13 +56,12 @@ class PersonsController extends Controller {
 
 	/**
 	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 * 
+	 *
 	 * @param int $personId
 	 */
 	public function data($personId) {
         return new DataResponse($this->personsService->getData($personId));
-	}	
+	}
 
 	/**
 	 * @NoAdminRequired

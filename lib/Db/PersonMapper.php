@@ -10,16 +10,17 @@ class PersonMapper extends QBMapper {
         parent::__construct($db, 'health_persons', Person::class);
     }
 
-    public function find(int $id, string $userId) {
+    public function find(int $id, string $userId = null) {
         $qb = $this->db->getQueryBuilder();
 
-                    $qb->select('*')
-                             ->from($this->getTableName())
-                             ->where(
-                                     $qb->expr()->eq('id', $qb->createNamedParameter($id))
-                             )->andWhere(
-             $qb->expr()->eq('user_id', $qb->createNamedParameter($userId))
-           );
+        $qb->select('*')
+            ->from($this->getTableName())
+            ->where( $qb->expr()->eq('id', $qb->createNamedParameter($id)) )
+        );
+
+        if($userId !== null) {
+            $qb->andWhere( $qb->expr()->eq('user_id', $qb->createNamedParameter($userId) );
+        }
 
         return $this->findEntity($qb);
     }

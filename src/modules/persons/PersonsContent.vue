@@ -92,8 +92,8 @@ export default {
 	.widget h3 {
 		margin-top: 5px;
 		margin-bottom: 2px;
-    	font-size: large;
-   	}
+		font-size: large;
+	}
 	.widget .date {
 		color: gray;
 		font-size: 0.8em;

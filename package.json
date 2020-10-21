@@ -35,8 +35,8 @@
 		"@nextcloud/axios": "^1.4.0",
 		"@nextcloud/moment": "^1.1.1",
 		"@nextcloud/router": "^1.2.0",
-		"@nextcloud/vue": "^2.7.0",
-		"chart.js": "^2.9.3",
+		"@nextcloud/vue": "^2.8.1",
+		"chart.js": "^2.9.4",
 		"moment": "^2.29.1",
 		"nextcloud-l10n": "^0.1.1",
 		"vue": "^2.6.12",
@@ -51,9 +51,9 @@
 		"node": ">=10.0.0"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.11.6",
+		"@babel/core": "^7.12.3",
 		"@babel/plugin-syntax-dynamic-import": "^7.8.3",
-		"@babel/preset-env": "^7.11.5",
+		"@babel/preset-env": "^7.12.1",
 		"@nextcloud/browserslist-config": "^1.0.0",
 		"@vue/test-utils": "^1.1.0",
 		"babel-eslint": "^10.1.0",

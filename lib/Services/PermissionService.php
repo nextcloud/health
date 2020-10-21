@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2019 John Molakvoæ <skjnldsv@protonmail.com>
  *
@@ -21,16 +22,28 @@
  *
  */
 
-return [
-	'resources' => [
-        'persons' => ['url' => '/persons'],
-    ],
-    'routes' => [    	
-	   ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
-	   ['name' => 'persons#data', 'url' => '/person/{personId}/data', 'verb' => 'GET'],
-	   ['name' => 'weightdata#index', 'url' => '/weightdata/person/{personId}', 'verb' => 'GET'],
-	   ['name' => 'weightdata#create', 'url' => '/weightdata/person/{personId}/create', 'verb' => 'POST'],
-	   ['name' => 'weightdata#destroy', 'url' => '/weightdata/delete/{id}', 'verb' => 'DELETE'],
-	   ['name' => 'weightdata#update', 'url' => '/weightdata/update/{id}', 'verb' => 'PUT'],
-    ]
-];
+namespace OCA\Health\Services;
+
+use OCA\Health\Db\PersonMapper;
+
+class PermissionService {
+
+	protected $userId;
+	protected $personMapper;
+
+	public function __construct($userId) {
+		$this->userId = $userId;
+		//$this->personMapper = $pM;
+	}
+
+	public function personData($destinationPersonId, $sourceUserId) {
+		return true;
+		try {
+            $entity = $this->personMapper->find($sourceUserId, $destinationPersonId);
+            return true;
+        } catch(Exception $e) {
+            return false;
+        }
+	}
+
+}

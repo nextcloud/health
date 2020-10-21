@@ -27,20 +27,26 @@ namespace OCA\Health\Services;
 use OCA\Health\Db\Weightdata;
 use OCA\Health\Db\WeightdataMapper;
 use OCA\Health\Services\FormatHelperService;
+use OCA\Health\Services\PermissionService;
 
 class WeightdataService {
 
 	protected $weightdataMapper;
 	protected $userId;
 	protected $formatHelperService;
+	protected $permissionService;
 
-	public function __construct($userId, WeightdataMapper $wdM, FormatHelperService $fhS) {
+	public function __construct($userId, WeightdataMapper $wdM, FormatHelperService $fhS, PermissionService $pmS) {
 		$this->userId = $userId;
 		$this->weightdataMapper = $wdM;
 		$this->formatHelperService = $fhS;
+		$this->permissionService = $pmS;
 	}
 
 	public function getAllByPersonId($personId) {
+		if(!$this->permissionService->personData($this->userId, $personId)) {
+			return null;
+		}
 		return $this->weightdataMapper->findAll($personId);
 	}
 
