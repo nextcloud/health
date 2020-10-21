@@ -5,6 +5,9 @@ use JsonSerializable;
 
 use OCP\AppFramework\Db\Entity;
 
+/**
+ * @method setDate(string $format)
+ */
 class Weightdata extends Entity implements JsonSerializable {
 
     protected $insertTime;

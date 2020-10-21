@@ -25,43 +25,53 @@ declare(strict_types=1);
 namespace OCA\Health\Services;
 
 use OCA\Health\Db\PersonMapper;
-use OCA\Health\Db\WeightdataMapper;
 use OCA\Health\Db\Person;
-use OCA\Health\Services\FormatHelperService;
-use OCA\Health\Services\WeightdataService;
+use Exception;
+use OCP\AppFramework\Http;
 
 class PersonsService {
 
-	protected $personMapper;
-	protected $weightdataService;
-	protected $userId;
-	protected $formatHelperService;
+	protected PersonMapper $personMapper;
+	protected WeightdataService $weightdataService;
+	protected String $userId;
+	protected FormatHelperService $formatHelperService;
+	protected PermissionService $permissionService;
 
-	public function __construct(PersonMapper $pM, $userId, WeightdataService $wdS, FormatHelperService $fhS) {
+	public function __construct(PersonMapper $pM, $userId, WeightdataService $wdS, FormatHelperService $fhS, PermissionService $permissionService) {
 		$this->personMapper = $pM;
 		$this->userId = $userId;
 		$this->weightdataService = $wdS;
 		$this->formatHelperService = $fhS;
+		$this->permissionService = $permissionService;
 	}
 
 	public function getAllPersons($full=true) {
-		$persons = $this->personMapper->findAll($this->userId);
-		return $persons;
+		return $this->personMapper->findAll($this->userId);
 	}
 
 	public function createPerson($name) {
 		$time = new \DateTime();
 		$p = new Person();
+		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setInsertTime($time->format('Y-m-d H:i:s'));
+		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setLastupdateTime($time->format('Y-m-d H:i:s'));
+		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setUserId($this->userId);
+		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setName($name);
+		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setEnabledModuleWeight(true);
+		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setWeightUnit('kg');
 		return $this->personMapper->insert($p);
 	}
 
 	public function deletePerson($id) {
+		if( !$this->permissionService->personData($id, $this->userId)) {
+			return null;
+		}
+
 		try {
              $person = $this->personMapper->find($id, $this->userId);
          } catch(Exception $e) {
@@ -76,6 +86,10 @@ class PersonsService {
 	}
 
 	public function updatePerson($id, $key, $value) {
+		if( !$this->permissionService->personData($id, $this->userId)) {
+			return null;
+		}
+
 		try {
              $person = $this->personMapper->find($id, $this->userId);
          } catch(Exception $e) {
@@ -90,6 +104,10 @@ class PersonsService {
 	}
 
 	public function getData($personId) {
+		if( !$this->permissionService->personData($personId, $this->userId)) {
+			return null;
+		}
+
 		return [
 			'lastWeight' => $this->weightdataService->getLastWeight($personId)
 		];

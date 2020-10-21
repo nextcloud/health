@@ -31,8 +31,6 @@ use OCP\Util;
 
 class PageController extends Controller {
 
-	protected $appName;
-
 	public function __construct($appName, IRequest $request) {
 		parent::__construct($appName, $request);
 		$this->appName = $appName;

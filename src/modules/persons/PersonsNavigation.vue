@@ -38,7 +38,7 @@
 				<template slot="actions">
 					<ActionButton
 						:close-after-click="true"
-						icon="icon-detail"
+						icon="icon-details"
 						@click="$store.commit('showSidebar', true); $store.dispatch('setActivePerson', index)">
 						{{ t('health', 'Show details') }}
 					</ActionButton>

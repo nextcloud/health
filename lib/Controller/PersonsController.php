@@ -25,25 +25,21 @@ declare(strict_types=1);
 namespace OCA\Health\Controller;
 
 use OCP\IRequest;
-use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Controller;
-use OCP\Util;
 use OCP\AppFramework\Http\DataResponse;
 use OCA\Health\Services\PersonsService;
 
 class PersonsController extends Controller {
 
-	protected $appName;
 	protected $userId;
 	protected $personsService;
-	protected $request;
 
-	public function __construct($appName, IRequest $request, PersonsService $pS, $userId) {
+	public function __construct($appName, IRequest $request, $userId, PersonsService $personsService) {
 		parent::__construct($appName, $request);
 		$this->appName = $appName;
-		$this->personsService = $pS;
 		$this->userId = $userId;
 		$this->request = $request;
+		$this->personsService = $personsService;
 	}
 
 	/**
@@ -56,6 +52,7 @@ class PersonsController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
 	 *
 	 * @param int $personId
 	 */

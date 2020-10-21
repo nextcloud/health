@@ -24,26 +24,35 @@ declare(strict_types=1);
 
 namespace OCA\Health\Services;
 
+use Exception;
 use OCA\Health\Db\PersonMapper;
+use OCP\ILogger;
 
 class PermissionService {
 
-	protected $userId;
-	protected $personMapper;
+	protected String $userId;
+	protected PersonMapper $personMapper;
+	protected ILogger $logger;
 
-	public function __construct($userId) {
+	public function __construct($userId, PersonMapper $pM, ILogger $ILogger) {
 		$this->userId = $userId;
-		//$this->personMapper = $pM;
+		$this->personMapper = $pM;
+		$this->logger = $ILogger;
 	}
 
 	public function personData($destinationPersonId, $sourceUserId) {
-		return true;
 		try {
-            $entity = $this->personMapper->find($sourceUserId, $destinationPersonId);
-            return true;
+            if($this->personMapper->find($destinationPersonId, $sourceUserId) !== null) {
+            	return true;
+            }
         } catch(Exception $e) {
-            return false;
+			$context = [
+				'personId' => $destinationPersonId,
+				'userId' => $sourceUserId
+			];
+			$this->logger->error('User tries to fetch data from personId that is not permitted.', $context);
         }
+        return false;
 	}
 
 }

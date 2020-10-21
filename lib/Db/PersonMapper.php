@@ -1,6 +1,8 @@
 <?php
 namespace OCA\Health\Db;
 
+use OCP\AppFramework\Db\DoesNotExistException;
+use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCP\IDbConnection;
 use OCP\AppFramework\Db\QBMapper;
 
@@ -10,20 +12,25 @@ class PersonMapper extends QBMapper {
         parent::__construct($db, 'health_persons', Person::class);
     }
 
-    public function find(int $id, string $userId = null) {
+    public function find(int $id, string $userId = "") {
         $qb = $this->db->getQueryBuilder();
 
-        $qb->select('*')
-            ->from($this->getTableName())
-            ->where( $qb->expr()->eq('id', $qb->createNamedParameter($id)) )
-        );
+        $qb->select('*');
+		$qb->from($this->getTableName());
+		$qb->where( $qb->expr()->eq('id', $qb->createNamedParameter($id)) );
 
-        if($userId !== null) {
-            $qb->andWhere( $qb->expr()->eq('user_id', $qb->createNamedParameter($userId) );
+        if($userId !== "") {
+            $qb->andWhere( $qb->expr()->eq('user_id', $qb->createNamedParameter($userId) ));
         }
 
-        return $this->findEntity($qb);
-    }
+		try {
+			return $this->findEntity($qb);
+		} catch (DoesNotExistException $e) {
+        	return null;
+		} catch (MultipleObjectsReturnedException $e) {
+			return null;
+		}
+	}
 
     public function findAll(string $userId) {
         $qb = $this->db->getQueryBuilder();

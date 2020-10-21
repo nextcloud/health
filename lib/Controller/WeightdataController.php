@@ -33,10 +33,8 @@ use OCA\Health\Services\WeightdataService;
 
 class WeightdataController extends Controller {
 
-	protected $appName;
 	protected $userId;
 	protected $weightdataService;
-	protected $request;
 
 	public function __construct($appName, IRequest $request, WeightdataService $wS, $userId) {
 		parent::__construct($appName, $request);
@@ -49,7 +47,7 @@ class WeightdataController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
-	 * 
+	 *
 	 * @param int $personId
 	 */
 	public function index(int $personId) {
@@ -59,7 +57,7 @@ class WeightdataController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 *
-     * @param int $personid
+     * @param int $personId
      * @param float $weight
      * @param float $measurement
      * @param float $bodyfat
