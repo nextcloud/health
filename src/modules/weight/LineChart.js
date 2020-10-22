@@ -114,6 +114,9 @@ export default {
 					left: 20,
 				},
 			},
+			legend: {
+				position: 'bottom',
+			},
 		}
 		this.renderChart(this.chartData, options)
 	},

@@ -36,7 +36,7 @@
 			<div v-if="lastWeight">
 				<p>You started with {{ person.weightTargetInitialWeight }}{{ person.weightUnit }} for your target. Your actual weight is now {{ lastWeight }}{{ person.weightUnit }} and your target values {{ person.weightTarget }}{{ person.weightUnit }}.</p>
 				<p v-if="lastWeight > person.weightTarget && lastWeight < person.weightTargetInitialWeight">
-					So you lost already {{ person.weightTargetInitialWeight - lastWeight }}{{ person.weightUnit }} and you have {{ lastWeight - person.weightTarget }}{{ person.weightUnit }} to go.
+					So you lost already {{ Math.round((person.weightTargetInitialWeight - lastWeight) * 100) / 100 }}{{ person.weightUnit }} and you have {{ Math.round((lastWeight - person.weightTarget) * 100) / 100 }}{{ person.weightUnit }} to go.
 					<br>
 					<br>
 					Go on and eliminate the blue bar:
@@ -103,7 +103,7 @@ export default {
 		getProgressbarValue: function() {
 			const lostAlready = this.person.weightTargetInitialWeight - this.lastWeight
 			const wantToLost = this.person.weightTargetInitialWeight - this.person.weightTarget
-			const result = 100 - ((lostAlready / wantToLost) * 100)
+			const result = Math.round((100 - ((lostAlready / wantToLost)) * 100) * 100) / 100
 			return (result > 100) ? 100 : result
 		},
 		lastWeight: function() {

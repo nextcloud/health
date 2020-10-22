@@ -30,7 +30,7 @@
 					{{ personData.lastWeight.date | formatMyDate }}
 				</div>
 				<div class="firstNumber">
-					{{ personData.lastWeight.weight }}<span>kg</span>
+					{{ personData.lastWeight.weight }}<span>{{ person.weightUnit }}</span>
 				</div>
 				<div v-if="person.weightTarget" class="secondNumber">
 					<span>{{ t('health', 'Target') }}</span>{{ person.weightTarget }}<span>{{ person.weightUnit }}</span>

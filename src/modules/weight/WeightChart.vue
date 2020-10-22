@@ -46,14 +46,6 @@
 			:height="200"
 			:chart-data="getChartData"
 			:range="chartDateRange" />
-		<p
-			v-show="getChartData.datasets[0].data.length > 1"
-			class="chartLegend">
-			{{ t('health', 'Green striped line is your target value.') }}<br>
-			{{ t('health', 'Red dotted is your initial start weight for targetting.') }}<br>
-			{{ t('health', 'And blue shows the weight you inserted.') }}<br>
-			{{ t('health', 'Your personal measure is dark gray and the bodyfat lightgray.') }}
-		</p>
 		<EmptyContent
 			v-if="data && getChartData.datasets[0].data.length <= 1"
 			icon="icon-category-monitoring">
@@ -145,14 +137,14 @@ export default {
 			return {
 				datasets: [
 					{
-						label: 'Weight',
+						label: t('health', 'weight'),
 						borderColor: '#0082c9',
 						fill: false,
 						data: data,
 						yAxisID: 'weight',
 					},
 					{
-						label: 'Target',
+						label: t('health', 'target'),
 						borderColor: 'green',
 						fill: false,
 						data: targetData,
@@ -163,7 +155,7 @@ export default {
 						yAxisID: 'weight',
 					},
 					{
-						label: 'Target initial weight',
+						label: t('health', 'target initial weight'),
 						borderColor: 'darkred',
 						fill: false,
 						data: targetInitialData,
@@ -184,7 +176,7 @@ export default {
 						yAxisID: 'percent',
 					},
 					{
-						label: 'Bodyfat',
+						label: t('health', 'bodyfat'),
 						backgroundColor: 'gray',
 						// borderColor: 'darkgray',
 						borderWidth: 1,

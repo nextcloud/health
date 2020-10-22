@@ -14,7 +14,7 @@ Track your weight or other things and export them for a doctor visit.
 Or just take a smooth view on your data.
 
 Health is everything.]]></description>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <licence>agpl</licence>
     <author mail="flost-dev@mailbox.org" >Florian Steffens</author>
     <namespace>Health</namespace>
