@@ -1,7 +1,7 @@
 {
 	"name": "health",
 	"description": "Nextclud health app",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"author": "Florian Steffens <flost-dev@mailbox.org>",
 	"contributors": [
 		"Florian Steffens <flost-dev@mailbox.org>"
