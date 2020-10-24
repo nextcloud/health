@@ -25,7 +25,10 @@ Health is everything.]]></description>
 	<category>monitoring</category>
 	<category>organization</category>
     <bugs>https://github.com/datenangebot/health/issues</bugs>
-    <dependencies>
+	<screenshot small-thumbnail="https://datenangebot.de/s/SM9w74RW4YHzbY6/download">https://datenangebot.de/s/TCg4GG8cMRfy6Zi/download</screenshot>
+	<screenshot>https://datenangebot.de/s/8T9ykEeLyFK9dD4/download</screenshot>
+	<screenshot>https://datenangebot.de/s/e9AnLma3EKkSyHW/download</screenshot>
+	<dependencies>
         <nextcloud min-version="18" max-version="20"/>
     </dependencies>
     <navigations>
