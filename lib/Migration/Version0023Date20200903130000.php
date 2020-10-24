@@ -62,16 +62,20 @@
             $table->addColumn('lastupdate_time', 'datetime', [
             ]);
             $table->addColumn('bodyfat', 'integer', [
-                'default' => null,
+				'default' => null,
+				'notnull' => false,
             ]);
             $table->addColumn('measurement', 'float', [
-                'default' => null,
+				'default' => null,
+				'notnull' => false,
             ]);
             $table->addColumn('weight', 'float', [
-                'default' => null,
+				'default' => null,
+				'notnull' => false,
             ]);
             $table->addColumn('date', 'datetime', [
-                'default' => null,
+				'default' => null,
+				'notnull' => false,
             ]);
 
             $table->setPrimaryKey(['id']);
@@ -100,49 +104,58 @@
             ]);
             $table->addColumn('age', 'integer', [
                 'default' => null,
+				'notnull' => false,
             ]);
             $table->addColumn('size', 'integer', [
-                'default' => null,
+				'default' => null,
+				'notnull' => false,
             ]);
             $table->addColumn('enabled_module_weight', 'boolean', [
-                'default' => null,
+                'default' => 0,
             ]);
             $table->addColumn('enabled_module_breaks', 'boolean', [
-                'default' => null,
+                'default' => 0,
             ]);
             $table->addColumn('enabled_module_feeling', 'boolean', [
-                'default' => null,
+                'default' => 0,
             ]);
             $table->addColumn('enabled_module_medicin', 'boolean', [
-                'default' => null,
+                'default' => 0,
             ]);
             $table->addColumn('enabled_module_activities', 'boolean', [
-                'default' => null,
+                'default' => 0,
             ]);
             $table->addColumn('sex', 'string', [
-                'length' => 6
-                'default' => null,
+                'length' => 6,
+				'default' => null,
+				'notnull' => false,
             ]);
             $table->addColumn('weight_measurement_name', 'string', [
-                'length' => 255
-                'default' => null,
+                'length' => 255,
+				'default' => null,
+				'notnull' => false,
             ]);
             $table->addColumn('weight_target_bounty', 'string', [
-                'default' => null,
+				'default' => null,
+				'notnull' => false,
                 'length' => 600
             ]);
             $table->addColumn('weight_unit', 'string', [
-                'default' => null,
+				'default' => null,
+				'notnull' => false,
                 'length' => 20
             ]);
             $table->addColumn('weight_target', 'float', [
-                'default' => null,
+				'default' => null,
+				'notnull' => false,
             ]);
             $table->addColumn('weight_target_initial_weight', 'float', [
-                'default' => null,
+				'default' => null,
+				'notnull' => false,
             ]);
             $table->addColumn('weight_target_start_date', 'datetime', [
-                'default' => null,
+				'default' => null,
+				'notnull' => false,
             ]);
             $table->addColumn('personal_mission', 'text', [
                 'notnull' => true,
