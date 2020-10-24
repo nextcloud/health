@@ -99,36 +99,50 @@
                 'length' => 200
             ]);
             $table->addColumn('age', 'integer', [
+                'default' => null,
             ]);
             $table->addColumn('size', 'integer', [
+                'default' => null,
             ]);
             $table->addColumn('enabled_module_weight', 'boolean', [
+                'default' => null,
             ]);
             $table->addColumn('enabled_module_breaks', 'boolean', [
+                'default' => null,
             ]);
             $table->addColumn('enabled_module_feeling', 'boolean', [
+                'default' => null,
             ]);
             $table->addColumn('enabled_module_medicin', 'boolean', [
+                'default' => null,
             ]);
             $table->addColumn('enabled_module_activities', 'boolean', [
+                'default' => null,
             ]);
             $table->addColumn('sex', 'string', [
                 'length' => 6
+                'default' => null,
             ]);
             $table->addColumn('weight_measurement_name', 'string', [
                 'length' => 255
+                'default' => null,
             ]);
             $table->addColumn('weight_target_bounty', 'string', [
+                'default' => null,
                 'length' => 600
             ]);
             $table->addColumn('weight_unit', 'string', [
+                'default' => null,
                 'length' => 20
             ]);
             $table->addColumn('weight_target', 'float', [
+                'default' => null,
             ]);
             $table->addColumn('weight_target_initial_weight', 'float', [
+                'default' => null,
             ]);
             $table->addColumn('weight_target_start_date', 'datetime', [
+                'default' => null,
             ]);
             $table->addColumn('personal_mission', 'text', [
                 'notnull' => true,
