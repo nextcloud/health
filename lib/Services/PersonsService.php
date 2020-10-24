@@ -77,7 +77,7 @@ class PersonsService {
 		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setEnabledModuleFeeling(false);
 		/** @noinspection PhpUndefinedMethodInspection */
-		$p->setEnabledModuleMedicin(false);
+		$p->setEnabledModuleMedicine(false);
 		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setEnabledModuleActivities(false);
 		/** @noinspection PhpUndefinedMethodInspection */

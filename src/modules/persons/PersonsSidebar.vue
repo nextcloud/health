@@ -75,10 +75,10 @@
 		</ActionCheckbox>
 		<ActionCheckbox
 			v-if="person"
-			:checked="person.enabledModuleMedicin"
-			value="medicin"
+			:checked="person.enabledModuleMedicine"
+			value="medicine"
 			@change="updateEnabledModules">
-			{{ t('health', 'Medicin') }}
+			{{ t('health', 'Medicine') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			v-if="person"

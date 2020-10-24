@@ -119,7 +119,7 @@
             $table->addColumn('enabled_module_feeling', 'boolean', [
                 'default' => 0,
             ]);
-            $table->addColumn('enabled_module_medicin', 'boolean', [
+            $table->addColumn('enabled_module_medicine', 'boolean', [
                 'default' => 0,
             ]);
             $table->addColumn('enabled_module_activities', 'boolean', [
