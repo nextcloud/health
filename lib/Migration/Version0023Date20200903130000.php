@@ -158,8 +158,8 @@
 				'notnull' => false,
             ]);
             $table->addColumn('personal_mission', 'text', [
-                'notnull' => true,
-                'default' => ''
+                'default' => '',
+				'notnull' => false,
             ]);
 
 
