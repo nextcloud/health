@@ -21,7 +21,7 @@ Health is everything.]]></description>
     <category>tools</category>
     <bugs>https://github.com/datenangebot/health/issues</bugs>
     <dependencies>
-        <nextcloud min-version="18" max-version="19"/>
+        <nextcloud min-version="18" max-version="20"/>
     </dependencies>
     <navigations>
         <navigation>
