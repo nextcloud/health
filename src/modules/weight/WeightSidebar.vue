@@ -47,7 +47,7 @@
 		</li>
 		<li>
 			<h4>
-				{{ t('health', 'Weight target{a}in {unit}{br}Leave blank for none.{b}', { unit: person.weightUnit, a: '<span>',	b: '</span>', br: '<br>', }) }}
+				{{ t('health', 'Weight target{a}in {unit}{br}Leave blank for none.{b}', {unit: person.weightUnit, a: '<span>', b: '</span>', br: '<br>', }) }}
 			</h4>
 		</li>
 		<ActionInput
@@ -62,7 +62,7 @@
 		</li>
 		<ActionInput
 			type="number"
-			:value="(person.weightTargetInitialWeight !== null )? person.weightTargetInitialWeight: lastWeight"
+			:value="(person.weightTargetInitialWeight !== null )? person.weightTargetInitialWeight: ''"
 			icon="icon-quota"
 			@submit="updateWeightTargetInitialWeight" />
 		<li>
@@ -71,7 +71,7 @@
 			</h4>
 		</li>
 		<div class="textarea-sidebar">
-			<textarea ref="weightTargetBounty" :value="person.weightTargetBounty" placeholder="t('health', 'Add some bounty to motivate yourself, if you like to.', {})" />
+			<textarea ref="weightTargetBounty" :value="person.weightTargetBounty" :placeholder="t('health', 'Add some bounty to motivate yourself, if you like to.', {})" />
 		</div>
 		<button
 			@click="updateWeightTargetBounty">
@@ -95,7 +95,7 @@ export default {
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar']),
-		...mapGetters(['person', 'lastWeight']),
+		...mapGetters(['person']),
 	},
 	methods: {
 		updateWeightUnit: function(e) {
