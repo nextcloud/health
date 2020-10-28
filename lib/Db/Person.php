@@ -29,6 +29,7 @@ use OCP\AppFramework\Db\Entity;
 
 class Person extends Entity implements JsonSerializable {
 
+	// general
     protected $name;
     protected $insertTime;
     protected $lastupdateTime;
@@ -36,34 +37,63 @@ class Person extends Entity implements JsonSerializable {
     protected $age;
     protected $size;
     protected $sex;
+	protected $personalMission;
+
+    // modules
     protected $enabledModuleWeight;
     protected $enabledModuleBreaks;
     protected $enabledModuleFeeling;
     protected $enabledModuleMedicine;
     protected $enabledModuleActivities;
+
+    // module weight
     protected $weightMeasurementName;
     protected $weightUnit;
     protected $weightTarget;
     protected $weightTargetInitialWeight;
     protected $weightTargetStartDate;
     protected $weightTargetBounty;
-    protected $personalMission;
+
+    // module feeling
+	protected $feelingColumnMood;
+	protected $feelingColumnSadness;
+	protected $feelingColumnSymptoms;
+	protected $feelingColumnAttacks;
+	protected $feelingColumnMedication;
+	protected $feelingColumnPain;
+	protected $feelingSpecialSymptomName;
+	protected $feelingSpecialAttackName;
+	protected $feelingDefaultMedication;
 
     public function __construct() {
+    	// general
         $this->addType('id','integer');
         $this->addType('age','integer');
         $this->addType('size','integer');
+
+		// modules
+		$this->addType('enabledModuleWeight', 'boolean');
+		$this->addType('enabledModuleBreaks', 'boolean');
+		$this->addType('enabledModuleFeeling', 'boolean');
+		$this->addType('enabledModuleMedicine', 'boolean');
+		$this->addType('enabledModuleActivities', 'boolean');
+
+        // module weight
         $this->addType('weightTarget', 'float');
         $this->addType('weightTargetInitialWeight', 'float');
-        $this->addType('enabledModuleWeight', 'boolean');
-        $this->addType('enabledModuleBreaks', 'boolean');
-        $this->addType('enabledModuleFeeling', 'boolean');
-        $this->addType('enabledModuleMedicine', 'boolean');
-        $this->addType('enabledModuleActivities', 'boolean');
+
+        // module feeling
+		$this->addType('feelingColumnMood', 'boolean');
+		$this->addType('feelingColumnSadness', 'boolean');
+		$this->addType('feelingColumnSymptoms', 'boolean');
+		$this->addType('feelingColumnAttacks', 'boolean');
+		$this->addType('feelingColumnMedication', 'boolean');
+		$this->addType('feelingColumnPain', 'boolean');
     }
 
     public function jsonSerialize() {
         return [
+        	// general
             'id' => $this->id,
             'insertTime' => $this->insertTime,
             'lastupdateTime' => $this->lastupdateTime,
@@ -72,18 +102,33 @@ class Person extends Entity implements JsonSerializable {
             'age' => $this->age,
             'size' => $this->size,
             'sex' => $this->sex,
+			'personalMission' => $this->personalMission,
+
+			// modules
             'enabledModuleWeight' => $this->enabledModuleWeight,
             'enabledModuleBreaks' => $this->enabledModuleBreaks,
             'enabledModuleFeeling' => $this->enabledModuleFeeling,
             'enabledModuleMedicine' => $this->enabledModuleMedicine,
             'enabledModuleActivities' => $this->enabledModuleActivities,
+
+			// module weight
             'weightMeasurementName' => $this->weightMeasurementName,
             'weightUnit' => $this->weightUnit,
             'weightTarget' => $this->weightTarget,
             'weightTargetInitialWeight' => $this->weightTargetInitialWeight,
             'weightTargetStartDate' => $this->weightTargetStartDate,
             'weightTargetBounty' => $this->weightTargetBounty,
-            'personalMission' => $this->personalMission,
+
+			// module feeling
+			'feelingColumnMood' => $this->feelingColumnMood,
+			'feelingColumnSadness' => $this->feelingColumnSadness,
+			'feelingColumnSymptoms' => $this->feelingColumnSymptoms,
+			'feelingColumnAttacks' => $this->feelingColumnAttacks,
+			'feelingColumnMedication' => $this->feelingColumnMedication,
+			'feelingColumnPain' => $this->feelingColumnPain,
+			'feelingSpecialSymptomName' => $this->feelingSpecialSymptomName,
+			'feelingSpecialAttackName' => $this->feelingSpecialAttackName,
+			'feelingDefaultMedication' => $this->feelingDefaultMedication,
         ];
     }
 }

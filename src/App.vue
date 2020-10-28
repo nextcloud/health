@@ -39,15 +39,28 @@
 			:title="person.name"
 			@close="$store.commit('showSidebar', false)">
 			<template #primary-actions />
-			<AppSidebarTab id="person" name="Person" icon="icon-user">
+			<AppSidebarTab
+				id="person"
+				name="Person"
+				icon="icon-user"
+				:order="0">
 				<PersonsSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
-				v-if="person"
+				v-if="person && person.enabledModuleWeight"
 				id="weight"
-				name="Weight"
-				icon="icon-quota">
+				:name="t('health', 'Weight', {})"
+				icon="icon-quota"
+				:order="1">
 				<WeightSidebar />
+			</AppSidebarTab>
+			<AppSidebarTab
+				v-if="person && person.enabledModuleFeeling"
+				id="feeling"
+				:name="t('health', 'Feeling')"
+				icon="icon-category-monitoring"
+				:order="2">
+				<FeelingSidebar />
 			</AppSidebarTab>
 		</AppSidebar>
 	</Content>
@@ -59,9 +72,9 @@ import AppContent from '@nextcloud/vue/dist/Components/AppContent'
 import AppSidebar from '@nextcloud/vue/dist/Components/AppSidebar'
 import AppSidebarTab from '@nextcloud/vue/dist/Components/AppSidebarTab'
 import PersonsNavigation from './modules/persons/PersonsNavigation'
-// import Notifications from './Notifications'
 import PersonsSidebar from './modules/persons/PersonsSidebar'
 import WeightSidebar from './modules/weight/WeightSidebar'
+import FeelingSidebar from './modules/feeling/FeelingSidebar'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import WeightContent from './modules/weight/WeightContent'
@@ -78,8 +91,8 @@ export default {
 		ActionButton,
 		Actions,
 		PersonsNavigation,
-		// Notifications,
 		WeightSidebar,
+		FeelingSidebar,
 		PersonsSidebar,
 		WeightContent,
 		PersonsContent,

@@ -32,7 +32,7 @@
 	},
 	"dependencies": {
 		"@bundle-analyzer/webpack-plugin": "^0.5.1",
-		"@nextcloud/axios": "^1.4.0",
+		"@nextcloud/axios": "^1.5.0",
 		"@nextcloud/moment": "^1.1.1",
 		"@nextcloud/router": "^1.2.0",
 		"@nextcloud/vue": "^2.8.1",
@@ -76,7 +76,7 @@
 		"stylelint-config-recommended-scss": "^3.3.0",
 		"stylelint-scss": "^3.18.0",
 		"stylelint-webpack-plugin": "^1.2.3",
-		"vue-loader": "^15.9.3",
+		"vue-loader": "^15.9.4",
 		"vue-template-compiler": "^2.6.12",
 		"webpack": "^4.44.2",
 		"webpack-cli": "^3.3.12",
