@@ -74,42 +74,42 @@
 		<li><h4>{{ t('health', 'Select columns', {}) }}</h4></li>
 		<ActionCheckbox
 			id="feelingColumnMood"
-			:checked="true"
+			:checked="person.feelingColumnMood"
 			value="mood"
 			@change="updateColumn">
 			{{ t('health', 'Mood', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			id="feelingColumnSadness"
-			:checked="true"
+			:checked="person.feelingColumnSadness"
 			value="sadness"
 			@change="updateColumn">
 			{{ t('health', 'Sadness level', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			id="feelingColumnSymptoms"
-			:checked="true"
+			:checked="person.feelingColumnSymptoms"
 			value="symptoms"
 			@change="updateColumn">
 			{{ t('health', 'Symptoms', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			id="feelingColumnAttacks"
-			:checked="true"
+			:checked="person.feelingColumnAttacks"
 			value="attacks"
 			@change="updateColumn">
 			{{ t('health', 'Attacks', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			id="feelingColumnMedication"
-			:checked="true"
+			:checked="person.feelingColumnMedication"
 			value="medication"
 			@change="updateColumn">
 			{{ t('health', 'Medication', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			id="feelingColumnPain"
-			:checked="true"
+			:checked="person.feelingColumnPain"
 			value="pain"
 			@change="updateColumn">
 			{{ t('health', 'Pain', {}) }}
@@ -120,16 +120,19 @@
 		<ActionInput
 			type="text"
 			icon="icon-rename"
+			:value="person.feelingSpecialSymptomName"
 			@submit="updateSpecialSymptomName" />
 		<li><h4>{{ t('health', 'Special attack name', {}) }}</h4></li>
 		<ActionInput
 			type="text"
 			icon="icon-rename"
+			:value="person.feelingSpecialAttackName"
 			@submit="updateSpecialAttackName" />
 		<li><h4>{{ t('health', 'Default medication', {}) }}</h4></li>
 		<div class="textarea-sidebar">
 			<textarea
-				ref="feelingDefaultMedication" />
+				ref="feelingDefaultMedication"
+				:value="person.feelingDefaultMedication" />
 		</div>
 		<button
 			@click="updateDefaultMedication">
@@ -160,17 +163,19 @@ export default {
 	methods: {
 		updateColumn: function(e) {
 			console.debug(e)
+			this.$store.dispatch('setValue', { key: e.target.id, value: e.target.checked })
 		},
 		updateDefaultMedication: function(e) {
+			this.$store.dispatch('setValue', { key: 'feelingDefaultMedication', value: this.$refs.feelingDefaultMedication.value })
 			console.debug(e)
 		},
 		updateSpecialAttackName: function(e) {
-			this.$store.dispatch('setValue', { key: 'feelingSpecialAttackName', value: e.target[1].value })
 			console.debug(e)
+			this.$store.dispatch('setValue', { key: 'feelingSpecialAttackName', value: e.target[1].value })
 		},
 		updateSpecialSymptomName: function(e) {
-			this.$store.dispatch('setValue', { key: 'feelingSpecialSymptomName', value: e.target[1].value })
 			console.debug(e)
+			this.$store.dispatch('setValue', { key: 'feelingSpecialSymptomName', value: e.target[1].value })
 		},
 	},
 }
