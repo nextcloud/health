@@ -47,7 +47,12 @@
 		</li>
 		<li>
 			<h4>
-				{{ t('health', 'Weight target{a}in {unit}{br}Leave blank for none.{b}', {unit: person.weightUnit, a: '<span>', b: '</span>', br: '<br>', }) }}
+				{{ t('health', 'Weight target') }}
+				<span>
+					{{ t('health', 'in {unit}', { unit: person.weightUnit }) }}
+					<br>
+					{{ t('health', 'Leave blank for none.') }}
+				</span>
 			</h4>
 		</li>
 		<ActionInput
@@ -57,7 +62,12 @@
 			@submit="updateWeightTarget" />
 		<li>
 			<h4>
-				{{ t('health', 'Weight target initial weight{a}in {unit}{br}your reference weight for the target{b}', { a: '<span>', b: '</span>', br: '<br>', unit: person.weightUnit, }) }}
+				{{ t('health', 'Weight target initial weight') }}
+				<span>
+					{{ t('health', 'in {unit}', { unit: person.weightUnit }) }}
+					<br>
+					{{ t('health', 'This is your reference weight for the target') }}
+				</span>
 			</h4>
 		</li>
 		<ActionInput
