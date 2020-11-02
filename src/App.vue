@@ -32,6 +32,7 @@
 			</div>
 			<PersonsContent v-if="person && activeModule === 'person'" />
 			<WeightContent v-if="person && activeModule === 'weight' && person.enabledModuleWeight" />
+			<FeelingContent v-if="person && activeModule === 'feeling' && person.enabledModuleFeeling" />
 		</AppContent>
 		<AppSidebar
 			v-show="showSidebar"
@@ -78,6 +79,7 @@ import FeelingSidebar from './modules/feeling/FeelingSidebar'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import WeightContent from './modules/weight/WeightContent'
+import FeelingContent from './modules/feeling/FeelingContent'
 import { mapState, mapGetters } from 'vuex'
 import PersonsContent from './modules/persons/PersonsContent'
 
@@ -95,6 +97,7 @@ export default {
 		FeelingSidebar,
 		PersonsSidebar,
 		WeightContent,
+		FeelingContent,
 		PersonsContent,
 	},
 	data: function() {

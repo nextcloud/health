@@ -32,7 +32,7 @@
 		0 none
 		1 low
 		2 medium
-		3 hight
+		3 height
 
 	Symptoms
 		Fatigue
@@ -64,7 +64,7 @@
 		0 none
 		1 low
 		2 medium
-		3 hight
+		3 height
 
 	-->
 
