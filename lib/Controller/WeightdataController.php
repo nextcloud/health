@@ -38,10 +38,8 @@ class WeightdataController extends Controller {
 
 	public function __construct($appName, IRequest $request, WeightdataService $wS, $userId) {
 		parent::__construct($appName, $request);
-		$this->appName = $appName;
 		$this->weightdataService = $wS;
 		$this->userId = $userId;
-		$this->request = $request;
 	}
 
 	/**

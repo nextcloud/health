@@ -33,7 +33,6 @@ class PageController extends Controller {
 
 	public function __construct($appName, IRequest $request) {
 		parent::__construct($appName, $request);
-		$this->appName = $appName;
 	}
 
 	/**

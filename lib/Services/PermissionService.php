@@ -30,9 +30,9 @@ use OCP\ILogger;
 
 class PermissionService {
 
-	protected String $userId;
-	protected PersonMapper $personMapper;
-	protected ILogger $logger;
+	protected $userId;
+	protected $personMapper;
+	protected $logger;
 
 	public function __construct($userId, PersonMapper $pM, ILogger $ILogger) {
 		$this->userId = $userId;

@@ -32,10 +32,10 @@ use OCP\AppFramework\Http;
 
 class WeightdataService {
 
-	protected WeightdataMapper $weightdataMapper;
-	protected String $userId;
-	protected FormatHelperService $formatHelperService;
-	protected PermissionService $permissionService;
+	protected $weightdataMapper;
+	protected $userId;
+	protected $formatHelperService;
+	protected $permissionService;
 
 	public function __construct($userId, WeightdataMapper $wdM, FormatHelperService $fhS, PermissionService $permissionService) {
 		$this->userId = $userId;

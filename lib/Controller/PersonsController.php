@@ -36,15 +36,15 @@ class PersonsController extends Controller {
 
 	public function __construct($appName, IRequest $request, $userId, PersonsService $personsService) {
 		parent::__construct($appName, $request);
-		$this->appName = $appName;
 		$this->userId = $userId;
-		$this->request = $request;
 		$this->personsService = $personsService;
 	}
 
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 *
+	 * @return DataResponse
 	 */
 	public function index() {
         return new DataResponse($this->personsService->getAllPersons());
@@ -55,24 +55,30 @@ class PersonsController extends Controller {
 	 * @NoCSRFRequired
 	 *
 	 * @param int $personId
+	 *
+	 * @return DataResponse
 	 */
-	public function data($personId) {
+	public function data(int $personId) {
         return new DataResponse($this->personsService->getData($personId));
 	}
 
 	/**
 	 * @NoAdminRequired
 	 *
-     * @param string $name
+	 * @param string $name
+	 *
+	 * @return DataResponse
 	 */
-	public function create($name) {
+	public function create(string $name) {
 		return new DataResponse($this->personsService->createPerson($name));
 	}
 
 	/**
 	 * @NoAdminRequired
 	 *
-     * @param int $id
+	 * @param int $id
+	 *
+	 * @return DataResponse
 	 */
 	public function destroy(int $id) {
 		return new DataResponse($this->personsService->deletePerson($id));
@@ -81,9 +87,11 @@ class PersonsController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 *
-     * @param int $id
-     * @param string $key
-     * @param string $value
+	 * @param int $id
+	 * @param string $key
+	 * @param string $value
+	 *
+	 * @return DataResponse
 	 */
 	public function update(int $id, string $key, string $value) {
 		return new DataResponse($this->personsService->updatePerson($id, $key, $value));

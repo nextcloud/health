@@ -33,12 +33,12 @@ use OCP\IUserManager;
 
 class PersonsService {
 
-	protected PersonMapper $personMapper;
-	protected WeightdataService $weightdataService;
-	protected String $userId;
-	protected FormatHelperService $formatHelperService;
-	protected PermissionService $permissionService;
-	protected IUserManager $userManager;
+	protected $personMapper;
+	protected $weightdataService;
+	protected $userId;
+	protected $formatHelperService;
+	protected $permissionService;
+	protected $userManager;
 
 	public function __construct(PersonMapper $pM, $userId, WeightdataService $wdS, FormatHelperService $fhS, PermissionService $permissionService, IUserManager $userManager) {
 		$this->personMapper = $pM;
