@@ -33,7 +33,7 @@ export default new Vuex.Store({
 		// .
 		// managing data
 		activePersonId: null,
-		activeModule: 'person',
+		activeModule: 'feeling',
 		showSidebar: false,
 		// .
 		// complete data

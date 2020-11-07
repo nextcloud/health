@@ -22,8 +22,8 @@
 
 <template>
 	<ul>
-		<li><h3>General settings</h3></li>
-		<li><h4>Unit for weight</h4></li>
+		<li><h3>{{ t('health', 'General settings', {}) }}</h3></li>
+		<li><h4>{{ t('health', 'Unit for weight', {}) }}</h4></li>
 		<ActionInput
 			type="text"
 			:value="person.weightUnit"
@@ -31,7 +31,7 @@
 			@submit="updateWeightUnit" />
 		<li>
 			<h4>
-				Measurement Name<span><br>What else do you want to track? Set here a name and you can add data in the data-table. The values have to be numbers.</span>
+				{{ t('health', 'Measurement Name', {}) }}<span><br>{{ t('health', 'What else do you want to track? Set here a name and you can add data in the data-table. The values have to be numbers.', {}) }}</span>
 			</h4>
 		</li>
 		<ActionInput
@@ -42,12 +42,17 @@
 		<li>
 			<h3 class="toggable"
 				@click="showTargetOptions = !showTargetOptions">
-				Target
+				{{ t('health', 'Target', {}) }}
 			</h3>
 		</li>
 		<li>
 			<h4>
-				Weight target<span>in {{ person.weightUnit }}<br>Leave blank for none.</span>
+				{{ t('health', 'Weight target') }}
+				<span>
+					{{ t('health', 'in {unit}', { unit: person.weightUnit }) }}
+					<br>
+					{{ t('health', 'Leave blank for none.') }}
+				</span>
 			</h4>
 		</li>
 		<ActionInput
@@ -57,25 +62,30 @@
 			@submit="updateWeightTarget" />
 		<li>
 			<h4>
-				Weight target initial weight<span>in {{ person.weightUnit }}<br>your reference weight for the target</span>
+				{{ t('health', 'Weight target initial weight') }}
+				<span>
+					{{ t('health', 'in {unit}', { unit: person.weightUnit }) }}
+					<br>
+					{{ t('health', 'This is your reference weight for the target') }}
+				</span>
 			</h4>
 		</li>
 		<ActionInput
 			type="number"
-			:value="(person.weightTargetInitialWeight !== null )? person.weightTargetInitialWeight: lastWeight"
+			:value="(person.weightTargetInitialWeight !== null )? person.weightTargetInitialWeight: ''"
 			icon="icon-quota"
 			@submit="updateWeightTargetInitialWeight" />
 		<li>
 			<h4>
-				Weight target bounty
+				{{ t('health', 'Weight target bounty', {}) }}
 			</h4>
 		</li>
 		<div class="textarea-sidebar">
-			<textarea ref="weightTargetBounty" :value="person.weightTargetBounty" placeholder="Add some bounty to motivate yourself, if you like to." />
+			<textarea ref="weightTargetBounty" :value="person.weightTargetBounty" :placeholder="t('health', 'Add some bounty to motivate yourself, if you like to.', {})" />
 		</div>
 		<button
 			@click="updateWeightTargetBounty">
-			Save bounty
+			{{ t('health', 'Save bounty', {}) }}
 		</button>
 	</ul>
 </template>
@@ -95,7 +105,7 @@ export default {
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar']),
-		...mapGetters(['person', 'lastWeight']),
+		...mapGetters(['person']),
 	},
 	methods: {
 		updateWeightUnit: function(e) {
