@@ -58,6 +58,13 @@
 			@change="updateEnabledModules">
 			{{ t('health', 'Weight') }}
 		</ActionCheckbox>
+		<ActionCheckbox
+			v-if="person"
+			:checked="person.enabledModuleFeeling"
+			value="feeling"
+			@change="updateEnabledModules">
+			{{ t('health', 'Feeling') }}
+		</ActionCheckbox>
 		<h4>{{ t('health', 'coming soon') }}</h4>
 		<ActionCheckbox
 			v-if="person"
@@ -65,13 +72,6 @@
 			value="breaks"
 			@change="updateEnabledModules">
 			{{ t('health', 'Breaks') }}
-		</ActionCheckbox>
-		<ActionCheckbox
-			v-if="person"
-			:checked="person.enabledModuleFeeling"
-			value="feeling"
-			@change="updateEnabledModules">
-			{{ t('health', 'Feeling') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			v-if="person"

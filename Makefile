@@ -50,6 +50,14 @@ composer=$(shell which composer 2> /dev/null)
 
 all: build
 
+.PHONY: npm-update
+npm-update:
+	npm
+
+.PHONY: watch-js
+watch-js:
+	npm run watch
+
 # Fetches the PHP and JS dependencies and compiles the JS. If no composer.json
 # is present, the composer step is skipped, if no package.json or js/package.json
 # is present, the npm step is skipped
@@ -154,9 +162,7 @@ appstore:
 	--exclude="./bower.json" \
 	--exclude="./karma.*" \
 	--exclude="./protractor\.*" \
-	--exclude="./.*" \
 	--exclude="./js/.*" \
-	--exclude="./*.tar.gz" \
 	-zf $(appstore_package_name).tar.gz ./* \
 
 .PHONY: test
