@@ -31,6 +31,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		// .
+		app: 'health',
+		// .
 		// managing data
 		activePersonId: null,
 		activeModule: 'feeling',
@@ -42,6 +44,7 @@ export default new Vuex.Store({
 		// individual data for actual person
 		weightData: null,
 		personData: null,
+		feelingData: null,
 	},
 	getters: {
 		person: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId] : null,
@@ -62,6 +65,9 @@ export default new Vuex.Store({
 		},
 		personData(state, data) {
 			state.personData = data
+		},
+		feelingData(state, data) {
+			state.feelingData = data
 		},
 		setWeightData(state, value) {
 			state.persons[state.activePersonId].weightdata = value
@@ -105,7 +111,7 @@ export default new Vuex.Store({
 			commit('activeModule', module)
 			dispatch('loadModuleContentForPerson')
 		},
-		loadModuleContentForPerson({ state, getters, commit, dispatch }) {
+		async loadModuleContentForPerson({ state, getters, commit, dispatch }) {
 			// this ist called if the active person or module changed
 			// it should load all data, that is neccessary for the active module
 			console.debug('debug: start loading loadModuleContentForPerson')
@@ -126,7 +132,7 @@ export default new Vuex.Store({
 						(err) => {
 							console.debug('debug axLoadWeightdata ERROR-------------')
 							console.debug(err)
-						}
+						},
 					)
 					.catch((err) => {
 						console.debug('error detected')
@@ -144,10 +150,45 @@ export default new Vuex.Store({
 						(err) => {
 							console.debug('debug axLoadPersondata ERROR-------------')
 							console.debug(err)
-						}
+						},
 					)
 					.catch((err) => {
 						console.debug('error detected')
+						console.debug(err)
+					})
+			} else if (state.activeModule === 'feeling') {
+				console.debug('debug: start loading feelingdata')
+				const request = {
+					contextFilter: {
+						app: state.app,
+						module: state.activeModule,
+						type: 'datasets',
+					},
+					entityFilter: {
+						personId: state.activePersonId,
+					},
+				}
+
+				axios.post(generateUrl('/apps/health/ces'), { data: request })
+					.then(
+						(response) => {
+							console.debug('debug feelingdata SUCCESS-------------')
+							console.debug(response)
+							const data = []
+							response.data.forEach(function(item) {
+								const d = JSON.parse(item.data)
+								d.id = item.id
+								data.push(d)
+							})
+							commit('feelingData', data)
+						},
+						(err) => {
+							console.debug('debug feelingdata ERROR-------------')
+							console.debug(err)
+						},
+					)
+					.catch((err) => {
+						console.debug('error detected cesRequest')
 						console.debug(err)
 					})
 			}
@@ -180,6 +221,33 @@ export default new Vuex.Store({
 					console.debug('error detected')
 					console.debug(err)
 				})
+		},
+		cesRequest({ commit, state }, data) {
+			console.debug('start cesRequest')
+
+			if ('entityData' in data) {
+				data.entityData.personId = state.activePersonId
+			}
+			console.debug(data)
+
+			axios.post(generateUrl('/apps/health/ces'), { data: data })
+				.then(
+					(response) => {
+						console.debug('debug cesRequest SUCCESS-------------')
+						console.debug(response)
+						return Promise.resolve(response.data)
+						// return response
+					},
+					(err) => {
+						console.debug('debug cesRequest ERROR-------------')
+						console.debug(err)
+					},
+				)
+				.catch((err) => {
+					console.debug('error detected cesRequest')
+					console.debug(err)
+				})
+			return null
 		},
 		addPerson: function({ state, dispatch, commit }, name) {
 			console.debug('debug start addPerson')

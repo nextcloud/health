@@ -81,7 +81,7 @@
 				}
 			}
 
-			$c = 'comments';
+			$c = 'comment';
 			if(!$table->hasColumn($c)) {
 				$table->addColumn($c, 'string', [
 					'default' 	=> '',

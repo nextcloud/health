@@ -26,7 +26,7 @@
 			Feeling <span>for {{ person.name }}</span>
 		</h2>
 		<div class="datatable">
-			<HealthTable :header="header" :data="feelingdata" />
+			<HealthTable :header="header" :data="feelingData" @onSafe="safeRowFeelingdata" />
 		</div>
 	</div>
 </template>
@@ -51,18 +51,18 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['personData']),
+		...mapState(['personData', 'feelingData']),
 		...mapGetters(['person']),
 		header: function() {
 			return [
 				{
-					name: 'Date',
+					name: t('health', 'Date'),
 					columnId: 'datetime',
 					type: 'datetime',
 					show: true,
 				},
 				{
-					name: 'Mood',
+					name: t('health', 'Mood'),
 					columnId: 'mood',
 					type: 'select',
 					show: this.person.feelingColumnMood,
@@ -75,7 +75,7 @@ export default {
 					],
 				},
 				{
-					name: 'Sadness level',
+					name: t('health', 'Sadness level'),
 					columnId: 'sadness',
 					type: 'select',
 					show: this.person.feelingColumnSadness,
@@ -87,7 +87,7 @@ export default {
 					],
 				},
 				{
-					name: 'Symptoms',
+					name: t('health', 'Symptoms'),
 					columnId: 'symptoms',
 					show: this.person.feelingColumnSymptoms,
 					type: 'multiselect',
@@ -108,7 +108,7 @@ export default {
 					],
 				},
 				{
-					name: 'Attacks',
+					name: t('health', 'Attacks'),
 					columnId: 'attacks',
 					show: this.person.feelingColumnAttacks,
 					type: 'multiselect',
@@ -119,13 +119,22 @@ export default {
 					],
 				},
 				{
-					name: 'Default medication',
+					name: t('health', 'Default medication'),
 					columnId: 'defaultMedication',
 					type: 'boolean',
 					show: this.person.feelingColumnMedication,
+					textTrue: t('health', 'was taken'),
+					textFalse: t('health', ''),
 				},
 				{
-					name: 'Pain',
+					name: t('health', 'Medication'),
+					columnId: 'medication',
+					type: 'longtext',
+					show: true,
+					placeholder: t('health', 'What medicine did you take?', {}),
+				},
+				{
+					name: t('health', 'Pain'),
 					columnId: 'pain',
 					type: 'select',
 					show: this.person.feelingColumnPain,
@@ -136,24 +145,38 @@ export default {
 						{ id: 3, label: t('health', 'High', {}) },
 					],
 				},
-			]
-		},
-		feelingdata: function() {
-			return [
-				[
-					moment().format('YYYY-MM-DDTHH:mm'), // date
-					1, // mood
-					1, // sadness
-					1, // symptoms
-					1, // attacks
-					true, // medication
-					1, // pain
-				],
+				{
+					name: t('health', 'Comment'),
+					columnId: 'comment',
+					type: 'longtext',
+					show: true,
+					placeholder: t('health', 'Give some comment, if you want...', {}),
+					maxlength: 1000,
+				},
 			]
 		},
 	},
 	methods: {
-
+		safeRowFeelingdata(values) {
+			console.debug('safeRowFeelingdata')
+			const request = {
+				contextFilter: {
+					app: 'health',
+					module: 'feeling',
+					type: 'datasets',
+				},
+				entityData: values,
+			}
+			if (values.rowId) {
+				console.debug('rowId is set: ' + values.rowId)
+				request.entityFilter = { id: values.rowId }
+			} else {
+				console.debug('no row id, is new item')
+			}
+			console.debug(request)
+			const result = this.$store.dispatch('cesRequest', request)
+			console.debug(result)
+		},
 	},
 }
 </script>
@@ -162,9 +185,11 @@ export default {
 		width: 67%;
 		min-height: 200px;
 	}
+
 	.content-wrapper-health {
 		width: 98%;
 	}
+
 	.widget {
 		border: 1px solid gray;
 		border-radius: 4px;
@@ -174,27 +199,33 @@ export default {
 		margin: 10px;
 		float: left;
 	}
+
 	.widget h3 {
 		margin-top: 5px;
 		margin-bottom: 2px;
 		font-size: large;
 	}
+
 	.widget .date {
 		color: gray;
 		font-size: 0.8em;
 		text-align: right;
 	}
+
 	.widget span {
 		padding-left: 2px;
 		padding-right: 2px;
 	}
+
 	.widget .firstNumber {
 		font-weight: bold;
 		text-align: right;
 	}
+
 	.widget .secondNumber {
 		text-align: right;
 	}
+
 	.clear {
 		clear: both;
 	}

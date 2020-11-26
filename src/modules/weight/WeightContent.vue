@@ -120,6 +120,7 @@ export default {
 		width: 35%;
 		height: 6px !important;
 	}
+
 	.green {
 		color: green;
 		font-weight: 500;
@@ -127,6 +128,7 @@ export default {
 		padding-right: 20px;
 		padding-top: 20px;
 	}
+
 	.bountybox {
 		padding: 10px;
 		border: 1px solid #80808073;

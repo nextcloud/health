@@ -23,7 +23,7 @@
 
 namespace OCA\Health\Db;
 
-use JsonSerializable;
+use \JsonSerializable;
 
 use OCP\AppFramework\Db\Entity;
 
