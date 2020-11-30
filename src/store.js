@@ -113,7 +113,7 @@ export default new Vuex.Store({
 		},
 		async loadModuleContentForPerson({ state, getters, commit, dispatch }) {
 			// this ist called if the active person or module changed
-			// it should load all data, that is neccessary for the active module
+			// it should load all data, that is necessary for the active module
 			console.debug('debug: start loading loadModuleContentForPerson')
 
 			commit('weightData', null)
@@ -172,12 +172,13 @@ export default new Vuex.Store({
 				axios.post(generateUrl('/apps/health/ces'), { data: request })
 					.then(
 						(response) => {
-							console.debug('debug feelingdata SUCCESS-------------')
-							console.debug(response)
+							// console.debug('debug feelingdata SUCCESS-------------')
+							// console.debug(response)
 							const data = []
 							response.data.forEach(function(item) {
 								const d = JSON.parse(item.data)
-								d.id = item.id
+								// d.id = item.id
+								delete d.personId
 								data.push(d)
 							})
 							commit('feelingData', data)
@@ -223,20 +224,18 @@ export default new Vuex.Store({
 				})
 		},
 		cesRequest({ commit, state }, data) {
-			console.debug('start cesRequest')
+			// console.debug('start cesRequest')
 
 			if ('entityData' in data) {
 				data.entityData.personId = state.activePersonId
 			}
-			console.debug(data)
+			// console.debug(data)
 
-			axios.post(generateUrl('/apps/health/ces'), { data: data })
+			return axios.post(generateUrl('/apps/health/ces'), { data: data })
 				.then(
 					(response) => {
-						console.debug('debug cesRequest SUCCESS-------------')
-						console.debug(response)
+						console.debug('debug cesRequest SUCCESS-------------', response)
 						return Promise.resolve(response.data)
-						// return response
 					},
 					(err) => {
 						console.debug('debug cesRequest ERROR-------------')
@@ -247,7 +246,6 @@ export default new Vuex.Store({
 					console.debug('error detected cesRequest')
 					console.debug(err)
 				})
-			return null
 		},
 		addPerson: function({ state, dispatch, commit }, name) {
 			console.debug('debug start addPerson')
@@ -296,6 +294,12 @@ export default new Vuex.Store({
 					console.debug('error detected')
 					console.debug(err)
 				})
+		},
+		insertFeelingData({ dispatch, getters, commit, state }, item) {
+			const d = state.feelingData
+			d.push(item)
+			commit('feelingData', d)
+			// dispatch('sortWeightData')
 		},
 		async sortWeightData({ state, getters, commit }) {
 			console.debug('start function: sortWeightData')

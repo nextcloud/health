@@ -26,7 +26,11 @@
 			Feeling <span>for {{ person.name }}</span>
 		</h2>
 		<div class="datatable">
-			<HealthTable :header="header" :data="feelingData" @onSafe="safeRowFeelingdata" />
+			<Table
+				:header="header"
+				:data="feelingData"
+				entity-name="Feeling data"
+				@onSafe="safeRowFeelingdata" />
 		</div>
 	</div>
 </template>
@@ -34,7 +38,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import moment from '@nextcloud/moment'
-import HealthTable from './../../HealthTable'
+import Table from '../../ces/Table'
 
 export default {
 	name: 'FeelingContent',
@@ -44,10 +48,15 @@ export default {
 		},
 	},
 	components: {
-		HealthTable,
+		Table,
 	},
 	data: function() {
 		return {
+			datasets: null,
+			contextFilter: {
+				app: 'health',
+				module: 'feeling',
+			},
 		}
 	},
 	computed: {
@@ -60,6 +69,10 @@ export default {
 					columnId: 'datetime',
 					type: 'datetime',
 					show: true,
+					section: {
+						id: 'meta',
+						name: t('health', 'General information', {}),
+					},
 				},
 				{
 					name: t('health', 'Mood'),
@@ -73,6 +86,10 @@ export default {
 						{ id: 3, label: t('health', 'Don\'t know', {}) },
 						{ id: 4, label: t('health', 'Don\'t ask me', {}) },
 					],
+					section: {
+						id: 'feeling',
+						name: t('health', 'Feeling information', {}),
+					},
 				},
 				{
 					name: t('health', 'Sadness level'),
@@ -85,6 +102,10 @@ export default {
 						{ id: 2, label: t('health', 'Medium', {}) },
 						{ id: 3, label: t('health', 'High', {}) },
 					],
+					section: {
+						id: 'feeling',
+						name: t('health', 'Feeling information', {}),
+					},
 				},
 				{
 					name: t('health', 'Symptoms'),
@@ -106,6 +127,10 @@ export default {
 						{ id: 11, label: t('health', 'Feeling worthless', {}) },
 						{ id: 12, label: t('health', 'Indecisive', {}) },
 					],
+					section: {
+						id: 'feeling',
+						name: t('health', 'Feeling information', {}),
+					},
 				},
 				{
 					name: t('health', 'Attacks'),
@@ -117,6 +142,10 @@ export default {
 						{ id: 1, label: t('health', 'Fit of range', {}) },
 						{ id: 2, label: t('health', 'Asthma attack', {}) },
 					],
+					section: {
+						id: 'feeling',
+						name: t('health', 'Feeling information', {}),
+					},
 				},
 				{
 					name: t('health', 'Default medication'),
@@ -125,6 +154,10 @@ export default {
 					show: this.person.feelingColumnMedication,
 					textTrue: t('health', 'was taken'),
 					textFalse: t('health', ''),
+					section: {
+						id: 'feeling',
+						name: t('health', 'Feeling information', {}),
+					},
 				},
 				{
 					name: t('health', 'Medication'),
@@ -132,6 +165,10 @@ export default {
 					type: 'longtext',
 					show: true,
 					placeholder: t('health', 'What medicine did you take?', {}),
+					section: {
+						id: 'feeling',
+						name: t('health', 'Feeling information', {}),
+					},
 				},
 				{
 					name: t('health', 'Pain'),
@@ -144,6 +181,10 @@ export default {
 						{ id: 2, label: t('health', 'Medium', {}) },
 						{ id: 3, label: t('health', 'High', {}) },
 					],
+					section: {
+						id: 'feeling',
+						name: t('health', 'Feeling information', {}),
+					},
 				},
 				{
 					name: t('health', 'Comment'),
@@ -152,13 +193,29 @@ export default {
 					show: true,
 					placeholder: t('health', 'Give some comment, if you want...', {}),
 					maxlength: 1000,
+					section: {
+						id: 'feeling',
+						name: t('health', 'Feeling information', {}),
+					},
 				},
 			]
 		},
 	},
+	mounted() {
+		const cesRequest = {}
+		cesRequest.contextFilter = this.contextFilter
+		cesRequest.contextFilter.type = 'datasets'
+		cesRequest.entityFilter = {
+			personId: this.person.id,
+		}
+		this.$store.dispatch('cesRequest', cesRequest).then(result => {
+			this.datasets = result.data
+		})
+		// console.debug('datasets feeling are loaded!')
+	},
 	methods: {
 		safeRowFeelingdata(values) {
-			console.debug('safeRowFeelingdata')
+			// console.debug('safeRowFeelingdata')
 			const request = {
 				contextFilter: {
 					app: 'health',
@@ -168,14 +225,20 @@ export default {
 				entityData: values,
 			}
 			if (values.rowId) {
-				console.debug('rowId is set: ' + values.rowId)
+				// console.debug('rowId is set: ' + values.rowId)
 				request.entityFilter = { id: values.rowId }
 			} else {
-				console.debug('no row id, is new item')
+				// console.debug('no row id, is new item')
 			}
-			console.debug(request)
-			const result = this.$store.dispatch('cesRequest', request)
-			console.debug(result)
+			// console.debug(request)
+			this.$store.dispatch('cesRequest', request).then((items) => {
+				items.forEach(item => {
+					const d = JSON.parse(item.data)
+					// d.id = item.id
+					this.$store.dispatch('insertFeelingData', d)
+					console.debug('new item', item)
+				})
+			})
 		},
 	},
 }
