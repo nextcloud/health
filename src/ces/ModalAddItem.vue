@@ -18,6 +18,22 @@
 	- You should have received a copy of the GNU Affero General Public License
 	- along with this program. If not, see <http://www.gnu.org/licenses/>.
 	-
+	- header definition: objects in array
+	- columnId REQUIRED
+	- name -> Name that is displayed REQUIRED
+	- type -> number, text, longtext, date, datetime, select, multiselect REQUIRED
+	- default -> function that returns default value
+	- show -> is the field hidden
+	- section -> {id, name} -> every new sections displays a header with the name
+	- hint -> give some description or additional information
+	-
+	- if type = number
+	- max
+	- min
+	-
+	- if type select/multiselect
+	- options -> {id, label} -> label should be translated
+	-
 	-->
 
 <template>
@@ -33,11 +49,14 @@
 					<div
 						v-for="(h, index) in header"
 						:key="index"
-						class="field">
+						:class="{ hide: !h.show, field: true }">
 						<h2 v-if="isNewSection(index)">
 							{{ h.section.name }}
 						</h2>
 						<h3>{{ h.name }}</h3>
+						<div v-if="'hint' in h" class="hint">
+							{{ h.hint }}
+						</div>
 						<div v-if="h.type === 'date'">
 							<input
 								v-model="values[h.columnId]"
@@ -64,27 +83,35 @@
 								:multiple="true"
 								track-by="id"
 								label="label" />
+							<div v-if="values[h.columnId]">
+								<div v-for="(selection, i) in values[h.columnId]" :key="i">
+									{{ selection.label }}
+								</div>
+							</div>
 						</div>
 						<div v-else-if="h.type === 'longtext'">
 							<textarea v-model="values[h.columnId]" :placeholder="(h.placeholder !== undefined) ? h.placeholder : ''" />
 						</div>
 						<div v-else-if="h.type === 'boolean'">
-							<div>
-								{{ values[h.columnId] ? ('textTrue' in h) ? h.textTrue : 'x' : '' }}
-								{{ !values[h.columnId] ? ('textFalse' in h) ? h.textFalse : '-' : '-' }}
-							</div>
-							<button
-								class="icon-checkmark boolean"
-								@click="values[h.columnId] = true" />
-							<button
-								class="icon-close boolean"
-								@click="values[h.columnId] = false" />
+							<input :id="h.columnId" v-model="values[h.columnId]" type="checkbox">
+							<label :for="h.columnId">
+								{{
+									values[h.columnId] && values[h.columnId] === true ? h.textTrue ? h.textTrue : 'On' : h.textFalse ? h.textFalse : 'Off'
+								}}
+							</label>
+						</div>
+						<div v-else-if="h.type === 'number'">
+							<input
+								v-model="values[h.columnId]"
+								type="Number"
+								:min="'min' in h ? h.min : ''"
+								:max="'max' in h ? h.max : ''"
+								class="widthfitcontent">
 						</div>
 						<div v-else>
-							<ActionInput
-								:type="text"
-								:value="values[h.columnId]"
-								icon="icon-edit" />
+							<input
+								v-model="values[h.columnId]"
+								class="widthfitcontent">
 						</div>
 					</div>
 				</div>
@@ -124,13 +151,21 @@ export default {
 	},
 	data: function() {
 		return {
-			values: [],
+			values: {},
 			showModal: false,
 		}
+	},
+	mounted() {
+		this.header.forEach(h => {
+			if ('default' in h && h.default instanceof Function) {
+				this.values[h.columnId] = h.default()
+			}
+		})
 	},
 	methods: {
 		sendData: function() {
 			this.$emit('addItem', this.values)
+			this.values = {}
 			this.showModal = false
 		},
 		isNewSection: function(index) {
@@ -138,7 +173,8 @@ export default {
 				&& this.header[index].section
 				&& this.header[(index - 1)]
 				&& this.header[(index - 1)].section
-				&& this.header[index].section.id === this.header[(index - 1)].section.id)
+				&& this.header[index].section.id === this.header[(index - 1)].section.id
+				&& this.header[index - 1].show)
 		},
 	},
 }
@@ -176,12 +212,29 @@ export default {
 		margin-right: 5vw;
 	}
 
+	.modal__content h3 {
+		margin-bottom: 0px;
+	}
+
+	.modal__content .hint {
+		margin-bottom: 10px;
+		margin-top: 3px;
+	}
+
 	.modal__content textarea {
 		width: 97%;
 	}
 
+	.modal__content input {
+		width: fit-content;
+	}
+
 	.modal__content .boolean {
 		padding: 16px;
+	}
+
+	.modal__content .hide {
+		display: none;
 	}
 
 	@media screen and (max-width:700px) {

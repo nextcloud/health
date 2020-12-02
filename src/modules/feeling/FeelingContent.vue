@@ -25,6 +25,7 @@
 		<h2>
 			Feeling <span>for {{ person.name }}</span>
 		</h2>
+		<ModalAddItem :header="header2" entity-name="TEST" @addItem="addItem" />
 		<div class="datatable">
 			<Table
 				:header="header"
@@ -39,6 +40,7 @@
 import { mapState, mapGetters } from 'vuex'
 import moment from '@nextcloud/moment'
 import Table from '../../ces/Table'
+import ModalAddItem from '../../ces/ModalAddItem'
 
 export default {
 	name: 'FeelingContent',
@@ -49,6 +51,7 @@ export default {
 	},
 	components: {
 		Table,
+		ModalAddItem,
 	},
 	data: function() {
 		return {
@@ -57,6 +60,39 @@ export default {
 				app: 'health',
 				module: 'feeling',
 			},
+			header2: [
+				{
+					name: 'TextLine',
+					columnId: 'field1',
+					type: 'select',
+					show: true,
+					hint: 'test for my hint',
+					section: {
+						id: 'head',
+						name: 'Head',
+					},
+					options: [
+						{ id: 0, label: 'first' },
+						{ id: 1, label: 'second' },
+					],
+				},
+				{
+					name: 'multi',
+					columnId: 'field2',
+					type: 'multiselect',
+					show: true,
+					hint: 'test for my hint',
+					section: {
+						id: 'head',
+						name: 'Head',
+					},
+					options: [
+						{ id: 0, label: 'first' },
+						{ id: 1, label: 'second' },
+						{ id: 2, label: 'third' },
+					],
+				},
+			],
 		}
 	},
 	computed: {
@@ -72,6 +108,9 @@ export default {
 					section: {
 						id: 'meta',
 						name: t('health', 'General information', {}),
+					},
+					default: function() {
+						return moment().format('YYYY-MM-DDTHH:mm')
 					},
 				},
 				{
@@ -153,7 +192,7 @@ export default {
 					type: 'boolean',
 					show: this.person.feelingColumnMedication,
 					textTrue: t('health', 'was taken'),
-					textFalse: t('health', ''),
+					textFalse: t('health', 'not taken'),
 					section: {
 						id: 'feeling',
 						name: t('health', 'Feeling information', {}),
@@ -214,6 +253,9 @@ export default {
 		// console.debug('datasets feeling are loaded!')
 	},
 	methods: {
+		addItem: function(item) {
+			console.debug('new item', item)
+		},
 		safeRowFeelingdata(values) {
 			// console.debug('safeRowFeelingdata')
 			const request = {
