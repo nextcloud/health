@@ -121,7 +121,7 @@
 					{{ t('health', 'Add {eName}', {eName: entityName}) }}
 				</button>
 				<button
-					@click="showModal = false">
+					@click="closeModal">
 					{{ t('health', 'Cancel', {}) }}
 				</button>
 			</div>
@@ -156,16 +156,12 @@ export default {
 		}
 	},
 	mounted() {
-		this.header.forEach(h => {
-			if ('default' in h && h.default instanceof Function) {
-				this.values[h.columnId] = h.default()
-			}
-		})
+		this.resetValues()
 	},
 	methods: {
 		sendData: function() {
 			this.$emit('addItem', this.values)
-			this.values = {}
+			this.resetValues()
 			this.showModal = false
 		},
 		isNewSection: function(index) {
@@ -175,6 +171,18 @@ export default {
 				&& this.header[(index - 1)].section
 				&& this.header[index].section.id === this.header[(index - 1)].section.id
 				&& this.header[index - 1].show)
+		},
+		closeModal: function() {
+			this.resetValues()
+			this.showModal = false
+		},
+		resetValues: function() {
+			this.values = {}
+			this.header.forEach(h => {
+				if ('default' in h && h.default instanceof Function) {
+					this.values[h.columnId] = h.default()
+				}
+			})
 		},
 	},
 }
@@ -223,10 +231,22 @@ export default {
 
 	.modal__content textarea {
 		width: 97%;
+		margin-left: 3px;
 	}
 
 	.modal__content input {
 		width: fit-content;
+	}
+
+	.modal__content input[type='checkbox'] {
+		min-height: auto;
+		margin-top: 15px;
+		margin-left: 5px;
+	}
+
+	.wrapper {
+		margin-left: 3px;
+		margin-top: 10px;
 	}
 
 	.modal__content .boolean {

@@ -32,7 +32,6 @@
 					</th>
 					<th>
 						{{ t('health', 'Actions', {}) }}
-						<button class="icon-add" @click="setEdit(-1)" />
 					</th>
 				</tr>
 			</thead>
@@ -43,45 +42,40 @@
 						:key="ii"
 						:data-label="t('health', h.name, {})"
 						:class="{ hide: !h.show }">
-						<div v-if="h.type === 'date'">
+						<div v-if="h.type === 'date' && d[h.columnId]" class="wrapper">
 							{{ d[h.columnId] | formatMyDate }}
 						</div>
-						<div v-else-if="h.type === 'datetime'">
+						<div v-else-if="h.type === 'datetime' && d[h.columnId]" class="wrapper">
 							{{ d[h.columnId] | formatMyDatetime }}
 						</div>
-						<div v-else-if="h.type === 'select'" class="wrapper">
-							{{ (h.options && h.options[d[h.columnId]] && h.options[d[h.columnId]].label) ? h.options[d[h.columnId]].label: 'no label found' }}
+						<div v-else-if="h.type === 'select' && d[h.columnId]" class="wrapper">
+							{{ (h.options && h.options[d[h.columnId].id] && h.options[d[h.columnId].id].label) ? h.options[d[h.columnId].id].label: 'no label found' }}
 						</div>
-						<div v-else-if="h.type === 'multiselect'" class="wrapper">
+						<div v-else-if="h.type === 'multiselect' && d[h.columnId]" class="wrapper">
 							<div v-for="(option, optionIndex) in d[h.columnId]"
 								:key="optionIndex">
-								{{ (h.options && h.options[d[h.columnId]] && h.options[d[h.columnId]].label) ? h.options[d[h.columnId]].label: 'no label found' }}
+								{{ (h.options && h.options[d[h.columnId].id] && h.options[d[h.columnId].id].label) ? h.options[d[h.columnId].id].label: 'no label found' }}
 							</div>
 						</div>
-						<div v-else-if="h.type === 'longtext'">
+						<div v-else-if="h.type === 'longtext' && d[h.columnId]" class="wrapper">
 							{{ d[h.columnId] }}
 						</div>
-						<div v-else-if="h.type === 'boolean'">
+						<div v-else-if="h.type === 'boolean' && d[h.columnId]" class="wrapper">
 							{{ d[h.columnId] ? ('textTrue' in h) ? h.textTrue : t('health', 'true') : '' }}
 							{{ !d[h.columnId] ? ('textFalse' in h) ? h.textFalse : t('health', 'false') : '' }}
 						</div>
-						<div v-else>
+						<div v-else-if="h.type === 'text' && d[h.columnId]" class="wrapper">
 							{{ d[h.columnId] }}
 						</div>
 					</td>
 					<td>
 						<button
-							v-if="editRowId === i"
-							class="icon-checkmark"
-							@click="updateTableData()" />
-						<button
 							v-if="editRowId === null"
-							class="icon-rename"
-							@click="setEdit(i)" />
+							class="icon-rename" />
 						<button
 							v-if="editRowId === null"
 							class="icon-delete"
-							@click="deleteDataRow(i)" />
+							@click="deleteItem(i)" />
 					</td>
 				</tr>
 			</tbody>
@@ -123,66 +117,19 @@ export default {
 	data: function() {
 		return {
 			editRowId: null,
-			values: [],
 		}
 	},
 	computed: {
 	},
 	methods: {
-		updateTableData: function() {
-			console.debug('send row for updating from health table')
-			console.debug(this.values)
-			let index, len
-			const returnData = {}
-			for (index = 0, len = this.values.length; index < len; ++index) {
-				let d = ''
-				if (this.values[index] instanceof Object) {
-					d = this.getIdsFromObjects(this.values[index])
-				} else {
-					d = this.values[index]
-				}
-				returnData[this.header[index].columnId] = d
-			}
-			if (this.editRowId !== -1) {
-				returnData.rowId = this.editRowId
-			}
-			this.$emit('onSafe', returnData)
-			this.editRowId = null
-		},
-		getIdsFromObjects(o) {
-			// console.debug('is object')
-			if ('id' in o) {
-				// console.debug('id is set' + o.id)
-				return o.id
-			} else {
-				// console.debug('no id found directly' + o)
-				if (0 in o) {
-					// console.debug('think its an array as object')
-					// let r = ''
-					const resultIds = []
-					let n = 0
-					while (o[n] !== undefined && 'id' in o[n]) {
-						// console.debug('try to append ' + o[n].id)
-						// r === '' ? r = '' + o[n].id : r = r + ',' + o[n].id
-						resultIds.push(o[n].id)
-						n++
-					}
-					// console.debug('resultIds')
-					// console.debug(resultIds)
-					return resultIds
-				} else {
-					console.debug('error while try to fetch id from multiplesSelectionField')
-				}
-			}
-			return o
-		},
-		deleteDataRow: function() {
-			console.debug('send row-id for deleting from health table')
-			console.debug(this.editRowId)
-			this.editRowId = null
+		deleteItem: function(id) {
+			this.$emit('deleteItem', id)
 		},
 		addItem: function(item) {
-			console.debug('new item data', item)
+			this.$emit('addItem', item)
+		},
+		updateItem: function(item) {
+			this.$emit('updateItem', item)
 		},
 	},
 }

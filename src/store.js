@@ -156,42 +156,6 @@ export default new Vuex.Store({
 						console.debug('error detected')
 						console.debug(err)
 					})
-			} else if (state.activeModule === 'feeling') {
-				console.debug('debug: start loading feelingdata')
-				const request = {
-					contextFilter: {
-						app: state.app,
-						module: state.activeModule,
-						type: 'datasets',
-					},
-					entityFilter: {
-						personId: state.activePersonId,
-					},
-				}
-
-				axios.post(generateUrl('/apps/health/ces'), { data: request })
-					.then(
-						(response) => {
-							// console.debug('debug feelingdata SUCCESS-------------')
-							// console.debug(response)
-							const data = []
-							response.data.forEach(function(item) {
-								const d = JSON.parse(item.data)
-								// d.id = item.id
-								delete d.personId
-								data.push(d)
-							})
-							commit('feelingData', data)
-						},
-						(err) => {
-							console.debug('debug feelingdata ERROR-------------')
-							console.debug(err)
-						},
-					)
-					.catch((err) => {
-						console.debug('error detected cesRequest')
-						console.debug(err)
-					})
 			}
 		},
 		setValue({ commit, state }, data) {
@@ -223,13 +187,15 @@ export default new Vuex.Store({
 					console.debug(err)
 				})
 		},
-		cesRequest({ commit, state }, data) {
+		cesRequest({ commit, state, getters }, data) {
 			// console.debug('start cesRequest')
 
 			if ('entityData' in data) {
-				data.entityData.personId = state.activePersonId
+				console.debug('add personId in $store')
+				data.entityData.personId = getters.person.id
 			}
-			// console.debug(data)
+
+			console.debug('request', data)
 
 			return axios.post(generateUrl('/apps/health/ces'), { data: data })
 				.then(

@@ -25,13 +25,14 @@
 		<h2>
 			Feeling <span>for {{ person.name }}</span>
 		</h2>
-		<ModalAddItem :header="header2" entity-name="TEST" @addItem="addItem" />
 		<div class="datatable">
 			<Table
 				:header="header"
-				:data="feelingData"
+				:data="dataForTable"
 				entity-name="Feeling data"
-				@onSafe="safeRowFeelingdata" />
+				@addItem="addItem"
+				@updateitem="updateItem"
+				@deleteItem="deleteItem" />
 		</div>
 	</div>
 </template>
@@ -40,7 +41,6 @@
 import { mapState, mapGetters } from 'vuex'
 import moment from '@nextcloud/moment'
 import Table from '../../ces/Table'
-import ModalAddItem from '../../ces/ModalAddItem'
 
 export default {
 	name: 'FeelingContent',
@@ -51,48 +51,14 @@ export default {
 	},
 	components: {
 		Table,
-		ModalAddItem,
 	},
 	data: function() {
 		return {
-			datasets: null,
+			datasets: [],
 			contextFilter: {
 				app: 'health',
 				module: 'feeling',
 			},
-			header2: [
-				{
-					name: 'TextLine',
-					columnId: 'field1',
-					type: 'select',
-					show: true,
-					hint: 'test for my hint',
-					section: {
-						id: 'head',
-						name: 'Head',
-					},
-					options: [
-						{ id: 0, label: 'first' },
-						{ id: 1, label: 'second' },
-					],
-				},
-				{
-					name: 'multi',
-					columnId: 'field2',
-					type: 'multiselect',
-					show: true,
-					hint: 'test for my hint',
-					section: {
-						id: 'head',
-						name: 'Head',
-					},
-					options: [
-						{ id: 0, label: 'first' },
-						{ id: 1, label: 'second' },
-						{ id: 2, label: 'third' },
-					],
-				},
-			],
 		}
 	},
 	computed: {
@@ -239,6 +205,13 @@ export default {
 				},
 			]
 		},
+		dataForTable: function() {
+			const data = []
+			this.datasets.forEach(d => {
+				data.push(JSON.parse(d.data))
+			})
+			return data
+		},
 	},
 	mounted() {
 		const cesRequest = {}
@@ -248,13 +221,31 @@ export default {
 			personId: this.person.id,
 		}
 		this.$store.dispatch('cesRequest', cesRequest).then(result => {
-			this.datasets = result.data
+			console.debug('loaded feeling data from db', result)
+			this.datasets = result
 		})
-		// console.debug('datasets feeling are loaded!')
 	},
 	methods: {
 		addItem: function(item) {
 			console.debug('new item', item)
+
+			item.personId = this.person.id
+
+			const cesRequest = {}
+			cesRequest.contextFilter = this.contextFilter
+			cesRequest.contextFilter.type = 'datasets'
+			cesRequest.entityData = item
+
+			this.$store.dispatch('cesRequest', cesRequest).then(newItem => {
+				this.datasets.push(newItem[0])
+				console.debug('saved item', newItem)
+			})
+		},
+		updateItem: function(item) {
+			console.debug('update item', item)
+		},
+		deleteItem: function(id) {
+			console.debug('delete item with id', id)
 		},
 		safeRowFeelingdata(values) {
 			// console.debug('safeRowFeelingdata')
