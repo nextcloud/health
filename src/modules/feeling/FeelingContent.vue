@@ -31,7 +31,7 @@
 				:data="dataForTable"
 				entity-name="Feeling data"
 				@addItem="addItem"
-				@updateitem="updateItem"
+				@updateItem="updateItem"
 				@deleteItem="deleteItem" />
 		</div>
 	</div>
@@ -44,11 +44,6 @@ import Table from '../../ces/Table'
 
 export default {
 	name: 'FeelingContent',
-	filters: {
-		formatMyDate: function(v) {
-			return moment(v).format('DD.MM.YYYY')
-		},
-	},
 	components: {
 		Table,
 	},
@@ -62,7 +57,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['personData', 'feelingData']),
+		...mapState(['activePersonId']),
 		...mapGetters(['person']),
 		header: function() {
 			return [
@@ -168,7 +163,7 @@ export default {
 					name: t('health', 'Medication'),
 					columnId: 'medication',
 					type: 'longtext',
-					show: true,
+					show: this.person.feelingColumnMedication,
 					placeholder: t('health', 'What medicine did you take?', {}),
 					section: {
 						id: 'feeling',
@@ -213,17 +208,14 @@ export default {
 			return data
 		},
 	},
+	watch: {
+		activePersonId: function() {
+			console.debug('person changed, load new datasets')
+			this.loadDatasets()
+		},
+	},
 	mounted() {
-		const cesRequest = {}
-		cesRequest.contextFilter = this.contextFilter
-		cesRequest.contextFilter.type = 'datasets'
-		cesRequest.entityFilter = {
-			personId: this.person.id,
-		}
-		this.$store.dispatch('cesRequest', cesRequest).then(result => {
-			console.debug('loaded feeling data from db', result)
-			this.datasets = result
-		})
+		this.loadDatasets()
 	},
 	methods: {
 		addItem: function(item) {
@@ -243,34 +235,50 @@ export default {
 		},
 		updateItem: function(item) {
 			console.debug('update item', item)
+
+			const cesRequest = {}
+			cesRequest.contextFilter = this.contextFilter
+			cesRequest.contextFilter.type = 'datasets'
+			cesRequest.entityFilter = {
+				id: this.datasets[item.id].id,
+			}
+			cesRequest.entityData = item.data
+
+			this.$store.dispatch('cesRequest', cesRequest).then(result => {
+				console.debug('item updated', result)
+				const datasets = this.datasets.slice()
+				result.forEach(r => {
+					datasets[item.id] = r
+				})
+				this.datasets = datasets
+			})
 		},
 		deleteItem: function(id) {
-			console.debug('delete item with id', id)
+			const entityId = this.datasets[id].id
+			console.debug('delete item with id', entityId)
+
+			const cesRequest = {}
+			cesRequest.contextFilter = this.contextFilter
+			cesRequest.contextFilter.type = 'datasets'
+			cesRequest.entityFilter = {
+				id: entityId,
+				remove: true,
+			}
+
+			this.$store.dispatch('cesRequest', cesRequest).then(result => {
+				console.debug('item deleted', result)
+				this.datasets.splice(id, 1)
+			})
 		},
-		safeRowFeelingdata(values) {
-			// console.debug('safeRowFeelingdata')
-			const request = {
-				contextFilter: {
-					app: 'health',
-					module: 'feeling',
-					type: 'datasets',
-				},
-				entityData: values,
+		loadDatasets: function() {
+			const cesRequest = {}
+			cesRequest.contextFilter = this.contextFilter
+			cesRequest.contextFilter.type = 'datasets'
+			cesRequest.entityFilter = {
+				personId: this.person.id,
 			}
-			if (values.rowId) {
-				// console.debug('rowId is set: ' + values.rowId)
-				request.entityFilter = { id: values.rowId }
-			} else {
-				// console.debug('no row id, is new item')
-			}
-			// console.debug(request)
-			this.$store.dispatch('cesRequest', request).then((items) => {
-				items.forEach(item => {
-					const d = JSON.parse(item.data)
-					// d.id = item.id
-					this.$store.dispatch('insertFeelingData', d)
-					console.debug('new item', item)
-				})
+			this.$store.dispatch('cesRequest', cesRequest).then(result => {
+				this.datasets = result
 			})
 		},
 	},

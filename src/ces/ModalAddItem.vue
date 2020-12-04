@@ -39,8 +39,9 @@
 <template>
 	<div>
 		<button
+			:class="{[icon]: icon !== null}"
 			@click="showModal = true">
-			{{ t('health', 'Add new {eName}', {eName: entityName}) }}
+			{{ icon === null ? t('health', 'Add new {eName}', {eName: entityName}) : '' }}
 		</button>
 		<Modal v-if="showModal" title="add item" @close="showModal = false">
 			<div class="modal__content">
@@ -118,7 +119,7 @@
 				<button
 					class="primary"
 					@click="sendData">
-					{{ t('health', 'Add {eName}', {eName: entityName}) }}
+					{{ t('health', 'Send {eName}', {eName: entityName}) }}
 				</button>
 				<button
 					@click="closeModal">
@@ -148,6 +149,18 @@ export default {
 			type: String,
 			default: 'item',
 		},
+		itemData: {
+			type: Object,
+			default: function() { return {} },
+		},
+		icon: {
+			type: String,
+			default: null,
+		},
+		id: {
+			type: Number,
+			default: null,
+		},
 	},
 	data: function() {
 		return {
@@ -155,12 +168,26 @@ export default {
 			showModal: false,
 		}
 	},
+	watch: {
+		itemData: function(newItemData) {
+			console.debug('newItemData', newItemData)
+			this.resetValues()
+		},
+	},
 	mounted() {
 		this.resetValues()
 	},
 	methods: {
 		sendData: function() {
-			this.$emit('addItem', this.values)
+			let ret = {}
+			if (this.id !== null) {
+				ret.data = this.values
+				ret.id = this.id
+			} else {
+				ret = this.values
+			}
+
+			this.$emit('addItem', ret)
 			this.resetValues()
 			this.showModal = false
 		},
@@ -177,7 +204,8 @@ export default {
 			this.showModal = false
 		},
 		resetValues: function() {
-			this.values = {}
+			console.debug('reset values in modal')
+			this.values = Object.assign({}, this.itemData)
 			this.header.forEach(h => {
 				if ('default' in h && h.default instanceof Function) {
 					this.values[h.columnId] = h.default()
@@ -188,6 +216,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
+	button {
+		padding: 13px 20px 13px 20px;
+	}
+
 	.modal__content {
 		width: 50vw;
 		margin: 1vw 0;

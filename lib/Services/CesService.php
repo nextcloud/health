@@ -68,8 +68,23 @@ class CesService {
 			$contexts[] = $this->createContext($contextFilter, $contextData);
 		}
 
+		// if magic key is set
+		$remove = false;
+		if (isset($entityFilter['remove']) && $entityFilter['remove']) {
+			$remove = true;
+			unset($entityFilter['remove']);
+		}
+
 		// if entityFilter exists -> find all entities
 		$entities = ($entityFilter !== null) ? $this->cesEntityMapper->find($contexts, $entityFilter): [];
+
+		// if $remove -> remove!
+		if($remove) {
+			foreach ($entities as $entity) {
+				$this->cesEntityMapper->delete($entity);
+			}
+			return [];
+		}
 
 		// finished if no data is to set
 		if($entityData === null) {

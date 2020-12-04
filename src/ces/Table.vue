@@ -23,7 +23,7 @@
 <template>
 	<div>
 		<h3>{{ t('health', 'Data', {}) }}</h3>
-		<ModalAddItem :header="header" @addItem="addItem" />
+		<ModalAddItem :header="header" icon="icon-add" @addItem="addItem" />
 		<table>
 			<thead>
 				<tr>
@@ -52,10 +52,12 @@
 							{{ (h.options && h.options[d[h.columnId].id] && h.options[d[h.columnId].id].label) ? h.options[d[h.columnId].id].label: 'no label found' }}
 						</div>
 						<div v-else-if="h.type === 'multiselect' && d[h.columnId]" class="wrapper">
-							<div v-for="(option, optionIndex) in d[h.columnId]"
-								:key="optionIndex">
-								{{ (h.options && h.options[d[h.columnId].id] && h.options[d[h.columnId].id].label) ? h.options[d[h.columnId].id].label: 'no label found' }}
-							</div>
+							<ul>
+								<li v-for="(option, optionIndex) in d[h.columnId]"
+									:key="optionIndex">
+									{{ (h.options && h.options[option.id] && h.options[option.id].label) ? h.options[option.id].label: 'no label found' }}
+								</li>
+							</ul>
 						</div>
 						<div v-else-if="h.type === 'longtext' && d[h.columnId]" class="wrapper">
 							{{ d[h.columnId] }}
@@ -69,11 +71,13 @@
 						</div>
 					</td>
 					<td>
+						<ModalAddItem
+							:id="i"
+							:header="header"
+							:item-data="d"
+							icon="icon-rename"
+							@addItem="updateItem" />
 						<button
-							v-if="editRowId === null"
-							class="icon-rename" />
-						<button
-							v-if="editRowId === null"
 							class="icon-delete"
 							@click="deleteItem(i)" />
 					</td>
@@ -116,7 +120,6 @@ export default {
 	},
 	data: function() {
 		return {
-			editRowId: null,
 		}
 	},
 	computed: {
@@ -153,6 +156,7 @@ export default {
 
 	td, tr, th {
 		padding: 5px;
+		vertical-align: top;
 	}
 
 	th {
@@ -171,6 +175,12 @@ export default {
 	tr:hover {
 		background: #80808063;
 	}
+
+	.datatable ul {
+		list-style: square;
+		padding-left: 20px;
+	}
+
 	@media screen and (max-width:700px) {
 
 		table, tr, td {

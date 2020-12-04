@@ -44,7 +44,6 @@ export default new Vuex.Store({
 		// individual data for actual person
 		weightData: null,
 		personData: null,
-		feelingData: null,
 	},
 	getters: {
 		person: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId] : null,
@@ -260,12 +259,6 @@ export default new Vuex.Store({
 					console.debug('error detected')
 					console.debug(err)
 				})
-		},
-		insertFeelingData({ dispatch, getters, commit, state }, item) {
-			const d = state.feelingData
-			d.push(item)
-			commit('feelingData', d)
-			// dispatch('sortWeightData')
 		},
 		async sortWeightData({ state, getters, commit }) {
 			console.debug('start function: sortWeightData')
