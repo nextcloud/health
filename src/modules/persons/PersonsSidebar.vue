@@ -67,12 +67,11 @@
 		</ActionCheckbox>
 		<ActionCheckbox
 			v-if="person"
-			:checked="person.enabledModuleBloodpressure"
-			value="bloodpressure"
+			:checked="person.enabledModuleMeasurement"
+			value="measurement"
 			@change="updateEnabledModules">
-			{{ t('health', 'Blood pressure') }}
+			{{ t('health', 'Measurement') }}
 		</ActionCheckbox>
-		<h4>{{ t('health', 'coming soon') }}</h4>
 		<ActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleBreaks"
@@ -93,6 +92,20 @@
 			value="activities"
 			@change="updateEnabledModules">
 			{{ t('health', 'Activities') }}
+		</ActionCheckbox>
+		<ActionCheckbox
+			v-if="person"
+			:checked="person.enabledModuleSleep"
+			value="sleep"
+			@change="updateEnabledModules">
+			{{ t('health', 'Sleep') }}
+		</ActionCheckbox>
+		<ActionCheckbox
+			v-if="person"
+			:checked="person.enabledModuleNutrition"
+			value="nutrition"
+			@change="updateEnabledModules">
+			{{ t('health', 'Nutrition') }}
 		</ActionCheckbox>
 	</ul>
 </template>
@@ -127,6 +140,7 @@ export default {
 		updateEnabledModules: function(e) {
 			const m = e.target.value
 			const key = 'enabledModule' + m[0].toUpperCase() + m.slice(1)
+			console.debug('update module', key)
 			this.$store.dispatch('setValue', { key: key, value: e.target.checked })
 		},
 	},

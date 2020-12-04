@@ -69,15 +69,15 @@
 					:class="(activeModule === 'feeling' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'feeling')" />
 				<AppNavigationItem
-					v-if="p.enabledModuleBloodpressure"
-					:title="t('health', 'Blood pressure')"
+					v-if="p.enabledModuleMeasurement"
+					:title="t('health', 'Measurement')"
 					icon="icon-home"
-					:class="(activeModule === 'bloodpressure' && index === activePersonId)?'active-module':''"
-					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'bloodpressure')" />
+					:class="(activeModule === 'measurement' && index === activePersonId)?'active-module':''"
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'measurement')" />
 				<AppNavigationItem
 					v-if="p.enabledModuleMedicine"
 					:title="t('health', 'Medicine')"
-					icon="icon-toggle-filelist"
+					icon="icon-filter"
 					:class="(activeModule === 'medicine' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'medicine')" />
 				<AppNavigationItem
@@ -86,6 +86,18 @@
 					icon="icon-user-admin"
 					:class="(activeModule === 'activities' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'activities')" />
+				<AppNavigationItem
+					v-if="p.enabledModuleSleep"
+					:title="t('health', 'Sleep')"
+					icon="icon-download"
+					:class="(activeModule === 'sleep' && index === activePersonId)?'active-module':''"
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'sleep')" />
+				<AppNavigationItem
+					v-if="p.enabledModuleNutrition"
+					:title="t('health', 'Nutrition')"
+					icon="icon-category-dashboard"
+					:class="(activeModule === 'nutrition' && index === activePersonId)?'active-module':''"
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'nutrition')" />
 			</AppNavigationItem>
 			<AppNavigationItem
 				:title="t('health', 'New person')"
@@ -155,6 +167,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
 	.person-create {
 		order: 1;
 		display: flex;
@@ -168,27 +181,35 @@ export default {
 			}
 		}
 	}
+
 	button, .button, input[type='button'], input[type='submit'], input[type='reset'] {
 		min-height: auto;
 		border-radius: var(--border-radius);
 		padding: 4px;
 	}
+
 	.app-navigation__list {
 		display: none;
 	}
+
 	.active-person {
 		background-color: var(--color-background-dark);
 	}
+
 	.active-person:hover {
 		background-color: var(--color-background-darker);
 	}
+
 	.active-module {
 		background-color: var(--color-background-darker);
 	}
+
 	.active-module:hover {
 		background-color: var(--color-background-darker);
 	}
+
 	.app-navigation-entry:hover {
 		background-color: var(--color-background-darker);
 	}
+
 </style>

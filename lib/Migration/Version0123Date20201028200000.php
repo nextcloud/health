@@ -36,68 +36,15 @@
     * @param array $options
     * @return null|ISchemaWrapper
     */
-    public function changeSchema(IOutput $output, Closure $schemaClosure, array $options) {
-        /** @var ISchemaWrapper $schema */
-        $schema = $schemaClosure();
+    public function changeSchema(IOutput $output, Closure $schemaClosure, array $options)
+	{
+		/** @var ISchemaWrapper $schema */
+		$schema = $schemaClosure();
 
-        $this->extendPersons($schema);
-        $this->createFeelingdata($schema);
+		$this->extendPersons($schema);
 
-        return $schema;
-
-    }
-
-    private function createFeelingdata(ISchemaWrapper $schema) {
-		if (!$schema->hasTable('health_feelingdata')) {
-			$table = $schema->createTable('health_feelingdata');
-			$table->addColumn('id', 'integer', [
-				'autoincrement' => true,
-				'notnull' => true,
-			]);
-			$table->addColumn('person_id', 'string', [
-				'notnull' => true,
-				'length' => 200,
-			]);
-			$table->addColumn('insert_time', 'datetime', []);
-			$table->addColumn('lastupdate_time', 'datetime', []);
-
-			$table->addColumn('datetime', 'datetime', []);
-
-			$newColumns = [
-				'mood',
-				'sadness',
-				'symptoms',
-				'attacks',
-				'medication_description',
-				'pain'
-			];
-			foreach ($newColumns as $c) {
-				if(!$table->hasColumn($c)) {
-					$table->addColumn($c, 'string', [
-						'default' 	=> '',
-						'notnull' 	=> false,
-						'length'	=> 300
-					]);
-				}
-			}
-
-			$c = 'comment';
-			if(!$table->hasColumn($c)) {
-				$table->addColumn($c, 'string', [
-					'default' 	=> '',
-					'notnull' 	=> false,
-					'length'	=> 1000
-				]);
-			}
-
-			$c = 'medication_default';
-			if(!$table->hasColumn($c)) {
-				$table->addColumn($c, 'boolean', [ 'default' => 0 ]);
-			}
-
-            $table->setPrimaryKey(['id']);
-        }
-    }
+		return $schema;
+	}
 
     private function extendPersons(ISchemaWrapper $schema) {
 		try {

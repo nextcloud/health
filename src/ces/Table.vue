@@ -48,7 +48,8 @@
 						v-for="(h, ii) in header"
 						:key="ii"
 						:data-label="t('health', h.name, {})"
-						:class="{ hide: !h.show }">
+						:class="{ hide: !h.show }"
+						:style="(h.style) ? h.style(d[h.columnId]): ''">
 						<div v-if="h.type === 'date' && d[h.columnId]" class="wrapper">
 							{{ d[h.columnId] | formatMyDate }}
 						</div>

@@ -33,7 +33,7 @@
 			<PersonsContent v-if="person && activeModule === 'person'" />
 			<WeightContent v-if="person && activeModule === 'weight' && person.enabledModuleWeight" />
 			<FeelingContent v-if="person && activeModule === 'feeling' && person.enabledModuleFeeling" />
-			<BloodpressureContent v-if="person && activeModule === 'bloodpressure' && person.enabledModuleBloodpressure" />
+			<MeasurementContent v-if="person && activeModule === 'measurement' && person.enabledModuleMeasurement" />
 		</AppContent>
 		<AppSidebar
 			v-show="showSidebar"
@@ -64,6 +64,54 @@
 				:order="2">
 				<FeelingSidebar />
 			</AppSidebarTab>
+			<AppSidebarTab
+				v-if="person && person.enabledModuleMeasurement"
+				id="measurement"
+				:name="t('health', 'Measurement')"
+				icon="icon-home"
+				:order="3">
+				<MeasurementSidebar />
+			</AppSidebarTab>
+			<AppSidebarTab
+				v-if="person && person.enabledModuleBreaks"
+				id="breaks"
+				:name="t('health', 'Breaks')"
+				icon="icon-pause"
+				:order="3">
+				<BreaksSidebar />
+			</AppSidebarTab>
+			<AppSidebarTab
+				v-if="person && person.enabledModuleMedicine"
+				id="medicine"
+				:name="t('health', 'Medicine')"
+				icon="icon-filter"
+				:order="3">
+				<MedicineSidebar />
+			</AppSidebarTab>
+			<AppSidebarTab
+				v-if="person && person.enabledModuleActivities"
+				id="activities"
+				:name="t('health', 'Activities')"
+				icon="icon-user-admin"
+				:order="3">
+				<ActivitiesSidebar />
+			</AppSidebarTab>
+			<AppSidebarTab
+				v-if="person && person.enabledModuleSleep"
+				id="sleep"
+				:name="t('health', 'Sleep')"
+				icon="icon-download"
+				:order="4">
+				<SleepSidebar />
+			</AppSidebarTab>
+			<AppSidebarTab
+				v-if="person && person.enabledModuleNutrition"
+				id="nutrition"
+				:name="t('health', 'Nutrition')"
+				icon="icon-category-dashboard"
+				:order="5">
+				<NutritionSidebar />
+			</AppSidebarTab>
 		</AppSidebar>
 	</Content>
 </template>
@@ -83,11 +131,22 @@ import WeightContent from './modules/weight/WeightContent'
 import FeelingContent from './modules/feeling/FeelingContent'
 import { mapState, mapGetters } from 'vuex'
 import PersonsContent from './modules/persons/PersonsContent'
-import BloodpressureContent from './modules/bloodpressure/BloodpressureContent'
+import MeasurementContent from './modules/measurement/MeasurementContent'
+import MeasurementSidebar from './modules/measurement/MeasurementSidebar'
+import SleepSidebar from './modules/sleep/SleepSidebar'
+import NutritionSidebar from './modules/nutrition/NutritionSidebar'
+import BreaksSidebar from './modules/breaks/BreaksSidebar'
+import MedicineSidebar from './modules/medicine/MedicineSidebar'
 
 export default {
 	name: 'App',
 	components: {
+		MedicineSidebar,
+		BreaksSidebar,
+		MeasurementContent,
+		MeasurementSidebar,
+		NutritionSidebar,
+		SleepSidebar,
 		Content,
 		AppContent,
 		AppSidebar,
@@ -101,7 +160,6 @@ export default {
 		WeightContent,
 		FeelingContent,
 		PersonsContent,
-		BloodpressureContent,
 	},
 	data: function() {
 		return {
@@ -118,9 +176,11 @@ export default {
 }
 </script>
 <style lang="scss">
+
 	.content-wrapper {
 		padding: 35px 10px 10px 10px;
 	}
+
 	.top-bar {
 		width: 100%;
 		height: 35px;
@@ -128,29 +188,36 @@ export default {
 		z-index: inherit;
 		background: var(--color-main-background);
 	}
+
 	.detailsMainInfo {
 		padding: 10px;
 	}
+
 	.content-menu-topright {
 		position: fixed;
 		right: 0px;
 		z-index: 1001;
 	}
+
 	h2 {
 		margin-top: 40px;
 	}
+
 	h3 {
 		font-size: 20px;
 		margin-top: 40px;
 	}
+
 	.content-wrapper h3:first-child {
 		margin-top: 2px;
 	}
+
 	.content-wrapper span {
 		opacity: .7;
 		font-size: 0.8em;
 		margin-left: 5px;
 	}
+
 	.app-content {
 		padding-left: 15px;
 	}

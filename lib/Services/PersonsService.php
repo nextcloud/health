@@ -81,6 +81,10 @@ class PersonsService {
 		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setEnabledModuleActivities(false);
 		/** @noinspection PhpUndefinedMethodInspection */
+		$p->setEnabledModuleSleep(false);
+		/** @noinspection PhpUndefinedMethodInspection */
+		$p->setEnabledModuleNutrition(false);
+		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setWeightUnit('kg');
 		return $this->personMapper->insert($p);
 	}

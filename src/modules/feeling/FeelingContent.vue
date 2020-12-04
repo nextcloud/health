@@ -186,6 +186,8 @@ export default {
 						{ id: 1, label: t('health', 'Low', {}) },
 						{ id: 2, label: t('health', 'Medium', {}) },
 						{ id: 3, label: t('health', 'High', {}) },
+						{ id: 4, label: t('health', 'Very high', {}) },
+						{ id: 5, label: t('health', 'Extreme', {}) },
 					],
 					section: {
 						id: 'feeling',

@@ -15,3 +15,46 @@ More modules are scheduled
 - ...
 
 >Ideas for modules and functions are welcome. Please create issues on github.
+
+
+Burkhard:
+
+Körperliches Befinden
+- Stuhlgang
+- Appetit
+- Allergien?
+- Isolinwert
+	- Aktivität dabei
+	- Zeit zum ... Aufstehen/Mahlzeit/etc.
+- custom measurement column
+
+
+Module:
+- Weight
+- Measurement
+- Sleep
+  	- start
+  	- ende
+  	- Dauer (berechnet)
+  	- Qualität
+	- Anzahl aufwachen
+	- Zeit bis zum Einschlafen
+	- Zeit bis zum Aufwachen
+	- typ: main sleep, pause, mittagsschlaf
+
+- Food & eating "Nutrition"
+	- typ: volle Mahlzeit, Zwischenmahlzeit
+  	- energiegehalt: kcal
+	- fett
+	- kohlenhydrate
+  	- eiweiß
+	- Ballaststoffe
+- Fitness
+  	- type
+	- kcal
+	- dauer
+	- schritte
+	- höhenmeter
+	- distanz
+	- erschöpfung nach Aktivität
+- breaks
