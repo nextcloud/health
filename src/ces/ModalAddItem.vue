@@ -192,6 +192,7 @@ export default {
 			this.showModal = false
 		},
 		isNewSection: function(index) {
+			// TODO only show section header if it is new, problem with hidden columns
 			return !(this.header[index]
 				&& this.header[index].section
 				&& this.header[(index - 1)]
@@ -207,7 +208,7 @@ export default {
 			console.debug('reset values in modal')
 			this.values = Object.assign({}, this.itemData)
 			this.header.forEach(h => {
-				if ('default' in h && h.default instanceof Function) {
+				if ('default' in h && h.default instanceof Function && !(h.columnId in this.values)) {
 					this.values[h.columnId] = h.default()
 				}
 			})

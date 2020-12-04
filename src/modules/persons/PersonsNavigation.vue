@@ -69,6 +69,12 @@
 					:class="(activeModule === 'feeling' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'feeling')" />
 				<AppNavigationItem
+					v-if="p.enabledModuleBloodpressure"
+					:title="t('health', 'Blood pressure')"
+					icon="icon-home"
+					:class="(activeModule === 'bloodpressure' && index === activePersonId)?'active-module':''"
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'bloodpressure')" />
+				<AppNavigationItem
 					v-if="p.enabledModuleMedicine"
 					:title="t('health', 'Medicine')"
 					icon="icon-toggle-filelist"

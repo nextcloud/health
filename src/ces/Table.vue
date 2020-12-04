@@ -23,8 +23,15 @@
 <template>
 	<div>
 		<h3>{{ t('health', 'Data', {}) }}</h3>
-		<ModalAddItem :header="header" icon="icon-add" @addItem="addItem" />
-		<table>
+		<div v-if="loading" class="icon-loading">
+			&nbsp;
+		</div>
+		<ModalAddItem
+			v-if="!loading"
+			:header="header"
+			icon="icon-add"
+			@addItem="addItem" />
+		<table v-if="!loading">
 			<thead>
 				<tr>
 					<th v-for="(h, i) in header" :key="i" :class="{ hide: !h.show }">
@@ -67,6 +74,9 @@
 							{{ !d[h.columnId] ? ('textFalse' in h) ? h.textFalse : t('health', 'false') : '' }}
 						</div>
 						<div v-else-if="h.type === 'text' && d[h.columnId]" class="wrapper">
+							{{ d[h.columnId] }}
+						</div>
+						<div v-else-if="h.type === 'number' && d[h.columnId]" class="wrapper">
 							{{ d[h.columnId] }}
 						</div>
 					</td>
@@ -116,6 +126,10 @@ export default {
 		entityName: {
 			type: String,
 			default: t('health', 'item', {}),
+		},
+		loading: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	data: function() {

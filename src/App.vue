@@ -33,6 +33,7 @@
 			<PersonsContent v-if="person && activeModule === 'person'" />
 			<WeightContent v-if="person && activeModule === 'weight' && person.enabledModuleWeight" />
 			<FeelingContent v-if="person && activeModule === 'feeling' && person.enabledModuleFeeling" />
+			<BloodpressureContent v-if="person && activeModule === 'bloodpressure' && person.enabledModuleBloodpressure" />
 		</AppContent>
 		<AppSidebar
 			v-show="showSidebar"
@@ -82,6 +83,7 @@ import WeightContent from './modules/weight/WeightContent'
 import FeelingContent from './modules/feeling/FeelingContent'
 import { mapState, mapGetters } from 'vuex'
 import PersonsContent from './modules/persons/PersonsContent'
+import BloodpressureContent from './modules/bloodpressure/BloodpressureContent'
 
 export default {
 	name: 'App',
@@ -99,6 +101,7 @@ export default {
 		WeightContent,
 		FeelingContent,
 		PersonsContent,
+		BloodpressureContent,
 	},
 	data: function() {
 		return {

@@ -45,6 +45,7 @@ class Person extends Entity implements JsonSerializable {
     protected $enabledModuleFeeling;
     protected $enabledModuleMedicine;
     protected $enabledModuleActivities;
+    protected $enabledModuleBloodpressure;
 
     // module weight
     protected $weightMeasurementName;
@@ -77,6 +78,7 @@ class Person extends Entity implements JsonSerializable {
 		$this->addType('enabledModuleFeeling', 'boolean');
 		$this->addType('enabledModuleMedicine', 'boolean');
 		$this->addType('enabledModuleActivities', 'boolean');
+		$this->addType('enabledModuleBloodpressure', 'boolean');
 
         // module weight
         $this->addType('weightTarget', 'float');
@@ -110,6 +112,7 @@ class Person extends Entity implements JsonSerializable {
             'enabledModuleFeeling' => $this->enabledModuleFeeling,
             'enabledModuleMedicine' => $this->enabledModuleMedicine,
             'enabledModuleActivities' => $this->enabledModuleActivities,
+			'enabledModuleBloodpressure' => $this->enabledModuleBloodpressure,
 
 			// module weight
             'weightMeasurementName' => $this->weightMeasurementName,

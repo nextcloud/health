@@ -23,12 +23,13 @@
 <template>
 	<div>
 		<h2>
-			Feeling <span>for {{ person.name }}</span>
+			{{ t('health', 'Feeling for {name}', {name: person.name}) }}
 		</h2>
 		<div class="datatable">
 			<Table
 				:header="header"
 				:data="dataForTable"
+				:loading="loading"
 				entity-name="Feeling data"
 				@addItem="addItem"
 				@updateItem="updateItem"
@@ -41,11 +42,13 @@
 import { mapState, mapGetters } from 'vuex'
 import moment from '@nextcloud/moment'
 import Table from '../../ces/Table'
+// import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
 
 export default {
 	name: 'FeelingContent',
 	components: {
 		Table,
+		// EmptyContent,
 	},
 	data: function() {
 		return {
@@ -54,6 +57,7 @@ export default {
 				app: 'health',
 				module: 'feeling',
 			},
+			loading: true,
 		}
 	},
 	computed: {
@@ -126,6 +130,7 @@ export default {
 						{ id: 10, label: t('health', 'Feeling hopeless', {}) },
 						{ id: 11, label: t('health', 'Feeling worthless', {}) },
 						{ id: 12, label: t('health', 'Indecisive', {}) },
+						{ id: 13, label: this.person.feelingSpecialSymptomName ? this.person.feelingSpecialSymptomName : t('health', 'No custom symptom', {}) },
 					],
 					section: {
 						id: 'feeling',
@@ -141,6 +146,7 @@ export default {
 						{ id: 0, label: t('health', 'Panic attack', {}) },
 						{ id: 1, label: t('health', 'Fit of range', {}) },
 						{ id: 2, label: t('health', 'Asthma attack', {}) },
+						{ id: 3, label: this.person.feelingSpecialAttackName ? this.person.feelingSpecialAttackName : t('health', 'No custom attack', {}) },
 					],
 					section: {
 						id: 'feeling',
@@ -231,6 +237,7 @@ export default {
 			this.$store.dispatch('cesRequest', cesRequest).then(newItem => {
 				this.datasets.push(newItem[0])
 				console.debug('saved item', newItem)
+				this.sortDatasets()
 			})
 		},
 		updateItem: function(item) {
@@ -251,6 +258,7 @@ export default {
 					datasets[item.id] = r
 				})
 				this.datasets = datasets
+				this.sortDatasets()
 			})
 		},
 		deleteItem: function(id) {
@@ -271,6 +279,7 @@ export default {
 			})
 		},
 		loadDatasets: function() {
+			this.loading = true
 			const cesRequest = {}
 			cesRequest.contextFilter = this.contextFilter
 			cesRequest.contextFilter.type = 'datasets'
@@ -279,6 +288,22 @@ export default {
 			}
 			this.$store.dispatch('cesRequest', cesRequest).then(result => {
 				this.datasets = result
+				this.sortDatasets()
+				this.loading = false
+			})
+		},
+		sortDatasets: function() {
+			this.datasets.sort(function(a, b) {
+				const dataA = JSON.parse(a.data)
+				const dataB = JSON.parse(b.data)
+
+				if (moment(dataA.datetime) > moment(dataB.datetime)) {
+					return -1
+				} else if (moment(dataA.datetime) < moment(dataB.datetime)) {
+					return 1
+				} else {
+					return 0
+				}
 			})
 		},
 	},
