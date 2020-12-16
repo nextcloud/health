@@ -51,7 +51,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['activePersonId']),
+		...mapState(['activePersonId', 'moduleSettings']),
 		...mapGetters(['person']),
 		header: function() {
 			return [
@@ -60,64 +60,44 @@ export default {
 					columnId: 'datetime',
 					type: 'datetime',
 					show: true,
-					section: {
-						id: 'meta',
-						name: t('health', 'General information', {}),
-					},
 					default: function() {
 						return moment().format('YYYY-MM-DDTHH:mm')
-					},
-				},
-				{
-					name: t('health', 'Heart rate'),
-					columnId: 'heartrate',
-					type: 'number',
-					show: true,
-					min: 0,
-					section: {
-						id: 'vitalfunction',
-						name: t('health', 'Vital function and more', {}),
 					},
 				},
 				{
 					name: t('health', 'Temperature'),
 					columnId: 'temperature',
 					type: 'number',
-					show: true,
+					show: this.getColumnShow('temperature'),
 					min: 35,
 					max: 42,
-					section: {
-						id: 'vitalfunction',
-						name: t('health', 'Vital function and more', {}),
-					},
+				},
+				{
+					name: t('health', 'Heart rate'),
+					columnId: 'heartrate',
+					type: 'number',
+					show: this.getColumnShow('heartrate'),
+					min: 0,
 				},
 				{
 					name: t('health', 'Blood pressure systolic'),
 					columnId: 'systolic',
 					type: 'number',
-					show: true,
+					show: this.getColumnShow('bloodPressure'),
 					min: 0,
-					section: {
-						id: 'vitalfunction',
-						name: t('health', 'Vital function and more', {}),
-					},
 				},
 				{
 					name: t('health', 'Blood pressure diastolic'),
 					columnId: 'diastolic',
 					type: 'number',
-					show: true,
+					show: this.getColumnShow('bloodPressure'),
 					min: 0,
-					section: {
-						id: 'vitalfunction',
-						name: t('health', 'Vital function and more', {}),
-					},
 				},
 				{
 					name: t('health', 'Oxygen saturation'),
 					columnId: 'oxygensaturation',
 					type: 'number',
-					show: true,
+					show: this.getColumnShow('oxygensaturation'),
 					min: 80,
 					max: 100,
 					// unter 90 ist dramatisch
@@ -129,23 +109,15 @@ export default {
 							return ''
 						}
 					},
-					section: {
-						id: 'vitalfunction',
-						name: t('health', 'Vital function and more', {}),
-					},
 				},
 				{
 					name: t('health', 'Blood sugar'),
 					columnId: 'bloodsugar',
 					type: 'number',
-					show: true,
+					show: this.getColumnShow('bloodsugar'),
 					min: 40,
 					max: 600,
 					// 80-120 ist normal
-					section: {
-						id: 'vitalfunction',
-						name: t('health', 'Vital function and more', {}),
-					},
 					style: function(value) {
 						console.debug('render style', value)
 						if (value < 80 || value > 120) {
@@ -156,23 +128,57 @@ export default {
 					},
 				},
 				{
+					name: t('health', 'Defecation'),
+					columnId: 'defecation',
+					type: 'select',
+					show: this.getColumnShow('defecation'),
+					options: [
+						t('health', 'low', {}),
+						t('health', 'middle', {}),
+						t('health', 'high', {}),
+						t('health', 'extreme', {}),
+					],
+					style: function(value) {
+						console.debug('render style', value)
+						if (value === 4) {
+							return 'color: darkred; font-weight: bolder;'
+						} else {
+							return ''
+						}
+					},
+				},
+				{
+					name: t('health', 'Appetite'),
+					columnId: 'appetite',
+					type: 'longtext',
+					show: this.getColumnShow('appetite'),
+					placeholder: t('health', 'What about your appetite...', {}),
+					maxlength: 1000,
+				},
+				{
+					name: t('health', 'Allergies'),
+					columnId: 'allergies',
+					type: 'longtext',
+					show: this.getColumnShow('allergies'),
+					placeholder: t('health', 'What about your allergies...', {}),
+					maxlength: 1000,
+				},
+				{
 					name: t('health', 'Comment'),
 					columnId: 'comment',
 					type: 'longtext',
 					show: true,
 					placeholder: t('health', 'Give some comment, if you want...', {}),
 					maxlength: 1000,
-					section: {
-						id: 'additional',
-						name: t('health', 'Additional information', {}),
-					},
 				},
 			]
 		},
 	},
 	methods: {
+		getColumnShow: function(key) {
+			const settings = this.moduleSettings
+			return settings.measurement.sidebarColumns[key] ? settings.measurement.sidebarColumns[key] : false
+		},
 	},
 }
 </script>
-<style lang="scss" scoped>
-</style>

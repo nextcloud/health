@@ -31,166 +31,59 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		// .
+		// static
 		app: 'health',
 		// .
-		// managing data
-		activePersonId: null,
+		// settings
+		settings: {},
+		// .
+		// module data
+		// only loaded if the component is mounted
+		moduleData: {},
+		// .
+		// local data
+		activePersonId: 0,
 		activeModule: 'person',
 		showSidebar: false,
 		// .
-		// complete data
-		persons: null,
-		// .
-		// individual data for actual person
-		weightData: null,
-		personData: null,
+		// persons
+		persons: [],
 	},
 	getters: {
 		person: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId] : null,
-		personsLength: state => state.persons ? state.persons.length : 0,
+		persons: state => state.persons,
+		activePersonId: state => state.activePersonId,
+		activeModule: state => state.activeModule,
+		showSidebar: state => state.showSidebar,
 	},
 	mutations: {
-		persons(state, persons) {
-			state.persons = persons.slice()
+		setPersons(state, persons) {
+			state.persons = persons
 		},
-		activePersonId(state, id) {
-			state.activePersonId = id
+		setModuleData(state, data) {
+			state.moduleData = data
 		},
-		activeModule(state, module) {
-			state.activeModule = module
-		},
-		weightData(state, data) {
-			state.weightData = data
-		},
-		personData(state, data) {
-			state.personData = data
-		},
-		feelingData(state, data) {
-			state.feelingData = data
-		},
-		setWeightData(state, value) {
-			state.persons[state.activePersonId].weightdata = value
+		setSettings(state, settings) {
+			state.settings = settings
 		},
 		// directly called (without actions)
-		showSidebar(state, bool) {
-			state.showSidebar = bool
+		setActivePersonId(state, id) {
+			state.activePersonId = id
+		},
+		setActiveModule(state, module) {
+			state.activeModule = module
+		},
+		setShowSidebar(state, bool) {
+			state.showSidebar = !!bool
 		},
 	},
 	actions: {
-		loadPersons({ dispatch, state, getters, commit }) {
-			console.debug('debug: start loading persons')
-			axios.get(generateUrl('/apps/health/persons'))
-				.then(
-					(response) => {
-						console.debug('debug axLoadPersons SUCCESS-------------')
-						console.debug(response)
-						if (response.data && response.data.length > 0) {
-							commit('persons', response.data)
-							if (state.activePersonId === null) {
-								dispatch('setActivePerson', 0)
-							}
-							dispatch('loadModuleContentForPerson')
-						}
-					},
-					(err) => {
-						console.debug('debug axLoadPersons ERROR-------------')
-						console.debug(err)
-					}
-				)
-				.catch((err) => {
-					console.debug('error detected')
-					console.debug(err)
-				})
-		},
-		setActivePerson({ dispatch, commit }, id) {
-			commit('activePersonId', id)
-			dispatch('loadModuleContentForPerson')
-		},
-		setActiveModule({ dispatch, commit }, module) {
-			commit('activeModule', module)
-			dispatch('loadModuleContentForPerson')
-		},
-		async loadModuleContentForPerson({ state, getters, commit, dispatch }) {
-			// this ist called if the active person or module changed
-			// it should load all data, that is necessary for the active module
-			console.debug('debug: start loading loadModuleContentForPerson')
-
-			commit('weightData', null)
-			commit('personData', null)
-
-			if (state.activeModule === 'weight') {
-				console.debug('debug: start loading weightdata')
-				axios.get(generateUrl('/apps/health/weightdata/person/' + getters.person.id))
-					.then(
-						(response) => {
-							console.debug('debug axLoadWeightdata SUCCESS-------------')
-							console.debug(response)
-							commit('weightData', response.data)
-							dispatch('sortWeightData')
-						},
-						(err) => {
-							console.debug('debug axLoadWeightdata ERROR-------------')
-							console.debug(err)
-						},
-					)
-					.catch((err) => {
-						console.debug('error detected')
-						console.debug(err)
-					})
-			} else if (state.activeModule === 'person') {
-				console.debug('debug: start loading persondata')
-				axios.get(generateUrl('/apps/health/person/' + getters.person.id + '/data'))
-					.then(
-						(response) => {
-							console.debug('debug axLoadPersondata SUCCESS-------------')
-							console.debug(response)
-							commit('personData', response.data)
-						},
-						(err) => {
-							console.debug('debug axLoadPersondata ERROR-------------')
-							console.debug(err)
-						},
-					)
-					.catch((err) => {
-						console.debug('error detected')
-						console.debug(err)
-					})
-			}
-		},
-		setValue({ commit, state }, data) {
-			// data: {key, value, [id]}
-			console.debug('start setValue')
-			console.debug(data)
-
-			if (!('id' in data)) {
-				data.id = state.activePersonId
-			}
-
-			const p = state.persons[data.id]
-			axios.put(generateUrl('/apps/health/persons/' + p.id), { key: data.key, value: '' + data.value })
-				.then(
-					(response) => {
-						console.debug('debug axSetValue SUCCESS-------------')
-						console.debug(response)
-						const persons = state.persons
-						persons[data.id] = response.data
-						commit('persons', persons)
-					},
-					(err) => {
-						console.debug('debug axUpdatePersons ERROR-------------')
-						console.debug(err)
-					}
-				)
-				.catch((err) => {
-					console.debug('error detected')
-					console.debug(err)
-				})
-		},
 		cesRequest({ commit, state, getters }, data) {
-			// console.debug('start cesRequest')
-
+			// data.contextFilter
+			// data.entityFilter optional
+			// data.entityData optional, needed to insert or update (if id in entityFilter is set) data
 			if ('entityData' in data) {
-				console.debug('add personId in $store')
+				// console.debug('add personId in $store')
 				data.entityData.personId = getters.person.id
 			}
 
@@ -212,140 +105,41 @@ export default new Vuex.Store({
 					console.debug(err)
 				})
 		},
-		addPerson: function({ state, dispatch, commit }, name) {
-			console.debug('debug start addPerson')
-			axios.post(generateUrl('/apps/health/persons'), { name: name })
-				.then(
-					(response) => {
-						console.debug('debug axPostPersons SUCCESS-------------')
-						console.debug(response)
-						const persons = state.persons
-						persons.push(response.data)
-						commit('persons', persons)
-						const id = state.persons.length - 1
-						dispatch('setActivePerson', id)
-					},
-					(err) => {
-						console.debug('debug axPostPersons ERROR-------------')
-						console.debug(err)
-					}
-				)
-				.catch((err) => {
-					console.debug('error detected')
-					console.debug(err)
-				})
+		loadPersons: function() {
+			// TODO
 		},
-		deletePerson: function({ state, dispatch, commit }, id) {
-			console.debug('debug deletePerson')
-			const p = state.persons[id]
-			axios.delete(generateUrl('/apps/health/persons/' + p.id))
-				.then(
-					(response) => {
-						console.debug('debug axDeletePersons SUCCESS-------------')
-						console.debug(response)
-						const persons = state.persons
-						persons.splice(id, 1)
-						commit('persons', persons)
-						if (state.activePersonId === id) {
-							dispatch('setActivePerson', 0)
-						}
-					},
-					(err) => {
-						console.debug('debug axDeletePersons ERROR-------------')
-						console.debug(err)
-					}
-				)
-				.catch((err) => {
-					console.debug('error detected')
-					console.debug(err)
-				})
+		// eslint-disable-next-line no-empty-pattern
+		addPerson: function({}, data) {
+			// TODO
 		},
-		async sortWeightData({ state, getters, commit }) {
-			console.debug('start function: sortWeightData')
-			const d = state.weightData
-			if (!d) {
+		// eslint-disable-next-line no-empty-pattern
+		deletePerson: function({}, personId) {
+			// TODO
+		},
+		updatePerson: function({ getters }, data) {
+			// TODO
+		},
+		updateModuleSettings: function({ state, commit }, data) {
+			// data: { module: ..., type: ..., data: ... }
+			// console.debug('updateModuleSettings', data)
+			const settings = Object.assign({}, state.moduleSettings)
+			if (!settings[data.module]) {
+				settings[data.module] = {}
+			}
+			settings[data.module][data.type] = data.data
+			// console.debug('try to set settings as following', settings)
+			this.commit('setModuleSettings', settings)
+		},
+		getModuleSetting: function({ state }, data) {
+			// data: { module: ..., type: ..., key: ... }
+			if (
+				this.moduleSettings[data.module]
+				&& this.moduleSettings[data.module][data.type]
+				&& this.moduleSettings[data.module][data.type][data.key]) {
+				return this.moduleSettings[data.module][data.type][data.key]
+			} else {
 				return null
 			}
-			d.sort(function(a, b) {
-				if (moment(a.date) > moment(b.date)) {
-					return -1
-				} else if (moment(a.date) < moment(b.date)) {
-					return 1
-				} else {
-					return 0
-				}
-			})
-			commit('setWeightData', d)
-		},
-		insertWeightData({ dispatch, getters, commit, state }, row) {
-			console.debug('start function: insertWeightData')
-			axios.post(generateUrl('/apps/health/weightdata/person/' + getters.person.id + '/create'), row)
-				.then(
-					(response) => {
-						console.debug('debug axInsertWeightData SUCCESS-------------')
-						console.debug(response)
-						const d = state.weightData
-						d.unshift(response.data)
-						commit('setWeightData', d)
-						dispatch('sortWeightData')
-					},
-					(err) => {
-						console.debug('debug axCreateWeightdata ERROR-------------')
-						console.debug(err)
-					}
-				)
-				.catch((err) => {
-					console.debug('error detected')
-					console.debug(err)
-				})
-			return false
-		},
-		updateWeightData({ dispatch, state, commit }, data) {
-			console.debug('start function: updateWeightData')
-			const serverId = state.weightData[data.id].id
-			const clientId = data.id
-			delete data.id
-			axios.put(generateUrl('/apps/health/weightdata/update/' + serverId), data)
-				.then(
-					(response) => {
-						console.debug('debug axUpdateWeightData SUCCESS-------------')
-						console.debug(response)
-						const d = state.weightData
-						d.splice(clientId, 1)
-						d.unshift(response.data)
-						commit('setWeightData', d)
-						dispatch('sortWeightData')
-					},
-					(err) => {
-						console.debug('debug axUpdateWeightData ERROR-------------')
-						console.debug(err)
-					}
-				)
-				.catch((err) => {
-					console.debug('error detected')
-					console.debug(err)
-				})
-		},
-		deleteWeightDataRow: function({ context, state, commit }, i) {
-			console.debug('function: deleteWeightDatarow')
-			axios.delete(generateUrl('/apps/health/weightdata/delete/' + state.weightData[i].id))
-				.then(
-					(response) => {
-						console.debug('debug axDeleteWeightData SUCCESS-------------')
-						console.debug(response)
-						const d = state.weightData
-						d.splice(i, 1)
-						commit('setWeightData', d)
-					},
-					(err) => {
-						console.debug('debug axDeleteWeightData ERROR-------------')
-						console.debug(err)
-					}
-				)
-				.catch((err) => {
-					console.debug('error detected')
-					console.debug(err)
-				})
 		},
 	},
 })

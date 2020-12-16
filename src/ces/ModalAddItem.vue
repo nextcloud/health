@@ -175,6 +175,7 @@ export default {
 		},
 	},
 	mounted() {
+		alert('mounted modal')
 		this.resetValues()
 	},
 	methods: {
@@ -192,13 +193,32 @@ export default {
 			this.showModal = false
 		},
 		isNewSection: function(index) {
-			// TODO only show section header if it is new, problem with hidden columns
-			return !(this.header[index]
-				&& this.header[index].section
-				&& this.header[(index - 1)]
-				&& this.header[(index - 1)].section
-				&& this.header[index].section.id === this.header[(index - 1)].section.id
-				&& this.header[index - 1].show)
+			// try to get header data
+			if (!this.header[index]) {
+				return false
+			}
+
+			// if there is a section definition, else false
+			if (this.header[index].section) {
+				// get last section definition or false
+				let lastSection = false
+				let i = 1
+				while (this.header[(index - i)]) {
+					if (this.header[(index - i)].show) {
+						if (this.header[(index - i)].section) {
+							lastSection = this.header[(index - i)].section
+						}
+						break
+					}
+					i++
+				}
+
+				if (lastSection && (lastSection.id !== this.header[index].section.id)) {
+					return true
+				}
+			}
+
+			return false
 		},
 		closeModal: function() {
 			this.resetValues()

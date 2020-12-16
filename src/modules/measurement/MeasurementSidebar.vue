@@ -22,6 +22,7 @@
 
 <template>
 	<div>
+		<h3>{{ t('health', 'Select columns', {}) }}</h3>
 		<SidebarSelectColumns :context-filter="contextFilter" :columns="columns" :person-id="person.id" />
 	</div>
 </template>
@@ -49,18 +50,18 @@ export default {
 		...mapGetters(['person']),
 		columns: function() {
 			return [
-				{ id: 'heart', name: t('health', 'Blood pressure and heart', {}) },
 				{ id: 'temperature', name: t('health', 'Temperature', {}) },
+				{ id: 'heartrate', name: t('health', 'Heart rate', {}) },
+				{ id: 'bloodPressure', name: t('health', 'Blood pressure', {}) },
 				{ id: 'oxygensaturation', name: t('health', 'Oxygen saturation', {}) },
 				{ id: 'bloodsugar', name: t('health', 'Blood sugar', {}) },
 				{ id: 'defecation', name: t('health', 'Defecation', {}) },
 				{ id: 'appetite', name: t('health', 'Appetite', {}) },
-				{ id: 'allergy', name: t('health', 'Allergies', {}) },
+				{ id: 'allergies', name: t('health', 'Allergies', {}) },
 			]
 		},
 	},
 	methods: {
-
 	},
 }
 </script>

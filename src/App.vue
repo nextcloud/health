@@ -221,4 +221,9 @@ export default {
 	.app-content {
 		padding-left: 15px;
 	}
+
+	.app-sidebar-tabs h3 {
+		border-bottom: 1px solid #80808057;
+	}
+
 </style>

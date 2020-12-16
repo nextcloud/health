@@ -32,6 +32,17 @@ Körperliches Befinden
 Module:
 - Weight
 - Measurement
+	- temperature
+	- heartrate
+	- blood pressure s
+	- blood pressure d
+	- oxygen saturation
+	- bloodsugar
+	- defecation
+	- appetite
+	- allergy
+	- custom measurement
+
 - Sleep
   	- start
   	- ende

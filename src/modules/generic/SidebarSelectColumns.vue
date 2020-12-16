@@ -22,15 +22,13 @@
 
 <template>
 	<ul>
-		<li><h3>{{ t('health', 'General settings', {}) }}</h3></li>
-		<li><h4>{{ t('health', 'Select columns', {}) }}</h4></li>
 		<ActionCheckbox
 			v-for="(c, i) in columns"
 			:id="c.id"
 			:key="i"
+			:checked="values[c.id]"
 			@check="values[c.id] = true"
 			@uncheck="values[c.id] = false"
-			// @change wird zu früh ausgeführt, speichern muss später getriggert werden -> @check="...; save"
 			@change="saveColumnSet">
 			{{ c.name }}
 		</ActionCheckbox>
@@ -38,9 +36,7 @@
 </template>
 
 <script>
-// import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
 import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
-// import { mapState, mapGetters } from 'vuex'
 
 export default {
 	name: 'SidebarSelectColumns',
@@ -67,8 +63,33 @@ export default {
 			id: null,
 		}
 	},
+	beforeMount() {
+		// load settings from db
+		const request = {}
+		request.contextFilter = this.contextFilter
+		request.entityFilter = {
+			personId: this.personId,
+		}
+		// console.debug('try to load column set, request:', request)
+		this.$store.dispatch('cesRequest', request).then(results => {
+			// console.debug('result', results)
+			if (results.length > 0) {
+				this.id = results[0].id
+				const result = JSON.parse(results[0].data)
+				delete result.personId
+				this.values = result
+				this.setValuesToStore()
+			} else {
+				console.debug('no saved sets found')
+			}
+		})
+	},
 	methods: {
-		saveColumnSet: function() {
+		saveColumnSet: function(e) {
+			// console.debug('save column set: event', e)
+			this.values[e.target.id] = e.target.checked
+			this.setValuesToStore()
+
 			const request = {}
 			request.contextFilter = this.contextFilter
 			if (this.id) {
@@ -77,10 +98,18 @@ export default {
 				}
 			}
 			request.entityData = this.values
-			console.debug('update column set', this.values)
+			// console.debug('update column set, request:', request)
 			this.$store.dispatch('cesRequest', request).then(result => {
 				console.debug('column set saved', result)
 			})
+		},
+		setValuesToStore: function() {
+			const o = {
+				module: this.contextFilter.module,
+				type: this.contextFilter.type,
+				data: this.values,
+			}
+			this.$store.dispatch('updateModuleSettings', o)
 		},
 	},
 }

@@ -25,30 +25,16 @@
 		<h2>
 			{{ t('health', 'Feeling for {name}', {name: person.name}) }}
 		</h2>
-		<div class="datatable">
-			<Table
-				:header="header"
-				:data="dataForTable"
-				:loading="loading"
-				entity-name="Feeling data"
-				@addItem="addItem"
-				@updateItem="updateItem"
-				@deleteItem="deleteItem" />
-		</div>
 	</div>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
 import moment from '@nextcloud/moment'
-import Table from '../../ces/Table'
-// import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
 
 export default {
 	name: 'FeelingContent',
 	components: {
-		Table,
-		// EmptyContent,
 	},
 	data: function() {
 		return {
@@ -57,11 +43,10 @@ export default {
 				app: 'health',
 				module: 'feeling',
 			},
-			loading: true,
 		}
 	},
 	computed: {
-		...mapState(['activePersonId']),
+		...mapState(['activePersonId', 'moduleSettings']),
 		...mapGetters(['person']),
 		header: function() {
 			return [
@@ -82,7 +67,7 @@ export default {
 					name: t('health', 'Mood'),
 					columnId: 'mood',
 					type: 'select',
-					show: this.person.feelingColumnMood,
+					show: this.getColumnShow('mood'),
 					options: [
 						{ id: 0, label: t('health', 'Perfect', {}) },
 						{ id: 1, label: t('health', 'Fine', {}) },
@@ -99,7 +84,7 @@ export default {
 					name: t('health', 'Sadness level'),
 					columnId: 'sadness',
 					type: 'select',
-					show: this.person.feelingColumnSadness,
+					show: this.getColumnShow('sadness'),
 					options: [
 						{ id: 0, label: t('health', 'None', {}) },
 						{ id: 1, label: t('health', 'Low', {}) },
@@ -114,7 +99,7 @@ export default {
 				{
 					name: t('health', 'Symptoms'),
 					columnId: 'symptoms',
-					show: this.person.feelingColumnSymptoms,
+					show: this.getColumnShow('symptoms'),
 					type: 'multiselect',
 					options: [
 						{ id: 0, label: t('health', 'Fatigue', {}) },
@@ -130,7 +115,6 @@ export default {
 						{ id: 10, label: t('health', 'Feeling hopeless', {}) },
 						{ id: 11, label: t('health', 'Feeling worthless', {}) },
 						{ id: 12, label: t('health', 'Indecisive', {}) },
-						{ id: 13, label: this.person.feelingSpecialSymptomName ? this.person.feelingSpecialSymptomName : t('health', 'No custom symptom', {}) },
 					],
 					section: {
 						id: 'feeling',
@@ -140,26 +124,13 @@ export default {
 				{
 					name: t('health', 'Attacks'),
 					columnId: 'attacks',
-					show: this.person.feelingColumnAttacks,
+					show: this.getColumnShow('attacks'),
 					type: 'multiselect',
 					options: [
 						{ id: 0, label: t('health', 'Panic attack', {}) },
 						{ id: 1, label: t('health', 'Fit of range', {}) },
 						{ id: 2, label: t('health', 'Asthma attack', {}) },
-						{ id: 3, label: this.person.feelingSpecialAttackName ? this.person.feelingSpecialAttackName : t('health', 'No custom attack', {}) },
 					],
-					section: {
-						id: 'feeling',
-						name: t('health', 'Feeling information', {}),
-					},
-				},
-				{
-					name: t('health', 'Default medication'),
-					columnId: 'defaultMedication',
-					type: 'boolean',
-					show: this.person.feelingColumnMedication,
-					textTrue: t('health', 'was taken'),
-					textFalse: t('health', 'not taken'),
 					section: {
 						id: 'feeling',
 						name: t('health', 'Feeling information', {}),
@@ -169,7 +140,7 @@ export default {
 					name: t('health', 'Medication'),
 					columnId: 'medication',
 					type: 'longtext',
-					show: this.person.feelingColumnMedication,
+					show: this.getColumnShow('medication'),
 					placeholder: t('health', 'What medicine did you take?', {}),
 					section: {
 						id: 'feeling',
@@ -180,7 +151,7 @@ export default {
 					name: t('health', 'Pain'),
 					columnId: 'pain',
 					type: 'select',
-					show: this.person.feelingColumnPain,
+					show: this.getColumnShow('pain'),
 					options: [
 						{ id: 0, label: t('health', 'None', {}) },
 						{ id: 1, label: t('health', 'Low', {}) },
@@ -208,156 +179,8 @@ export default {
 				},
 			]
 		},
-		dataForTable: function() {
-			const data = []
-			this.datasets.forEach(d => {
-				data.push(JSON.parse(d.data))
-			})
-			return data
-		},
-	},
-	watch: {
-		activePersonId: function() {
-			console.debug('person changed, load new datasets')
-			this.loadDatasets()
-		},
-	},
-	mounted() {
-		this.loadDatasets()
 	},
 	methods: {
-		addItem: function(item) {
-			console.debug('new item', item)
-
-			item.personId = this.person.id
-
-			const cesRequest = {}
-			cesRequest.contextFilter = this.contextFilter
-			cesRequest.contextFilter.type = 'datasets'
-			cesRequest.entityData = item
-
-			this.$store.dispatch('cesRequest', cesRequest).then(newItem => {
-				this.datasets.push(newItem[0])
-				console.debug('saved item', newItem)
-				this.sortDatasets()
-			})
-		},
-		updateItem: function(item) {
-			console.debug('update item', item)
-
-			const cesRequest = {}
-			cesRequest.contextFilter = this.contextFilter
-			cesRequest.contextFilter.type = 'datasets'
-			cesRequest.entityFilter = {
-				id: this.datasets[item.id].id,
-			}
-			cesRequest.entityData = item.data
-
-			this.$store.dispatch('cesRequest', cesRequest).then(result => {
-				console.debug('item updated', result)
-				const datasets = this.datasets.slice()
-				result.forEach(r => {
-					datasets[item.id] = r
-				})
-				this.datasets = datasets
-				this.sortDatasets()
-			})
-		},
-		deleteItem: function(id) {
-			const entityId = this.datasets[id].id
-			console.debug('delete item with id', entityId)
-
-			const cesRequest = {}
-			cesRequest.contextFilter = this.contextFilter
-			cesRequest.contextFilter.type = 'datasets'
-			cesRequest.entityFilter = {
-				id: entityId,
-				remove: true,
-			}
-
-			this.$store.dispatch('cesRequest', cesRequest).then(result => {
-				console.debug('item deleted', result)
-				this.datasets.splice(id, 1)
-			})
-		},
-		loadDatasets: function() {
-			this.loading = true
-			const cesRequest = {}
-			cesRequest.contextFilter = this.contextFilter
-			cesRequest.contextFilter.type = 'datasets'
-			cesRequest.entityFilter = {
-				personId: this.person.id,
-			}
-			this.$store.dispatch('cesRequest', cesRequest).then(result => {
-				this.datasets = result
-				this.sortDatasets()
-				this.loading = false
-			})
-		},
-		sortDatasets: function() {
-			this.datasets.sort(function(a, b) {
-				const dataA = JSON.parse(a.data)
-				const dataB = JSON.parse(b.data)
-
-				if (moment(dataA.datetime) > moment(dataB.datetime)) {
-					return -1
-				} else if (moment(dataA.datetime) < moment(dataB.datetime)) {
-					return 1
-				} else {
-					return 0
-				}
-			})
-		},
 	},
 }
 </script>
-<style lang="scss" scoped>
-	.textarea-mission {
-		width: 67%;
-		min-height: 200px;
-	}
-
-	.content-wrapper-health {
-		width: 98%;
-	}
-
-	.widget {
-		border: 1px solid gray;
-		border-radius: 4px;
-		background-color: #80808026;
-		padding: 4px;
-		width: 100px;
-		margin: 10px;
-		float: left;
-	}
-
-	.widget h3 {
-		margin-top: 5px;
-		margin-bottom: 2px;
-		font-size: large;
-	}
-
-	.widget .date {
-		color: gray;
-		font-size: 0.8em;
-		text-align: right;
-	}
-
-	.widget span {
-		padding-left: 2px;
-		padding-right: 2px;
-	}
-
-	.widget .firstNumber {
-		font-weight: bold;
-		text-align: right;
-	}
-
-	.widget .secondNumber {
-		text-align: right;
-	}
-
-	.clear {
-		clear: both;
-	}
-</style>
