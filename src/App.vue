@@ -34,6 +34,7 @@
 			<WeightContent v-if="person && activeModule === 'weight' && person.enabledModuleWeight" />
 			<FeelingContent v-if="person && activeModule === 'feeling' && person.enabledModuleFeeling" />
 			<MeasurementContent v-if="person && activeModule === 'measurement' && person.enabledModuleMeasurement" />
+			<SleepContent v-if="person && activeModule === 'sleep' && person.enabledModuleSleep" />
 		</AppContent>
 		<AppSidebar
 			v-show="showSidebar"
@@ -131,6 +132,7 @@ import WeightContent from './modules/weight/WeightContent'
 import FeelingContent from './modules/feeling/FeelingContent'
 import { mapState, mapGetters } from 'vuex'
 import PersonsContent from './modules/persons/PersonsContent'
+import SleepContent from './modules/sleep/SleepContent'
 import MeasurementContent from './modules/measurement/MeasurementContent'
 import MeasurementSidebar from './modules/measurement/MeasurementSidebar'
 import SleepSidebar from './modules/sleep/SleepSidebar'
@@ -144,6 +146,7 @@ export default {
 		MedicineSidebar,
 		BreaksSidebar,
 		MeasurementContent,
+		SleepContent,
 		MeasurementSidebar,
 		NutritionSidebar,
 		SleepSidebar,

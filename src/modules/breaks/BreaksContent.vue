@@ -25,6 +25,7 @@
 		<h2>
 			{{ t('health', 'Breaks for {name}', {name: person.name}) }}
 		</h2>
+		<p>coming soon</p>
 	</div>
 </template>
 

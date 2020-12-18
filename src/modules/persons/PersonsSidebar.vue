@@ -73,21 +73,21 @@
 			{{ t('health', 'Measurement') }}
 		</ActionCheckbox>
 		<ActionCheckbox
-			v-if="person"
+			v-if="person && false"
 			:checked="person.enabledModuleBreaks"
 			value="breaks"
 			@change="updateEnabledModules">
 			{{ t('health', 'Breaks') }}
 		</ActionCheckbox>
 		<ActionCheckbox
-			v-if="person"
+			v-if="person && false"
 			:checked="person.enabledModuleMedicine"
 			value="medicine"
 			@change="updateEnabledModules">
 			{{ t('health', 'Medicine') }}
 		</ActionCheckbox>
 		<ActionCheckbox
-			v-if="person"
+			v-if="person && false"
 			:checked="person.enabledModuleActivities"
 			value="activities"
 			@change="updateEnabledModules">
@@ -101,7 +101,7 @@
 			{{ t('health', 'Sleep') }}
 		</ActionCheckbox>
 		<ActionCheckbox
-			v-if="person"
+			v-if="person && false"
 			:checked="person.enabledModuleNutrition"
 			value="nutrition"
 			@change="updateEnabledModules">

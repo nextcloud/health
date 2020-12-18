@@ -48,10 +48,7 @@ export default {
 		...mapState(['activeModule', 'showSidebar']),
 		...mapGetters(['person']),
 		columns: function() {
-			return [
-				{ id: 'hear', name: t('health', 'Blood pressure and heart', {}) },
-				{ id: 'temperature', name: t('health', 'Temperature', {}) },
-			]
+			return []
 		},
 	},
 	methods: {

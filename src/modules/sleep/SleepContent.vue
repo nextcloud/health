@@ -23,7 +23,7 @@
 <template>
 	<div>
 		<h2>
-			{{ t('health', 'Nutrition for {name}', {name: person.name}) }}
+			{{ t('health', 'Sleep for {name}', {name: person.name}) }}
 		</h2>
 	</div>
 </template>
@@ -34,7 +34,7 @@ import { mapState, mapGetters } from 'vuex'
 // import DataTable from '../generic/DataTable'
 
 export default {
-	name: 'NutritionContent',
+	name: 'SleepContent',
 	components: {
 		// DataTable,
 	},
@@ -42,7 +42,7 @@ export default {
 		return {
 			contextFilter: {
 				app: 'health',
-				module: 'nutrition',
+				module: 'sleep',
 			},
 		}
 	},
@@ -57,5 +57,3 @@ export default {
 	},
 }
 </script>
-<style lang="scss" scoped>
-</style>
