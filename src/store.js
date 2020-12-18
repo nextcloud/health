@@ -243,8 +243,19 @@ export default new Vuex.Store({
 				})
 		},
 		deletePerson: function({ state, dispatch, commit }, id) {
-			// console.debug('debug deletePerson')
 			const p = state.persons[id]
+			// console.debug('debug deletePerson')
+			const request = {
+				contextFilter: {
+					app: this.app,
+				},
+				entityFilter: {
+					personId: p.id,
+					remove: true,
+				},
+			}
+			dispatch('cesRequest', request)
+
 			axios.delete(generateUrl('/apps/health/persons/' + p.id))
 				.then(
 					(response) => {
