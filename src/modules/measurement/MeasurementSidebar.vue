@@ -21,10 +21,10 @@
 	-->
 
 <template>
-	<div>
-		<h3>{{ t('health', 'Select columns', {}) }}</h3>
+	<ul>
+		<li><h3>{{ t('health', 'Select columns', {}) }}</h3></li>
 		<SidebarSelectColumns :context-filter="contextFilter" :columns="columns" :person-id="person.id" />
-	</div>
+	</ul>
 </template>
 
 <script>

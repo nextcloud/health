@@ -175,7 +175,6 @@ export default {
 		},
 	},
 	mounted() {
-		alert('mounted modal')
 		this.resetValues()
 	},
 	methods: {
@@ -290,6 +289,7 @@ export default {
 
 	.modal__content input {
 		width: fit-content;
+		min-width: 55%;
 	}
 
 	.modal__content input[type='checkbox'] {

@@ -49,7 +49,7 @@ class Item extends Entity implements JsonSerializable {
 			'ownership' => $this->ownership,
 			'insertTime' => $this->insertTime,
 			'lastupdateTime' => $this->lastupdateTime,
-			'context' => $this->context,
+			// 'context' => $this->context,
         ];
     }
 }

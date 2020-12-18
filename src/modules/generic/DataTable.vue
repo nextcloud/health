@@ -59,12 +59,11 @@ export default {
 	},
 	data: function() {
 		return {
-			datasets: [],
 			loading: true,
 		}
 	},
 	computed: {
-		...mapState(['activePersonId']),
+		...mapState(['activePersonId', 'moduleData']),
 		...mapGetters(['person']),
 		dataForTable: function() {
 			const data = []
@@ -72,6 +71,13 @@ export default {
 				data.push(JSON.parse(d.data))
 			})
 			return data
+		},
+		datasets: function() {
+			if (this.moduleData[this.contextFilter.module] && this.moduleData[this.contextFilter.module][this.contextFilter.type]) {
+				return this.moduleData[this.contextFilter.module][this.contextFilter.type]
+			} else {
+				return []
+			}
 		},
 	},
 	watch: {
@@ -85,7 +91,7 @@ export default {
 	},
 	methods: {
 		addItem: function(item) {
-			console.debug('new item', item)
+			// console.debug('new item', item)
 
 			item.personId = this.person.id
 
@@ -95,13 +101,14 @@ export default {
 			cesRequest.entityData = item
 
 			this.$store.dispatch('cesRequest', cesRequest).then(newItem => {
-				this.datasets.push(newItem[0])
 				console.debug('saved item', newItem)
-				this.sortDatasets()
+				// this.datasets.push(newItem[0])
+				// this.sortDatasets()
+				this.loadDatasets()
 			})
 		},
 		updateItem: function(item) {
-			console.debug('update item', item)
+			// console.debug('update item', item)
 
 			const cesRequest = {}
 			cesRequest.contextFilter = this.contextFilter
@@ -113,12 +120,13 @@ export default {
 
 			this.$store.dispatch('cesRequest', cesRequest).then(result => {
 				console.debug('item updated', result)
-				const datasets = this.datasets.slice()
-				result.forEach(r => {
-					datasets[item.id] = r
-				})
-				this.datasets = datasets
-				this.sortDatasets()
+				this.loadDatasets()
+				// const datasets = this.datasets.slice()
+				// result.forEach(r => {
+				// datasets[item.id] = r
+				// })
+				// this.datasets = datasets
+				// this.sortDatasets()
 			})
 		},
 		deleteItem: function(id) {
@@ -135,11 +143,12 @@ export default {
 
 			this.$store.dispatch('cesRequest', cesRequest).then(result => {
 				console.debug('item deleted', result)
-				this.datasets.splice(id, 1)
+				this.loadDatasets()
+				// this.datasets.splice(id, 1)
 			})
 		},
 		loadDatasets: function() {
-			this.loading = true
+			// this.loading = true
 			const cesRequest = {}
 			cesRequest.contextFilter = this.contextFilter
 			cesRequest.contextFilter.type = 'datasets'
@@ -147,23 +156,27 @@ export default {
 				personId: this.person.id,
 			}
 			this.$store.dispatch('cesRequest', cesRequest).then(result => {
-				this.datasets = result
-				this.sortDatasets()
-				this.loading = false
-			})
-		},
-		sortDatasets: function() {
-			this.datasets.sort(function(a, b) {
-				const dataA = JSON.parse(a.data)
-				const dataB = JSON.parse(b.data)
+				result.sort(function(a, b) {
+					const dataA = JSON.parse(a.data)
+					const dataB = JSON.parse(b.data)
 
-				if (moment(dataA.datetime) > moment(dataB.datetime)) {
-					return -1
-				} else if (moment(dataA.datetime) < moment(dataB.datetime)) {
-					return 1
-				} else {
-					return 0
+					if (moment(dataA.datetime) > moment(dataB.datetime)) {
+						return -1
+					} else if (moment(dataA.datetime) < moment(dataB.datetime)) {
+						return 1
+					} else {
+						return 0
+					}
+				})
+				const data = {
+					module: this.contextFilter.module,
+					type: this.contextFilter.type,
 				}
+				data.data = result
+				this.$store.dispatch('updateModuleData', data)
+				// this.datasets = result
+				// this.sortDatasets()
+				this.loading = false
 			})
 		},
 	},

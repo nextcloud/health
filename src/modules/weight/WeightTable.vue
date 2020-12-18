@@ -226,16 +226,20 @@ export default {
 		overflow-y: auto;
 		margin-bottom: 50px;
 	}
+
 	table {
 		min-width: 98%;
 		color: #2b2b2bd1;
 	}
+
 	tr:nth-child(even) {
 		background-color: #c5c5c585;
 	}
+
 	tr:hover {
 		background: #80808063;
 	}
+
 	th {
 		border-bottom: 2px solid gray;
 		font-weight: bold;
@@ -244,12 +248,14 @@ export default {
 		text-align: left;
 		vertical-align: middle;
 	}
+
 	td {
 		border-bottom: 1px solid gray;
 		padding: 5px;
 		text-align: left;
 		vertical-align: middle;
 	}
+
 	button {
 		padding: 13px 20px 13px 20px;
 	}
@@ -258,6 +264,7 @@ export default {
 			display:none;
 		}
 	}
+
 	.widthfitcontent {
 		min-width: fit-content;
 	}
