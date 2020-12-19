@@ -43,45 +43,58 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(d, i) in data" :key="i">
+				<tr v-for="(d, i) in datasets" :key="i">
 					<td
 						v-for="(h, ii) in header"
 						:key="ii"
 						:data-label="t('health', h.name, {})"
 						:class="{ hide: !h.show }"
 						:style="(h.style) ? h.style(d[h.columnId]): ''">
-						<div v-if="h.type === 'date' && d[h.columnId]" class="wrapper">
-							{{ d[h.columnId] | formatMyDate }}
+						<div v-if="d.type === 'group'" class="group">
+							GROUP
 						</div>
-						<div v-else-if="h.type === 'datetime' && d[h.columnId]" class="wrapper">
-							{{ d[h.columnId] | formatMyDatetime }}
-						</div>
-						<div v-else-if="h.type === 'select' && d[h.columnId]" class="wrapper">
-							{{ (h.options && h.options[d[h.columnId].id] && h.options[d[h.columnId].id].label) ? h.options[d[h.columnId].id].label: 'no label found' }}
-						</div>
-						<div v-else-if="h.type === 'multiselect' && d[h.columnId]" class="wrapper">
-							<ul>
-								<li v-for="(option, optionIndex) in d[h.columnId]"
-									:key="optionIndex">
-									{{ (h.options && h.options[option.id] && h.options[option.id].label) ? h.options[option.id].label: 'no label found' }}
-								</li>
-							</ul>
-						</div>
-						<div v-else-if="h.type === 'longtext' && d[h.columnId]" class="wrapper">
-							{{ d[h.columnId] }}
-						</div>
-						<div v-else-if="h.type === 'boolean' && d[h.columnId]" class="wrapper">
-							{{ d[h.columnId] ? ('textTrue' in h) ? h.textTrue : t('health', 'true') : '' }}
-							{{ !d[h.columnId] ? ('textFalse' in h) ? h.textFalse : t('health', 'false') : '' }}
-						</div>
-						<div v-else-if="h.type === 'text' && d[h.columnId]" class="wrapper">
-							{{ d[h.columnId] }}
-						</div>
-						<div v-else-if="h.type === 'number' && d[h.columnId]" class="wrapper">
-							{{ d[h.columnId] }}
+						<div v-else>
+							<div v-if="h.type === 'date' && d[h.columnId]" class="wrapper">
+								{{ d[h.columnId] | formatMyDate }}
+							</div>
+							<div v-else-if="h.type === 'datetime' && d[h.columnId]" class="wrapper">
+								{{ d[h.columnId] | formatMyDatetime }}
+							</div>
+							<div v-else-if="h.type === 'select' && d[h.columnId]" class="wrapper">
+								{{ (h.options && h.options[d[h.columnId].id] && h.options[d[h.columnId].id].label) ? h.options[d[h.columnId].id].label: 'no label found' }}
+							</div>
+							<div v-else-if="h.type === 'multiselect' && d[h.columnId]" class="wrapper">
+								<ul>
+									<li v-for="(option, optionIndex) in d[h.columnId]"
+										:key="optionIndex">
+										{{ (h.options && h.options[option.id] && h.options[option.id].label) ? h.options[option.id].label: 'no label found' }}
+									</li>
+								</ul>
+							</div>
+							<div v-else-if="h.type === 'longtext' && d[h.columnId]" class="wrapper">
+								{{ d[h.columnId] }}
+							</div>
+							<div v-else-if="h.type === 'boolean' && d[h.columnId]" class="wrapper">
+								{{ d[h.columnId] ? ('textTrue' in h) ? h.textTrue : t('health', 'true') : '' }}
+								{{ !d[h.columnId] ? ('textFalse' in h) ? h.textFalse : t('health', 'false') : '' }}
+							</div>
+							<div v-else-if="h.type === 'text' && d[h.columnId]" class="wrapper">
+								{{ d[h.columnId] }}
+							</div>
+							<div v-else-if="h.type === 'number' && d[h.columnId]" class="wrapper">
+								{{ d[h.columnId] }}
+							</div>
+							<div v-else-if="h.type === 'calculate' && d" class="wrapper">
+								{{ h.calc(d) }}
+							</div>
 						</div>
 					</td>
-					<td>
+					<td v-if="d.type === 'group'">
+						<div class="group">
+							GROUP
+						</div>
+					</td>
+					<td v-else>
 						<ModalAddItem
 							:id="i"
 							:header="header"
@@ -132,12 +145,34 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		groupBy: {
+			type: Object,
+			default: function() { return {} },
+		},
 	},
 	data: function() {
 		return {
 		}
 	},
 	computed: {
+		datasets: function() {
+			// eslint-disable-next-line vue/no-side-effects-in-computed-properties
+			const data = []
+			let i = 0
+			this.data.forEach(item => {
+				if (i === 2) {
+					const d = { type: 'group' }
+					this.header.forEach(h => {
+						d[h.columnId] = h.columnId
+					})
+					data.push(d)
+					i = 0
+				}
+				data.push(item)
+				i++
+			})
+			return data
+		},
 	},
 	methods: {
 		deleteItem: function(id) {
@@ -249,4 +284,10 @@ export default {
 		width: 160px;
 		height: 100px;
 	}
+
+	.group {
+		font-weight: bold;
+		margin-top: 25px;
+	}
+
 </style>

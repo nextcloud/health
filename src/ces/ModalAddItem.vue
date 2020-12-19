@@ -109,10 +109,13 @@
 								:max="'max' in h ? h.max : ''"
 								class="widthfitcontent">
 						</div>
-						<div v-else>
+						<div v-else-if="h.type === 'text'">
 							<input
 								v-model="values[h.columnId]"
 								class="widthfitcontent">
+						</div>
+						<div v-else-if="h.type === 'calculate'">
+							{{ t('health', 'Will be calculated', {}) }}
 						</div>
 					</div>
 				</div>

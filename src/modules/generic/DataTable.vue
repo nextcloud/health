@@ -27,6 +27,7 @@
 			:data="dataForTable"
 			:loading="loading"
 			:entity-name="entityName"
+			:group-by="groupBy"
 			@addItem="addItem"
 			@updateItem="updateItem"
 			@deleteItem="deleteItem" />
@@ -55,6 +56,18 @@ export default {
 		header: {
 			type: Array,
 			default: function() { return [] },
+		},
+		groupBy: {
+			type: Object,
+			default: function() {
+				return {
+					dayParts: false,
+					day: true,
+					week: false,
+					month: false,
+					year: false,
+				}
+			},
 		},
 	},
 	data: function() {
