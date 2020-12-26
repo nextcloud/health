@@ -59,12 +59,13 @@ export default {
 		},
 		groupBy: {
 			type: Object,
-			// eslint-disable-next-line vue/require-valid-default-prop
-			default: {
-				day: false,
-				week: false,
-				year: false,
-				dateColumnsId: 'datetime',
+			default: function() {
+				return {
+					day: false,
+					week: false,
+					year: false,
+					dateColumnsId: 'datetime',
+				}
 			},
 		},
 	},

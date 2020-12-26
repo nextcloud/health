@@ -25,16 +25,22 @@
 		<h2>
 			{{ t('health', 'Feeling for {name}', {name: person.name}) }}
 		</h2>
+		<DataTable
+			:context-filter="contextFilter"
+			:header="header"
+			entity-name="Feeling" />
 	</div>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
 import moment from '@nextcloud/moment'
+import DataTable from '../generic/DataTable'
 
 export default {
 	name: 'FeelingContent',
 	components: {
+		DataTable,
 	},
 	data: function() {
 		return {
@@ -181,6 +187,14 @@ export default {
 		},
 	},
 	methods: {
+		getColumnShow: function(key) {
+			const settings = this.moduleSettings
+			if (settings && settings[this.contextFilter.module] && settings[this.contextFilter.module].sidebarColumns && settings[this.contextFilter.module].sidebarColumns[key]) {
+				return settings[this.contextFilter.module].sidebarColumns[key]
+			} else {
+				return false
+			}
+		},
 	},
 }
 </script>
