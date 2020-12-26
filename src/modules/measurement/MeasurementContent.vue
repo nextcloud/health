@@ -102,7 +102,7 @@ export default {
 					max: 100,
 					// unter 90 ist dramatisch
 					style: function(value) {
-						console.debug('render style', value)
+						// console.debug('render style', value)
 						if (value < 90) {
 							return 'color: darkred; font-weight: bolder;'
 						} else {

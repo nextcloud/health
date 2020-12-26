@@ -98,7 +98,7 @@
 				<ActivitiesSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
-				v-if="person && person.enabledModuleSleep"
+				v-if="person && person.enabledModuleSleep && false"
 				id="sleep"
 				:name="t('health', 'Sleep')"
 				icon="icon-download"

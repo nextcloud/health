@@ -59,14 +59,12 @@ export default {
 		},
 		groupBy: {
 			type: Object,
-			default: function() {
-				return {
-					dayParts: false,
-					day: true,
-					week: false,
-					month: false,
-					year: false,
-				}
+			// eslint-disable-next-line vue/require-valid-default-prop
+			default: {
+				day: false,
+				week: false,
+				year: false,
+				dateColumnsId: 'datetime',
 			},
 		},
 	},
@@ -81,7 +79,9 @@ export default {
 		dataForTable: function() {
 			const data = []
 			this.datasets.forEach(d => {
-				data.push(JSON.parse(d.data))
+				const tmp = JSON.parse(d.data)
+				tmp.id = d.id
+				data.push(tmp)
 			})
 			return data
 		},
@@ -127,7 +127,7 @@ export default {
 			cesRequest.contextFilter = this.contextFilter
 			cesRequest.contextFilter.type = 'datasets'
 			cesRequest.entityFilter = {
-				id: this.datasets[item.id].id,
+				id: item.id,
 			}
 			cesRequest.entityData = item.data
 
@@ -143,7 +143,8 @@ export default {
 			})
 		},
 		deleteItem: function(id) {
-			const entityId = this.datasets[id].id
+			// const entityId = this.datasets[id].id
+			const entityId = id
 			console.debug('delete item with id', entityId)
 
 			const cesRequest = {}

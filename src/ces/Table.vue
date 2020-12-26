@@ -50,8 +50,8 @@
 						:data-label="t('health', h.name, {})"
 						:class="{ hide: !h.show }"
 						:style="(h.style) ? h.style(d[h.columnId]): ''">
-						<div v-if="d.type === 'group'" class="group">
-							GROUP
+						<div v-if="d.type === 'group'" :class="{ group: true, year: d.period === 'year', week: d.period === 'week', day: d.period === 'day' }">
+							{{ d[h.columnId] }}
 						</div>
 						<div v-else>
 							<div v-if="h.type === 'date' && d[h.columnId]" class="wrapper">
@@ -91,19 +91,23 @@
 					</td>
 					<td v-if="d.type === 'group'">
 						<div class="group">
-							GROUP
+							{{ n('health', '%n item', '%n items', d.groupCount, {}) }}
 						</div>
 					</td>
 					<td v-else>
-						<ModalAddItem
-							:id="i"
-							:header="header"
-							:item-data="d"
-							icon="icon-rename"
-							@addItem="updateItem" />
-						<button
-							class="icon-delete"
-							@click="deleteItem(i)" />
+						<div class="inlineButtons">
+							<ModalAddItem
+								:id="i"
+								:header="header"
+								:item-data="d"
+								icon="icon-rename"
+								@addItem="updateItem" />
+						</div>
+						<div class="inlineButtons">
+							<button
+								class="icon-delete"
+								@click="deleteItem(i)" />
+						</div>
 					</td>
 				</tr>
 			</tbody>
@@ -147,7 +151,7 @@ export default {
 		},
 		groupBy: {
 			type: Object,
-			default: function() { return {} },
+			default: null,
 		},
 	},
 	data: function() {
@@ -156,32 +160,147 @@ export default {
 	},
 	computed: {
 		datasets: function() {
-			// eslint-disable-next-line vue/no-side-effects-in-computed-properties
-			const data = []
-			let i = 0
-			this.data.forEach(item => {
-				if (i === 2) {
-					const d = { type: 'group' }
-					this.header.forEach(h => {
-						d[h.columnId] = h.columnId
-					})
-					data.push(d)
-					i = 0
+			if (this.groupBy === null) {
+				return this.data
+			}
+			// year -> week -> day
+			/*
+			items = {
+				2020: {
+					03: {
+						24: [item, item, ...]
+					}
 				}
-				data.push(item)
-				i++
+			}
+			 */
+			const items = {}
+			this.data.forEach(item => {
+				const date = moment(item[this.groupBy.dateColumnsId])
+				if (!items[date.year()]) {
+					items[date.year()] = {}
+				}
+				if (!items[date.year()][date.isoWeek()]) {
+					items[date.year()][date.isoWeek()] = {}
+				}
+				if (!items[date.year()][date.isoWeek()][date.date()]) {
+					items[date.year()][date.isoWeek()][date.date()] = []
+				}
+				items[date.year()][date.isoWeek()][date.date()].push(item)
 			})
-			return data
+
+			// items = items.reverse
+			// console.debug('items object', items)
+
+			const data2 = []
+			for (const [yKey, yValue] of Object.entries(items)) {
+				// add year group item
+				if (this.groupBy.year) {
+					const d = { type: 'group', period: 'year' }
+					d.groupCount = this.getItemsFromObject(yValue).length
+					this.header.forEach(h => {
+						if (h.columnId === this.groupBy.dateColumnsId) {
+							d[h.columnId] = t('health', 'Year {nr}', { nr: yKey })
+						} else {
+							if (h.groupCalc instanceof Function) {
+								d[h.columnId] = h.groupCalc(this.getItemsFromObject(yValue))
+							}
+						}
+					})
+					// console.debug('array to calc', this.getItemsFromObject(yValue))
+					data2.push(d)
+				}
+
+				// add all sub items -----------------
+				// console.debug('year: continue with following', yValue)
+				for (const [wKey, wValue] of Object.entries(yValue)) {
+					// add year group item
+					if (this.groupBy.week) {
+						const d = { type: 'group', period: 'week' }
+						d.groupCount = this.getItemsFromObject(wValue).length
+						this.header.forEach(h => {
+							if (h.columnId === this.groupBy.dateColumnsId) {
+								d[h.columnId] = t('health', 'Week {nr}', { nr: wKey })
+							} else {
+								if (h.groupCalc instanceof Function) {
+									d[h.columnId] = h.groupCalc(this.getItemsFromObject(wValue))
+								}
+							}
+							// this.calcCount(this.getItemsFromObject(value))
+						})
+						data2.push(d)
+					}
+
+					// add all sub items -------------
+					// console.debug('week: continue with following', wValue)
+					for (const [, dValue] of Object.entries(wValue)) {
+						// add year group item
+						if (this.groupBy.day) {
+							const d = { type: 'group', period: 'day' }
+							d.groupCount = this.getItemsFromObject(dValue).length
+							this.header.forEach(h => {
+								if (h.columnId === this.groupBy.dateColumnsId) {
+									d[h.columnId] = moment(dValue[0][this.groupBy.dateColumnsId]).format('L')
+								} else {
+									if (h.groupCalc instanceof Function) {
+										d[h.columnId] = h.groupCalc(this.getItemsFromObject(dValue))
+									}
+								}
+								// this.calcCount(this.getItemsFromObject(value))
+							})
+							data2.push(d)
+						}
+
+						// add all sub items
+						// console.debug('day: continue with following', dValue)
+						dValue.forEach(value => {
+							data2.push(value)
+						})
+					}
+				}
+			}
+			// console.debug('data2', data2)
+			return data2
 		},
 	},
 	methods: {
+		getItemsFromObject: function(o) {
+			if (o instanceof Array) {
+				// console.debug('o is array', o)
+				// console.debug('return o', o)
+				return o
+			} else {
+				// console.debug('o is object', o)
+				let data = null
+				for (const [, v] of Object.entries(o)) {
+					// console.debug('k', k)
+					const items = this.getItemsFromObject(v)
+					if (data === null) {
+						data = items
+					} else {
+						data = items.concat(data)
+					}
+				}
+				// console.debug('return data', data)
+				return data
+			}
+		},
+		calcCount: function(items) {
+			return items.length
+		},
 		deleteItem: function(id) {
-			this.$emit('deleteItem', id)
+			this.$emit('deleteItem', this.datasets[id].id)
 		},
 		addItem: function(item) {
 			this.$emit('addItem', item)
 		},
 		updateItem: function(item) {
+			console.debug('get id', {
+				datasets: this.datasets,
+				item: item,
+				entity: this.datasets[item.id],
+				id: this.datasets[item.id].id,
+			})
+			item.id = this.datasets[item.id].id
 			this.$emit('updateItem', item)
 		},
 	},
@@ -219,7 +338,7 @@ export default {
 	}
 
 	tr:nth-child(even) {
-		background-color: #c5c5c585;
+		// background-color: #c5c5c585;
 	}
 
 	tr:hover {
@@ -287,7 +406,22 @@ export default {
 
 	.group {
 		font-weight: bold;
-		margin-top: 25px;
+		margin-top: 30px;
+	}
+
+	.group.year {
+		font-size: x-large;
+	}
+
+	.group.week {
+		font-size: large;
+	}
+
+	.group.day {
+	}
+
+	.inlineButtons {
+		float: left;
 	}
 
 </style>

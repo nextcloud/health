@@ -28,6 +28,7 @@
 		<DataTable
 			:context-filter="contextFilter"
 			:header="header"
+			:group-by="groupBy"
 			entity-name="Sleeptime" />
 	</div>
 </template>
@@ -47,6 +48,12 @@ export default {
 			contextFilter: {
 				app: 'health',
 				module: 'sleep',
+			},
+			groupBy: {
+				day: true,
+				week: true,
+				year: false,
+				dateColumnsId: 'datetimeStart',
 			},
 		}
 	},
@@ -102,6 +109,30 @@ export default {
 							return ''
 						}
 					},
+					groupCalc: function(items) {
+						let sum = 0
+						items.forEach(dataset => {
+							if (dataset && dataset.datetimeStart && dataset.datetimeEnd) {
+								const start = moment(dataset.datetimeStart)
+								const end = moment(dataset.datetimeEnd)
+								if (end > start) {
+									sum += end.diff(start)
+								}
+							}
+						})
+						const duration = moment.duration(sum)
+						let text = ''
+						if (duration._data.days > 0) {
+							text = text + n('health', '%nd ', '%nd ', duration._data.days)
+						}
+						if (duration._data.hours > 0) {
+							text = text + n('health', '%nh ', '%nh ', duration._data.hours)
+						}
+						if (duration._data.minutes > 0) {
+							text = text + n('health', '%nmin ', '%nmin ', duration._data.minutes)
+						}
+						return t('health', 'Sum: {sum}', { sum: text })
+					},
 				},
 				{
 					name: t('health', 'Quality'),
@@ -115,6 +146,15 @@ export default {
 						{ id: 3, label: t('health', 'well', {}) },
 						{ id: 4, label: t('health', 'perfect', {}) },
 					],
+					style: function(value) {
+						console.debug('try to get style "sleep qualisty"', value)
+						if (value && 'id' in value && value.id === 0) {
+							return 'color: darkred; background-color: #ff000045;'
+						} else if (value && 'id' in value && value.id === 4) {
+							return 'color: green; background-color: greenyellow;'
+						}
+						return ''
+					},
 				},
 				{
 					name: t('health', 'Number of wakeups'),
@@ -123,6 +163,15 @@ export default {
 					show: true,
 					min: 0,
 					max: 50,
+					groupCalc: function(items) {
+						let sum = 0
+						items.forEach(i => {
+							if (i.wakeups) {
+								sum += parseInt(i.wakeups)
+							}
+						})
+						return t('health', 'Sum: {sum}', { sum: sum })
+					},
 				},
 			]
 		},
