@@ -113,6 +113,7 @@ export default new Vuex.Store({
 		},
 		setActivePerson({ dispatch, commit }, id) {
 			commit('activePersonId', id)
+			// commit('setModuleSettings', {})
 			dispatch('loadModuleContentForPerson')
 		},
 		setActiveModule({ dispatch, commit }, module) {
@@ -378,9 +379,11 @@ export default new Vuex.Store({
 		getModuleSetting: function({ state }, data) {
 			// data: { module: ..., type: ..., key: ... }
 			if (
-				this.moduleSettings[data.module]
+				this.moduleSettings
+				&& this.moduleSettings[data.module]
 				&& this.moduleSettings[data.module][data.type]
 				&& this.moduleSettings[data.module][data.type][data.key]) {
+				console.debug('getModuleSetting', { request: data, result: this.moduleSettings[data.module][data.type][data.key] })
 				return this.moduleSettings[data.module][data.type][data.key]
 			} else {
 				return null

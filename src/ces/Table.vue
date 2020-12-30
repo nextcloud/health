@@ -396,7 +396,7 @@ export default {
 	}
 
 	button {
-		padding: 13px 20px 13px 20px;
+		padding: 10px 20px 10px 20px;
 	}
 
 	textarea {

@@ -22,8 +22,9 @@
 
 <template>
 	<div>
+		<h3>{{ person.name }}</h3>
 		<h2>
-			{{ t('health', 'Measure for {name}', {name: person.name}) }}
+			{{ t('health', 'Measurement') }}
 		</h2>
 		<DataTable
 			:context-filter="contextFilter"
@@ -176,8 +177,16 @@ export default {
 	},
 	methods: {
 		getColumnShow: function(key) {
-			const settings = this.moduleSettings
-			return settings.measurement.sidebarColumns[key] ? settings.measurement.sidebarColumns[key] : false
+			if (
+				this.moduleSettings
+				&& this.moduleSettings.measurement
+				&& this.moduleSettings.measurement.sidebarColumns
+				&& this.moduleSettings.measurement.sidebarColumns[key]
+			) {
+				return this.moduleSettings.measurement.sidebarColumns[key]
+			} else {
+				return false
+			}
 		},
 	},
 }

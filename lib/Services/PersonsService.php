@@ -59,7 +59,8 @@ class PersonsService {
 		return $persons;
 	}
 
-	public function createPerson($name) {
+	public function createPerson($name): \OCP\AppFramework\Db\Entity
+	{
 		$time = new \DateTime();
 		$p = new Person();
 		/** @noinspection PhpUndefinedMethodInspection */
@@ -84,6 +85,7 @@ class PersonsService {
 		$p->setEnabledModuleSleep(false);
 		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setEnabledModuleNutrition(false);
+		$p->setEnabledModuleMeasurement(true);
 		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setWeightUnit('kg');
 		return $this->personMapper->insert($p);

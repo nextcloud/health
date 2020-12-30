@@ -203,7 +203,8 @@ export default {
 	}
 
 	h2 {
-		margin-top: 40px;
+		margin-top: -10px;
+		font-size: x-large;
 	}
 
 	h3 {

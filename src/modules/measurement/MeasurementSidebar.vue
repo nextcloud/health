@@ -50,11 +50,11 @@ export default {
 		...mapGetters(['person']),
 		columns: function() {
 			return [
-				{ id: 'temperature', name: t('health', 'Temperature', {}) },
-				{ id: 'heartrate', name: t('health', 'Heart rate', {}) },
-				{ id: 'bloodPressure', name: t('health', 'Blood pressure', {}) },
+				{ id: 'temperature', name: t('health', 'Temperature', {}), default: true },
+				{ id: 'heartrate', name: t('health', 'Heart rate', {}), default: true },
+				{ id: 'bloodPressure', name: t('health', 'Blood pressure', {}), default: true },
 				{ id: 'oxygensaturation', name: t('health', 'Oxygen saturation', {}) },
-				{ id: 'bloodsugar', name: t('health', 'Blood sugar', {}) },
+				{ id: 'bloodsugar', name: t('health', 'Blood sugar', {}), default: true },
 				{ id: 'defecation', name: t('health', 'Defecation', {}) },
 				{ id: 'appetite', name: t('health', 'Appetite', {}) },
 				{ id: 'allergies', name: t('health', 'Allergies', {}) },

@@ -22,8 +22,9 @@
 
 <template>
 	<div>
+		<h3>{{ person.name }}</h3>
 		<h2>
-			{{ t('health', 'Breaks for {name}', {name: person.name}) }}
+			{{ t('health', 'Breaks') }}
 		</h2>
 		<p>coming soon</p>
 	</div>

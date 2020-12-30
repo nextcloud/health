@@ -22,8 +22,9 @@
 
 <template>
 	<div>
+		<h3>{{ person.name }}</h3>
 		<h2>
-			Weight <span>for {{ person.name }}</span>
+			{{ t('health', 'Weight') }}
 		</h2>
 		<div>
 			<WeightBmi

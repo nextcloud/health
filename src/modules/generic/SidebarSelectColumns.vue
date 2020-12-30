@@ -22,26 +22,28 @@
 
 <template>
 	<ul>
-		<ActionCheckbox
+		<div
 			v-for="(c, i) in columns"
 			:id="c.id"
-			:key="i"
-			:checked="values[c.id]"
-			@check="values[c.id] = true"
-			@uncheck="values[c.id] = false"
-			@change="saveColumnSet">
-			{{ c.name }}
-		</ActionCheckbox>
+			:key="i">
+			<label>
+				<input
+					:id="c.id"
+					v-model="values[c.id]"
+					type="checkbox"
+					@change="saveColumnSet">
+				{{ c.name }}
+			</label>
+		</div>
 	</ul>
 </template>
 
 <script>
-import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
+import { mapState } from 'vuex'
 
 export default {
 	name: 'SidebarSelectColumns',
 	components: {
-		ActionCheckbox,
 	},
 	props: {
 		personId: {
@@ -63,31 +65,20 @@ export default {
 			id: null,
 		}
 	},
+	computed: {
+		...mapState(['activePersonId']),
+	},
+	watch: {
+		activePersonId: function() {
+			console.debug('person changed, load new sidebar column values')
+			this.loadValues()
+		},
+	},
 	beforeMount() {
-		// load settings from db
-		const request = {}
-		request.contextFilter = this.contextFilter
-		request.entityFilter = {
-			personId: this.personId,
-		}
-		// console.debug('try to load column set, request:', request)
-		this.$store.dispatch('cesRequest', request).then(results => {
-			// console.debug('result', results)
-			if (results.length > 0) {
-				this.id = results[0].id
-				const result = JSON.parse(results[0].data)
-				delete result.personId
-				this.values = result
-				this.setValuesToStore()
-			} else {
-				console.debug('no saved sets found')
-			}
-		})
+		this.loadValues()
 	},
 	methods: {
-		saveColumnSet: function(e) {
-			// console.debug('save column set: event', e)
-			this.values[e.target.id] = e.target.checked
+		saveColumnSet: function() {
 			this.setValuesToStore()
 
 			const request = {}
@@ -101,6 +92,38 @@ export default {
 			// console.debug('update column set, request:', request)
 			this.$store.dispatch('cesRequest', request).then(result => {
 				console.debug('column set saved', result)
+				this.id = result[0].id
+			})
+		},
+		loadValues: function() {
+			// console.debug('load values for sidebarcolumns')
+			// load settings from db
+			const request = {}
+			request.contextFilter = this.contextFilter
+			request.entityFilter = {
+				personId: this.personId,
+			}
+			// console.debug('try to load column set, request:', request)
+			this.$store.dispatch('cesRequest', request).then(results => {
+				// console.debug('result', results)
+				if (results.length > 0) {
+					this.id = results[0].id
+					const result = JSON.parse(results[0].data)
+					delete result.personId
+					this.values = result
+					this.setValuesToStore()
+				} else {
+					console.debug('no saved sets found, load defaults')
+					this.values = {}
+					this.columns.forEach(item => {
+						if (item.default) {
+							console.debug('default for ' + item.id, item.default)
+							this.values[item.id] = item.default
+						}
+					})
+					console.debug('defaults loaded', this.values)
+					this.saveColumnSet()
+				}
 			})
 		},
 		setValuesToStore: function() {

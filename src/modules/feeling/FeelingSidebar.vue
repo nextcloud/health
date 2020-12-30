@@ -50,9 +50,9 @@ export default {
 		...mapGetters(['person']),
 		columns: function() {
 			return [
-				{ id: 'mood', name: t('health', 'Mood', {}) },
+				{ id: 'mood', name: t('health', 'Mood', {}), default: true },
 				{ id: 'sadness', name: t('health', 'Sadness level', {}) },
-				{ id: 'symptoms', name: t('health', 'Symptoms', {}) },
+				{ id: 'symptoms', name: t('health', 'Symptoms', {}), default: true },
 				{ id: 'attacks', name: t('health', 'Attacks', {}) },
 				{ id: 'medication', name: t('health', 'Medication', {}) },
 				{ id: 'pain', name: t('health', 'Pain', {}) },

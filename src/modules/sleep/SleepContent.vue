@@ -22,14 +22,15 @@
 
 <template>
 	<div>
+		<h3>{{ person.name }}</h3>
 		<h2>
-			{{ t('health', 'Sleep for {name}', {name: person.name}) }}
+			{{ t('health', 'Sleep') }}
 		</h2>
 		<DataTable
 			:context-filter="contextFilter"
 			:header="header"
 			:group-by="groupBy"
-			entity-name="Sleeptime" />
+			entity-name="Sleep" />
 	</div>
 </template>
 

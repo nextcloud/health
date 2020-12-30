@@ -22,8 +22,9 @@
 
 <template>
 	<div>
+		<h3>{{ person.name }}</h3>
 		<h2>
-			{{ t('health', 'Feeling for {name}', {name: person.name}) }}
+			{{ t('health', 'Feeling') }}
 		</h2>
 		<DataTable
 			:context-filter="contextFilter"
