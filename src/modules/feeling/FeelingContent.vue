@@ -62,10 +62,6 @@ export default {
 					columnId: 'datetime',
 					type: 'datetime',
 					show: true,
-					section: {
-						id: 'meta',
-						name: t('health', 'General information', {}),
-					},
 					default: function() {
 						return moment().format('YYYY-MM-DDTHH:mm')
 					},
@@ -82,10 +78,6 @@ export default {
 						{ id: 3, label: t('health', 'Don\'t know', {}) },
 						{ id: 4, label: t('health', 'Don\'t ask me', {}) },
 					],
-					section: {
-						id: 'feeling',
-						name: t('health', 'Feeling information', {}),
-					},
 				},
 				{
 					name: t('health', 'Sadness level'),
@@ -98,10 +90,6 @@ export default {
 						{ id: 2, label: t('health', 'Medium', {}) },
 						{ id: 3, label: t('health', 'High', {}) },
 					],
-					section: {
-						id: 'feeling',
-						name: t('health', 'Feeling information', {}),
-					},
 				},
 				{
 					name: t('health', 'Symptoms'),
@@ -123,10 +111,6 @@ export default {
 						{ id: 11, label: t('health', 'Feeling worthless', {}) },
 						{ id: 12, label: t('health', 'Indecisive', {}) },
 					],
-					section: {
-						id: 'feeling',
-						name: t('health', 'Feeling information', {}),
-					},
 				},
 				{
 					name: t('health', 'Attacks'),
@@ -138,10 +122,6 @@ export default {
 						{ id: 1, label: t('health', 'Fit of range', {}) },
 						{ id: 2, label: t('health', 'Asthma attack', {}) },
 					],
-					section: {
-						id: 'feeling',
-						name: t('health', 'Feeling information', {}),
-					},
 				},
 				{
 					name: t('health', 'Medication'),
@@ -149,10 +129,6 @@ export default {
 					type: 'longtext',
 					show: this.getColumnShow('medication'),
 					placeholder: t('health', 'What medicine did you take?', {}),
-					section: {
-						id: 'feeling',
-						name: t('health', 'Feeling information', {}),
-					},
 				},
 				{
 					name: t('health', 'Pain'),
@@ -167,10 +143,6 @@ export default {
 						{ id: 4, label: t('health', 'Very high', {}) },
 						{ id: 5, label: t('health', 'Extreme', {}) },
 					],
-					section: {
-						id: 'feeling',
-						name: t('health', 'Feeling information', {}),
-					},
 				},
 				{
 					name: t('health', 'Comment'),
@@ -179,10 +151,6 @@ export default {
 					show: true,
 					placeholder: t('health', 'Give some comment, if you want...', {}),
 					maxlength: 1000,
-					section: {
-						id: 'feeling',
-						name: t('health', 'Feeling information', {}),
-					},
 				},
 			]
 		},
