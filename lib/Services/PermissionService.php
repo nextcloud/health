@@ -55,8 +55,9 @@ class PermissionService {
         return false;
 	}
 
-	public function weightData($id, $userId) {
-		// TODO
+	public function weightData($id, $userId): bool
+	{
+		// => will be continued with new weight data management via ces
 		return true;
 	}
 

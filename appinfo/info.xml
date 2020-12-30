@@ -8,16 +8,18 @@
 
 Following modules are served
 - Weight
+- Feeling (only basic for now)
+- Measurement (only basic for now)
+- Sleep (only basic for now)
 
 More modules are scheduled
 - breaks
-- Feeling
 - Medicine
 - Activities
-- ...
+- Nutrition
 
 Health is everything.]]></description>
-    <version>0.1.4.2</version>
+    <version>0.2.0</version>
     <licence>agpl</licence>
     <author mail="flost-dev@mailbox.org" >Florian Steffens</author>
     <namespace>Health</namespace>

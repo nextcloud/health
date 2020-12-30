@@ -26,6 +26,7 @@ return [
         'persons' => ['url' => '/persons'],
     ],
     'routes' => [
+    	// main
 	   	['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
 	   	['name' => 'persons#data', 'url' => '/person/{personId}/data', 'verb' => 'GET'],
 
@@ -35,15 +36,9 @@ return [
 		['name' => 'weightdata#destroy', 'url' => '/weightdata/delete/{id}', 'verb' => 'DELETE'],
 		['name' => 'weightdata#update', 'url' => '/weightdata/update/{id}', 'verb' => 'PUT'],
 
-		// feeling data
-		['name' => 'feelingdata#index', 'url' => '/feelingdata/person/{personId}', 'verb' => 'GET'],
-		['name' => 'feelingdata#create', 'url' => '/feelingdata/person/{personId}/create', 'verb' => 'POST'],
-		['name' => 'feelingdata#destroy', 'url' => '/feelingdata/delete/{id}', 'verb' => 'DELETE'],
-		['name' => 'feelingdata#update', 'url' => '/feelingdata/update/{id}', 'verb' => 'PUT'],
-
+		// ces service
 		['name' => 'ces#index', 'url' => '/ces', 'verb' => 'POST'],
 		['name' => 'ces#contexts', 'url' => '/ces/contexts', 'verb' => 'POST'],
 		['name' => 'ces#contexts', 'url' => '/ces/contexts', 'verb' => 'GET'],
-
     ]
 ];
