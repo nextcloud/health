@@ -22,7 +22,6 @@
 
 <template>
 	<div>
-		<h3>{{ person.name }}</h3>
 		<h2>
 			{{ t('health', 'Measurement') }}
 		</h2>
@@ -134,10 +133,10 @@ export default {
 					type: 'select',
 					show: this.getColumnShow('defecation'),
 					options: [
-						t('health', 'low', {}),
-						t('health', 'middle', {}),
-						t('health', 'high', {}),
-						t('health', 'extreme', {}),
+						{ id: 0, label: t('health', 'low', {}) },
+						{ id: 1, label: t('health', 'middle', {}) },
+						{ id: 2, label: t('health', 'high', {}) },
+						{ id: 3, label: t('health', 'extreme', {}) },
 					],
 					style: function(value) {
 						console.debug('render style', value)

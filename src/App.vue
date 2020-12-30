@@ -30,6 +30,9 @@
 					<ActionButton icon="icon-menu-sidebar" @click="$store.commit('showSidebar', !showSidebar)" />
 				</Actions>
 			</div>
+			<h3 class="icon-user h3-icon">
+				{{ person.name }}
+			</h3>
 			<PersonsContent v-if="person && activeModule === 'person'" />
 			<WeightContent v-if="person && activeModule === 'weight' && person.enabledModuleWeight" />
 			<FeelingContent v-if="person && activeModule === 'feeling' && person.enabledModuleFeeling" />
@@ -210,6 +213,12 @@ export default {
 	h3 {
 		font-size: 20px;
 		margin-top: 40px;
+	}
+
+	.h3-icon {
+		background-position: left;
+		padding-left: 20px;
+		opacity: 0.4;
 	}
 
 	.content-wrapper h3:first-child {

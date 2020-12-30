@@ -21,7 +21,7 @@
 	-->
 
 <template>
-	<div class="content-wrapper-health">
+	<div>
 		<h2>{{ t('health', 'Welcome to your health center') }}</h2>
 		<div class="widgets">
 			<div v-if="person && personData && personData.lastWeight" class="widget">

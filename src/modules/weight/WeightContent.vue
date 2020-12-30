@@ -22,7 +22,6 @@
 
 <template>
 	<div>
-		<h3>{{ person.name }}</h3>
 		<h2>
 			{{ t('health', 'Weight') }}
 		</h2>
