@@ -32,6 +32,7 @@ Health is everything.]]></description>
 	<screenshot>https://datenangebot.de/s/e9AnLma3EKkSyHW/download</screenshot>
 	<dependencies>
         <nextcloud min-version="18" max-version="20"/>
+		<database>mysql</database>
     </dependencies>
     <navigations>
         <navigation>

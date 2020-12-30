@@ -17,3 +17,9 @@ More modules are scheduled
 - Nutrition
 
 >Ideas for modules and functions are welcome. Please create issues on github.
+
+### Changelog
+v0.2.0 [beta]
+- Start with changelog
+- added some modules with basic data tables
+- dependency for mysql, pgsql not tested
