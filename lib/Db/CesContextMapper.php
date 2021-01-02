@@ -48,16 +48,29 @@ class CesContextMapper extends QBMapper {
 			$first = true;
 			foreach ($contextFilter as $key => $value) {
 				if($first) {
-					$qb->where('description->>\'$.'.$key.'\' LIKE :'.$key);
+					// $qb->where('description->>\'$.'.$key.'\' LIKE :'.$key);
+					// $qb->where('`description` LIKE \'%"'.$key.'"\:":'.$key.'"%\'');
+					// $qb->where($this->getWhereClause('description', $key, $value));
+					$qb->where('`description` LIKE :'.$key);
 					$first = false;
 				} else {
-					$qb->andWhere('description->>\'$.'.$key.'\' LIKE :'.$key);
+					$qb->andWhere('`description` LIKE :'.$key);
 				}
-				$qb->setParameter(':'.$key, $value);
+				$qb->setParameter($key, $this->getParameterClause($key, $value));
 			}
 		}
 
 		return $this->findEntities($qb);
+	}
+
+	private function getParameterClause($key, $value): string
+	{
+		$numberTypes = ['integer', 'double', 'float'];
+		if(in_array(gettype($value), $numberTypes)) {
+			return '%"'.$key.'":'.$value.'%';
+		} else {
+			return '%"'.$key.'":"'.$value.'"%';
+		}
 	}
 
 }

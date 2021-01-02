@@ -23,7 +23,7 @@
   namespace OCA\Health\Migration;
 
   use Closure;
-  use Doctrine\DBAL\Schema\SchemaException;
+  use Doctrine\DBAL\Types\Type;
   use OCP\DB\ISchemaWrapper;
   use OCP\Migration\SimpleMigrationStep;
   use OCP\Migration\IOutput;
@@ -54,7 +54,7 @@
 				'autoincrement' => true,
 				'notnull' => true,
 			]);
-			$table->addColumn('description', 'json', [
+			$table->addColumn('description', Type::TEXT, [
 				'notnull' => false,
 				'default' => null,
 			]);
@@ -77,11 +77,11 @@
 			$table->addColumn('context', 'integer', [
 				'notnull' => true,
 			]);
-			$table->addColumn('data', 'json', [
+			$table->addColumn('data', Type::TEXT, [
 				'notnull' => false,
 				'default' => null,
 			]);
-			$table->addColumn('ownership', 'json', [
+			$table->addColumn('ownership', Type::TEXT, [
 				'notnull' => false,
 				'default' => null,
 			]);

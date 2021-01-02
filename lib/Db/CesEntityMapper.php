@@ -73,23 +73,41 @@ class CesEntityMapper extends QBMapper {
 					$qb->setParameter(':id', $value);
 				} else {
 					if($first && $c === 0) {
-						$qb->where('data->>\'$.'.$key.'\' LIKE :'.$key);
+						// $qb->where('data->>\'$.'.$key.'\' LIKE :'.$key);
+						// $qb->where('`data` LIKE \'%"'.$key.'"\:":'.$key.'"%\'');
+						// $qb->where($this->getWhereClause('data', $key, $value));
+						$qb->where('`data` LIKE :'.$key);
 						$first = false;
 					} else {
-						$qb->andWhere('data->>\'$.'.$key.'\' LIKE :'.$key);
+						// $qb->andWhere($this->getWhereClause('data', $key, $value));
+						$qb->andWhere('`data` LIKE :'.$key);
 					}
-					$qb->setParameter(':'.$key, $value);
+					// $qb->setParameter($key, $value);
+					$qb->setParameter($key, $this->getParameterClause($key, $value));
 				}
 			}
 		}
+
 		if($first && $c === 0) {
-			$qb->where('ownership->>\'$.owner\' LIKE :userId');
+			// $qb->where('ownership->>\'$.owner\' LIKE :userId');
+			// $qb->where("`ownership` LIKE '%\"owner\":\":userId\"%'");
+			$qb->where("`ownership` LIKE :userId");
 		} else {
-			$qb->andWhere('ownership->>\'$.owner\' LIKE :userId');
+			$qb->andWhere("`ownership` LIKE :userId");
 		}
-		$qb->setParameter(':userId', $this->userId);
+		$qb->setParameter(':userId', '%"owner":"'.$this->userId.'"%');
 
 		return $this->findEntities($qb);
     }
+
+	private function getParameterClause($key, $value): string
+	{
+		$numberTypes = ['integer', 'double', 'float'];
+		if(in_array(gettype($value), $numberTypes)) {
+			return '%"'.$key.'":'.$value.'%';
+		} else {
+			return '%"'.$key.'":"'.$value.'"%';
+		}
+	}
 
 }
