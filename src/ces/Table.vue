@@ -387,7 +387,7 @@ export default {
 		td::before {
 			content:attr(data-label);
 			word-wrap: break-word;
-			width: 20%;
+			width: 35%;
 			float:left;
 			padding:1em;
 			font-weight: bold;
