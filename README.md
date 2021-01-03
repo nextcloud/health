@@ -1,5 +1,5 @@
 # Health
-##### [beta] version 0.2.1
+##### [beta] version 0.2.2
 ### Track your health. Use the advantages of a trusted platform.
 
 The app provides different modules to track your  health data.
@@ -11,7 +11,7 @@ Following modules are served
 - Sleep (only basic for now)
 
 More modules are scheduled
-- breaks
+- Breaks
 - Medicine
 - Activities
 - Nutrition
@@ -19,6 +19,10 @@ More modules are scheduled
 >Ideas for modules and functions are welcome. Please create issues on github.
 
 ### Changelog
+
+v0.2.2 [beta]
+- css fixes, specially for mobile use
+- css fixes for dark theme compatibility
 
 v0.2.1 [beta]
 - no limitation to db with json support

@@ -13,13 +13,13 @@ Following modules are served
 - Sleep (only basic for now)
 
 More modules are scheduled
-- breaks
+- Breaks
 - Medicine
 - Activities
 - Nutrition
 
 Health is everything.]]></description>
-    <version>0.2.1</version>
+    <version>0.2.2</version>
     <licence>agpl</licence>
     <author mail="flost-dev@mailbox.org" >Florian Steffens</author>
     <namespace>Health</namespace>
