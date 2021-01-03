@@ -30,7 +30,7 @@
 					<ActionButton icon="icon-menu-sidebar" @click="$store.commit('showSidebar', !showSidebar)" />
 				</Actions>
 			</div>
-			<h3 class="icon-user h3-icon">
+			<h3 v-if="person && person.name" class="icon-user h3-icon">
 				{{ person.name }}
 			</h3>
 			<PersonsContent v-if="person && activeModule === 'person'" />

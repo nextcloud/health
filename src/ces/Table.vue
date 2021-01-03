@@ -317,7 +317,6 @@ export default {
 		text-align: left;
 		vertical-align: middle;
 		color: var(--color-main-text);
-		opacity: .7;
 	}
 
 	td, tr, th {
@@ -357,6 +356,7 @@ export default {
 		table, tr, td {
 			padding:0;
 			border-bottom: none;
+			// opacity: .7;
 		}
 
 		table {
@@ -387,7 +387,7 @@ export default {
 		td::before {
 			content:attr(data-label);
 			word-wrap: break-word;
-			width: 35%;
+			width: 45%;
 			float:left;
 			padding:1em;
 			font-weight: bold;
@@ -420,6 +420,7 @@ export default {
 	.group {
 		font-weight: bold;
 		margin-top: 30px;
+		opacity: 0.5;
 	}
 
 	.group.year {
