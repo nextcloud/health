@@ -286,7 +286,8 @@ export default {
 	}
 
 	.modal__content textarea {
-		width: 97%;
+		width: fit-content;
+		min-width: 55%;
 		margin-left: 3px;
 	}
 

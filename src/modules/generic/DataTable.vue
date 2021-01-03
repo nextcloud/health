@@ -106,7 +106,6 @@ export default {
 	methods: {
 		addItem: function(item) {
 			// console.debug('new item', item)
-
 			item.personId = this.person.id
 
 			const cesRequest = {}
@@ -116,14 +115,11 @@ export default {
 
 			this.$store.dispatch('cesRequest', cesRequest).then(newItem => {
 				console.debug('saved item', newItem)
-				// this.datasets.push(newItem[0])
-				// this.sortDatasets()
 				this.loadDatasets()
 			})
 		},
 		updateItem: function(item) {
 			// console.debug('update item', item)
-
 			const cesRequest = {}
 			cesRequest.contextFilter = this.contextFilter
 			cesRequest.contextFilter.type = 'datasets'
@@ -135,12 +131,6 @@ export default {
 			this.$store.dispatch('cesRequest', cesRequest).then(result => {
 				console.debug('item updated', result)
 				this.loadDatasets()
-				// const datasets = this.datasets.slice()
-				// result.forEach(r => {
-				// datasets[item.id] = r
-				// })
-				// this.datasets = datasets
-				// this.sortDatasets()
 			})
 		},
 		deleteItem: function(id) {
@@ -159,11 +149,9 @@ export default {
 			this.$store.dispatch('cesRequest', cesRequest).then(result => {
 				console.debug('item deleted', result)
 				this.loadDatasets()
-				// this.datasets.splice(id, 1)
 			})
 		},
 		loadDatasets: function() {
-			// this.loading = true
 			const cesRequest = {}
 			cesRequest.contextFilter = this.contextFilter
 			cesRequest.contextFilter.type = 'datasets'
@@ -189,61 +177,9 @@ export default {
 				}
 				data.data = result
 				this.$store.dispatch('updateModuleData', data)
-				// this.datasets = result
-				// this.sortDatasets()
 				this.loading = false
 			})
 		},
 	},
 }
 </script>
-<style lang="scss" scoped>
-	.textarea-mission {
-		width: 67%;
-		min-height: 200px;
-	}
-
-	.content-wrapper-health {
-		width: 98%;
-	}
-
-	.widget {
-		border: 1px solid gray;
-		border-radius: 4px;
-		background-color: #80808026;
-		padding: 4px;
-		width: 100px;
-		margin: 10px;
-		float: left;
-	}
-
-	.widget h3 {
-		margin-top: 5px;
-		margin-bottom: 2px;
-		font-size: large;
-	}
-
-	.widget .date {
-		color: gray;
-		font-size: 0.8em;
-		text-align: right;
-	}
-
-	.widget span {
-		padding-left: 2px;
-		padding-right: 2px;
-	}
-
-	.widget .firstNumber {
-		font-weight: bold;
-		text-align: right;
-	}
-
-	.widget .secondNumber {
-		text-align: right;
-	}
-
-	.clear {
-		clear: both;
-	}
-</style>

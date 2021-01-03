@@ -43,7 +43,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(d, i) in datasets" :key="i">
+				<tr v-for="(d, i) in datasets" :key="i" :class="{ hideMobile: d.type === 'group' }">
 					<td
 						v-for="(h, ii) in header"
 						:key="ii"
@@ -265,14 +265,10 @@ export default {
 	methods: {
 		getItemsFromObject: function(o) {
 			if (o instanceof Array) {
-				// console.debug('o is array', o)
-				// console.debug('return o', o)
 				return o
 			} else {
-				// console.debug('o is object', o)
 				let data = null
 				for (const [, v] of Object.entries(o)) {
-					// console.debug('k', k)
 					const items = this.getItemsFromObject(v)
 					if (data === null) {
 						data = items
@@ -280,7 +276,6 @@ export default {
 						data = items.concat(data)
 					}
 				}
-				// console.debug('return data', data)
 				return data
 			}
 		},
@@ -321,6 +316,8 @@ export default {
 		border-collapse: collapse;
 		text-align: left;
 		vertical-align: middle;
+		color: var(--color-main-text);
+		opacity: .7;
 	}
 
 	td, tr, th {
@@ -343,6 +340,11 @@ export default {
 
 	tr:hover {
 		background: #80808063;
+		opacity: 1;
+	}
+
+	tr:hover td {
+		opacity: 1;
 	}
 
 	.datatable ul {
@@ -354,6 +356,7 @@ export default {
 
 		table, tr, td {
 			padding:0;
+			border-bottom: none;
 		}
 
 		table {
@@ -367,7 +370,12 @@ export default {
 		tr {
 			float: left;
 			width: 100%;
-			margin-bottom: 2em;
+			margin-bottom: 3em;
+			margin-top: 3em;
+		}
+
+		td:first-child {
+			border-top: gray 10px solid;
 		}
 
 		td {
@@ -385,6 +393,11 @@ export default {
 			font-weight: bold;
 			margin:-1em 1em -1em -1em;
 		}
+
+		.hideMobile {
+			display: none;
+		}
+
 	}
 
 	.hide {
@@ -415,9 +428,6 @@ export default {
 
 	.group.week {
 		font-size: large;
-	}
-
-	.group.day {
 	}
 
 	.inlineButtons {
