@@ -55,7 +55,8 @@
 							ref="weightinsertweight"
 							type="Number"
 							min="1"
-							max="200">
+							max="200"
+							step="0.1">
 					</td>
 					<td v-if="hasMeasurement" class="hide-if-small">
 						<input ref="weightinsertmeasurement" type="Number">
@@ -65,7 +66,8 @@
 							ref="weightinsertbodyfat"
 							type="Number"
 							min="0"
-							max="100">
+							max="100"
+							step="0.1">
 					</td>
 					<td>
 						<button
@@ -97,7 +99,8 @@
 								:value="v.weight"
 								type="Number"
 								min="1"
-								max="200">
+								max="200"
+								step="0.1">
 						</div>
 						<div v-else>
 							{{ v.weight }}
@@ -118,7 +121,8 @@
 								:value="v.bodyfat"
 								type="Number"
 								min="0"
-								max="100">
+								max="100"
+								step="0.1">
 						</div>
 						<div v-else>
 							{{ v.bodyfat }}
