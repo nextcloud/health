@@ -107,7 +107,7 @@ export default {
 			return (result > 100) ? 100 : result
 		},
 		lastWeight: function() {
-			if (this.weightData && this.weightData.length > 1) {
+			if (this.weightData && this.weightData.length >= 1) {
 				return this.weightData[0].weight
 			}
 			return null
