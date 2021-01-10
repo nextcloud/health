@@ -23,6 +23,7 @@
 
 namespace OCA\Health\Db;
 
+use DateTime;
 use \JsonSerializable;
 
 use OCP\AppFramework\Db\Entity;
@@ -36,6 +37,7 @@ class Weightdata extends Entity implements JsonSerializable {
     protected $lastupdateTime;
     protected $personId;
     protected $bodyfat;
+    protected $bodyfat2;
     protected $measurement;
     protected $weight;
     protected $date;
@@ -49,7 +51,7 @@ class Weightdata extends Entity implements JsonSerializable {
     }
 
     public function jsonSerialize() {
-        $date = new \DateTime($this->date);
+        $date = new DateTime($this->date);
         return [
             'id' => $this->id,
             'insertTime' => $this->insertTime,
