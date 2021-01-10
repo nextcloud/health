@@ -58,7 +58,7 @@ class WeightdataService {
 		return $this->weightdataMapper->findLast($personId);
 	}
 
-	public function create($personId, $weight, $measurement, $bodyfat, $date) {
+	public function create($personId, $weight, $waist, $hip, $measurement, $bodyfat, $date) {
 		if( !$this->permissionService->weightData($personId, $this->userId)) {
 			return null;
 		}
@@ -79,6 +79,10 @@ class WeightdataService {
 		/** @noinspection PhpUndefinedMethodInspection */
 		$wd->setWeight($weight);
 		/** @noinspection PhpUndefinedMethodInspection */
+		$wd->setWaist($waist);
+		/** @noinspection PhpUndefinedMethodInspection */
+		$wd->setHip($hip);
+		/** @noinspection PhpUndefinedMethodInspection */
 		$wd->setMeasurement($measurement);
 		/** @noinspection PhpUndefinedMethodInspection */
 		$wd->setBodyfat($bodyfat);
@@ -98,7 +102,7 @@ class WeightdataService {
 		return $this->weightdataMapper->delete($wd);
 	}
 
-	public function update($id, $date, $weight, $measurement, $bodyfat) {
+	public function update($id, $date, $weight, $waist, $hip, $measurement, $bodyfat) {
 		if( !$this->permissionService->weightData($id, $this->userId)) {
 			return null;
 		}
@@ -107,6 +111,10 @@ class WeightdataService {
 			$wd->setDate($this->formatHelperService->typeCast('date', $date));
 			/** @noinspection PhpUndefinedMethodInspection */
 			$wd->setWeight($this->formatHelperService->typeCast('weight', $weight));
+			/** @noinspection PhpUndefinedMethodInspection */
+			$wd->setWaist($this->formatHelperService->typeCast('waist', $waist));
+			/** @noinspection PhpUndefinedMethodInspection */
+			$wd->setHip($this->formatHelperService->typeCast('hip', $hip));
 			/** @noinspection PhpUndefinedMethodInspection */
 			$wd->setMeasurement($this->formatHelperService->typeCast('measurement', $measurement));
 			/** @noinspection PhpUndefinedMethodInspection */

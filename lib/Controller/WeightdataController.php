@@ -57,12 +57,14 @@ class WeightdataController extends Controller {
 	 *
      * @param int $personId
      * @param float $weight
+     * @param float $waist
+     * @param float $hip
      * @param float $measurement
      * @param float $bodyfat
      * @param string $date
 	 */
-	public function create($personId, $weight, $measurement, $bodyfat, $date) {
-		return new DataResponse($this->weightdataService->create($personId, $weight, $measurement, $bodyfat, $date));
+	public function create($personId, $weight, $waist, $hip, $measurement, $bodyfat, $date) {
+		return new DataResponse($this->weightdataService->create($personId, $weight, $waist, $hip, $measurement, $bodyfat, $date));
 	}
 
 	/**
@@ -79,11 +81,13 @@ class WeightdataController extends Controller {
 	 *
      * @param int $id
      * @param float $weight
+     * @param float $waist
+     * @param float $hip
      * @param float $measurement
      * @param float $bodyfat
      * @param string $date
 	 */
-	public function update($id, $date, $weight, $measurement, $bodyfat) {
-		return new DataResponse($this->weightdataService->update($id, $date, $weight, $measurement, $bodyfat));
+	public function update($id, $date, $weight, $waist, $hip, $measurement, $bodyfat) {
+		return new DataResponse($this->weightdataService->update($id, $date, $weight, $waist, $hip, $measurement, $bodyfat));
 	}
 }

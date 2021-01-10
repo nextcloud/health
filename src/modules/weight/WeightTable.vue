@@ -30,6 +30,12 @@
 				<th>
 					Weight <span>in {{ person.weightUnit }}</span>
 				</th>
+				<th>
+					Waist <span>in cm</span>
+				</th>
+				<th>
+					Hip <span>in cm</span>
+				</th>
 				<th v-if="hasMeasurement" class="hide-if-small">
 					{{ person.weightMeasurementName }}
 				</th>
@@ -53,6 +59,22 @@
 					<td>
 						<input
 							ref="weightinsertweight"
+							type="Number"
+							min="1"
+							max="200"
+							step="0.1">
+					</td>
+					<td>
+						<input
+							ref="weightinsertwaist"
+							type="Number"
+							min="1"
+							max="200"
+							step="0.1">
+					</td>
+					<td>
+						<input
+							ref="weightinserthip"
 							type="Number"
 							min="1"
 							max="200"
@@ -104,6 +126,34 @@
 						</div>
 						<div v-else>
 							{{ v.weight }}
+						</div>
+					</td>
+					<td>
+						<div v-if="editRowId === i">
+							<input
+								ref="weightinputwaist"
+								:value="v.waist"
+								type="Number"
+								min="1"
+								max="200"
+								step="0.1">
+						</div>
+						<div v-else>
+							{{ v.waist }}
+						</div>
+					</td>
+					<td>
+						<div v-if="editRowId === i">
+							<input
+								ref="weightinputhip"
+								:value="v.hip"
+								type="Number"
+								min="1"
+								max="200"
+								step="0.1">
+						</div>
+						<div v-else>
+							{{ v.hip }}
 						</div>
 					</td>
 					<td v-if="hasMeasurement" class="hide-if-small">
@@ -192,6 +242,8 @@ export default {
 			const row = {
 				id: this.editRowId,
 				weight: this.$refs.weightinputweight[0].value,
+				waist: this.$refs.weightinputwaist[0].value,
+				hip: this.$refs.weightinputhip[0].value,
 				measurement: (this.$refs.weightinputmeasurement !== undefined) ? this.$refs.weightinputmeasurement[0].value : null,
 				date: this.$refs.weightinputdate[0].value,
 				bodyfat: this.$refs.weightinputbodyfat[0].value,
@@ -205,12 +257,16 @@ export default {
 			console.debug(this.$refs)
 			const row = {
 				weight: this.$refs.weightinsertweight.value,
+				waist: this.$refs.weightinsertwaist.value,
+				hip: this.$refs.weightinserthip.value,
 				measurement: (this.$refs.weightinsertmeasurement !== undefined) ? this.$refs.weightinsertmeasurement.value : null,
 				date: this.$refs.weightinsertdate.value,
 				bodyfat: this.$refs.weightinsertbodyfat.value,
 			}
 			console.debug(row)
 			this.$refs.weightinsertweight.value = ''
+			this.$refs.weightinsertwaist.value = ''
+			this.$refs.weightinserthip.value = ''
 			if (this.$refs.weightinsertmeasurement !== undefined) {
 				this.$refs.weightinsertmeasurement.value = ''
 			}
