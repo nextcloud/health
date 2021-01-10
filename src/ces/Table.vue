@@ -160,106 +160,7 @@ export default {
 	},
 	computed: {
 		datasets: function() {
-			if (this.groupBy === null) {
-				return this.data
-			}
-			// year -> week -> day
-			/*
-			items = {
-				2020: {
-					03: {
-						24: [item, item, ...]
-					}
-				}
-			}
-			 */
-			const items = {}
-			this.data.forEach(item => {
-				const date = moment(item[this.groupBy.dateColumnsId])
-				if (!items[date.year()]) {
-					items[date.year()] = {}
-				}
-				if (!items[date.year()][date.isoWeek()]) {
-					items[date.year()][date.isoWeek()] = {}
-				}
-				if (!items[date.year()][date.isoWeek()][date.date()]) {
-					items[date.year()][date.isoWeek()][date.date()] = []
-				}
-				items[date.year()][date.isoWeek()][date.date()].push(item)
-			})
-
-			// items = items.reverse
-			// console.debug('items object', items)
-
-			const data2 = []
-			for (const [yKey, yValue] of Object.entries(items)) {
-				// add year group item
-				if (this.groupBy.year) {
-					const d = { type: 'group', period: 'year' }
-					d.groupCount = this.getItemsFromObject(yValue).length
-					this.header.forEach(h => {
-						if (h.columnId === this.groupBy.dateColumnsId) {
-							d[h.columnId] = t('health', 'Year {nr}', { nr: yKey })
-						} else {
-							if (h.groupCalc instanceof Function) {
-								d[h.columnId] = h.groupCalc(this.getItemsFromObject(yValue))
-							}
-						}
-					})
-					// console.debug('array to calc', this.getItemsFromObject(yValue))
-					data2.push(d)
-				}
-
-				// add all sub items -----------------
-				// console.debug('year: continue with following', yValue)
-				for (const [wKey, wValue] of Object.entries(yValue)) {
-					// add year group item
-					if (this.groupBy.week) {
-						const d = { type: 'group', period: 'week' }
-						d.groupCount = this.getItemsFromObject(wValue).length
-						this.header.forEach(h => {
-							if (h.columnId === this.groupBy.dateColumnsId) {
-								d[h.columnId] = t('health', 'Week {nr}', { nr: wKey })
-							} else {
-								if (h.groupCalc instanceof Function) {
-									d[h.columnId] = h.groupCalc(this.getItemsFromObject(wValue))
-								}
-							}
-							// this.calcCount(this.getItemsFromObject(value))
-						})
-						data2.push(d)
-					}
-
-					// add all sub items -------------
-					// console.debug('week: continue with following', wValue)
-					for (const [, dValue] of Object.entries(wValue)) {
-						// add year group item
-						if (this.groupBy.day) {
-							const d = { type: 'group', period: 'day' }
-							d.groupCount = this.getItemsFromObject(dValue).length
-							this.header.forEach(h => {
-								if (h.columnId === this.groupBy.dateColumnsId) {
-									d[h.columnId] = moment(dValue[0][this.groupBy.dateColumnsId]).format('L')
-								} else {
-									if (h.groupCalc instanceof Function) {
-										d[h.columnId] = h.groupCalc(this.getItemsFromObject(dValue))
-									}
-								}
-								// this.calcCount(this.getItemsFromObject(value))
-							})
-							data2.push(d)
-						}
-
-						// add all sub items
-						// console.debug('day: continue with following', dValue)
-						dValue.forEach(value => {
-							data2.push(value)
-						})
-					}
-				}
-			}
-			// console.debug('data2', data2)
-			return data2
+			return this.data
 		},
 	},
 	methods: {
@@ -409,7 +310,7 @@ export default {
 	}
 
 	button {
-		padding: 10px 20px 10px 20px;
+		padding: 13px 20px 13px 20px;
 	}
 
 	textarea {

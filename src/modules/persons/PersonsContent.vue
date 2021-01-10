@@ -43,14 +43,16 @@
 		<br>
 		<button
 			@click="updateMission">
-			{{ t('health', 'Save') }}
+			{{ t('health', 'Save ') }}
 		</button>
+		<LineChart2 :chartdata="data" :options="options" />
 	</div>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
 import moment from '@nextcloud/moment'
+import LineChart2 from '../generic/charts/LineChart2'
 
 export default {
 	name: 'PersonsContent',
@@ -60,6 +62,36 @@ export default {
 		},
 	},
 	components: {
+		LineChart2,
+	},
+	data: function() {
+		return {
+			data: {
+				labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+				datasets: [{
+					label: '# of Votes',
+					data: [12, 19, 3, 5, 2, 3],
+					backgroundColor: [
+						'rgba(255, 99, 132, 0.2)',
+						'rgba(54, 162, 235, 0.2)',
+						'rgba(255, 206, 86, 0.2)',
+						'rgba(75, 192, 192, 0.2)',
+						'rgba(153, 102, 255, 0.2)',
+						'rgba(255, 159, 64, 0.2)',
+					],
+					borderColor: [
+						'rgba(255, 99, 132, 1)',
+						'rgba(54, 162, 235, 1)',
+						'rgba(255, 206, 86, 1)',
+						'rgba(75, 192, 192, 1)',
+						'rgba(153, 102, 255, 1)',
+						'rgba(255, 159, 64, 1)',
+					],
+					borderWidth: 1,
+				}],
+			},
+			options: {},
+		}
 	},
 	computed: {
 		...mapState(['personData']),
@@ -69,6 +101,9 @@ export default {
 		updateMission: function() {
 			this.$store.dispatch('setValue', { key: 'personalMission', value: this.$refs.mission.value })
 		},
+		getRandomInt() {
+			return Math.floor(Math.random() * (50 - 5 + 1)) + 5
+		},
 	},
 }
 </script>
@@ -77,9 +112,11 @@ export default {
 		width: 67%;
 		min-height: 200px;
 	}
+
 	.content-wrapper-health {
 		width: 98%;
 	}
+
 	.widget {
 		border: 1px solid gray;
 		border-radius: 4px;
@@ -89,27 +126,33 @@ export default {
 		margin: 10px;
 		float: left;
 	}
+
 	.widget h3 {
 		margin-top: 5px;
 		margin-bottom: 2px;
 		font-size: large;
 	}
+
 	.widget .date {
 		color: gray;
 		font-size: 0.8em;
 		text-align: right;
 	}
+
 	.widget span {
 		padding-left: 2px;
 		padding-right: 2px;
 	}
+
 	.widget .firstNumber {
 		font-weight: bold;
 		text-align: right;
 	}
+
 	.widget .secondNumber {
 		text-align: right;
 	}
+
 	.clear {
 		clear: both;
 	}

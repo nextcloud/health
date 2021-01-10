@@ -159,18 +159,9 @@ export default {
 				personId: this.person.id,
 			}
 			this.$store.dispatch('cesRequest', cesRequest).then(result => {
-				result.sort(function(a, b) {
-					const dataA = JSON.parse(a.data)
-					const dataB = JSON.parse(b.data)
-
-					if (moment(dataA.datetime) > moment(dataB.datetime)) {
-						return -1
-					} else if (moment(dataA.datetime) < moment(dataB.datetime)) {
-						return 1
-					} else {
-						return 0
-					}
-				})
+				// console.debug('before sort', result)
+				result.sort(this.sortDatasets)
+				// console.debug('after sort', result)
 				const data = {
 					module: this.contextFilter.module,
 					type: this.contextFilter.type,
@@ -179,6 +170,38 @@ export default {
 				this.$store.dispatch('updateModuleData', data)
 				this.loading = false
 			})
+		},
+		sortDatasets: function(a, b) {
+			const dataA = JSON.parse(a.data)
+			const dataB = JSON.parse(b.data)
+			let dA = 0
+			if ('datetime' in dataA) {
+				dA = dataA.datetime
+			} else if ('datetimeStart' in dataA) {
+				dA = dataA.datetimeStart
+			} else {
+				dA = 0
+			}
+
+			let dB = 0
+			if ('datetime' in dataB) {
+				dB = dataB.datetime
+			} else if ('datetimeStart' in dataB) {
+				dB = dataB.datetimeStart
+			} else {
+				dB = 0
+			}
+
+			let r = 0
+			if (moment(dA) > moment(dB)) {
+				r = -1
+			} else if (moment(dA) < moment(dB)) {
+				r = 1
+			}
+
+			// console.debug('compare', { a: dA, b: dB, comp: r })
+
+			return r
 		},
 	},
 }
