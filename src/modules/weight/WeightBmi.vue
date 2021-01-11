@@ -130,12 +130,14 @@ export default {
 	.hint {
 		font-size: 0.8em;
 	}
+
 	.bmi {
 	background-color: var(--color-background-dark);
 	border-radius: 10px;
 	padding: 10px;
 	width: fit-content;
 	}
+
 	.bmi .number {
 		padding: 6px 12px 6px 12px;
 		border-radius: 20px;
@@ -144,34 +146,44 @@ export default {
 		font-size: 1.5em;
 		font-weight: 100;
 	}
+
 	.bmi.good {
 		color: var(--color-success);
 	}
+
 	.bmi.okay {
 		color: var(--color-primary-element);
 	}
+
 	.bmi.warn {
 		color: var(--color-warning);
 	}
+
 	.bmi.alert {
 		color: var(--color-error);
 	}
+
 	.bmi.danger {
 		color: var(--color-error);
 		font-weight: bolder;
 	}
+
 	.number.good {
 		background-color: var(--color-success);
 	}
+
 	.number.okay {
 		background-color: var(--color-primary-element);
 	}
+
 	.number.warn {
 		background-color: var(--color-warning);
 	}
+
 	.number.alert {
 		background-color: var(--color-error);
 	}
+
 	.number.danger {
 		background-color: var(--color-error);
 		font-weight: bolder;

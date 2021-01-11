@@ -239,4 +239,11 @@ export default {
 		border-bottom: 1px solid #80808057;
 	}
 
+	.green {
+		color: #19880C;
+	}
+
+	.red {
+		color: #bd1500;
+	}
 </style>

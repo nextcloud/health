@@ -27,12 +27,12 @@ namespace OCA\Health\Services;
 class FormatHelperService {
 
 	public function typeCast($key, $value) {
-		 $intData = ['age', 'size', 'bodyfat'];
+		 $intData = ['age', 'size'];
          if(in_array($key, $intData)) {
          	$value = intval($value);
          }
 
-         $doubleData = ['weightTarget', 'weightTargetInitialWeight', 'weight', 'measurement'];
+         $doubleData = ['weightTarget', 'weightTargetInitialWeight', 'weight', 'measurement', 'bodyfat'];
          if(in_array($key, $doubleData)) {
          	$value = floatval($value);
          }

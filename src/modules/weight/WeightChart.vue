@@ -22,7 +22,9 @@
 
 <template>
 	<div class="weight-chart">
-		<div class="chartDataRangeSelector">
+		<div
+			v-if="data && getChartData.datasets[0].data.length > 1"
+			class="chartDataRangeSelector">
 			<select
 				id="chartDataRangeSelector"
 				v-model="chartDateRange"

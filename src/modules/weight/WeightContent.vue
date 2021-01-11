@@ -23,7 +23,7 @@
 <template>
 	<div>
 		<h2>
-			{{ t('health', 'Weight') }}
+			{{ t('health', 'Weight', {}) }}
 		</h2>
 		<div>
 			<WeightBmi
@@ -31,36 +31,25 @@
 				:age="person.age"
 				:weight="lastWeight" />
 		</div>
+
 		<h3>Target</h3>
-		<div v-if="person.weightTarget != '' && person.weightTarget != null">
-			<div v-if="lastWeight">
-				<p>You started with {{ person.weightTargetInitialWeight }}{{ person.weightUnit }} for your target. Your actual weight is now {{ lastWeight }}{{ person.weightUnit }} and your target values {{ person.weightTarget }}{{ person.weightUnit }}.</p>
-				<p v-if="lastWeight > person.weightTarget && lastWeight < person.weightTargetInitialWeight">
-					So you lost already {{ Math.round((person.weightTargetInitialWeight - lastWeight) * 100) / 100 }}{{ person.weightUnit }} and you have {{ Math.round((lastWeight - person.weightTarget) * 100) / 100 }}{{ person.weightUnit }} to go.
-					<br>
-					<br>
-					Go on and eliminate the blue bar:
-					<ProgressBar
-						:value="getProgressbarValue"
-						:class="{'small':true}" />
-				</p>
-				<p v-if="lastWeight > person.weightTarget && lastWeight > person.weightTargetInitialWeight">
-					Ups, you become more and more. Be careful!
-				</p>
-				<p v-if="lastWeight <= person.weightTarget" class="green">
-					Good, you reached your target!
-				</p>
-				<p v-if="lastWeight <= person.weightTarget" class="bountybox">
-					{{ person.weightTargetBounty }}
-				</p>
-			</div>
-			<div v-else>
-				<p>Please insert your actual weight in the table.</p>
-			</div>
-		</div>
-		<div v-else>
-			<p>If you want, you can set a target for your weight. Do this in the settings in the sidebar. You will see right here how much you lost and what is left. Maybe you can be motivated this way.</p>
-		</div>
+
+		<TextResultsLooseWeight
+			v-if="lastWeight && person.weightTarget <= person.weightTargetInitialWeight"
+			:bounty="person.weightTargetBounty"
+			:initial-weight="person.weightTargetInitialWeight"
+			:target="person.weightTarget"
+			:weight="lastWeight"
+			:unit="person.weightUnit" />
+		<TextResultsGainWeight
+			v-else-if="lastWeight && person.weightTarget > person.weightTargetInitialWeight"
+			:bounty="person.weightTargetBounty"
+			:initial-weight="person.weightTargetInitialWeight"
+			:target="person.weightTarget"
+			:weight="lastWeight"
+			:unit="person.weightUnit" />
+		<TextResultsNoData v-else />
+
 		<h3>Chart</h3>
 		<WeightChart
 			v-show="weightData"
@@ -76,19 +65,23 @@
 </template>
 
 <script>
-import ProgressBar from '@nextcloud/vue/dist/Components/ProgressBar'
 import WeightTable from './WeightTable.vue'
 import WeightChart from './WeightChart'
 import { mapState, mapGetters } from 'vuex'
 import WeightBmi from './WeightBmi'
+import TextResultsLooseWeight from './contentParts/TextResultsLooseWeight'
+import TextResultsGainWeight from './contentParts/TextResultsGainWeight'
+import TextResultsNoData from './contentParts/TextResultsNoData'
 
 export default {
 	name: 'WeightContent',
 	components: {
-		ProgressBar,
 		WeightTable,
 		WeightChart,
 		WeightBmi,
+		TextResultsLooseWeight,
+		TextResultsGainWeight,
+		TextResultsNoData,
 	},
 	data: function() {
 		return {
@@ -115,24 +108,3 @@ export default {
 	},
 }
 </script>
-<style lang="scss" scoped>
-	.progress-bar.small {
-		width: 35%;
-		height: 6px !important;
-	}
-
-	.green {
-		color: green;
-		font-weight: 500;
-		padding-left: 20px;
-		padding-right: 20px;
-		padding-top: 20px;
-	}
-
-	.bountybox {
-		padding: 10px;
-		border: 1px solid #80808073;
-		margin: 20px;
-		width: min-content;
-	}
-</style>
