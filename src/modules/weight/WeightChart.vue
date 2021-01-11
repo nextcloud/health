@@ -198,29 +198,36 @@ export default {
 		margin-top: 0px !important;
 		margin-bottom: 20px;
 	}
+
 	.chartLegend {
 		font-size: 0.8em;
 	}
+
 	.chartLegend .green {
 		font-weight: bold;
 		color: green;
 	}
+
 	.chartLegend .darkgray {
 		font-weight: bold;
 		color: gray;
 	}
+
 	.chartLegend .gray {
 		font-weight: bold;
 		color: lightgray;
 	}
+
 	.chartLegend .blue {
 		font-weight: bold;
 		color: darkblue;
 	}
+
 	.chartLegend .darkred {
 		font-weight: bold;
 		color: darkred;
 	}
+
 	.weight-chart {
 		width: 95%;
 	}

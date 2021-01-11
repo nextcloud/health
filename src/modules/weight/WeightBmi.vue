@@ -132,10 +132,10 @@ export default {
 	}
 
 	.bmi {
-	background-color: var(--color-background-dark);
-	border-radius: 10px;
-	padding: 10px;
-	width: fit-content;
+		background-color: var(--color-background-dark);
+		border-radius: 10px;
+		padding: 10px;
+		width: fit-content;
 	}
 
 	.bmi .number {
