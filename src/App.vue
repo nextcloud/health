@@ -43,6 +43,7 @@
 			v-show="showSidebar"
 			v-if="persons !== null"
 			:title="person.name"
+			:subtitle="t('health', 'created at {creationTime}', { creationTime: formatMyDate(person.insertTime) })"
 			@close="$store.commit('showSidebar', false)">
 			<template #primary-actions />
 			<AppSidebarTab
@@ -142,6 +143,7 @@ import SleepSidebar from './modules/sleep/SleepSidebar'
 import NutritionSidebar from './modules/nutrition/NutritionSidebar'
 import BreaksSidebar from './modules/breaks/BreaksSidebar'
 import MedicineSidebar from './modules/medicine/MedicineSidebar'
+import moment from '@nextcloud/moment'
 
 export default {
 	name: 'App',
@@ -178,6 +180,11 @@ export default {
 	},
 	created() {
 		return this.$store.dispatch('loadPersons')
+	},
+	methods: {
+		formatMyDate: function(v) {
+			return moment(v).format('DD.MM.YYYY')
+		},
 	},
 }
 </script>

@@ -126,7 +126,7 @@ export default {
 			return moment(v).format('DD.MM.YYYY')
 		},
 		formatMyDatetime: function(v) {
-			return moment(v).format('DD.MM.YYYY h:mm')
+			return moment(v).format('DD.MM.YYYY hh:mm a')
 		},
 	},
 	components: {
