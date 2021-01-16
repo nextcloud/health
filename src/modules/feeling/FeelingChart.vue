@@ -63,6 +63,10 @@ export default {
 			type: Object,
 			default: null,
 		},
+		columnShows: {
+			type: Object,
+			default: null,
+		},
 	},
 	data: function() {
 		return {
@@ -111,55 +115,77 @@ export default {
 					position: 'bottom',
 				},
 			},
-			setDefinitions: [{
-				title: t('health', 'Mood', {}),
-				columnId: 'mood',
-				timeId: 'datetime',
-				valueId: 'mood',
-				getValueY: function(v) {
-					const max = 4
-					return Math.round((max - v.id) / max * 100)
-				},
-				borderColor: 'darkblue',
-				borderWidth: 2,
-				fill: false,
-			},
-			{
-				title: t('health', 'Sadness level', {}),
-				columnId: 'sadness',
-				timeId: 'datetime',
-				valueId: 'sadness',
-				getValueY: function(v) {
-					const max = 3
-					return Math.round(v.id / max * 100)
-				},
-				borderColor: 'darkred',
-				backgroundColor: 'rgba(148,16,16,0.2)',
-				borderWidth: 1,
-				fill: true,
-			},
-			{
-				title: t('health', 'Symptoms', {}),
-				columnId: 'symptoms',
-				timeId: 'datetime',
-				valueId: 'symptoms',
-				getValueY: function(v) {
-					const max = 13
-					return Math.round(v.length / max * 100)
-				},
-				borderColor: 'darkgray',
-				backgroundColor: 'lightgray',
-				borderWidth: 1,
-				fill: true,
-				type: 'bar',
-			}],
 		}
 	},
 	computed: {
 		...mapState(['activePersonId', 'moduleSettings']),
 		...mapGetters(['person']),
-	},
-	methods: {
+		setDefinitions: function() {
+			return [
+				{
+					title: t('health', 'Mood', {}),
+					columnId: 'mood',
+					timeId: 'datetime',
+					valueId: 'mood',
+					getValueY: function(v) {
+						const max = 4
+						return Math.round((max - v.id) / max * 100)
+					},
+					borderColor: 'darkblue',
+					borderWidth: 2,
+					fill: false,
+					show: this.columnShows.mood,
+				},
+				{
+					title: t('health', 'Sadness level', {}),
+					columnId: 'sadness',
+					timeId: 'datetime',
+					valueId: 'sadness',
+					getValueY: function(v) {
+						const max = 3
+						return Math.round(v.id / max * 100)
+					},
+					borderColor: 'darkgreen',
+					backgroundColor: 'rgba(3,121,14,0.2)',
+					borderWidth: 1,
+					fill: true,
+					show: this.columnShows.sadness,
+				},
+				{
+					title: t('health', 'Symptoms', {}),
+					columnId: 'symptoms',
+					timeId: 'datetime',
+					valueId: 'symptoms',
+					getValueY: function(v) {
+						const max = 13
+						return Math.round(v.length / max * 100)
+					},
+					borderColor: 'darkgray',
+					backgroundColor: 'lightgray',
+					borderWidth: 1,
+					fill: true,
+					type: 'bar',
+					show: this.columnShows.symptoms,
+				},
+				{
+					title: t('health', 'Pain', {}),
+					columnId: 'pain',
+					timeId: 'datetime',
+					valueId: 'pain',
+					getValueY: function(v) {
+						const max = 5
+						const value = v
+						return Math.round(value / max * 100)
+					},
+					borderColor: 'red',
+					backgroundColor: 'rgba(255,0,0,0.2)',
+					borderWidth: 1,
+					fill: true,
+					type: 'bar',
+					show: this.columnShows.pain,
+				},
+			]
+		},
 	},
 }
 </script>

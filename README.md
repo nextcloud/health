@@ -1,5 +1,5 @@
 # Health
-##### [beta] version 0.2.2
+##### [beta] version 0.3.0
 ### Track your health. Use the advantages of a trusted platform.
 
 The app provides different modules to track your  health data.
@@ -19,6 +19,11 @@ More modules are scheduled
 >Ideas for modules and functions are welcome. Please create issues on github.
 
 ### Changelog
+
+v0.3.0 [beta]
+- charts for feeling module
+- show person creation time
+- weight data bodyfat accepts decimals
 
 v0.2.2 [beta]
 - css fixes, specially for mobile use

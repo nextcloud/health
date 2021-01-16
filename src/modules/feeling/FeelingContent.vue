@@ -25,7 +25,6 @@
 		<h2>
 			{{ t('health', 'Feeling') }}
 		</h2>
-		<FeelingChart :context-filter="contextFilter" />
 		<DataTable
 			:context-filter="contextFilter"
 			:header="header"
@@ -37,13 +36,11 @@
 import { mapState, mapGetters } from 'vuex'
 import moment from '@nextcloud/moment'
 import DataTable from '../generic/DataTable'
-import FeelingChart from './FeelingChart'
 
 export default {
 	name: 'FeelingContent',
 	components: {
 		DataTable,
-		FeelingChart,
 	},
 	data: function() {
 		return {
@@ -58,6 +55,13 @@ export default {
 	computed: {
 		...mapState(['activePersonId', 'moduleSettings', 'moduleData']),
 		...mapGetters(['person']),
+		columnShows: function() {
+			const shows = {}
+			this.header.forEach(item => {
+				shows[item.columnId] = item.show
+			})
+			return shows
+		},
 		header: function() {
 			return [
 				{

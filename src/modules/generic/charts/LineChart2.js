@@ -1,9 +1,11 @@
-import { Line } from 'vue-chartjs'
+import { Line, mixins } from 'vue-chartjs'
 import { mapGetters, mapState } from 'vuex'
 import moment from '@nextcloud/moment'
+const { reactiveProp } = mixins
 
 export default {
 	extends: Line,
+	mixins: [reactiveProp],
 	props: {
 		options: {
 			type: Object,
@@ -22,16 +24,15 @@ export default {
 			default: 'month',
 		},
 	},
+	data: function() {
+		return {
+			chartData: this.chartData2,
+		}
+	},
 	mounted() {
 		this.renderChart(this.chartData, this.options)
 	},
 	watch: {
-		datasets: function() {
-			this.renderChart(this.chartData, this.options)
-		},
-		range: function() {
-			this.renderChart(this.chartData, this.options)
-		},
 	},
 	computed: {
 		...mapState(['activePersonId', 'moduleSettings', 'moduleData']),
@@ -43,7 +44,18 @@ export default {
 				return []
 			}
 		},
-		chartData: function() {
+		rangeDays: function() {
+			if (this.range === 'week') {
+				return 7
+			} else if (this.range === 'month') {
+				return 31
+			} else if (this.range === 'year') {
+				return 365
+			} else {
+				return -1
+			}
+		},
+		chartData2: function() {
 			if (!this.setDefinitions || !this.datasets) {
 				return null
 			}
@@ -55,7 +67,7 @@ export default {
 					if (!data[set.columnId]) {
 						data[set.columnId] = []
 					}
-					if (d[set.timeId] && d[set.valueId] && this.isInTimeRange(d[set.timeId])) {
+					if (d[set.timeId] && d[set.valueId] && this.isInTimeRange(d[set.timeId]) && set.show) {
 						data[set.columnId].push({
 							t: moment(d[set.timeId]),
 							y: set.getValueY(d[set.valueId]),
@@ -81,19 +93,8 @@ export default {
 				result.datasets.push(push)
 			})
 
-			console.debug('chartData', result)
+			// console.debug('chartData', result)
 			return result
-		},
-		rangeDays: function() {
-			if (this.range === 'week') {
-				return 7
-			} else if (this.range === 'month') {
-				return 31
-			} else if (this.range === 'year') {
-				return 365
-			} else {
-				return -1
-			}
 		},
 	},
 	methods: {
@@ -101,10 +102,7 @@ export default {
 			if (this.rangeDays === -1) {
 				return true
 			}
-			console.debug('isInTimeRange', {
-				ohneAbs: moment(date).diff(moment(), 'days'),
-				result: Math.abs(moment(date).diff(moment(), 'days')),
-			})
+			// console.debug('isInTimeRange', { ohneAbs: moment(date).diff(moment(), 'days'), result: Math.abs(moment(date).diff(moment(), 'days')),  })
 			return Math.abs(moment(date).diff(moment(), 'days')) <= this.rangeDays
 		},
 	},
