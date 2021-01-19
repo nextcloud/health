@@ -23,7 +23,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { translate, translatePlural } from 'nextcloud-l10n'
-import store from './store'
+import store from './store/store'
 
 import App from './App'
 

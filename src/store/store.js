@@ -25,8 +25,10 @@ import Vuex from 'vuex'
 import moment from '@nextcloud/moment'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
+import { WeightApi } from './WeightApi'
 
 Vue.use(Vuex)
+const weightApiClient = new WeightApi()
 
 export default new Vuex.Store({
 	state: {
@@ -36,7 +38,7 @@ export default new Vuex.Store({
 		// .
 		// managing data
 		activePersonId: null,
-		activeModule: 'feeling', // person
+		activeModule: 'weight', // person
 		showSidebar: false,
 		// .
 		// complete data
@@ -47,6 +49,10 @@ export default new Vuex.Store({
 		// individual data for actual person
 		weightData: null,
 		personData: null,
+		// .
+		// rebuild data
+		// depending on the actual person
+		rWeightDatasets: [],
 	},
 	getters: {
 		person: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId] : null,
@@ -84,9 +90,30 @@ export default new Vuex.Store({
 		setModuleData(state, data) {
 			state.moduleData = data
 		},
+		rWeightDatasets(state, data) {
+			state.rWeightDatasets = data
+		},
+		rWeightDatasetsAppend(state, data) {
+			state.rWeightDatasets.push(data)
+		},
+		rWeightDatasetsDelete(state, data) {
+			const existingIndex = state.rWeightDatasets.findIndex(set => set.id === data.id)
+			if (existingIndex !== -1) {
+				state.rWeightDatasets.splice(existingIndex, 1)
+			}
+		},
+		rWeightDatasetsUpdate(state, data) {
+			const datasets = state.rWeightDatasets
+			const existingIndex = datasets.findIndex(set => set.id === data.id)
+			if (existingIndex !== -1) {
+				datasets.splice(existingIndex, 1)
+				datasets.push(data)
+			}
+			state.rWeightDatasets = datasets
+		},
 	},
 	actions: {
-		loadPersons({ dispatch, state, getters, commit }) {
+		loadPersons({ dispatch, state, commit }) {
 			// console.debug('debug: start loading persons')
 			axios.get(generateUrl('/apps/health/persons'))
 				.then(
@@ -123,49 +150,7 @@ export default new Vuex.Store({
 		async loadModuleContentForPerson({ state, getters, commit, dispatch }) {
 			// this ist called if the active person or module changed
 			// it should load all data, that is necessary for the active module
-			// console.debug('debug: start loading loadModuleContentForPerson')
-
-			commit('weightData', null)
-			commit('personData', null)
-
-			if (state.activeModule === 'weight') {
-				console.debug('debug: start loading weightdata')
-				axios.get(generateUrl('/apps/health/weightdata/person/' + getters.person.id))
-					.then(
-						(response) => {
-							// console.debug('debug axLoadWeightdata SUCCESS-------------')
-							// console.debug(response)
-							commit('weightData', response.data)
-							dispatch('sortWeightData')
-						},
-						(err) => {
-							console.debug('debug axLoadWeightdata ERROR-------------')
-							console.debug(err)
-						},
-					)
-					.catch((err) => {
-						console.debug('error detected')
-						console.debug(err)
-					})
-			} else if (state.activeModule === 'person') {
-				console.debug('debug: start loading persondata')
-				axios.get(generateUrl('/apps/health/person/' + getters.person.id + '/data'))
-					.then(
-						(response) => {
-							// console.debug('debug axLoadPersondata SUCCESS-------------')
-							// console.debug(response)
-							commit('personData', response.data)
-						},
-						(err) => {
-							console.debug('debug axLoadPersondata ERROR-------------')
-							console.debug(err)
-						},
-					)
-					.catch((err) => {
-						console.debug('error detected')
-						console.debug(err)
-					})
-			}
+			dispatch('weightDatasetsLoadByPerson', getters.person.id)
 		},
 		setValue({ commit, state }, data) {
 			// data: {key, value, [id]}
@@ -209,7 +194,7 @@ export default new Vuex.Store({
 			return axios.post(generateUrl('/apps/health/ces'), { data: data })
 				.then(
 					(response) => {
-						console.debug('cesRequest SUCCESS-------------', { request: data, response: response })
+						// console.debug('cesRequest SUCCESS-------------', { request: data, response: response })
 						return Promise.resolve(response.data)
 					},
 					(err) => {
@@ -399,6 +384,32 @@ export default new Vuex.Store({
 			d[data.module][data.type] = data.data
 			// console.debug('try to set settings as following', settings)
 			this.commit('setModuleData', d)
+		},
+		// ---
+		async weightDatasetsLoadByPerson({ commit }, personId) {
+			// console.debug('weightDatasetsLoadByPerson', personId)
+			const datasets = await weightApiClient.findDatasetsByPerson(personId)
+			// console.debug('found datasets', datasets)
+			commit('rWeightDatasets', datasets)
+			// console.debug('saved to store "rWeightDatasets"')
+		},
+		async rWeightDatasetsAppend({ commit, getters }, set) {
+			// console.debug('add weight dataset', set)
+			const o = await weightApiClient.addSet(getters.person.id, set)
+			// console.debug('returned o', o)
+			commit('rWeightDatasetsAppend', o)
+		},
+		async rWeightDatasetsUpdate({ commit, getters }, set) {
+			console.debug('update weight dataset', set)
+			const o = await weightApiClient.updateSet(set)
+			console.debug('returned o', o)
+			commit('rWeightDatasetsUpdate', o)
+		},
+		async rWeightDatasetsDelete({ commit, getters }, set) {
+			// console.debug('remove weight dataset', set)
+			const o = await weightApiClient.deleteSet(set)
+			// console.debug('returned o', o)
+			commit('rWeightDatasetsDelete', o)
 		},
 	},
 })

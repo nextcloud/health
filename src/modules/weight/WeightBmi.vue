@@ -22,34 +22,30 @@
 
 <template>
 	<div>
-		<h3>
-			{{ t('health', 'Body mass index (BMI)') }}
-		</h3>
 		<div v-if="bmi">
 			<div class="bmi" :class="statusClass">
 				<div class="number" :class="statusClass">
 					{{ bmi }}
 				</div>
 				{{ status }}
+				<div class="info">
+					{{ t('health', 'Weight', {}) }} {{ weight + unit }}
+				</div>
+				<div class="info">
+					{{ t('health', 'Date', {}) }} {{ date | formatMyDate }}
+				</div>
 			</div>
-			<p class="hint">
-				{{ t('health', 'The calculated value is valid only for adults. Its base are the tables from the WHO.') }}
-			</p>
 		</div>
-		<p v-if="!bmi">
-			{{ t('health', 'To calculate your BMI, please set your weight in the table below and you age and size in the person settings.') }}
-		</p>
 	</div>
 </template>
 
 <script>
-import moment from '@nextcloud/moment'
 
 export default {
 	name: 'WeightBmi',
 	filters: {
 		formatMyDate: function(v) {
-			return moment(v).format('DD.MM.YYYY')
+			return new Date(v).toLocaleDateString()
 		},
 	},
 	props: {
@@ -65,6 +61,14 @@ export default {
 			type: Number,
 			default: null,
 		},
+		unit: {
+			type: String,
+			default: 'kg',
+		},
+		date: {
+			type: String,
+			default: null,
+		},
 	},
 	computed: {
 		bmi: function() {
@@ -73,7 +77,7 @@ export default {
 			}
 			const s = this.size / 100
 			const bmi = this.weight / (s * s)
-			console.debug('bmi: ' + bmi)
+			// console.debug('bmi: ' + bmi)
 			return Math.round(bmi)
 		},
 		status: function() {
@@ -136,6 +140,12 @@ export default {
 		border-radius: 10px;
 		padding: 10px;
 		width: fit-content;
+	}
+
+	.bmi .info {
+		font-size: 0.8em;
+		font-weight: normal;
+		color: gray;
 	}
 
 	.bmi .number {
