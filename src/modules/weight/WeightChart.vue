@@ -21,214 +21,168 @@
 	-->
 
 <template>
-	<div class="weight-chart">
-		<div
-			v-if="data && getChartData.datasets[0].data.length > 1"
-			class="chartDataRangeSelector">
-			<select
-				id="chartDataRangeSelector"
-				v-model="chartDateRange"
-				name="chartDataRangeSelector">
-				<option value="week">
-					{{ t('health', 'Show chart for the last week') }}
-				</option>
-				<option value="month">
-					{{ t('health', 'Show chart for the last month') }}
-				</option>
-				<option value="year">
-					{{ t('health', 'Show chart for the last year') }}
-				</option>
-				<option value="all">
-					{{ t('health', 'Show all') }}
-				</option>
-			</select>
-		</div>
-		<LineChart
-			v-if="data && getChartData.datasets[0].data.length > 1"
-			:height="200"
-			:chart-data="getChartData"
-			:range="chartDateRange" />
-		<EmptyContent
-			v-if="data && getChartData.datasets[0].data.length <= 1"
-			icon="icon-category-monitoring">
-			No data for a chart
-			<template #desc>
-				{{ t('health', 'More than one dataset is required.') }}<br>
-				<span v-if="data.length > 1">{{ t('health', 'You selected to show only data from the last {chartDateRange}.', {chartDateRange: chartDateRange}) }}</span>
-			</template>
-		</EmptyContent>
+	<div>
+		<Chart
+			:chart-style="chartStyle"
+			:data="data"
+			:definition="setDefinitions"
+			:options="options" />
 	</div>
 </template>
 
 <script>
-import LineChart from './LineChart.js'
-import moment from '@nextcloud/moment'
-import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
+import Chart from '../../general/Chart'
 
 export default {
 	name: 'WeightChart',
 	components: {
-		LineChart,
-		EmptyContent,
+		Chart,
 	},
 	props: {
-		person: {
-			type: Object,
-			default: null,
-		},
 		data: {
 			type: Array,
 			default: null,
 		},
-	},
-	data: function() {
-		return {
-			chartDateRange: 'month',
-		}
+		person: {
+			type: Object,
+			default: null,
+		},
 	},
 	computed: {
-		chartStyles: function() {
+		setDefinitions: function() {
+			return [
+				{
+					title: t('health', 'Weight', {}),
+					columnId: 'weight',
+					timeId: 'date',
+					valueId: 'weight',
+					getValueY: function(v) {
+						return v
+					},
+					borderColor: 'darkblue',
+					borderWidth: 2,
+					fill: true,
+					show: this.person.weightColumnWeight,
+				},
+				{
+					title: t('health', 'Bodyfat', {}),
+					columnId: 'bodyfat',
+					timeId: 'date',
+					valueId: 'bodyfat',
+					getValueY: function(v) {
+						return v
+					},
+					borderColor: 'darkgreen',
+					borderWidth: 2,
+					fill: false,
+					show: this.person.weightColumnBodyfat,
+				},
+				{
+					title: 'weightMeasurementName' in this.person && this.person.weightMeasurementName ? this.person.weightMeasurementName : t('health', 'Measurement'),
+					columnId: 'measurement',
+					timeId: 'date',
+					valueId: 'measurement',
+					getValueY: function(v) {
+						return v
+					},
+					borderColor: 'darkorange',
+					borderWidth: 2,
+					fill: true,
+					show: this.person.weightColumnMeasurement,
+				},
+				{
+					title: t('health', 'Waist size', {}),
+					columnId: 'waistSize',
+					timeId: 'date',
+					valueId: 'waistSize',
+					getValueY: function(v) {
+						return v
+					},
+					borderColor: 'gray',
+					borderWidth: 2,
+					fill: false,
+					show: this.person.weightColumnWaistSize,
+				},
+				{
+					title: t('health', 'Hip size', {}),
+					columnId: 'hipSize',
+					timeId: 'date',
+					valueId: 'hipSize',
+					getValueY: function(v) {
+						return v
+					},
+					borderColor: 'darkgray',
+					borderWidth: 2,
+					fill: false,
+					show: this.person.weightColumnHipSize,
+				},
+				{
+					title: t('health', 'Muscle part', {}),
+					columnId: 'musclePart',
+					timeId: 'date',
+					valueId: 'musclePart',
+					getValueY: function(v) {
+						return v
+					},
+					borderColor: 'lightgreen',
+					borderWidth: 2,
+					fill: false,
+					show: this.person.weightColumnMusclePart,
+				},
+			]
+		},
+		options: function() {
 			return {
-				height: '200px',
-				position: 'relative',
+				title: {
+					text: t('health', 'Chart'),
+				},
+				responsive: true,
+				maintainAspectRatio: false,
+				scales: {
+					xAxes: [
+						{
+							type: 'time',
+							time: {
+								minUnit: 'day',
+							},
+						},
+					],
+					yAxes: [
+						{
+							gridLines: {
+								display: true,
+								color: 'gray',
+								z: 100,
+								lineWidth: 1,
+							},
+							scaleLabel: {
+								display: true,
+								labelString: t('health', 'Values'),
+							},
+							min: 0,
+							max: 100,
+						},
+					],
+				},
+				tooltips: {
+					enabled: true,
+				},
+				layout: {
+					padding: {
+						right: 30,
+						left: 25,
+					},
+				},
+				legend: {
+					position: 'bottom',
+				},
 			}
 		},
-		getChartData: function() {
-			const data = []
-			const targetData = []
-			const targetInitialData = []
-			const measurement = []
-			const bodyfat = []
-			if (this.data !== null && this.data !== undefined) {
-				for (let i = 0; i < this.data.length; i++) {
-					if (this.data[i].weight !== '' && this.data[i].weight !== null) {
-						// console.debug(Math.abs(moment(this.data[i].date).diff(moment(), 'days')))
-						let diff = null
-						if (this.chartDateRange === 'week') {
-							diff = 7
-						} else if (this.chartDateRange === 'month') {
-							diff = 31
-						} else if (this.chartDateRange === 'year') {
-							diff = 365
-						}
-						if (diff === null || Math.abs(moment(this.data[i].date).diff(moment(), 'days')) <= diff) {
-							data.push({
-								t: moment(this.data[i].date),
-								y: this.data[i].weight,
-							})
-							targetData.push({
-								t: moment(this.data[i].date),
-								y: this.person.weightTarget,
-							})
-							targetInitialData.push({
-								t: moment(this.data[i].date),
-								y: this.person.weightTargetInitialWeight,
-							})
-							measurement.push({
-								t: moment(this.data[i].date),
-								y: this.data[i].measurement,
-							})
-							bodyfat.push({
-								t: moment(this.data[i].date),
-								y: this.data[i].bodyfat,
-							})
-						}
-					}
-				}
-			}
+		chartStyle() {
 			return {
-				datasets: [
-					{
-						label: t('health', 'weight'),
-						borderColor: '#0082c9',
-						fill: false,
-						data: data,
-						yAxisID: 'weight',
-					},
-					{
-						label: t('health', 'target'),
-						borderColor: 'green',
-						fill: false,
-						data: targetData,
-						borderDash: [
-							8,
-							5,
-						],
-						yAxisID: 'weight',
-					},
-					{
-						label: t('health', 'target initial weight'),
-						borderColor: 'darkred',
-						fill: false,
-						data: targetInitialData,
-						borderDash: [
-							2,
-							5,
-						],
-						yAxisID: 'weight',
-					},
-					{
-						label: this.person.weightMeasurementName,
-						backgroundColor: 'lightgray',
-						// borderColor: 'gray',
-						borderWidth: 1,
-						fill: true,
-						data: measurement,
-						type: 'bar',
-						yAxisID: 'percent',
-					},
-					{
-						label: t('health', 'bodyfat'),
-						backgroundColor: 'gray',
-						// borderColor: 'darkgray',
-						borderWidth: 1,
-						fill: false,
-						data: bodyfat,
-						type: 'bar',
-						yAxisID: 'percent',
-					},
-				],
+				height: '250px',
 			}
 		},
 	},
 }
 </script>
-<style lang="scss" scoped>
-	.empty-content {
-		margin-top: 0px !important;
-		margin-bottom: 20px;
-	}
-
-	.chartLegend {
-		font-size: 0.8em;
-	}
-
-	.chartLegend .green {
-		font-weight: bold;
-		color: green;
-	}
-
-	.chartLegend .darkgray {
-		font-weight: bold;
-		color: gray;
-	}
-
-	.chartLegend .gray {
-		font-weight: bold;
-		color: lightgray;
-	}
-
-	.chartLegend .blue {
-		font-weight: bold;
-		color: darkblue;
-	}
-
-	.chartLegend .darkred {
-		font-weight: bold;
-		color: darkred;
-	}
-
-	.weight-chart {
-		width: 95%;
-	}
-</style>

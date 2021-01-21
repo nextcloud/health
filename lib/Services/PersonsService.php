@@ -115,16 +115,16 @@ class PersonsService {
 		}
 
 		try {
-             $person = $this->personMapper->find($id, $this->userId);
-         } catch(Exception $e) {
-             return Http::STATUS_NOT_FOUND;
-         }
+			$person = $this->personMapper->find($id, $this->userId);
+		} catch(Exception $e) {
+			return Http::STATUS_NOT_FOUND;
+		}
 
-         $method = 'set'.ucfirst($key);
-         $person->{$method}($this->formatHelperService->typeCast($key, $value));
-         $this->personMapper->update($person);
+		$method = 'set'.ucfirst($key);
+		$person->{$method}($this->formatHelperService->typeCastByEntity($key, $value, $person));
+		$this->personMapper->update($person);
 
-         return $person;
+		return $person;
 	}
 
 	public function getData($personId) {

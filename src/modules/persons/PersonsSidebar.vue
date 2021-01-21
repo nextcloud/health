@@ -150,21 +150,26 @@ export default {
 	.textarea-sidebar {
 		padding-right: 14px;
 	}
+
 	textarea {
 		height: 100px;
 		width: 100%;
 	}
+
 	.subli {
 		border-left: 5px solid #8080804a;
 		border-top: 5px solid #8080804a;
 		padding-left: 8px;
 	}
+
 	li h3 {
 		border-bottom: 1px solid #80808057;
 	}
+
 	li h3, li h4 {
 		margin-top: 20px;
 	}
+
 	h4 span {
 		opacity: .7;
 		font-size: 0.8em;

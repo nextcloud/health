@@ -26,6 +26,31 @@ namespace OCA\Health\Services;
 
 class FormatHelperService {
 
+	public function typeCastByEntity($key, $value, \OCP\AppFramework\Db\Entity $entity)
+	{
+		$fieldTypes = $entity->getFieldTypes();
+		if(isset($fieldTypes[$key])) {
+			if(in_array($fieldTypes[$key], ['bool', 'boolean'])) {
+				if($value === 'false') {
+					return 0;
+				}
+			}
+			if(in_array($fieldTypes[$key], ['float', 'double'])) {
+				return floatval($value);
+			}
+			if(in_array($fieldTypes[$key], ['int', 'integer'])) {
+				return intval($value);
+			}
+		}
+		return $value;
+	}
+
+	public function convertDate($value): string
+	{
+		$dt = new \DateTime($value);
+		return $dt->format('Y-m-d H:i:s');
+	}
+
 	public function typeCast($key, $value) {
 		 $intData = ['age', 'size'];
          if(in_array($key, $intData)) {

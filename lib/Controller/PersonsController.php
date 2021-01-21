@@ -46,7 +46,8 @@ class PersonsController extends Controller {
 	 *
 	 * @return DataResponse
 	 */
-	public function index() {
+	public function index(): DataResponse
+	{
         return new DataResponse($this->personsService->getAllPersons());
 	}
 
@@ -58,7 +59,8 @@ class PersonsController extends Controller {
 	 *
 	 * @return DataResponse
 	 */
-	public function data(int $personId) {
+	public function data(int $personId): DataResponse
+	{
         return new DataResponse($this->personsService->getData($personId));
 	}
 
@@ -69,7 +71,8 @@ class PersonsController extends Controller {
 	 *
 	 * @return DataResponse
 	 */
-	public function create(string $name) {
+	public function create(string $name): DataResponse
+	{
 		return new DataResponse($this->personsService->createPerson($name));
 	}
 
@@ -80,7 +83,8 @@ class PersonsController extends Controller {
 	 *
 	 * @return DataResponse
 	 */
-	public function destroy(int $id) {
+	public function destroy(int $id): DataResponse
+	{
 		return new DataResponse($this->personsService->deletePerson($id));
 	}
 
@@ -93,7 +97,8 @@ class PersonsController extends Controller {
 	 *
 	 * @return DataResponse
 	 */
-	public function update(int $id, string $key, string $value) {
+	public function update(int $id, string $key, string $value): DataResponse
+	{
 		return new DataResponse($this->personsService->updatePerson($id, $key, $value));
 	}
 }

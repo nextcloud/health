@@ -41,11 +41,10 @@
 		</AppContent>
 		<AppSidebar
 			v-show="showSidebar"
-			v-if="persons !== null"
+			v-if="person && !loading"
 			:title="person.name"
 			:subtitle="t('health', 'created at {creationTime}', { creationTime: formatMyDate(person.insertTime) })"
 			@close="$store.commit('showSidebar', false)">
-			<template #primary-actions />
 			<AppSidebarTab
 				id="person"
 				name="Person"
@@ -54,7 +53,7 @@
 				<PersonsSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
-				v-if="person && person.enabledModuleWeight"
+				v-if="person.enabledModuleWeight"
 				id="weight"
 				:name="t('health', 'Weight', {})"
 				icon="icon-quota"
@@ -62,7 +61,7 @@
 				<WeightSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
-				v-if="person && person.enabledModuleFeeling"
+				v-if="person.enabledModuleFeeling"
 				id="feeling"
 				:name="t('health', 'Feeling')"
 				icon="icon-category-monitoring"
@@ -70,7 +69,7 @@
 				<FeelingSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
-				v-if="person && person.enabledModuleMeasurement"
+				v-if="person.enabledModuleMeasurement"
 				id="measurement"
 				:name="t('health', 'Measurement')"
 				icon="icon-home"
@@ -78,7 +77,7 @@
 				<MeasurementSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
-				v-if="person && person.enabledModuleBreaks"
+				v-if="person.enabledModuleBreaks"
 				id="breaks"
 				:name="t('health', 'Breaks')"
 				icon="icon-pause"
@@ -86,7 +85,7 @@
 				<BreaksSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
-				v-if="person && person.enabledModuleMedicine"
+				v-if="person.enabledModuleMedicine"
 				id="medicine"
 				:name="t('health', 'Medicine')"
 				icon="icon-filter"
@@ -94,7 +93,7 @@
 				<MedicineSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
-				v-if="person && person.enabledModuleActivities"
+				v-if="person.enabledModuleActivities"
 				id="activities"
 				:name="t('health', 'Activities')"
 				icon="icon-user-admin"
@@ -102,7 +101,7 @@
 				<ActivitiesSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
-				v-if="person && person.enabledModuleSleep && false"
+				v-if="person.enabledModuleSleep"
 				id="sleep"
 				:name="t('health', 'Sleep')"
 				icon="icon-download"
@@ -110,7 +109,7 @@
 				<SleepSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
-				v-if="person && person.enabledModuleNutrition"
+				v-if="person.enabledModuleNutrition"
 				id="nutrition"
 				:name="t('health', 'Nutrition')"
 				icon="icon-category-dashboard"
@@ -171,15 +170,17 @@ export default {
 	},
 	data: function() {
 		return {
-			loading: false,
+			loading: true,
 		}
 	},
 	computed: {
 		...mapState(['activePersonId', 'activeModule', 'showSidebar', 'persons']),
 		...mapGetters(['person']),
 	},
-	created() {
-		return this.$store.dispatch('loadPersons')
+	async beforeMount() {
+		this.loading = true
+		await this.$store.dispatch('loadPersons')
+		this.loading = false
 	},
 	methods: {
 		formatMyDate: function(v) {

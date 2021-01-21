@@ -8,6 +8,8 @@
 	},
 	"scripts": {
 	  "lint": "find . -name \\*.php -not -path './vendor/*' -exec php -l \"{}\" \\;"
-	}
+	},
+  "require": {
+    "ext-json": "*"
   }
-  
+}

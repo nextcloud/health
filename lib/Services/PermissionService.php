@@ -40,7 +40,8 @@ class PermissionService {
 		$this->logger = $ILogger;
 	}
 
-	public function personData($destinationPersonId, $sourceUserId) {
+	public function personData($destinationPersonId, $sourceUserId): bool
+	{
 		try {
             if($this->personMapper->find($destinationPersonId, $sourceUserId) !== null) {
             	return true;

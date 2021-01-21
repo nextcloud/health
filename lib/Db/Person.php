@@ -38,6 +38,8 @@ class Person extends Entity implements JsonSerializable {
     protected $size;
     protected $sex;
 	protected $personalMission;
+	protected $shared;
+	protected $sharedReadonly;
 
     // modules
     protected $enabledModuleWeight;
@@ -56,6 +58,12 @@ class Person extends Entity implements JsonSerializable {
     protected $weightTargetInitialWeight;
     protected $weightTargetStartDate;
     protected $weightTargetBounty;
+	protected $weightColumnWeight;
+	protected $weightColumnBodyfat;
+	protected $weightColumnMeasurement;
+	protected $weightColumnWaistSize;
+	protected $weightColumnHipSize;
+	protected $weightColumnMusclePart;
 
     // module feeling
 	protected $feelingColumnMood;
@@ -67,6 +75,21 @@ class Person extends Entity implements JsonSerializable {
 	protected $feelingSpecialSymptomName;
 	protected $feelingSpecialAttackName;
 	protected $feelingDefaultMedication;
+	protected $feelingColumnEnergy;
+
+	// module measurement
+	protected $measurementColumnTemperature;
+	protected $measurementColumnHeartRate;
+	protected $measurementColumnBloodPres;
+	protected $measurementColumnOxygenSat;
+	protected $measurementColumnBloodSugar;
+	protected $measurementColumnDefecation;
+	protected $measurementColumnAppetite;
+	protected $measurementColumnAllergies;
+
+	// module sleep
+	protected $sleepColumnQuality;
+	protected $sleepColumnWakeups;
 
     public function __construct() {
     	// general
@@ -86,7 +109,13 @@ class Person extends Entity implements JsonSerializable {
 
         // module weight
         $this->addType('weightTarget', 'float');
-        $this->addType('weightTargetInitialWeight', 'float');
+		$this->addType('weightTargetInitialWeight', 'float');
+		$this->addType('weightColumnWeight', 'boolean');
+		$this->addType('weightColumnBodyfat', 'boolean');
+		$this->addType('weightColumnMeasurement', 'boolean');
+		$this->addType('weightColumnWaistSize', 'boolean');
+		$this->addType('weightColumnHipSize', 'boolean');
+		$this->addType('weightColumnMusclePart', 'boolean');
 
         // module feeling
 		$this->addType('feelingColumnMood', 'boolean');
@@ -95,9 +124,25 @@ class Person extends Entity implements JsonSerializable {
 		$this->addType('feelingColumnAttacks', 'boolean');
 		$this->addType('feelingColumnMedication', 'boolean');
 		$this->addType('feelingColumnPain', 'boolean');
+		$this->addType('feelingColumnEnergy', 'boolean');
+
+		// module measurement
+		$this->addType('measurementColumnTemperature', 'boolean');
+		$this->addType('measurementColumnHeartRate', 'boolean');
+		$this->addType('measurementColumnBloodPres', 'boolean');
+		$this->addType('measurementColumnOxygenSat', 'boolean');
+		$this->addType('measurementColumnBloodSugar', 'boolean');
+		$this->addType('measurementColumnDefecation', 'boolean');
+		$this->addType('measurementColumnAppetite', 'boolean');
+		$this->addType('measurementColumnAllergies', 'boolean');
+
+		// module sleep
+		$this->addType('sleepColumnQuality', 'boolean');
+		$this->addType('sleepColumnWakeups', 'boolean');
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize(): array
+	{
         return [
         	// general
             'id' => $this->id,
@@ -109,6 +154,8 @@ class Person extends Entity implements JsonSerializable {
             'size' => $this->size,
             'sex' => $this->sex,
 			'personalMission' => $this->personalMission,
+			'shared' => $this->shared,
+			'sharedReadonly' => $this->sharedReadonly,
 
 			// modules
             'enabledModuleWeight' => $this->enabledModuleWeight,
@@ -127,6 +174,12 @@ class Person extends Entity implements JsonSerializable {
             'weightTargetInitialWeight' => $this->weightTargetInitialWeight,
             'weightTargetStartDate' => $this->weightTargetStartDate,
             'weightTargetBounty' => $this->weightTargetBounty,
+			'weightColumnWeight' => $this->weightColumnWeight,
+			'weightColumnBodyfat' => $this->weightColumnBodyfat,
+			'weightColumnMeasurement' => $this->weightColumnMeasurement,
+			'weightColumnWaistSize' => $this->weightColumnWaistSize,
+			'weightColumnHipSize' => $this->weightColumnHipSize,
+			'weightColumnMusclePart' => $this->weightColumnMusclePart,
 
 			// module feeling
 			'feelingColumnMood' => $this->feelingColumnMood,
@@ -138,6 +191,21 @@ class Person extends Entity implements JsonSerializable {
 			'feelingSpecialSymptomName' => $this->feelingSpecialSymptomName,
 			'feelingSpecialAttackName' => $this->feelingSpecialAttackName,
 			'feelingDefaultMedication' => $this->feelingDefaultMedication,
+			'feelingColumnEnergy' => $this->feelingColumnEnergy,
+
+			// module measurement
+			'measurementColumnTemperature' => $this->measurementColumnTemperature,
+			'measurementColumnHeartRate' => $this->measurementColumnHeartRate,
+			'measurementColumnBloodPressure' => $this->measurementColumnBloodPres,
+			'measurementColumnOxygenSaturation' => $this->measurementColumnOxygenSat,
+			'measurementColumnBloodSugar' => $this->measurementColumnBloodSugar,
+			'measurementColumnDefecation' => $this->measurementColumnDefecation,
+			'measurementColumnAppetite' => $this->measurementColumnAppetite,
+			'measurementColumnAllergies' => $this->measurementColumnAllergies,
+
+			// module sleep
+			'sleepColumnQuality' => $this->sleepColumnQuality,
+			'sleepColumnWakeups' => $this->sleepColumnWakeups,
         ];
     }
 }

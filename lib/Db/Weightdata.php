@@ -41,6 +41,10 @@ class Weightdata extends Entity implements JsonSerializable {
     protected $measurement;
     protected $weight;
     protected $date;
+    protected $waistSize;
+    protected $hipSize;
+    protected $musclePart;
+    protected $comment;
 
     public function __construct() {
         $this->addType('id','integer');
@@ -48,9 +52,13 @@ class Weightdata extends Entity implements JsonSerializable {
         $this->addType('bodyfat','float');
         $this->addType('measurement','float');
         $this->addType('weight','float');
+		$this->addType('waistSize', 'float');
+		$this->addType('hipSize', 'float');
+		$this->addType('musclePart', 'float');
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize(): array
+	{
         $date = new DateTime($this->date);
         return [
             'id' => $this->id,
@@ -61,6 +69,10 @@ class Weightdata extends Entity implements JsonSerializable {
             'measurement' => $this->measurement,
             'weight' => $this->weight,
             'date' => $date->format('Y-m-d'),
+			'waistSize' => $this->waistSize,
+			'hipSize' => $this->hipSize,
+			'musclePart' => $this->musclePart,
+			'comment' => $this->comment,
         ];
     }
 }

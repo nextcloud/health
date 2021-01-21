@@ -23,7 +23,7 @@
 	-->
 
 <template>
-	<div>
+	<div style="margin-bottom: 100px;">
 		<div v-if="loading" class="icon-loading" />
 		<ModalItem
 			v-if="!loading"
@@ -104,11 +104,24 @@
 				</tr>
 			</tbody>
 		</table>
+		<EmptyContent
+			v-if="!datasets || datasets.length === 0 && !loading"
+			icon="icon-category-monitoring">
+			No data yet
+			<template #desc>
+				{{ t('health', 'Click at the + to add the first data.') }}
+				<ModalItem
+					:header="header"
+					icon="icon-add"
+					@addItem="addItem" />
+			</template>
+		</EmptyContent>
 	</div>
 </template>
 
 <script>
 import ModalItem from './ModalItem'
+import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
 
 export default {
 	name: 'DataTable',
@@ -122,6 +135,7 @@ export default {
 	},
 	components: {
 		ModalItem,
+		EmptyContent,
 	},
 	props: {
 		header: {
@@ -159,8 +173,10 @@ export default {
 		},
 		handleDataIncome(item) {
 			if ('id' in item) {
+				console.debug('id found -> update item', item)
 				this.updateItem(item)
 			} else {
+				console.debug('id not found -> add item', item)
 				this.addItem(item)
 			}
 		},
@@ -174,6 +190,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
+	.empty-content {
+		margin-top: 0 !important;
+		margin-bottom: 20px;
+		text-align: center;
+	}
+
 	* {
 		box-sizing:border-box;
 	}
@@ -181,6 +204,7 @@ export default {
 	table {
 		width: 97%;
 		color: #2b2b2bd1;
+		margin-bottom: 20px;
 	}
 
 	table, td, tr, th {

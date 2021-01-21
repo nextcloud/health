@@ -23,7 +23,7 @@
 <template>
 	<AppNavigation>
 		<template #list>
-			<AppNavigationItem v-for="(p, index) in persons"
+			<AppNavigationItem v-for="(p, index) in getPersons"
 				:key="index"
 				:title="p.name"
 				:allow-collapse="true"
@@ -46,7 +46,7 @@
 						v-show="personsLength != 1"
 						:close-after-click="true"
 						icon="icon-delete"
-						@click="$store.dispatch('deletePerson', menuOpenPersonId)">
+						@click="$store.dispatch('deletePerson', persons[menuOpenPersonId])">
 						{{ t('health', 'Delete') }}
 					</ActionButton>
 				</template>
@@ -147,6 +147,12 @@ export default {
 	computed: {
 		...mapState(['activePersonId', 'activeModule', 'showSidebar', 'persons']),
 		...mapGetters(['person', 'personsLength']),
+		getPersons() {
+			return this.persons && this.persons.length > 0
+				// eslint-disable-next-line vue/no-side-effects-in-computed-properties
+				? this.persons.sort(function(a, b) { return a.id - b.id })
+				: null
+		},
 	},
 	methods: {
 		createPerson: function(e) {

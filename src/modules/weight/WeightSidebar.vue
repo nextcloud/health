@@ -22,6 +22,68 @@
 
 <template>
 	<ul>
+		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
+		<div>
+			<label>
+				<input
+					id="weight"
+					v-model="columns.weight"
+					type="checkbox"
+					@change="saveColumn('weight')">
+				{{ t('health', 'Weight', {}) }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="bodyfat"
+					v-model="columns.bodyfat"
+					type="checkbox"
+					@change="saveColumn('bodyfat')">
+				{{ t('health', 'Bodyfat', {}) }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="measurement"
+					v-model="columns.measurement"
+					type="checkbox"
+					@change="saveColumn('measurement')">
+				{{ person.weightMeasurementName ? person.weightMeasurementName : t('health', 'Custom measurement') }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="waistSize"
+					v-model="columns.waistSize"
+					type="checkbox"
+					@change="saveColumn('waistSize')">
+				{{ t('health', 'Waist size', {}) }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="hipSize"
+					v-model="columns.hipSize"
+					type="checkbox"
+					@change="saveColumn('hipSize')">
+				{{ t('health', 'Hip size', {}) }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="musclePart"
+					v-model="columns.musclePart"
+					type="checkbox"
+					@change="saveColumn('musclePart')">
+				{{ t('health', 'Muscle part', {}) }}
+			</label>
+		</div>
+
 		<li><h3>{{ t('health', 'General settings', {}) }}</h3></li>
 		<li><h4>{{ t('health', 'Unit for weight', {}) }}</h4></li>
 		<ActionInput
@@ -101,13 +163,46 @@ export default {
 	},
 	data: function() {
 		return {
+			columns: {
+				weight: true,
+				bodyfat: true,
+				measurement: false,
+				waistSize: false,
+				hipSize: false,
+				musclePart: false,
+			},
 		}
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar']),
 		...mapGetters(['person']),
 	},
+	watch: {
+		person: function() {
+			this.updateLocalColumnData()
+		},
+	},
+	mounted() {
+		this.updateLocalColumnData()
+	},
 	methods: {
+		updateLocalColumnData() {
+			if (this.person) {
+				this.columns.weight = this.person.weightColumnWeight
+				this.columns.bodyfat = this.person.weightColumnBodyfat
+				this.columns.measurement = this.person.weightColumnMeasurement
+				this.columns.waistSize = this.person.weightColumnWaistSize
+				this.columns.hipSize = this.person.weightColumnHipSize
+				this.columns.musclePart = this.person.weightColumnMusclePart
+			} else {
+				console.debug('no person found to update [watch person in WeightSidebar]')
+			}
+		},
+		saveColumn(key) {
+			// console.debug('update column', key)
+			// console.debug('value', this.columns[key])
+			this.$store.dispatch('setValue', { key: 'weightColumn' + key[0].toUpperCase() + key.substring(1), value: this.columns[key] })
+		},
 		updateWeightUnit: function(e) {
 			this.$store.dispatch('setValue', { key: 'weightUnit', value: e.target[1].value })
 		},
@@ -126,5 +221,3 @@ export default {
 	},
 }
 </script>
-<style lang="scss" scoped>
-</style>

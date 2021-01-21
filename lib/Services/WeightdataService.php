@@ -58,7 +58,7 @@ class WeightdataService {
 		return $this->weightdataMapper->findLast($personId);
 	}
 
-	public function create($personId, $weight, $measurement, $bodyfat, $date) {
+	public function create($personId, $weight, $measurement, $bodyfat, $date, $waistSize, $hipSize, $musclePart, $comment) {
 		if( !$this->permissionService->weightData($personId, $this->userId)) {
 			return null;
 		}
@@ -82,6 +82,14 @@ class WeightdataService {
 		$wd->setMeasurement($measurement);
 		/** @noinspection PhpUndefinedMethodInspection */
 		$wd->setBodyfat($bodyfat);
+		/** @noinspection PhpUndefinedMethodInspection */
+		$wd->setWaistSize($this->formatHelperService->typeCastByEntity('waistSize', $waistSize, $wd));
+		/** @noinspection PhpUndefinedMethodInspection */
+		$wd->setHipSize($this->formatHelperService->typeCastByEntity('hipSize', $hipSize, $wd));
+		/** @noinspection PhpUndefinedMethodInspection */
+		$wd->setMusclePart($this->formatHelperService->typeCastByEntity('musclePart', $musclePart, $wd));
+		/** @noinspection PhpUndefinedMethodInspection */
+		$wd->setComment($comment);
 		// error_log(print_r($wd, true));
 		return $this->weightdataMapper->insert($wd);
 	}
@@ -98,19 +106,28 @@ class WeightdataService {
 		return $this->weightdataMapper->delete($wd);
 	}
 
-	public function update($id, $date, $weight, $measurement, $bodyfat) {
+	public function update($id, $date, $weight, $measurement, $bodyfat, $waistSize, $hipSize, $musclePart, $comment) {
 		if( !$this->permissionService->weightData($id, $this->userId)) {
 			return null;
 		}
 		try {
 			$wd = $this->weightdataMapper->find($id);
-			$wd->setDate($this->formatHelperService->typeCast('date', $date));
+			/** @noinspection PhpPossiblePolymorphicInvocationInspection */
+			$wd->setDate($this->formatHelperService->convertDate($date));
 			/** @noinspection PhpUndefinedMethodInspection */
-			$wd->setWeight($this->formatHelperService->typeCast('weight', $weight));
+			$wd->setWeight($this->formatHelperService->typeCastByEntity('weight', $weight, $wd));
 			/** @noinspection PhpUndefinedMethodInspection */
-			$wd->setMeasurement($this->formatHelperService->typeCast('measurement', $measurement));
+			$wd->setMeasurement($this->formatHelperService->typeCastByEntity('measurement', $measurement, $wd));
 			/** @noinspection PhpUndefinedMethodInspection */
-			$wd->setBodyfat($this->formatHelperService->typeCast('bodyfat', $bodyfat));
+			$wd->setBodyfat($this->formatHelperService->typeCastByEntity('bodyfat', $bodyfat, $wd));
+			/** @noinspection PhpUndefinedMethodInspection */
+			$wd->setWaistSize($this->formatHelperService->typeCastByEntity('waistSize', $waistSize, $wd));
+			/** @noinspection PhpUndefinedMethodInspection */
+			$wd->setHipSize($this->formatHelperService->typeCastByEntity('hipSize', $hipSize, $wd));
+			/** @noinspection PhpUndefinedMethodInspection */
+			$wd->setMusclePart($this->formatHelperService->typeCastByEntity('musclePart', $musclePart, $wd));
+			/** @noinspection PhpUndefinedMethodInspection */
+			$wd->setComment($comment);
         } catch(Exception $e) {
              return Http::STATUS_NOT_FOUND;
 		}

@@ -47,43 +47,59 @@ class WeightdataController extends Controller {
 	 * @NoCSRFRequired
 	 *
 	 * @param int $personId
+	 * @return DataResponse
 	 */
-	public function index(int $personId) {
+	public function findByPerson(int $personId): DataResponse
+	{
         return new DataResponse($this->weightdataService->getAllByPersonId($personId));
 	}
 
 	/**
 	 * @NoAdminRequired
 	 *
-     * @param int $personId
-     * @param float $weight
-     * @param float $measurement
-     * @param float $bodyfat
-     * @param string $date
+	 * @param int $personId
+	 * @param string $date
+	 * @param null $weight
+	 * @param null $measurement
+	 * @param null $bodyfat
+	 * @param null $waistSize
+	 * @param null $hipSize
+	 * @param null $musclePart
+	 * @param string $comment
+	 * @return DataResponse
 	 */
-	public function create($personId, $weight, $measurement, $bodyfat, $date) {
-		return new DataResponse($this->weightdataService->create($personId, $weight, $measurement, $bodyfat, $date));
+	public function create(int $personId, string $date, $weight = null, $measurement = null, $bodyfat = null, $waistSize = null, $hipSize = null, $musclePart = null, string $comment = ''): DataResponse
+	{
+		return new DataResponse($this->weightdataService->create($personId, $weight, $measurement, $bodyfat, $date, $waistSize, $hipSize, $musclePart, $comment));
 	}
 
 	/**
 	 * @NoAdminRequired
 	 *
-     * @param int $id
+	 * @param int $id
+	 * @return DataResponse
 	 */
-	public function destroy($id) {
+	public function delete(int $id): DataResponse
+	{
 		return new DataResponse($this->weightdataService->delete($id));
 	}
 
 	/**
 	 * @NoAdminRequired
 	 *
-     * @param int $id
-     * @param float $weight
-     * @param float $measurement
-     * @param float $bodyfat
-     * @param string $date
+	 * @param int $id
+	 * @param string $date
+	 * @param null $weight
+	 * @param null $measurement
+	 * @param null $bodyfat
+	 * @param null $waistSize
+	 * @param null $hipSize
+	 * @param null $musclePart
+	 * @param string $comment
+	 * @return DataResponse
 	 */
-	public function update($id, $date, $weight, $measurement, $bodyfat) {
-		return new DataResponse($this->weightdataService->update($id, $date, $weight, $measurement, $bodyfat));
+	public function update(int $id, string $date, $weight = null, $measurement = null, $bodyfat = null, $waistSize = null, $hipSize = null, $musclePart = null, string $comment = ''): DataResponse
+	{
+		return new DataResponse($this->weightdataService->update($id, $date, $weight, $measurement, $bodyfat, $waistSize, $hipSize, $musclePart, $comment));
 	}
 }

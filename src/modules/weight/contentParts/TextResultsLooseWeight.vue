@@ -40,7 +40,7 @@
 				:value="getProgressbarValue"
 				:class="{'small':true}" />
 		</p>
-		<p v-if="weight > initialWeight" class="alert red">
+		<p v-if="weight > initialWeight && initialWeight !== null" class="alert red">
 			{{ t('health', 'Ups, you become more and more. Be careful!', {}) }}
 		</p>
 		<p v-if="weight <= target" class="green alert">
@@ -82,10 +82,6 @@ export default {
 			type: String,
 			default: '',
 		},
-	},
-	data: function() {
-		return {
-		}
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar', 'weightData']),

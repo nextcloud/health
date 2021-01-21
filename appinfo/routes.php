@@ -31,16 +31,10 @@ return [
 	   	['name' => 'persons#data', 'url' => '/person/{personId}/data', 'verb' => 'GET'],
 
 		// weight data
-		['name' => 'weightdata#index', 'url' => '/weightdata/person/{personId}', 'verb' => 'GET'],
-		['name' => 'weightdata#create', 'url' => '/weightdata/person/{personId}/create', 'verb' => 'POST'],
-		['name' => 'weightdata#destroy', 'url' => '/weightdata/delete/{id}', 'verb' => 'DELETE'],
-		['name' => 'weightdata#update', 'url' => '/weightdata/update/{id}', 'verb' => 'PUT'],
-
-		// r weight data
-		['name' => 'weight#datasetFind',	'url' => '/weight/dataset/person/{personId}',	'verb' => 'GET'],
-		['name' => 'weight#datasetCreate',	'url' => '/weight/dataset/person/{personId}',	'verb' => 'POST'],
-		['name' => 'weight#datasetDelete',	'url' => '/weight/dataset/{id}',	'verb' => 'DELETE'],
-		['name' => 'weight#datasetUpdate',	'url' => '/weight/dataset/{id}',	'verb' => 'PUT'],
+		['name' => 'weightdata#findByPerson',	'url' => '/weight/dataset/person/{personId}',	'verb' => 'GET'],
+		['name' => 'weightdata#create',	'url' => '/weight/dataset/person/{personId}',	'verb' => 'POST'],
+		['name' => 'weightdata#delete',	'url' => '/weight/dataset/{id}',	'verb' => 'DELETE'],
+		['name' => 'weightdata#update',	'url' => '/weight/dataset/{id}',	'verb' => 'PUT'],
 
 		// ces service
 		['name' => 'ces#index', 'url' => '/ces', 'verb' => 'POST'],

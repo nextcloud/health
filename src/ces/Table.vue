@@ -23,9 +23,7 @@
 <template>
 	<div>
 		<h3>{{ t('health', 'Data', {}) }}</h3>
-		<div v-if="loading" class="icon-loading">
-			&nbsp;
-		</div>
+		<div v-if="loading" class="icon-loading" />
 		<ModalAddItem
 			v-if="!loading"
 			:header="header"
