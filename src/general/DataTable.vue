@@ -155,10 +155,6 @@ export default {
 			default: false,
 		},
 	},
-	data: function() {
-		return {
-		}
-	},
 	computed: {
 		datasets: function() {
 			return this.data

@@ -26,10 +26,12 @@ import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import { WeightApi } from './WeightApi'
 import { PersonApi } from './PersonApi'
+import { MeasurementApi } from './MeasurementApi'
 
 Vue.use(Vuex)
 const weightApiClient = new WeightApi()
 const personApiClient = new PersonApi()
+const measurementApiClient = new MeasurementApi()
 
 export default new Vuex.Store({
 	state: {
@@ -54,6 +56,7 @@ export default new Vuex.Store({
 		// rebuild data
 		// depending on the actual person
 		rWeightDatasets: [],
+		measurementDatasets: [],
 	},
 	getters: {
 		person: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId] : null,
@@ -124,6 +127,29 @@ export default new Vuex.Store({
 		loading(state, status) {
 			state.loading = !!status
 		},
+		// -------------
+		measurementDatasets(state, data) {
+			state.measurementDatasets = data
+		},
+		measurementDatasetsAppend(state, data) {
+			state.measurementDatasets.push(data)
+		},
+		measurementDatasetsDelete(state, data) {
+			const existingIndex = state.measurementDatasets.findIndex(set => set.id === data.id)
+			if (existingIndex !== -1) {
+				state.measurementDatasets.splice(existingIndex, 1)
+			}
+		},
+		measurementDatasetsUpdate(state, data) {
+			const datasets = state.measurementDatasets
+			const existingIndex = datasets.findIndex(set => set.id === data.id)
+			if (existingIndex !== -1) {
+				datasets.splice(existingIndex, 1)
+				datasets.push(data)
+			}
+			state.measurementDatasets = datasets
+		},
+
 	},
 	actions: {
 		async loadPersons({ dispatch, state, commit }) {
@@ -246,9 +272,9 @@ export default new Vuex.Store({
 			commit('rWeightDatasetsAppend', o)
 		},
 		async rWeightDatasetsUpdate({ commit, getters }, set) {
-			console.debug('update weight dataset', set)
+			// console.debug('update weight dataset', set)
 			const o = await weightApiClient.updateSet(set)
-			console.debug('returned o', o)
+			// console.debug('returned o', o)
 			commit('rWeightDatasetsUpdate', o)
 		},
 		async rWeightDatasetsDelete({ commit, getters }, set) {
@@ -256,6 +282,27 @@ export default new Vuex.Store({
 			const o = await weightApiClient.deleteSet(set)
 			// console.debug('returned o', o)
 			commit('rWeightDatasetsDelete', o)
+		},
+		// module measurement
+		async measurementDatasetsLoadByPerson({ commit }, personId) {
+			const datasets = await measurementApiClient.findDatasetsByPerson(personId)
+			// console.debug('found datasets', datasets)
+			commit('measurementDatasets', datasets)
+		},
+		async measurementDatasetsAppend({ commit, getters }, set) {
+			const o = await measurementApiClient.addSet(getters.person.id, set)
+			// console.debug('returned o', o)
+			commit('measurementDatasetsAppend', o)
+		},
+		async measurementDatasetsUpdate({ commit, getters }, set) {
+			const o = await measurementApiClient.updateSet(set)
+			// console.debug('returned o', o)
+			commit('measurementDatasetsUpdate', o)
+		},
+		async measurementDatasetsDelete({ commit, getters }, set) {
+			const o = await measurementApiClient.deleteSet(set)
+			// console.debug('returned o', o)
+			commit('measurementDatasetsDelete', o)
 		},
 	},
 })

@@ -93,7 +93,7 @@
 			@submit="updateWeightUnit" />
 		<li>
 			<h4>
-				{{ t('health', 'Measurement Name', {}) }}<span><br>{{ t('health', 'What else do you want to track? Set here a name and you can add data in the data-table. The values have to be numbers.', {}) }}</span>
+				{{ t('health', 'Measurementdata Name', {}) }}<span><br>{{ t('health', 'What else do you want to track? Set here a name and you can add data in the data-table. The values have to be numbers.', {}) }}</span>
 			</h4>
 		</li>
 		<ActionInput

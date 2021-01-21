@@ -71,7 +71,7 @@
 			<AppSidebarTab
 				v-if="person.enabledModuleMeasurement"
 				id="measurement"
-				:name="t('health', 'Measurement')"
+				:name="t('health', 'Measurementdata')"
 				icon="icon-home"
 				:order="3">
 				<MeasurementSidebar />

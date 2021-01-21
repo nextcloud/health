@@ -75,7 +75,7 @@ export default {
 					show: this.person.weightColumnBodyfat,
 				},
 				{
-					name: 'weightMeasurementName' in this.person && this.person.weightMeasurementName ? this.person.weightMeasurementName : t('health', 'Measurement'),
+					name: 'weightMeasurementName' in this.person && this.person.weightMeasurementName ? this.person.weightMeasurementName : t('health', 'Measurementdata'),
 					columnId: 'measurement',
 					type: 'number',
 					show: this.person.weightColumnMeasurement,

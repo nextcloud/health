@@ -22,46 +22,139 @@
 
 <template>
 	<ul>
-		<li><h3>{{ t('health', 'Select columns', {}) }}</h3></li>
-		<SidebarSelectColumns :context-filter="contextFilter" :columns="columns" :person-id="person.id" />
+		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
+		<div>
+			<label>
+				<input
+					id="temperature"
+					v-model="columns.temperature"
+					type="checkbox"
+					@change="saveColumn('temperature')">
+				{{ t('health', 'Temperature', {}) }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="heartRate"
+					v-model="columns.heartRate"
+					type="checkbox"
+					@change="saveColumn('heartRate')">
+				{{ t('health', 'Heart rate', {}) }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="bloodPres"
+					v-model="columns.bloodPres"
+					type="checkbox"
+					@change="saveColumn('bloodPres')">
+				{{ t('health', 'Blood pressure') }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="oxygenSat"
+					v-model="columns.oxygenSat"
+					type="checkbox"
+					@change="saveColumn('oxygenSat')">
+				{{ t('health', 'Oxygen saturation', {}) }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="bloodSugar"
+					v-model="columns.bloodSugar"
+					type="checkbox"
+					@change="saveColumn('bloodSugar')">
+				{{ t('health', 'Blood sugar', {}) }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="defecation"
+					v-model="columns.defecation"
+					type="checkbox"
+					@change="saveColumn('defecation')">
+				{{ t('health', 'Defecation', {}) }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="appetite"
+					v-model="columns.appetite"
+					type="checkbox"
+					@change="saveColumn('appetite')">
+				{{ t('health', 'Appetite', {}) }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="allergies"
+					v-model="columns.allergies"
+					type="checkbox"
+					@change="saveColumn('allergies')">
+				{{ t('health', 'Allergies', {}) }}
+			</label>
+		</div>
 	</ul>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import SidebarSelectColumns from '../generic/SidebarSelectColumns'
 
 export default {
 	name: 'MeasurementSidebar',
-	components: {
-		SidebarSelectColumns,
-	},
 	data: function() {
 		return {
-			contextFilter: {
-				app: 'health',
-				module: 'measurement',
-				type: 'sidebarColumns',
+			columns: {
+				temperature: true,
+				heartRate: true,
+				bloodPres: false,
+				oxygenSat: false,
+				bloodSugar: true,
+				defecation: false,
+				appetite: true,
+				allergies: true,
 			},
 		}
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar']),
 		...mapGetters(['person']),
-		columns: function() {
-			return [
-				{ id: 'temperature', name: t('health', 'Temperature', {}), default: true },
-				{ id: 'heartrate', name: t('health', 'Heart rate', {}), default: true },
-				{ id: 'bloodPressure', name: t('health', 'Blood pressure', {}), default: true },
-				{ id: 'oxygensaturation', name: t('health', 'Oxygen saturation', {}) },
-				{ id: 'bloodsugar', name: t('health', 'Blood sugar', {}), default: true },
-				{ id: 'defecation', name: t('health', 'Defecation', {}) },
-				{ id: 'appetite', name: t('health', 'Appetite', {}) },
-				{ id: 'allergies', name: t('health', 'Allergies', {}) },
-			]
+	},
+	watch: {
+		person: function() {
+			this.updateLocalColumnData()
 		},
 	},
+	mounted() {
+		this.updateLocalColumnData()
+	},
 	methods: {
+		updateLocalColumnData() {
+			if (this.person) {
+				this.columns.temperature = this.person.measurementColumnTemperature
+				this.columns.heartRate = this.person.measurementColumnHeartRate
+				this.columns.bloodPres = this.person.measurementColumnBloodPres
+				this.columns.oxygenSat = this.person.measurementColumnOxygenSat
+				this.columns.bloodSugar = this.person.measurementColumnBloodSugar
+				this.columns.defecation = this.person.measurementColumnDefecation
+				this.columns.appetite = this.person.measurementColumnAppetite
+				this.columns.allergies = this.person.measurementColumnAllergies
+			} else {
+				console.debug('no person found to update [watch person in MeasurementSidebar]')
+			}
+		},
+		saveColumn(key) {
+			this.$store.dispatch('setValue', { key: 'measurementColumn' + key[0].toUpperCase() + key.substring(1), value: this.columns[key] })
+		},
 	},
 }
 </script>

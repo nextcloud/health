@@ -196,8 +196,8 @@ class Person extends Entity implements JsonSerializable {
 			// module measurement
 			'measurementColumnTemperature' => $this->measurementColumnTemperature,
 			'measurementColumnHeartRate' => $this->measurementColumnHeartRate,
-			'measurementColumnBloodPressure' => $this->measurementColumnBloodPres,
-			'measurementColumnOxygenSaturation' => $this->measurementColumnOxygenSat,
+			'measurementColumnBloodPres' => $this->measurementColumnBloodPres,
+			'measurementColumnOxygenSat' => $this->measurementColumnOxygenSat,
 			'measurementColumnBloodSugar' => $this->measurementColumnBloodSugar,
 			'measurementColumnDefecation' => $this->measurementColumnDefecation,
 			'measurementColumnAppetite' => $this->measurementColumnAppetite,

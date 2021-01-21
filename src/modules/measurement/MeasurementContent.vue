@@ -1,5 +1,5 @@
 <!--
-	- @copyright Copyright (c) 2019 Florian Steffens <flost-dev@mailbox.org>
+	- @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
 	-
 	- @author Florian Steffens
 	-
@@ -23,169 +23,45 @@
 <template>
 	<div>
 		<h2>
-			{{ t('health', 'Measurement') }}
+			{{ t('health', 'Measurement', {}) }}
 		</h2>
-		<DataTable
-			:context-filter="contextFilter"
-			:header="header"
-			entity-name="Measurement" />
+
+		<h3>{{ t('health', 'Chart', {}) }}</h3>
+		<MeasurementChart
+			v-if="!loading"
+			:person="person"
+			:data="measurementData" />
+		<div v-if="loading" class="icon-loading" />
+
+		<h3>Data</h3>
+		<MeasurementTable
+			:data="measurementData"
+			:person="person" />
+		<div v-if="loading" class="icon-loading" />
 	</div>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import moment from '@nextcloud/moment'
-import DataTable from '../generic/DataTable'
+import MeasurementTable from './MeasurementTable'
+import MeasurementChart from './MeasurementChart'
 
 export default {
 	name: 'MeasurementContent',
 	components: {
-		DataTable,
-	},
-	data: function() {
-		return {
-			contextFilter: {
-				app: 'health',
-				module: 'measurement',
-			},
-		}
+		MeasurementChart,
+		MeasurementTable,
 	},
 	computed: {
-		...mapState(['activePersonId', 'moduleSettings']),
+		...mapState(['activeModule', 'showSidebar', 'measurementDatasets', 'loading']),
 		...mapGetters(['person']),
-		header: function() {
-			return [
-				{
-					name: t('health', 'Date'),
-					columnId: 'datetime',
-					type: 'datetime',
-					show: true,
-					default: function() {
-						return moment().format('YYYY-MM-DDTHH:mm')
-					},
-				},
-				{
-					name: t('health', 'Temperature'),
-					columnId: 'temperature',
-					type: 'number',
-					show: this.getColumnShow('temperature'),
-					min: 35,
-					max: 42,
-				},
-				{
-					name: t('health', 'Heart rate'),
-					columnId: 'heartrate',
-					type: 'number',
-					show: this.getColumnShow('heartrate'),
-					min: 0,
-				},
-				{
-					name: t('health', 'Blood pressure systolic'),
-					columnId: 'systolic',
-					type: 'number',
-					show: this.getColumnShow('bloodPressure'),
-					min: 0,
-				},
-				{
-					name: t('health', 'Blood pressure diastolic'),
-					columnId: 'diastolic',
-					type: 'number',
-					show: this.getColumnShow('bloodPressure'),
-					min: 0,
-				},
-				{
-					name: t('health', 'Oxygen saturation'),
-					columnId: 'oxygensaturation',
-					type: 'number',
-					show: this.getColumnShow('oxygensaturation'),
-					min: 80,
-					max: 100,
-					// unter 90 ist dramatisch
-					style: function(value) {
-						// console.debug('render style', value)
-						if (value < 90) {
-							return 'color: darkred; font-weight: bolder;'
-						} else {
-							return ''
-						}
-					},
-				},
-				{
-					name: t('health', 'Blood sugar'),
-					columnId: 'bloodsugar',
-					type: 'number',
-					show: this.getColumnShow('bloodsugar'),
-					min: 40,
-					max: 600,
-					// 80-120 ist normal
-					style: function(value) {
-						console.debug('render style', value)
-						if (value < 80 || value > 120) {
-							return 'color: darkred; font-weight: bolder;'
-						} else {
-							return ''
-						}
-					},
-				},
-				{
-					name: t('health', 'Defecation'),
-					columnId: 'defecation',
-					type: 'select',
-					show: this.getColumnShow('defecation'),
-					options: [
-						{ id: 0, label: t('health', 'low', {}) },
-						{ id: 1, label: t('health', 'middle', {}) },
-						{ id: 2, label: t('health', 'high', {}) },
-						{ id: 3, label: t('health', 'extreme', {}) },
-					],
-					style: function(value) {
-						console.debug('render style', value)
-						if (value === 4) {
-							return 'color: darkred; font-weight: bolder;'
-						} else {
-							return ''
-						}
-					},
-				},
-				{
-					name: t('health', 'Appetite'),
-					columnId: 'appetite',
-					type: 'longtext',
-					show: this.getColumnShow('appetite'),
-					placeholder: t('health', 'What about your appetite...', {}),
-					maxlength: 1000,
-				},
-				{
-					name: t('health', 'Allergies'),
-					columnId: 'allergies',
-					type: 'longtext',
-					show: this.getColumnShow('allergies'),
-					placeholder: t('health', 'What about your allergies...', {}),
-					maxlength: 1000,
-				},
-				{
-					name: t('health', 'Comment'),
-					columnId: 'comment',
-					type: 'longtext',
-					show: true,
-					placeholder: t('health', 'Give some comment, if you want...', {}),
-					maxlength: 1000,
-				},
-			]
-		},
-	},
-	methods: {
-		getColumnShow: function(key) {
-			if (
-				this.moduleSettings
-				&& this.moduleSettings.measurement
-				&& this.moduleSettings.measurement.sidebarColumns
-				&& this.moduleSettings.measurement.sidebarColumns[key]
-			) {
-				return this.moduleSettings.measurement.sidebarColumns[key]
-			} else {
-				return false
-			}
+		measurementData() {
+			return !this.measurementDatasets
+				? null
+				// eslint-disable-next-line vue/no-side-effects-in-computed-properties
+				: this.measurementDatasets.sort(function(a, b) {
+					return new Date(b.date) - new Date(a.date)
+				})
 		},
 	},
 }
