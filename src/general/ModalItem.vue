@@ -45,7 +45,12 @@
 		</button>
 		<Modal v-if="showModal" title="add item" @close="showModal = false">
 			<div class="modal__content">
-				<h1>{{ t('health', 'Add new {entityName}', { entityName: entityName }) }}</h1>
+				<h1 v-if="inputMode === 'add'">
+					{{ t('health', 'Add new {entityName}', { entityName: entityName }) }}
+				</h1>
+				<h1 v-if="inputMode === 'edit'">
+					{{ t('health', 'Edit {entityName}', { entityName: entityName }) }}
+				</h1>
 				<div class="scrollable">
 					<div
 						v-for="(h, index) in header"
@@ -81,9 +86,7 @@
 							<Multiselect
 								v-model="values[h.columnId]"
 								:options="h.options"
-								:multiple="true"
-								track-by="id"
-								label="label" />
+								:multiple="true" />
 							<div v-if="values[h.columnId]">
 								<div v-for="(selection, i) in values[h.columnId]" :key="i">
 									{{ selection.label }}
@@ -136,6 +139,7 @@
 <script>
 import Modal from '@nextcloud/vue/dist/Components/Modal'
 import Multiselect from '@nextcloud/vue/dist/Components/Multiselect'
+import moment from '@nextcloud/moment'
 
 export default {
 	name: 'ModalItem',
@@ -164,6 +168,10 @@ export default {
 			type: Number,
 			default: null,
 		},
+		inputMode: {
+			type: String,
+			default: 'add', // add or edit
+		},
 	},
 	data: function() {
 		return {
@@ -182,6 +190,21 @@ export default {
 	},
 	methods: {
 		sendData: function() {
+			console.debug('modal transform values', this.values)
+			for (const [key] of Object.entries(this.values)) {
+				if (this.values[key] && this.values[key].id) {
+					this.values[key] = this.values[key].id
+				} else if (Array.isArray(this.values[key])) {
+					const d = []
+					this.values[key].forEach(item => {
+						// console.debug('entry', { item: item, i: i })
+						d.push(item)
+					})
+					this.values[key] = JSON.stringify(d)
+				}
+			}
+			console.debug('modal send values', this.values)
+
 			this.$emit('addItem', this.values)
 			this.resetValues()
 			this.showModal = false
@@ -224,6 +247,18 @@ export default {
 			this.header.forEach(h => {
 				if ('default' in h && h.default instanceof Function && !(h.columnId in this.values)) {
 					this.values[h.columnId] = h.default()
+				}
+				if (h.columnId === 'date') {
+					// this.values[h.columnId] = new Date(this.values[h.columnId]).toISOString().slice(0, 10)
+					this.values[h.columnId] = moment(this.values[h.columnId]).format('YYYY-MM-DD')
+				}
+				if (h.columnId === 'datetime') {
+					this.values[h.columnId] = moment(this.values[h.columnId]).format('YYYY-MM-DDTHH:mm')
+				}
+				if (h.type === 'multiselect') {
+					if (typeof this.values[h.columnId] === 'string') {
+						this.values[h.columnId] = JSON.parse(this.values[h.columnId])
+					}
 				}
 			})
 		},

@@ -163,7 +163,7 @@ export default {
 			e.currentTarget.childNodes[0].value = ''
 		},
 		personUpdateName: function(v) {
-			this.$store.dispatch('setValue', { id: this.menuOpenPersonId, key: 'name', value: v })
+			this.$store.dispatch('setValue', { id: this.persons[this.menuOpenPersonId].id, key: 'name', value: v })
 		},
 		closeNewPersonForm: function() {
 			this.$refs.newPersonName.value = ''

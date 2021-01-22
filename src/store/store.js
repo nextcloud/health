@@ -27,11 +27,13 @@ import { generateUrl } from '@nextcloud/router'
 import { WeightApi } from './WeightApi'
 import { PersonApi } from './PersonApi'
 import { MeasurementApi } from './MeasurementApi'
+import { FeelingApi } from './FeelingApi'
 
 Vue.use(Vuex)
 const weightApiClient = new WeightApi()
 const personApiClient = new PersonApi()
 const measurementApiClient = new MeasurementApi()
+const feelingApiClient = new FeelingApi()
 
 export default new Vuex.Store({
 	state: {
@@ -57,6 +59,7 @@ export default new Vuex.Store({
 		// depending on the actual person
 		rWeightDatasets: [],
 		measurementDatasets: [],
+		feelingDatasets: [],
 	},
 	getters: {
 		person: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId] : null,
@@ -149,6 +152,28 @@ export default new Vuex.Store({
 			}
 			state.measurementDatasets = datasets
 		},
+		// -------------
+		feelingDatasets(state, data) {
+			state.feelingDatasets = data
+		},
+		feelingDatasetsAppend(state, data) {
+			state.feelingDatasets.push(data)
+		},
+		feelingDatasetsDelete(state, data) {
+			const existingIndex = state.feelingDatasets.findIndex(set => set.id === data.id)
+			if (existingIndex !== -1) {
+				state.feelingDatasets.splice(existingIndex, 1)
+			}
+		},
+		feelingDatasetsUpdate(state, data) {
+			const datasets = state.feelingDatasets
+			const existingIndex = datasets.findIndex(set => set.id === data.id)
+			if (existingIndex !== -1) {
+				datasets.splice(existingIndex, 1)
+				datasets.push(data)
+			}
+			state.feelingDatasets = datasets
+		},
 
 	},
 	actions: {
@@ -175,7 +200,12 @@ export default new Vuex.Store({
 			// this ist called if the active person or module changed
 			// it should load all data, that is necessary for the active module
 			commit('loading', true)
+			// await dispatch('weightDatasetsLoadByPerson', [])
+			// await dispatch('measurementDatasetsLoadByPerson', [])
+			// await dispatch('feelingDatasetsLoadByPerson', [])
 			await dispatch('weightDatasetsLoadByPerson', getters.person.id)
+			await dispatch('measurementDatasetsLoadByPerson', getters.person.id)
+			await dispatch('feelingDatasetsLoadByPerson', getters.person.id)
 			commit('loading', false)
 		},
 		async setValue({ commit, state, getters }, data) {
@@ -214,10 +244,12 @@ export default new Vuex.Store({
 			const p = await personApiClient.addPerson(name)
 			commit('personsAdd', p)
 		},
-		async deletePerson({ state, dispatch, commit }, personId) {
-			const existingIndex = state.persons.findIndex(set => set.id === personId)
-			const o = await weightApiClient.deleteAllByPerson(personId)
-			commit('personsDelete', o)
+		async deletePerson({ state, dispatch, commit }, person) {
+			const existingIndex = state.persons.findIndex(set => set.id === person.id)
+			await weightApiClient.deleteAllByPerson(person.id)
+			await measurementApiClient.deleteAllByPerson(person.id)
+			await personApiClient.deletePerson(person.id)
+			commit('personsDelete', person)
 			if (existingIndex !== -1) {
 				dispatch('setActivePerson', 0)
 			}
@@ -303,6 +335,27 @@ export default new Vuex.Store({
 			const o = await measurementApiClient.deleteSet(set)
 			// console.debug('returned o', o)
 			commit('measurementDatasetsDelete', o)
+		},
+		// module feeling
+		async feelingDatasetsLoadByPerson({ commit }, personId) {
+			const datasets = await feelingApiClient.findDatasetsByPerson(personId)
+			// console.debug('found datasets', datasets)
+			commit('feelingDatasets', datasets)
+		},
+		async feelingDatasetsAppend({ commit, getters }, set) {
+			const o = await feelingApiClient.addSet(getters.person.id, set)
+			// console.debug('returned o', o)
+			commit('feelingDatasetsAppend', o)
+		},
+		async feelingDatasetsUpdate({ commit, getters }, set) {
+			const o = await feelingApiClient.updateSet(set)
+			// console.debug('returned o', o)
+			commit('feelingDatasetsUpdate', o)
+		},
+		async feelingDatasetsDelete({ commit, getters }, set) {
+			const o = await feelingApiClient.deleteSet(set)
+			// console.debug('returned o', o)
+			commit('feelingDatasetsDelete', o)
 		},
 	},
 })

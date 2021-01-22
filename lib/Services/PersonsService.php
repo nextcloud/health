@@ -59,35 +59,29 @@ class PersonsService {
 		return $persons;
 	}
 
+	/** @noinspection PhpUndefinedMethodInspection */
 	public function createPerson($name): \OCP\AppFramework\Db\Entity
 	{
 		$time = new \DateTime();
 		$p = new Person();
-		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setInsertTime($time->format('Y-m-d H:i:s'));
-		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setLastupdateTime($time->format('Y-m-d H:i:s'));
-		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setUserId($this->userId);
-		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setName($name);
-		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setEnabledModuleWeight(true);
-		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setEnabledModuleBreaks(false);
-		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setEnabledModuleFeeling(false);
-		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setEnabledModuleMedicine(false);
-		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setEnabledModuleActivities(false);
-		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setEnabledModuleSleep(false);
-		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setEnabledModuleNutrition(false);
 		$p->setEnabledModuleMeasurement(true);
-		/** @noinspection PhpUndefinedMethodInspection */
 		$p->setWeightUnit('kg');
+		$p->setWeightColumnWeight(true);
+		$p->setWeightColumnBodyfat(true);
+		$p->setMeasurementColumnTemperature(true);
+		$p->setMeasurementColumnHeartRate(true);
+		$p->setMeasurementColumnBloodPres(true);
 		return $this->personMapper->insert($p);
 	}
 

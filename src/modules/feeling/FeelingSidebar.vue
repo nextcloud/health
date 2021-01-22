@@ -22,44 +22,127 @@
 
 <template>
 	<ul>
-		<li><h3>{{ t('health', 'Select columns', {}) }}</h3></li>
-		<SidebarSelectColumns :context-filter="contextFilter" :columns="columns" :person-id="person.id" />
+		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
+		<div>
+			<label>
+				<input
+					id="mood"
+					v-model="columns.mood"
+					type="checkbox"
+					@change="saveColumn('mood')">
+				{{ t('health', 'Mood', {}) }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="sadnessLevel"
+					v-model="columns.sadnessLevel"
+					type="checkbox"
+					@change="saveColumn('sadnessLevel')">
+				{{ t('health', 'Sadness level', {}) }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="symptoms"
+					v-model="columns.symptoms"
+					type="checkbox"
+					@change="saveColumn('symptoms')">
+				{{ t('health', 'Symptoms') }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="attacks"
+					v-model="columns.attacks"
+					type="checkbox"
+					@change="saveColumn('attacks')">
+				{{ t('health', 'Attacks', {}) }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="medication"
+					v-model="columns.medication"
+					type="checkbox"
+					@change="saveColumn('medication')">
+				{{ t('health', 'Medication', {}) }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="pain"
+					v-model="columns.pain"
+					type="checkbox"
+					@change="saveColumn('pain')">
+				{{ t('health', 'Pain', {}) }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="energy"
+					v-model="columns.energy"
+					type="checkbox"
+					@change="saveColumn('energy')">
+				{{ t('health', 'Energy', {}) }}
+			</label>
+		</div>
 	</ul>
 </template>
 
 <script>
-import SidebarSelectColumns from '../generic/SidebarSelectColumns'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
 	name: 'FeelingSidebar',
-	components: {
-		SidebarSelectColumns,
-	},
 	data: function() {
 		return {
-			contextFilter: {
-				app: 'health',
-				module: 'feeling',
-				type: 'sidebarColumns',
+			columns: {
+				mood: true,
+				sadnessLevel: true,
+				symptoms: true,
+				attacks: true,
+				medication: true,
+				pain: true,
+				energy: true,
 			},
 		}
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar']),
 		...mapGetters(['person']),
-		columns: function() {
-			return [
-				{ id: 'mood', name: t('health', 'Mood', {}), default: true },
-				{ id: 'sadness', name: t('health', 'Sadness level', {}) },
-				{ id: 'symptoms', name: t('health', 'Symptoms', {}), default: true },
-				{ id: 'attacks', name: t('health', 'Attacks', {}) },
-				{ id: 'medication', name: t('health', 'Medication', {}) },
-				{ id: 'pain', name: t('health', 'Pain', {}) },
-			]
+	},
+	watch: {
+		person: function() {
+			this.updateLocalColumnData()
 		},
 	},
+	mounted() {
+		this.updateLocalColumnData()
+	},
 	methods: {
+		updateLocalColumnData() {
+			if (this.person) {
+				this.columns.mood = this.person.feelingColumnMood
+				this.columns.sadnessLevel = this.person.feelingColumnSadnessLevel
+				this.columns.symptoms = this.person.feelingColumnSymptoms
+				this.columns.attacks = this.person.feelingColumnAttacks
+				this.columns.medication = this.person.feelingColumnMedication
+				this.columns.pain = this.person.feelingColumnPain
+				this.columns.energy = this.person.feelingColumnEnergy
+			} else {
+				console.debug('no person found to update [watch person in FeelingSidebar]')
+			}
+		},
+		saveColumn(key) {
+			this.$store.dispatch('setValue', { key: 'feelingColumn' + key[0].toUpperCase() + key.substring(1), value: this.columns[key] })
+		},
 	},
 }
 </script>

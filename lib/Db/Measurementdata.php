@@ -62,6 +62,7 @@ class Measurementdata extends Entity implements JsonSerializable {
     public function jsonSerialize(): array
 	{
         return [
+			'id' => $this->id,
 			'personId' => $this->personId,
 			'datetime' => $this->datetime,
 			'temperature' => $this->temperature,

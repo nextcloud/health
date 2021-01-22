@@ -68,4 +68,10 @@ class PermissionService {
 		return true;
 	}
 
+	public function feelingData($id, $userId): bool
+	{
+		// TODO
+		return true;
+	}
+
 }

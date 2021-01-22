@@ -106,10 +106,10 @@ class MeasurementdataService {
 		}
 		try {
 			$md = $this->measurementdataMapper->find($id);
+			return $this->measurementdataMapper->delete($md);
         } catch(Exception $e) {
              return Http::STATUS_NOT_FOUND;
 		}
-		return $this->measurementdataMapper->delete($md);
 	}
 
 	/** @noinspection DuplicatedCode

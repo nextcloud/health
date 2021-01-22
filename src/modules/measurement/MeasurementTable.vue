@@ -25,7 +25,7 @@
 		<DataTable
 			:data="data"
 			:header="headerDefinition"
-			entity-name="Measurement dataset"
+			entity-name="measurement dataset"
 			@addItem="addItem"
 			@updateItem="updateItem"
 			@deleteItem="deleteItem" />
@@ -34,6 +34,7 @@
 
 <script>
 import DataTable from '../../general/DataTable'
+import moment from '@nextcloud/moment'
 
 export default {
 	name: 'MeasurementTable',
@@ -59,7 +60,7 @@ export default {
 					type: 'datetime',
 					show: true,
 					default: function() {
-						return new Date().toISOString().slice(0, 19)
+						return moment().format('YYYY-MM-DDTHH:mm')
 					},
 				},
 				{
@@ -72,16 +73,16 @@ export default {
 				},
 				{
 					name: t('health', 'Heart rate'),
-					columnId: 'heartrate',
+					columnId: 'heartRate',
 					type: 'number',
-					show: this.person.measurementColumnHeartrate,
+					show: this.person.measurementColumnHeartRate,
 					min: 0,
 				},
 				{
 					name: t('health', 'Blood pressure systolic'),
 					columnId: 'systolic',
 					type: 'number',
-					show: this.person.measurementColumnBloodPressure,
+					show: this.person.measurementColumnBloodPres,
 					min: 0,
 				},
 				{
@@ -93,14 +94,13 @@ export default {
 				},
 				{
 					name: t('health', 'Oxygen saturation'),
-					columnId: 'oxygensaturation',
+					columnId: 'oxygenSat',
 					type: 'number',
 					show: this.person.measurementColumnOxygenSat,
 					min: 80,
 					max: 100,
 					// unter 90 ist dramatisch
 					style: function(value) {
-						// console.debug('render style', value)
 						if (value < 90) {
 							return 'color: darkred; font-weight: bolder;'
 						} else {
@@ -117,7 +117,6 @@ export default {
 					max: 600,
 					// 80-120 ist normal
 					style: function(value) {
-						console.debug('render style', value)
 						if (value < 80 || value > 120) {
 							return 'color: darkred; font-weight: bolder;'
 						} else {
@@ -137,7 +136,6 @@ export default {
 						{ id: 3, label: t('health', 'extreme', {}) },
 					],
 					style: function(value) {
-						console.debug('render style', value)
 						if (value === 4) {
 							return 'color: darkred; font-weight: bolder;'
 						} else {

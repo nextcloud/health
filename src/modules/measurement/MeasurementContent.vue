@@ -60,7 +60,7 @@ export default {
 				? null
 				// eslint-disable-next-line vue/no-side-effects-in-computed-properties
 				: this.measurementDatasets.sort(function(a, b) {
-					return new Date(b.date) - new Date(a.date)
+					return new Date(b.datetime) - new Date(a.datetime)
 				})
 		},
 	},

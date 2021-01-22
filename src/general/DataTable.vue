@@ -58,13 +58,13 @@
 								{{ d[h.columnId] | formatMyDatetime }}
 							</div>
 							<div v-else-if="h.type === 'select' && d[h.columnId]" class="wrapper">
-								{{ (h.options && h.options[d[h.columnId].id] && h.options[d[h.columnId].id].label) ? h.options[d[h.columnId].id].label: 'no label found' }}
+								{{ (h.options && h.options[d[h.columnId]] && h.options[d[h.columnId]].label) ? h.options[d[h.columnId]].label: 'no label found' }}
 							</div>
 							<div v-else-if="h.type === 'multiselect' && d[h.columnId]" class="wrapper">
 								<ul>
-									<li v-for="(option, optionIndex) in d[h.columnId]"
+									<li v-for="(option, optionIndex) in JSON.parse(d[h.columnId])"
 										:key="optionIndex">
-										{{ (h.options && h.options[option.id] && h.options[option.id].label) ? h.options[option.id].label: 'no label found' }}
+										{{ option ? option: 'no label found' }}
 									</li>
 								</ul>
 							</div>
@@ -92,6 +92,8 @@
 								:id="i"
 								:header="header"
 								:item-data="d"
+								input-mode="edit"
+								:entity-name="entityName"
 								icon="icon-rename"
 								@addItem="updateItem" />
 						</div>
@@ -112,6 +114,8 @@
 				{{ t('health', 'Click at the + to add the first data.') }}
 				<ModalItem
 					:header="header"
+					:entity-name="entityName"
+					input-mode="add"
 					icon="icon-add"
 					@addItem="addItem" />
 			</template>
@@ -122,15 +126,17 @@
 <script>
 import ModalItem from './ModalItem'
 import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
+// import moment from '@nextcloud/moment'
 
 export default {
 	name: 'DataTable',
 	filters: {
 		formatMyDate: function(v) {
-			return new Date(v).toLocaleDateString()
+			return new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'today') : new Date(v).toLocaleDateString()
 		},
 		formatMyDatetime: function(v) {
-			return new Date(v).toLocaleTimeString()
+			const date = new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'today') : new Date(v).toLocaleDateString()
+			return date + ' ' + new Date(v).toLocaleTimeString().slice(0, 5)
 		},
 	},
 	components: {

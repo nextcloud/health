@@ -1,5 +1,5 @@
 <!--
-	- @copyright Copyright (c) 2019 Florian Steffens <flost-dev@mailbox.org>
+	- @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
 	-
 	- @author Florian Steffens
 	-
@@ -22,60 +22,131 @@
 
 <template>
 	<div>
-		<select
-			id="chartDataRangeSelector"
-			v-model="chartDateRange"
-			name="chartDataRangeSelector">
-			<option value="week">
-				{{ t('health', 'Show chart for the last week') }}
-			</option>
-			<option value="month">
-				{{ t('health', 'Show chart for the last month') }}
-			</option>
-			<option value="year">
-				{{ t('health', 'Show chart for the last year') }}
-			</option>
-			<option value="all">
-				{{ t('health', 'Show all') }}
-			</option>
-		</select>
-		<LineChart2
-			:context-filter="contextFilter"
-			:options="options"
-			:height="150"
-			:range="chartDateRange"
-			:set-definitions="setDefinitions" />
+		<Chart
+			:chart-style="chartStyle"
+			:data="data"
+			:definition="setDefinitions"
+			:options="options" />
 	</div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
-// import moment from '@nextcloud/moment'
-import LineChart2 from '../generic/charts/LineChart2'
+import Chart from '../../general/Chart'
 
 export default {
 	name: 'FeelingChart',
 	components: {
-		LineChart2,
+		Chart,
 	},
 	props: {
-		contextFilter: {
-			type: Object,
+		data: {
+			type: Array,
 			default: null,
 		},
-		columnShows: {
+		person: {
 			type: Object,
 			default: null,
 		},
 	},
-	data: function() {
-		return {
-			chartDateRange: 'month',
-			options: {
+	computed: {
+		setDefinitions: function() {
+			return [
+				{
+					title: t('health', 'Mood', {}),
+					columnId: 'mood',
+					timeId: 'datetime',
+					valueId: 'mood',
+					getValueY: function(v) {
+						const maxIndex = 3
+						return Math.round((v + 1) / (maxIndex + 1) * 100)
+					},
+					borderColor: 'darkgray',
+					borderWidth: 2,
+					fill: true,
+					type: 'bar',
+					show: this.person.feelingColumnMood,
+				},
+				{
+					title: t('health', 'Sadness level', {}),
+					columnId: 'sadnessLevel',
+					timeId: 'datetime',
+					valueId: 'sadnessLevel',
+					getValueY: function(v) {
+						const maxIndex = 3
+						return Math.round((v + 1) / (maxIndex + 1) * 100)
+					},
+					borderColor: 'rgb(115,32,32)',
+					borderWidth: 2,
+					fill: false,
+					show: this.person.feelingColumnSadnessLevel,
+				},
+				{
+					title: t('health', 'Symptoms', {}),
+					columnId: 'symptoms',
+					timeId: 'datetime',
+					valueId: 'symptoms',
+					getValueY: function(v) {
+						const maxIndex = 6
+						return Math.round((v + 1) / (maxIndex + 1) * 100)
+					},
+					borderColor: 'rgb(11,109,53)',
+					borderWidth: 2,
+					fill: true,
+					type: 'bar',
+					show: this.person.feelingColumnSymptoms,
+				},
+				{
+					title: t('health', 'Attacks', {}),
+					columnId: 'attacks',
+					timeId: 'datetime',
+					valueId: 'attacks',
+					getValueY: function(v) {
+						const maxIndex = 6
+						return Math.round((v + 1) / (maxIndex + 1) * 100)
+					},
+					borderColor: 'rgb(11,109,53)',
+					borderWidth: 2,
+					fill: true,
+					type: 'bar',
+					show: this.person.feelingColumnAttacks,
+				},
+				{
+					title: t('health', 'Pain', {}),
+					columnId: 'pain',
+					timeId: 'datetime',
+					valueId: 'pain',
+					getValueY: function(v) {
+						const maxIndex = 10
+						return Math.round((v + 1) / (maxIndex + 1) * 100)
+					},
+					borderColor: 'rgb(212,40,40)',
+					borderWidth: 2,
+					fill: true,
+					show: this.person.feelingColumnPain,
+				},
+				{
+					title: t('health', 'Energy', {}),
+					columnId: 'energy',
+					timeId: 'datetime',
+					valueId: 'energy',
+					getValueY: function(v) {
+						const maxIndex = 10
+						return Math.round((v + 1) / (maxIndex + 1) * 100)
+					},
+					borderColor: 'rgb(212,135,40)',
+					borderWidth: 2,
+					fill: true,
+					show: this.person.feelingColumnEnergy,
+				},
+			]
+		},
+		options: function() {
+			return {
 				title: {
-					text: t('health', 'Feeling chart'),
+					text: t('health', 'Chart'),
 				},
 				responsive: true,
+				maintainAspectRatio: false,
 				scales: {
 					xAxes: [
 						{
@@ -95,7 +166,7 @@ export default {
 							},
 							scaleLabel: {
 								display: true,
-								labelString: t('health', 'Values in %'),
+								labelString: t('health', 'Values'),
 							},
 							min: 0,
 							max: 100,
@@ -107,93 +178,20 @@ export default {
 				},
 				layout: {
 					padding: {
-						right: 20,
-						left: 20,
+						right: 30,
+						left: 25,
 					},
 				},
 				legend: {
 					position: 'bottom',
 				},
-			},
-		}
-	},
-	computed: {
-		...mapState(['activePersonId', 'moduleSettings']),
-		...mapGetters(['person']),
-		setDefinitions: function() {
-			return [
-				{
-					title: t('health', 'Mood', {}),
-					columnId: 'mood',
-					timeId: 'datetime',
-					valueId: 'mood',
-					getValueY: function(v) {
-						const max = 4
-						return Math.round((max - v.id) / max * 100)
-					},
-					borderColor: 'darkblue',
-					borderWidth: 2,
-					fill: false,
-					show: this.columnShows.mood,
-				},
-				{
-					title: t('health', 'Sadness level', {}),
-					columnId: 'sadness',
-					timeId: 'datetime',
-					valueId: 'sadness',
-					getValueY: function(v) {
-						const max = 3
-						return Math.round(v.id / max * 100)
-					},
-					borderColor: 'darkgreen',
-					backgroundColor: 'rgba(3,121,14,0.2)',
-					borderWidth: 1,
-					fill: true,
-					show: this.columnShows.sadness,
-				},
-				{
-					title: t('health', 'Symptoms', {}),
-					columnId: 'symptoms',
-					timeId: 'datetime',
-					valueId: 'symptoms',
-					getValueY: function(v) {
-						const max = 13
-						return Math.round(v.length / max * 100)
-					},
-					borderColor: 'darkgray',
-					backgroundColor: 'lightgray',
-					borderWidth: 1,
-					fill: true,
-					type: 'bar',
-					show: this.columnShows.symptoms,
-				},
-				{
-					title: t('health', 'Pain', {}),
-					columnId: 'pain',
-					timeId: 'datetime',
-					valueId: 'pain',
-					getValueY: function(v) {
-						const max = 5
-						const value = v
-						return Math.round(value / max * 100)
-					},
-					borderColor: 'red',
-					backgroundColor: 'rgba(255,0,0,0.2)',
-					borderWidth: 1,
-					fill: true,
-					type: 'bar',
-					show: this.columnShows.pain,
-				},
-			]
+			}
+		},
+		chartStyle() {
+			return {
+				height: '250px',
+			}
 		},
 	},
 }
 </script>
-<style lang="css" scoped>
-
-	select {
-		margin-top: 20px;
-		margin-bottom: 20px;
-	}
-
-</style>

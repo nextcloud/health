@@ -25,9 +25,7 @@ declare(strict_types=1);
 namespace OCA\Health\Controller;
 
 use OCP\IRequest;
-use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Controller;
-use OCP\Util;
 use OCP\AppFramework\Http\DataResponse;
 use OCA\Health\Services\WeightdataService;
 

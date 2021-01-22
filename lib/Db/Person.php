@@ -67,7 +67,7 @@ class Person extends Entity implements JsonSerializable {
 
     // module feeling
 	protected $feelingColumnMood;
-	protected $feelingColumnSadness;
+	protected $feelingColumnSadnessLevel;
 	protected $feelingColumnSymptoms;
 	protected $feelingColumnAttacks;
 	protected $feelingColumnMedication;
@@ -119,7 +119,7 @@ class Person extends Entity implements JsonSerializable {
 
         // module feeling
 		$this->addType('feelingColumnMood', 'boolean');
-		$this->addType('feelingColumnSadness', 'boolean');
+		$this->addType('feelingColumnSadnessLevel', 'boolean');
 		$this->addType('feelingColumnSymptoms', 'boolean');
 		$this->addType('feelingColumnAttacks', 'boolean');
 		$this->addType('feelingColumnMedication', 'boolean');
@@ -183,7 +183,7 @@ class Person extends Entity implements JsonSerializable {
 
 			// module feeling
 			'feelingColumnMood' => $this->feelingColumnMood,
-			'feelingColumnSadness' => $this->feelingColumnSadness,
+			'feelingColumnSadnessLevel' => $this->feelingColumnSadnessLevel,
 			'feelingColumnSymptoms' => $this->feelingColumnSymptoms,
 			'feelingColumnAttacks' => $this->feelingColumnAttacks,
 			'feelingColumnMedication' => $this->feelingColumnMedication,

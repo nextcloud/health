@@ -1,5 +1,5 @@
 <!--
-	- @copyright Copyright (c) 2019 Florian Steffens <flost-dev@mailbox.org>
+	- @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
 	-
 	- @author Florian Steffens
 	-
@@ -23,153 +23,45 @@
 <template>
 	<div>
 		<h2>
-			{{ t('health', 'Feeling') }}
+			{{ t('health', 'Feeling', {}) }}
 		</h2>
-		<DataTable
-			:context-filter="contextFilter"
-			:header="header"
-			entity-name="Feeling" />
+
+		<h3>{{ t('health', 'Chart', {}) }}</h3>
+		<FeelingChart
+			v-if="!loading"
+			:person="person"
+			:data="feelingData" />
+		<div v-if="loading" class="icon-loading" />
+
+		<h3>Data</h3>
+		<FeelingTable
+			:data="feelingData"
+			:person="person" />
+		<div v-if="loading" class="icon-loading" />
 	</div>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import moment from '@nextcloud/moment'
-import DataTable from '../generic/DataTable'
+import FeelingTable from './FeelingTable'
+import FeelingChart from './FeelingChart'
 
 export default {
 	name: 'FeelingContent',
 	components: {
-		DataTable,
-	},
-	data: function() {
-		return {
-			datasets: [],
-			contextFilter: {
-				app: 'health',
-				module: 'feeling',
-				type: 'datasets',
-			},
-		}
+		FeelingChart,
+		FeelingTable,
 	},
 	computed: {
-		...mapState(['activePersonId', 'moduleSettings', 'moduleData']),
+		...mapState(['activeModule', 'showSidebar', 'feelingDatasets', 'loading']),
 		...mapGetters(['person']),
-		columnShows: function() {
-			const shows = {}
-			this.header.forEach(item => {
-				shows[item.columnId] = item.show
-			})
-			return shows
-		},
-		header: function() {
-			return [
-				{
-					name: t('health', 'Date'),
-					columnId: 'datetime',
-					type: 'datetime',
-					show: true,
-					default: function() {
-						return moment().format('YYYY-MM-DDTHH:mm')
-					},
-				},
-				{
-					name: t('health', 'Mood'),
-					columnId: 'mood',
-					type: 'select',
-					show: this.getColumnShow('mood'),
-					options: [
-						{ id: 0, label: t('health', 'Perfect', {}) },
-						{ id: 1, label: t('health', 'Fine', {}) },
-						{ id: 2, label: t('health', 'Okay', {}) },
-						{ id: 3, label: t('health', 'Don\'t know', {}) },
-						{ id: 4, label: t('health', 'Don\'t ask me', {}) },
-					],
-				},
-				{
-					name: t('health', 'Sadness level'),
-					columnId: 'sadness',
-					type: 'select',
-					show: this.getColumnShow('sadness'),
-					options: [
-						{ id: 0, label: t('health', 'None', {}) },
-						{ id: 1, label: t('health', 'Low', {}) },
-						{ id: 2, label: t('health', 'Medium', {}) },
-						{ id: 3, label: t('health', 'High', {}) },
-					],
-				},
-				{
-					name: t('health', 'Symptoms'),
-					columnId: 'symptoms',
-					show: this.getColumnShow('symptoms'),
-					type: 'multiselect',
-					options: [
-						{ id: 0, label: t('health', 'Fatigue', {}) },
-						{ id: 1, label: t('health', 'No Appetite', {}) },
-						{ id: 2, label: t('health', 'Overeating', {}) },
-						{ id: 3, label: t('health', 'Repeated thoughts', {}) },
-						{ id: 4, label: t('health', 'Unmotivated', {}) },
-						{ id: 5, label: t('health', 'Irritable', {}) },
-						{ id: 6, label: t('health', 'Lack of Concentration', {}) },
-						{ id: 7, label: t('health', 'Anxiety', {}) },
-						{ id: 8, label: t('health', 'Isolation self from others', {}) },
-						{ id: 9, label: t('health', 'Thoughts of death/sicide', {}) },
-						{ id: 10, label: t('health', 'Feeling hopeless', {}) },
-						{ id: 11, label: t('health', 'Feeling worthless', {}) },
-						{ id: 12, label: t('health', 'Indecisive', {}) },
-					],
-				},
-				{
-					name: t('health', 'Attacks'),
-					columnId: 'attacks',
-					show: this.getColumnShow('attacks'),
-					type: 'multiselect',
-					options: [
-						{ id: 0, label: t('health', 'Panic attack', {}) },
-						{ id: 1, label: t('health', 'Fit of range', {}) },
-						{ id: 2, label: t('health', 'Asthma attack', {}) },
-					],
-				},
-				{
-					name: t('health', 'Medication'),
-					columnId: 'medication',
-					type: 'longtext',
-					show: this.getColumnShow('medication'),
-					placeholder: t('health', 'What medicine did you take?', {}),
-				},
-				{
-					name: t('health', 'Pain'),
-					columnId: 'pain',
-					type: 'select',
-					show: this.getColumnShow('pain'),
-					options: [
-						{ id: 0, label: t('health', 'None', {}) },
-						{ id: 1, label: t('health', 'Low', {}) },
-						{ id: 2, label: t('health', 'Medium', {}) },
-						{ id: 3, label: t('health', 'High', {}) },
-						{ id: 4, label: t('health', 'Very high', {}) },
-						{ id: 5, label: t('health', 'Extreme', {}) },
-					],
-				},
-				{
-					name: t('health', 'Comment'),
-					columnId: 'comment',
-					type: 'longtext',
-					show: true,
-					placeholder: t('health', 'Give some comment, if you want...', {}),
-					maxlength: 1000,
-				},
-			]
-		},
-	},
-	methods: {
-		getColumnShow: function(key) {
-			const settings = this.moduleSettings
-			if (settings && settings[this.contextFilter.module] && settings[this.contextFilter.module].sidebarColumns && settings[this.contextFilter.module].sidebarColumns[key]) {
-				return settings[this.contextFilter.module].sidebarColumns[key]
-			} else {
-				return false
-			}
+		feelingData() {
+			return !this.feelingDatasets
+				? null
+				// eslint-disable-next-line vue/no-side-effects-in-computed-properties
+				: this.feelingDatasets.sort(function(a, b) {
+					return new Date(b.datetime) - new Date(a.datetime)
+				})
 		},
 	},
 }

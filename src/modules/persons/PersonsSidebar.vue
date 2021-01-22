@@ -140,7 +140,7 @@ export default {
 		updateEnabledModules: function(e) {
 			const m = e.target.value
 			const key = 'enabledModule' + m[0].toUpperCase() + m.slice(1)
-			console.debug('update module', key)
+			// console.debug('update module', key)
 			this.$store.dispatch('setValue', { key: key, value: e.target.checked })
 		},
 	},

@@ -64,6 +64,7 @@ class Version0300Date20210119000000 extends SimpleMigrationStep {
 			$table = $schema->getTable('health_persons');
 			$newColumns = [
 				'feeling_column_energy',
+				'feeling_column_sadness_level',
 				'measurement_column_temperature',
 				'measurement_column_heart_rate',
 				'measurement_column_blood_pres',

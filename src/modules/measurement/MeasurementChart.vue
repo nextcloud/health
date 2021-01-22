@@ -54,7 +54,7 @@ export default {
 				{
 					title: t('health', 'Temperature', {}),
 					columnId: 'temperature',
-					timeId: 'date',
+					timeId: 'datetime',
 					valueId: 'temperature',
 					getValueY: function(v) {
 						return v
@@ -63,6 +63,86 @@ export default {
 					borderWidth: 2,
 					fill: true,
 					show: this.person.measurementColumnTemperature,
+				},
+				{
+					title: t('health', 'Heart rate', {}),
+					columnId: 'heartRate',
+					timeId: 'datetime',
+					valueId: 'heartRate',
+					getValueY: function(v) {
+						return v
+					},
+					borderColor: 'darkgreen',
+					borderWidth: 2,
+					fill: false,
+					show: this.person.measurementColumnHeartRate,
+				},
+				{
+					title: t('health', 'Blood pressure systolic', {}),
+					columnId: 'bloodPressureS',
+					timeId: 'datetime',
+					valueId: 'bloodPressureS',
+					getValueY: function(v) {
+						return v
+					},
+					borderColor: 'rgb(110,20,128)',
+					borderWidth: 2,
+					fill: false,
+					show: this.person.measurementColumnBloodPres,
+				},
+				{
+					title: t('health', 'Blood pressure diastolic', {}),
+					columnId: 'bloodPressureD',
+					timeId: 'datetime',
+					valueId: 'bloodPressureD',
+					getValueY: function(v) {
+						return v
+					},
+					borderColor: 'rgb(188,4,219)',
+					borderWidth: 2,
+					fill: false,
+					show: this.person.measurementColumnBloodPres,
+				},
+				{
+					title: t('health', 'Oxygen saturation', {}),
+					columnId: 'oxygenSat',
+					timeId: 'datetime',
+					valueId: 'oxygenSat',
+					getValueY: function(v) {
+						return v
+					},
+					borderColor: 'rgb(12,147,159)',
+					borderWidth: 2,
+					fill: true,
+					show: this.person.measurementColumnOxygenSat,
+				},
+				{
+					title: t('health', 'Blood sugar', {}),
+					columnId: 'bloodSugar',
+					timeId: 'datetime',
+					valueId: 'bloodSugar',
+					getValueY: function(v) {
+						return v
+					},
+					borderColor: 'rgb(181,80,17)',
+					borderWidth: 2,
+					fill: true,
+					show: this.person.measurementColumnBloodSugar,
+				},
+				{
+					title: t('health', 'Defecation', {}),
+					columnId: 'defecation',
+					timeId: 'datetime',
+					valueId: 'defecation',
+					getValueY: function(v) {
+						const maxIndex = 3
+						return Math.round((v + 1) / (maxIndex + 1) * 100)
+					},
+					borderColor: 'darkgray',
+					borderWidth: 2,
+					fill: true,
+					type: 'bar',
+					show: this.person.measurementColumnDefecation,
 				},
 			]
 		},
