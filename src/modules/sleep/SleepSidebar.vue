@@ -21,37 +21,68 @@
 	-->
 
 <template>
-	<div>
-		<SidebarSelectColumns :context-filter="contextFilter" :columns="columns" :person-id="person.id" />
-	</div>
+	<ul>
+		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
+		<div>
+			<label>
+				<input
+					id="mood"
+					v-model="columns.quality"
+					type="checkbox"
+					@change="saveColumn('quality')">
+				{{ t('health', 'Quality', {}) }}
+			</label>
+		</div>
+		<div>
+			<label>
+				<input
+					id="wakeups"
+					v-model="columns.wakeups"
+					type="checkbox"
+					@change="saveColumn('wakeups')">
+				{{ t('health', 'Track wakeups', {}) }}
+			</label>
+		</div>
+	</ul>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import SidebarSelectColumns from '../generic/SidebarSelectColumns'
 
 export default {
 	name: 'SleepSidebar',
-	components: {
-		SidebarSelectColumns,
-	},
 	data: function() {
 		return {
-			contextFilter: {
-				app: 'health',
-				module: 'nutrition',
-				type: 'sidebarColumns',
+			columns: {
+				quality: true,
+				wakeups: true,
 			},
 		}
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar']),
 		...mapGetters(['person']),
-		columns: function() {
-			return []
+	},
+	watch: {
+		person: function() {
+			this.updateLocalColumnData()
 		},
 	},
+	mounted() {
+		this.updateLocalColumnData()
+	},
 	methods: {
+		updateLocalColumnData() {
+			if (this.person) {
+				this.columns.quality = this.person.sleepColumnQuality
+				this.columns.wakeups = this.person.sleepColumnWakeups
+			} else {
+				console.debug('no person found to update [watch person in SleepSidebar]')
+			}
+		},
+		saveColumn(key) {
+			this.$store.dispatch('setValue', { key: 'sleepColumn' + key[0].toUpperCase() + key.substring(1), value: this.columns[key] })
+		},
 	},
 }
 </script>

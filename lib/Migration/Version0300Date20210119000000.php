@@ -73,6 +73,7 @@ class Version0300Date20210119000000 extends SimpleMigrationStep {
 				'measurement_column_defecation',
 				'measurement_column_appetite',
 				'measurement_column_allergies',
+				'measurement_chart_detail',
 				'weight_column_weight',
 				'weight_column_bodyfat',
 				'weight_column_measurement',
@@ -225,8 +226,8 @@ class Version0300Date20210119000000 extends SimpleMigrationStep {
 	}
 
 	private function createSleepData(ISchemaWrapper $schema) {
-		if (!$schema->hasTable('health_measurementdata')) {
-			$table = $schema->createTable('health_measurementdata');
+		if (!$schema->hasTable('health_sleepdata')) {
+			$table = $schema->createTable('health_sleepdata');
 			/** @noinspection DuplicatedCode */
 			$table->addColumn('id', 'integer', [
 				'autoincrement' => true,
@@ -246,11 +247,15 @@ class Version0300Date20210119000000 extends SimpleMigrationStep {
 			$table->addColumn('quality', 'integer', [
 				'notnull' => false,
 			]);
-			$table->addColumn('counted_wakeup', 'integer', [
+			$table->addColumn('counted_wakeups', 'integer', [
 				'notnull' => false,
 			]);
 			$table->addColumn('duration_wakeups', 'integer', [
 				'notnull' => false,
+			]);
+			$table->addColumn('comment', Type::TEXT, [
+				'notnull' => false,
+				'default' => null,
 			]);
 			$table->setPrimaryKey(['id']);
 		}

@@ -48,6 +48,12 @@ return [
 		['name' => 'feelingdata#delete',	'url' => '/feeling/dataset/{id}',	'verb' => 'DELETE'],
 		['name' => 'feelingdata#update',	'url' => '/feeling/dataset/{id}',	'verb' => 'PUT'],
 
+		// sleep data
+		['name' => 'sleepdata#findByPerson',	'url' => '/sleep/dataset/person/{personId}',	'verb' => 'GET'],
+		['name' => 'sleepdata#create',	'url' => '/sleep/dataset/person/{personId}',	'verb' => 'POST'],
+		['name' => 'sleepdata#delete',	'url' => '/sleep/dataset/{id}',	'verb' => 'DELETE'],
+		['name' => 'sleepdata#update',	'url' => '/sleep/dataset/{id}',	'verb' => 'PUT'],
+
 		// ces service
 		['name' => 'ces#index', 'url' => '/ces', 'verb' => 'POST'],
 		['name' => 'ces#contexts', 'url' => '/ces/contexts', 'verb' => 'POST'],

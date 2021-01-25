@@ -190,7 +190,7 @@ export default {
 	},
 	methods: {
 		sendData: function() {
-			console.debug('modal transform values', this.values)
+			// console.debug('modal transform values', this.values)
 			for (const [key] of Object.entries(this.values)) {
 				if (this.values[key] && this.values[key].id) {
 					this.values[key] = this.values[key].id
@@ -203,7 +203,7 @@ export default {
 					this.values[key] = JSON.stringify(d)
 				}
 			}
-			console.debug('modal send values', this.values)
+			// console.debug('modal send values', this.values)
 
 			this.$emit('addItem', this.values)
 			this.resetValues()
@@ -252,7 +252,7 @@ export default {
 					// this.values[h.columnId] = new Date(this.values[h.columnId]).toISOString().slice(0, 10)
 					this.values[h.columnId] = moment(this.values[h.columnId]).format('YYYY-MM-DD')
 				}
-				if (h.columnId === 'datetime') {
+				if (h.columnId === 'datetime' || h.columnId === 'asleep' || h.columnId === 'wakeup') {
 					this.values[h.columnId] = moment(this.values[h.columnId]).format('YYYY-MM-DDTHH:mm')
 				}
 				if (h.type === 'multiselect') {

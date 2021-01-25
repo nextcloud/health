@@ -223,6 +223,13 @@ export default {
 		margin-top: 40px;
 	}
 
+	h4 {
+		font-size: large;
+		font-weight: 300;
+		margin-bottom: 20px;
+		margin-top: 10px;
+	}
+
 	.h3-icon {
 		background-position: left;
 		padding-left: 20px;

@@ -119,6 +119,7 @@
 
 		<h3>Data</h3>
 		<WeightTable
+			v-if="!loading"
 			:data="weightData"
 			:person="person" />
 		<div v-if="loading" class="icon-loading" />

@@ -28,12 +28,14 @@ import { WeightApi } from './WeightApi'
 import { PersonApi } from './PersonApi'
 import { MeasurementApi } from './MeasurementApi'
 import { FeelingApi } from './FeelingApi'
+import { SleepApi } from './SleepApi'
 
 Vue.use(Vuex)
 const weightApiClient = new WeightApi()
 const personApiClient = new PersonApi()
 const measurementApiClient = new MeasurementApi()
 const feelingApiClient = new FeelingApi()
+const sleepApiClient = new SleepApi()
 
 export default new Vuex.Store({
 	state: {
@@ -60,6 +62,7 @@ export default new Vuex.Store({
 		rWeightDatasets: [],
 		measurementDatasets: [],
 		feelingDatasets: [],
+		sleepDatasets: [],
 	},
 	getters: {
 		person: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId] : null,
@@ -174,6 +177,28 @@ export default new Vuex.Store({
 			}
 			state.feelingDatasets = datasets
 		},
+		// -------------
+		sleepDatasets(state, data) {
+			state.sleepDatasets = data
+		},
+		sleepDatasetsAppend(state, data) {
+			state.sleepDatasets.push(data)
+		},
+		sleepDatasetsDelete(state, data) {
+			const existingIndex = state.sleepDatasets.findIndex(set => set.id === data.id)
+			if (existingIndex !== -1) {
+				state.sleepDatasets.splice(existingIndex, 1)
+			}
+		},
+		sleepDatasetsUpdate(state, data) {
+			const datasets = state.sleepDatasets
+			const existingIndex = datasets.findIndex(set => set.id === data.id)
+			if (existingIndex !== -1) {
+				datasets.splice(existingIndex, 1)
+				datasets.push(data)
+			}
+			state.sleepDatasets = datasets
+		},
 
 	},
 	actions: {
@@ -196,7 +221,7 @@ export default new Vuex.Store({
 			commit('activeModule', module)
 			dispatch('loadModuleContentForPerson')
 		},
-		async loadModuleContentForPerson({ state, getters, commit, dispatch }) {
+		async loadModuleContentForPerson({ getters, commit, dispatch }) {
 			// this ist called if the active person or module changed
 			// it should load all data, that is necessary for the active module
 			commit('loading', true)
@@ -206,6 +231,7 @@ export default new Vuex.Store({
 			await dispatch('weightDatasetsLoadByPerson', getters.person.id)
 			await dispatch('measurementDatasetsLoadByPerson', getters.person.id)
 			await dispatch('feelingDatasetsLoadByPerson', getters.person.id)
+			await dispatch('sleepDatasetsLoadByPerson', getters.person.id)
 			commit('loading', false)
 		},
 		async setValue({ commit, state, getters }, data) {
@@ -217,6 +243,7 @@ export default new Vuex.Store({
 			commit('personUpdate', o)
 		},
 		cesRequest({ commit, state, getters }, data) {
+			console.debug('CES DEPRECATED!')
 			// console.debug('start cesRequest')
 
 			if ('entityData' in data) {
@@ -255,6 +282,8 @@ export default new Vuex.Store({
 			}
 		},
 		updateModuleSettings: function({ state, commit }, data) {
+			console.debug('CES DEPRECATED!')
+
 			// data: { module: ..., type: ..., data: ... }
 			// console.debug('updateModuleSettings', data)
 			const settings = Object.assign({}, state.moduleSettings)
@@ -266,6 +295,8 @@ export default new Vuex.Store({
 			this.commit('setModuleSettings', settings)
 		},
 		getModuleSetting: function({ state }, data) {
+			console.debug('CES DEPRECATED!')
+
 			// data: { module: ..., type: ..., key: ... }
 			if (
 				this.moduleSettings
@@ -279,6 +310,8 @@ export default new Vuex.Store({
 			}
 		},
 		updateModuleData: function({ state, commit }, data) {
+			console.debug('CES DEPRECATED!')
+
 			// data: { module: ..., type: ..., data: ... }
 			// console.debug('updateModuleSettings', data)
 			const d = Object.assign({}, state.moduleData)
@@ -356,6 +389,27 @@ export default new Vuex.Store({
 			const o = await feelingApiClient.deleteSet(set)
 			// console.debug('returned o', o)
 			commit('feelingDatasetsDelete', o)
+		},
+		// module sleep
+		async sleepDatasetsLoadByPerson({ commit }, personId) {
+			const datasets = await sleepApiClient.findDatasetsByPerson(personId)
+			// console.debug('found datasets', datasets)
+			commit('sleepDatasets', datasets)
+		},
+		async sleepDatasetsAppend({ commit, getters }, set) {
+			const o = await sleepApiClient.addSet(getters.person.id, set)
+			// console.debug('returned o', o)
+			commit('sleepDatasetsAppend', o)
+		},
+		async sleepDatasetsUpdate({ commit, getters }, set) {
+			const o = await sleepApiClient.updateSet(set)
+			// console.debug('returned o', o)
+			commit('sleepDatasetsUpdate', o)
+		},
+		async sleepDatasetsDelete({ commit, getters }, set) {
+			const o = await sleepApiClient.deleteSet(set)
+			// console.debug('returned o', o)
+			commit('sleepDatasetsDelete', o)
 		},
 	},
 })

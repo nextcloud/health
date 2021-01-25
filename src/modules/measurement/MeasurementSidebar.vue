@@ -103,6 +103,18 @@
 				{{ t('health', 'Allergies', {}) }}
 			</label>
 		</div>
+
+		<li><h3>{{ t('health', 'General settings', {}) }}</h3></li>
+		<div>
+			<label>
+				<input
+					id="chartDetail"
+					v-model="chartDetail"
+					type="checkbox"
+					@change="saveField('chartDetail')">
+				{{ t('health', 'Show time detail chart', {}) }}
+			</label>
+		</div>
 	</ul>
 </template>
 
@@ -123,6 +135,7 @@ export default {
 				appetite: true,
 				allergies: true,
 			},
+			chartDetail: false,
 		}
 	},
 	computed: {
@@ -148,12 +161,16 @@ export default {
 				this.columns.defecation = this.person.measurementColumnDefecation
 				this.columns.appetite = this.person.measurementColumnAppetite
 				this.columns.allergies = this.person.measurementColumnAllergies
+				this.chartDetail = this.person.measurementChartDetail
 			} else {
 				console.debug('no person found to update [watch person in MeasurementSidebar]')
 			}
 		},
 		saveColumn(key) {
 			this.$store.dispatch('setValue', { key: 'measurementColumn' + key[0].toUpperCase() + key.substring(1), value: this.columns[key] })
+		},
+		saveField(key) {
+			this.$store.dispatch('setValue', { key: 'measurement' + key[0].toUpperCase() + key.substring(1), value: this[key] })
 		},
 	},
 }

@@ -26,15 +26,31 @@
 			{{ t('health', 'Measurement', {}) }}
 		</h2>
 
-		<h3>{{ t('health', 'Chart', {}) }}</h3>
+		<h3 v-if="!person.measurementChartDetail">
+			{{ t('health', 'Chart', {}) }}
+		</h3>
+		<h3 v-if="person.measurementChartDetail">
+			{{ t('health', 'Charts', {}) }}
+		</h3>
+		<h4>{{ t('health', 'Over all view', {}) }}</h4>
 		<MeasurementChart
 			v-if="!loading"
 			:person="person"
 			:data="measurementData" />
 		<div v-if="loading" class="icon-loading" />
 
+		<h4 v-if="person.measurementChartDetail">
+			{{ t('health', 'Detail view', {}) }}
+		</h4>
+		<MeasurementDetailChart
+			v-if="!loading && person.measurementChartDetail"
+			:person="person"
+			:data="measurementData" />
+		<div v-if="loading && person.measurementChartDetail" class="icon-loading" />
+
 		<h3>Data</h3>
 		<MeasurementTable
+			v-if="!loading"
 			:data="measurementData"
 			:person="person" />
 		<div v-if="loading" class="icon-loading" />
@@ -45,12 +61,14 @@
 import { mapState, mapGetters } from 'vuex'
 import MeasurementTable from './MeasurementTable'
 import MeasurementChart from './MeasurementChart'
+import MeasurementDetailChart from './MeasurementDetailChart'
 
 export default {
 	name: 'MeasurementContent',
 	components: {
 		MeasurementChart,
 		MeasurementTable,
+		MeasurementDetailChart,
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar', 'measurementDatasets', 'loading']),

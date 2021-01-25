@@ -74,4 +74,10 @@ class PermissionService {
 		return true;
 	}
 
+	public function sleepData($id, $userId): bool
+	{
+		// TODO
+		return true;
+	}
+
 }

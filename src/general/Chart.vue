@@ -26,7 +26,8 @@
 			v-if="data && data.length > 0 && definition"
 			class="chartDataRangeSelector">
 			<select
-				id="range"
+				v-if="!isDetailRange"
+				id="rangeDays"
 				v-model="range"
 				name="range">
 				<option value="week">
@@ -40,6 +41,27 @@
 				</option>
 				<option value="all">
 					{{ t('health', 'Show all') }}
+				</option>
+			</select>
+			<select
+				v-if="isDetailRange"
+				id="rangeHours"
+				v-model="range"
+				name="range">
+				<option value="1hour">
+					{{ t('health', 'last hour') }}
+				</option>
+				<option value="4hours">
+					{{ t('health', 'last 4 hours') }}
+				</option>
+				<option value="12hours">
+					{{ t('health', 'last 12 hours') }}
+				</option>
+				<option value="24hours">
+					{{ t('health', 'last 24 hours') }}
+				</option>
+				<option value="48hours">
+					{{ t('health', 'last 48 hours') }}
 				</option>
 			</select>
 		</div>
@@ -114,14 +136,20 @@ export default {
 					if (!data[def.columnId]) {
 						data[def.columnId] = []
 					}
-					if (d[def.timeId] && d[def.valueId] && this.isInTimeRange(d[def.timeId]) && def.show) {
+					if (def.valueId !== 'calculate' && d[def.timeId] && d[def.valueId] && this.isInTimeRange(d[def.timeId]) && def.show) {
 						data[def.columnId].push({
 							t: moment(d[def.timeId]),
 							y: def.getValueY(d[def.valueId]),
 						})
+					} else if (def.valueId === 'calculate' && d[def.timeId] && this.isInTimeRange(d[def.timeId]) && def.show) {
+						data[def.columnId].push({
+							t: moment(d[def.timeId]),
+							y: def.getValueY(d),
+						})
 					}
 				})
 			})
+			// console.debug('data in get datasets for chartData', data)
 
 			const result = {
 				datasets: [],
@@ -143,6 +171,9 @@ export default {
 			// console.debug('chartData', result)
 			return result
 		},
+		isDetailRange: function() {
+			return !(this.rangeDefinition === 'week' || this.rangeDefinition === 'month' || this.rangeDefinition === 'year')
+		},
 		rangeDays: function() {
 			if (this.range === 'week') {
 				return 7
@@ -154,14 +185,31 @@ export default {
 				return -1
 			}
 		},
+		rangeHours: function() {
+			if (this.range === '1hour') {
+				return 1
+			} else if (this.range === '4hours') {
+				return 4
+			} else if (this.range === '12hours') {
+				return 12
+			} else if (this.range === '24hours') {
+				return 24
+			} else if (this.range === '48hours') {
+				return 48
+			} else {
+				return -1
+			}
+		},
 	},
 	methods: {
 		isInTimeRange: function(date) {
-			if (this.rangeDays === -1) {
+			if (this.rangeDays !== -1 && !this.isDetailRange) {
+				return Math.abs(moment(date).diff(moment(), 'days')) <= this.rangeDays
+			} else if (this.rangeHours !== -1 && this.isDetailRange) {
+				return Math.abs(moment(date).diff(moment(), 'hours')) <= this.rangeHours
+			} else {
 				return true
 			}
-			// console.debug('isInTimeRange', { ohneAbs: moment(date).diff(moment(), 'days'), result: Math.abs(moment(date).diff(moment(), 'days')),  })
-			return Math.abs(moment(date).diff(moment(), 'days')) <= this.rangeDays
 		},
 	},
 }

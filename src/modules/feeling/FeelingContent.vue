@@ -35,6 +35,7 @@
 
 		<h3>Data</h3>
 		<FeelingTable
+			v-if="!loading"
 			:data="feelingData"
 			:person="person" />
 		<div v-if="loading" class="icon-loading" />

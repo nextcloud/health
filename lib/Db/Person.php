@@ -86,6 +86,7 @@ class Person extends Entity implements JsonSerializable {
 	protected $measurementColumnDefecation;
 	protected $measurementColumnAppetite;
 	protected $measurementColumnAllergies;
+	protected $measurementChartDetail;
 
 	// module sleep
 	protected $sleepColumnQuality;
@@ -134,7 +135,7 @@ class Person extends Entity implements JsonSerializable {
 		$this->addType('measurementColumnBloodSugar', 'boolean');
 		$this->addType('measurementColumnDefecation', 'boolean');
 		$this->addType('measurementColumnAppetite', 'boolean');
-		$this->addType('measurementColumnAllergies', 'boolean');
+		$this->addType('measurementChartDetail', 'boolean');
 
 		// module sleep
 		$this->addType('sleepColumnQuality', 'boolean');
@@ -202,6 +203,8 @@ class Person extends Entity implements JsonSerializable {
 			'measurementColumnDefecation' => $this->measurementColumnDefecation,
 			'measurementColumnAppetite' => $this->measurementColumnAppetite,
 			'measurementColumnAllergies' => $this->measurementColumnAllergies,
+			'measurementChartDetail' => $this->measurementChartDetail,
+
 
 			// module sleep
 			'sleepColumnQuality' => $this->sleepColumnQuality,
