@@ -23,7 +23,7 @@
 <template>
 	<ul>
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="mood"
@@ -33,7 +33,7 @@
 				{{ t('health', 'Mood', {}) }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="sadnessLevel"
@@ -43,7 +43,7 @@
 				{{ t('health', 'Sadness level', {}) }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="symptoms"
@@ -53,7 +53,7 @@
 				{{ t('health', 'Symptoms') }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="attacks"
@@ -63,7 +63,7 @@
 				{{ t('health', 'Attacks', {}) }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="medication"
@@ -73,7 +73,7 @@
 				{{ t('health', 'Medication', {}) }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="pain"
@@ -83,7 +83,7 @@
 				{{ t('health', 'Pain', {}) }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="energy"

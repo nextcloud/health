@@ -77,44 +77,12 @@
 				<MeasurementSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
-				v-if="person.enabledModuleBreaks"
-				id="breaks"
-				:name="t('health', 'Breaks')"
-				icon="icon-pause"
-				:order="3">
-				<BreaksSidebar />
-			</AppSidebarTab>
-			<AppSidebarTab
-				v-if="person.enabledModuleMedicine"
-				id="medicine"
-				:name="t('health', 'Medicine')"
-				icon="icon-filter"
-				:order="3">
-				<MedicineSidebar />
-			</AppSidebarTab>
-			<AppSidebarTab
-				v-if="person.enabledModuleActivities"
-				id="activities"
-				:name="t('health', 'Activities')"
-				icon="icon-user-admin"
-				:order="3">
-				<ActivitiesSidebar />
-			</AppSidebarTab>
-			<AppSidebarTab
 				v-if="person.enabledModuleSleep"
 				id="sleep"
 				:name="t('health', 'Sleep')"
 				icon="icon-download"
 				:order="4">
 				<SleepSidebar />
-			</AppSidebarTab>
-			<AppSidebarTab
-				v-if="person.enabledModuleNutrition"
-				id="nutrition"
-				:name="t('health', 'Nutrition')"
-				icon="icon-category-dashboard"
-				:order="5">
-				<NutritionSidebar />
 			</AppSidebarTab>
 		</AppSidebar>
 	</Content>
@@ -139,20 +107,14 @@ import SleepContent from './modules/sleep/SleepContent'
 import MeasurementContent from './modules/measurement/MeasurementContent'
 import MeasurementSidebar from './modules/measurement/MeasurementSidebar'
 import SleepSidebar from './modules/sleep/SleepSidebar'
-import NutritionSidebar from './modules/nutrition/NutritionSidebar'
-import BreaksSidebar from './modules/breaks/BreaksSidebar'
-import MedicineSidebar from './modules/medicine/MedicineSidebar'
 import moment from '@nextcloud/moment'
 
 export default {
 	name: 'App',
 	components: {
-		MedicineSidebar,
-		BreaksSidebar,
 		MeasurementContent,
 		SleepContent,
 		MeasurementSidebar,
-		NutritionSidebar,
 		SleepSidebar,
 		Content,
 		AppContent,
@@ -260,5 +222,21 @@ export default {
 
 	.red {
 		color: #bd1500;
+	}
+
+	.app-sidebar input[type='checkbox'] {
+		min-height: auto;
+	}
+
+	.checkbox-wrapper {
+		padding: 10px;
+	}
+
+	.checkbox-wrapper label {
+		color: rgb(34,34,34);
+	}
+
+	.checkbox-wrapper:hover label {
+		color: black;
 	}
 </style>

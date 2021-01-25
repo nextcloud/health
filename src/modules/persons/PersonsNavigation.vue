@@ -57,12 +57,6 @@
 					:class="(activeModule === 'weight' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'weight')" />
 				<AppNavigationItem
-					v-if="p.enabledModuleBreaks"
-					:title="t('health', 'Breaks')"
-					icon="icon-pause"
-					:class="(activeModule === 'breaks' && index === activePersonId)?'active-module':''"
-					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'breaks')" />
-				<AppNavigationItem
 					v-if="p.enabledModuleFeeling"
 					:title="t('health', 'Feeling')"
 					icon="icon-category-monitoring"
@@ -75,29 +69,11 @@
 					:class="(activeModule === 'measurement' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'measurement')" />
 				<AppNavigationItem
-					v-if="p.enabledModuleMedicine"
-					:title="t('health', 'Medicine')"
-					icon="icon-filter"
-					:class="(activeModule === 'medicine' && index === activePersonId)?'active-module':''"
-					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'medicine')" />
-				<AppNavigationItem
-					v-if="p.enabledModuleActivities"
-					:title="t('health', 'Activities')"
-					icon="icon-user-admin"
-					:class="(activeModule === 'activities' && index === activePersonId)?'active-module':''"
-					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'activities')" />
-				<AppNavigationItem
 					v-if="p.enabledModuleSleep"
 					:title="t('health', 'Sleep')"
 					icon="icon-download"
 					:class="(activeModule === 'sleep' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'sleep')" />
-				<AppNavigationItem
-					v-if="p.enabledModuleNutrition"
-					:title="t('health', 'Nutrition')"
-					icon="icon-category-dashboard"
-					:class="(activeModule === 'nutrition' && index === activePersonId)?'active-module':''"
-					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'nutrition')" />
 			</AppNavigationItem>
 			<AppNavigationItem
 				:title="t('health', 'New person')"

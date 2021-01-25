@@ -23,7 +23,7 @@
 <template>
 	<ul>
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="temperature"
@@ -33,7 +33,7 @@
 				{{ t('health', 'Temperature', {}) }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="heartRate"
@@ -43,7 +43,7 @@
 				{{ t('health', 'Heart rate', {}) }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="bloodPres"
@@ -53,7 +53,7 @@
 				{{ t('health', 'Blood pressure') }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="oxygenSat"
@@ -63,7 +63,7 @@
 				{{ t('health', 'Oxygen saturation', {}) }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="bloodSugar"
@@ -73,7 +73,7 @@
 				{{ t('health', 'Blood sugar', {}) }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="defecation"
@@ -83,7 +83,7 @@
 				{{ t('health', 'Defecation', {}) }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="appetite"
@@ -93,7 +93,7 @@
 				{{ t('health', 'Appetite', {}) }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="allergies"
@@ -105,7 +105,7 @@
 		</div>
 
 		<li><h3>{{ t('health', 'General settings', {}) }}</h3></li>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="chartDetail"

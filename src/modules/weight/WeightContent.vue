@@ -117,8 +117,6 @@
 			:data="weightData"
 			:person="person" />
 		<div v-if="loading" class="icon-loading" />
-
-		<button @click="clicked('cool')" />
 	</div>
 </template>
 

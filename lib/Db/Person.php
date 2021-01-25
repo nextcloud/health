@@ -135,6 +135,7 @@ class Person extends Entity implements JsonSerializable {
 		$this->addType('measurementColumnBloodSugar', 'boolean');
 		$this->addType('measurementColumnDefecation', 'boolean');
 		$this->addType('measurementColumnAppetite', 'boolean');
+		$this->addType('measurementColumnAllergies', 'boolean');
 		$this->addType('measurementChartDetail', 'boolean');
 
 		// module sleep

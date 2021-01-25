@@ -32,7 +32,9 @@
 		<h3 v-if="person.measurementChartDetail">
 			{{ t('health', 'Charts', {}) }}
 		</h3>
-		<h4>{{ t('health', 'Over all view', {}) }}</h4>
+		<h4 v-if="person.measurementChartDetail">
+			{{ t('health', 'Over all view', {}) }}
+		</h4>
 		<MeasurementChart
 			v-if="!loading"
 			:person="person"

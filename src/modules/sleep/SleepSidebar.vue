@@ -23,7 +23,7 @@
 <template>
 	<ul>
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="mood"
@@ -33,7 +33,7 @@
 				{{ t('health', 'Quality', {}) }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="wakeups"

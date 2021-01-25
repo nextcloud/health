@@ -23,7 +23,7 @@
 <template>
 	<ul>
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="weight"
@@ -33,7 +33,7 @@
 				{{ t('health', 'Weight', {}) }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="bodyfat"
@@ -43,7 +43,7 @@
 				{{ t('health', 'Bodyfat', {}) }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="measurement"
@@ -53,7 +53,7 @@
 				{{ person.weightMeasurementName ? person.weightMeasurementName : t('health', 'Custom measurement') }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="waistSize"
@@ -63,7 +63,7 @@
 				{{ t('health', 'Waist size', {}) }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="hipSize"
@@ -73,7 +73,7 @@
 				{{ t('health', 'Hip size', {}) }}
 			</label>
 		</div>
-		<div>
+		<div class="checkbox-wrapper">
 			<label>
 				<input
 					id="musclePart"
