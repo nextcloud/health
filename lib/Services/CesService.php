@@ -24,10 +24,15 @@ declare(strict_types=1);
 
 namespace OCA\Health\Services;
 
+use OCA\Health\Controller\FeelingdataController;
+use OCA\Health\Controller\MeasurementdataController;
+use OCA\Health\Controller\SleepdataController;
+use OCA\Health\Controller\WeightdataController;
 use OCA\Health\Db\CesContextMapper;
 use OCA\Health\Db\CesEntityMapper;
 use OCA\Health\Db\Context;
 use OCA\Health\Db\Item;
+use OCA\Health\Db\Measurementdata;
 use OCP\AppFramework\Db\Entity;
 
 class CesService {
@@ -36,15 +41,24 @@ class CesService {
 	protected $cesContextMapper;
 	protected $cesEntityMapper;
 
+	protected $measurementController;
+	protected $sleepController;
+	protected $feelingController;
+	protected $weightController;
+
 	private $magicKeys;
 
-	public function __construct($userId, CesContextMapper $cesContextMapper, CesEntityMapper $cesEntityMapper) {
+	public function __construct($userId, CesContextMapper $cesContextMapper, CesEntityMapper $cesEntityMapper, SleepdataController $sleepdataController, FeelingdataController $feelingdataController, WeightdataController $weightdataController, MeasurementdataController $measurementdataController) {
 		$this->userId = $userId;
 		$this->cesContextMapper = $cesContextMapper;
 		$this->cesEntityMapper = $cesEntityMapper;
 		$this->magicKeys = [
 			'alwaysCreate'
 		];
+		$this->measurementController = $measurementdataController;
+		$this->sleepController = $sleepdataController;
+		$this->weightController = $weightdataController;
+		$this->feelingController = $feelingdataController;
 	}
 
 	/**
@@ -60,7 +74,8 @@ class CesService {
 	 * @param $entityData
 	 * @return array|Entity[]
 	 */
-	public function handleRequest($contextFilter, $contextData, $entityFilter, $entityData) {
+	public function handleRequest($contextFilter, $contextData, $entityFilter, $entityData): array
+	{
 		// if contextFilter exists -> find all contexts
 		$contexts = $this->cesContextMapper->find($contextFilter);
 		// if none was found OR magic key 'alwaysCreate' is set, create new
@@ -147,8 +162,38 @@ class CesService {
 		return $this->cesEntityMapper->insert($entity);
 	}
 
-	public function getContexts($filter = null) {
+	public function getContexts($filter = null): array
+	{
 		return $this->cesContextMapper->find($filter);
+	}
+
+	public function transformDatasets() {
+		$contextFilter = [
+			'type' => 'datasets'
+			];
+		$contexts = $this->cesContextMapper->find($contextFilter);
+		foreach ($contexts as $context) {
+			$contextData = \GuzzleHttp\json_decode($context->getDescription());
+			$entities = $this->cesEntityMapper->find($context);
+			foreach ($entities as $e) {
+				$eData = \GuzzleHttp\json_decode($e->getData());
+				if($contextData->module === 'measurement') {
+					$personId = $eData->getPersonId() ? $eData->getPersonId() : null;
+					$temperature = $eData->getTemperature() ? $eData->getTemperature() : null;
+					$datetime = $eData->getDatetime() ? $eData->getDatetime() : null;
+					$heartRate = $eData->getHeartRate() ? $eData->getHeartRate() : null;
+					$bloodPressureS = $eData->getBloodPres() ? $eData->getBloodPres() : null;
+					$temperature = $eData->getTemperature() ? $eData->getTemperature() : null;
+					$temperature = $eData->getTemperature() ? $eData->getTemperature() : null;
+					$temperature = $eData->getTemperature() ? $eData->getTemperature() : null;
+					$temperature = $eData->getTemperature() ? $eData->getTemperature() : null;
+
+				} elseif($contextData->module === 'sleep') {
+				} elseif($contextData->module === 'feeling') {
+				} else {
+				}
+			}
+		}
 	}
 
 }

@@ -23,13 +23,13 @@
 <template>
 	<div>
 		<div v-if="bmi">
-			<div class="bmi" :class="statusClass">
-				<div class="number" :class="statusClass">
-					{{ bmi }}
+			<div class="bmi" :class="statusClass(bmi(person, weight))">
+				<div class="number" :class="statusClass(bmi(person, weight))">
+					{{ bmi(person, weight) }}
 				</div>
-				{{ status }}
+				{{ status(bmi(person, weight)) }}
 				<div class="info">
-					{{ t('health', 'Weight', {}) }} {{ weight + unit }}
+					{{ t('health', 'Weight', {}) }} {{ weight + person.weightUnit }}
 				</div>
 				<div class="info">
 					{{ t('health', 'Date', {}) }} {{ date | formatMyDate }}
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import MixinBmi from './MixinBmi'
 
 export default {
 	name: 'WeightBmi',
@@ -48,85 +49,20 @@ export default {
 			return new Date(v).toLocaleDateString()
 		},
 	},
+	mixins: [MixinBmi],
 	props: {
-		size: {
-			type: Number,
-			default: null,
-		},
-		age: {
-			type: Number,
-			default: null,
-		},
 		weight: {
 			type: Number,
 			default: null,
-		},
-		unit: {
-			type: String,
-			default: 'kg',
 		},
 		date: {
 			type: String,
 			default: null,
 		},
-	},
-	computed: {
-		bmi: function() {
-			if (this.size === null || this.age === null || this.weight === null) {
-				return null
-			}
-			const s = this.size / 100
-			const bmi = this.weight / (s * s)
-			// console.debug('bmi: ' + bmi)
-			return Math.round(bmi)
+		person: {
+			type: Object,
+			default: null,
 		},
-		status: function() {
-			const bmi = this.bmi
-			if (this.bmi === null) {
-				return null
-			}
-
-			if (bmi < 18.5) {
-				return t('health', 'Underweight')
-			} else if (bmi >= 18.5 && bmi < 25) {
-				return t('health', 'Normal weight')
-			} else if (bmi >= 25 && bmi < 30) {
-				return t('health', 'Pre-obesity')
-			} else if (bmi >= 30 && bmi < 35) {
-				return t('health', 'Obesity class I')
-			} else if (bmi >= 35 && bmi < 40) {
-				return t('health', 'Obesity class II')
-			} else {
-				return t('health', 'Obesity class III')
-			}
-		},
-		statusClass: function() {
-			const bmi = this.bmi
-			const data = {
-				okay: false,
-				good: false,
-				warning: false,
-				alert: false,
-				danger: false,
-			}
-
-			if (bmi < 18.5) {
-				data.okay = true
-			} else if (bmi >= 18.5 && bmi < 25) {
-				data.good = true
-			} else if (bmi >= 25 && bmi < 30) {
-				data.okay = true
-			} else if (bmi >= 30 && bmi < 35) {
-				data.warn = true
-			} else if (bmi >= 35 && bmi < 40) {
-				data.alert = true
-			} else {
-				data.danger = true
-			}
-			return data
-		},
-	},
-	methods: {
 	},
 }
 </script>

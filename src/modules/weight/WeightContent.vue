@@ -51,33 +51,27 @@
 						<WeightBmi
 							v-if="minWeightDataset && person.size && person.age"
 							:title="t('health', 'minimum')"
-							:size="person.size"
 							:date="minWeightDataset ? minWeightDataset.date : null"
-							:age="person.age"
 							:weight="minWeightDataset ? minWeightDataset.weight : null"
-							:unit="weightUnit" />
+							:person="person" />
 					</td>
 					<td>
 						<WeightBmi
 							v-if="minWeightDataset && person.size && person.age"
 							:title="t('health', 'actual')"
 							:show-base-info="false"
-							:size="person.size"
-							:age="person.age"
 							:date="lastWeightDataset ? lastWeightDataset.date : null"
 							:weight="lastWeightDataset ? lastWeightDataset.weight : null"
-							:unit="weightUnit" />
+							:person="person" />
 					</td>
 					<td>
 						<WeightBmi
 							v-if="minWeightDataset && person.size && person.age"
 							:title="t('health', 'maximum')"
 							:show-base-info="false"
-							:size="person.size"
-							:age="person.age"
 							:date="maxWeightDataset ? maxWeightDataset.date : null"
 							:weight="maxWeightDataset ? maxWeightDataset.weight : null"
-							:unit="weightUnit" />
+							:person="person" />
 					</td>
 				</tr>
 				<tr>
@@ -123,6 +117,8 @@
 			:data="weightData"
 			:person="person" />
 		<div v-if="loading" class="icon-loading" />
+
+		<button @click="clicked('cool')" />
 	</div>
 </template>
 

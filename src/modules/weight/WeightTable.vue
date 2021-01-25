@@ -34,12 +34,14 @@
 
 <script>
 import DataTable from '../../general/DataTable'
+import MixinBmi from './MixinBmi'
 
 export default {
 	name: 'WeightTable',
 	components: {
 		DataTable,
 	},
+	mixins: [MixinBmi],
 	props: {
 		data: {
 			type: Array,

@@ -31,8 +31,11 @@ use OCP\Util;
 
 class PageController extends Controller {
 
+	protected $cesService;
+
 	public function __construct($appName, IRequest $request) {
 		parent::__construct($appName, $request);
+		// $this->cesService = $cesService;
 	}
 
 	/**
@@ -40,6 +43,7 @@ class PageController extends Controller {
 	 * @NoCSRFRequired
 	 */
 	public function index() {
+		// $this->cesService->transformDatasets();
 		// Util::addScript($this->appName, 'vue-chartjs.min');
 		// Util::addScript($this->appName, 'Chart');
 		Util::addScript($this->appName, 'health');
