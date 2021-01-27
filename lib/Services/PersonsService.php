@@ -28,28 +28,34 @@ use OCA\Health\Db\PersonMapper;
 use OCA\Health\Db\Person;
 use Exception;
 use OCP\AppFramework\Http;
-use OCP\IUser;
 use OCP\IUserManager;
 
 class PersonsService {
 
 	protected $personMapper;
 	protected $weightdataService;
+	protected $sleepdataService;
+	protected $feelingdataService;
+	protected $measurementdataService;
 	protected $userId;
 	protected $formatHelperService;
 	protected $permissionService;
 	protected $userManager;
 
-	public function __construct(PersonMapper $pM, $userId, WeightdataService $wdS, FormatHelperService $fhS, PermissionService $permissionService, IUserManager $userManager) {
+	public function __construct(PersonMapper $pM, $userId, WeightdataService $wdS, FormatHelperService $fhS, PermissionService $permissionService, IUserManager $userManager, FeelingdataService $feelingdataService, SleepdataService $sleepdataService, MeasurementdataService $measurementdataService) {
 		$this->personMapper = $pM;
 		$this->userId = $userId;
 		$this->weightdataService = $wdS;
 		$this->formatHelperService = $fhS;
 		$this->permissionService = $permissionService;
 		$this->userManager = $userManager;
+		$this->sleepdataService = $sleepdataService;
+		$this->measurementdataService = $measurementdataService;
+		$this->feelingdataService = $feelingdataService;
 	}
 
-	public function getAllPersons() {
+	public function getAllPersons(): array
+	{
 		$persons = $this->personMapper->findAll($this->userId);
 		if( count($persons) === 0) {
 			$user = $this->userManager->get($this->userId);
@@ -70,10 +76,10 @@ class PersonsService {
 		$p->setName($name);
 		$p->setEnabledModuleWeight(true);
 		$p->setEnabledModuleBreaks(false);
-		$p->setEnabledModuleFeeling(false);
+		$p->setEnabledModuleFeeling(true);
 		$p->setEnabledModuleMedicine(false);
 		$p->setEnabledModuleActivities(false);
-		$p->setEnabledModuleSleep(false);
+		$p->setEnabledModuleSleep(true);
 		$p->setEnabledModuleNutrition(false);
 		$p->setEnabledModuleMeasurement(true);
 		$p->setWeightUnit('kg');
@@ -82,6 +88,9 @@ class PersonsService {
 		$p->setMeasurementColumnTemperature(true);
 		$p->setMeasurementColumnHeartRate(true);
 		$p->setMeasurementColumnBloodPres(true);
+		$p->setFeelingColumnMood(true);
+		$p->setFeelingColumnEnergy(true);
+		$p->setSleepColumnQuality(true);
 		return $this->personMapper->insert($p);
 	}
 
@@ -91,16 +100,32 @@ class PersonsService {
 		}
 
 		try {
-             $person = $this->personMapper->find($id, $this->userId);
-         } catch(Exception $e) {
-             return Http::STATUS_NOT_FOUND;
-         }
-         $wd = $this->weightdataService->getAllByPersonId($id);
-         foreach( $wd as $i ) {
-         	$this->weightdataService->delete($i->id);
-         }
-         $this->personMapper->delete($person);
-         return new $person;
+			$person = $this->personMapper->find($id, $this->userId);
+		} catch(Exception $e) {
+			return Http::STATUS_NOT_FOUND;
+		}
+
+		$wd = $this->weightdataService->getAllByPersonId($id);
+		foreach( $wd as $i ) {
+			$this->weightdataService->delete($i->id);
+		}
+
+		$wd = $this->feelingdataService->getAllByPersonId($id);
+		foreach( $wd as $i ) {
+			$this->feelingdataService->delete($i->id);
+		}
+
+		$wd = $this->sleepdataService->getAllByPersonId($id);
+		foreach( $wd as $i ) {
+			$this->sleepdataService->delete($i->id);
+		}
+
+		$wd = $this->measurementdataService->getAllByPersonId($id);
+		foreach( $wd as $i ) {
+			$this->measurementdataService->delete($i->id);
+		}
+
+		return $this->personMapper->delete($person);
 	}
 
 	public function updatePerson($id, $key, $value) {

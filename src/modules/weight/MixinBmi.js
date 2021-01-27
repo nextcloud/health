@@ -1,6 +1,9 @@
-// import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
+	components: {
+		...mapGetters(['person']),
+	},
 	methods: {
 		bmi(person, weight) {
 			if (person.size === null || person.age === null || weight === null) {
@@ -53,6 +56,19 @@ export default {
 				data.danger = true
 			}
 			return data
+		},
+		bodyfat(weight, age, sex) {
+			if (!weight || !age || !sex) {
+				return null
+			}
+
+			const bmi = this.bmi(this.person, weight)
+			const sexNumber = sex === 'female' ? 0 : 1
+			if (age <= 15) {
+				return (1.51 * bmi) - (0.7 * age) - (3.6 * sexNumber) + 1.4
+			} else {
+				return (1.39 * bmi) + (0.16 * age) - (10.34 * sexNumber) - 9
+			}
 		},
 	},
 }

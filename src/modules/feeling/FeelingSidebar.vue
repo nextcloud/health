@@ -23,126 +23,56 @@
 <template>
 	<ul>
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="mood"
-					v-model="columns.mood"
-					type="checkbox"
-					@change="saveColumn('mood')">
-				{{ t('health', 'Mood', {}) }}
-			</label>
-		</div>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="sadnessLevel"
-					v-model="columns.sadnessLevel"
-					type="checkbox"
-					@change="saveColumn('sadnessLevel')">
-				{{ t('health', 'Sadness level', {}) }}
-			</label>
-		</div>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="symptoms"
-					v-model="columns.symptoms"
-					type="checkbox"
-					@change="saveColumn('symptoms')">
-				{{ t('health', 'Symptoms') }}
-			</label>
-		</div>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="attacks"
-					v-model="columns.attacks"
-					type="checkbox"
-					@change="saveColumn('attacks')">
-				{{ t('health', 'Attacks', {}) }}
-			</label>
-		</div>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="medication"
-					v-model="columns.medication"
-					type="checkbox"
-					@change="saveColumn('medication')">
-				{{ t('health', 'Medication', {}) }}
-			</label>
-		</div>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="pain"
-					v-model="columns.pain"
-					type="checkbox"
-					@change="saveColumn('pain')">
-				{{ t('health', 'Pain', {}) }}
-			</label>
-		</div>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="energy"
-					v-model="columns.energy"
-					type="checkbox"
-					@change="saveColumn('energy')">
-				{{ t('health', 'Energy', {}) }}
-			</label>
-		</div>
+		<ActionCheckbox
+			:checked="person.feelingColumnMood"
+			@change="$store.dispatch('setValue', { key: 'feelingColumnMood', value: $event.target.checked })">
+			{{ t('health', 'Mood', {}) }}
+		</ActionCheckbox>
+		<ActionCheckbox
+			:checked="person.feelingColumnSadnessLevel"
+			@change="$store.dispatch('setValue', { key: 'feelingColumnSadnessLevel', value: $event.target.checked })">
+			{{ t('health', 'Sadness level', {}) }}
+		</ActionCheckbox>
+		<ActionCheckbox
+			:checked="person.feelingColumnSymptoms"
+			@change="$store.dispatch('setValue', { key: 'feelingColumnSymptoms', value: $event.target.checked })">
+			{{ t('health', 'Symptoms') }}
+		</ActionCheckbox>
+		<ActionCheckbox
+			:checked="person.feelingColumnAttacks"
+			@change="$store.dispatch('setValue', { key: 'feelingColumnAttacks', value: $event.target.checked })">
+			{{ t('health', 'Attacks') }}
+		</ActionCheckbox>
+		<ActionCheckbox
+			:checked="person.feelingColumnMedication"
+			@change="$store.dispatch('setValue', { key: 'feelingColumnMedication', value: $event.target.checked })">
+			{{ t('health', 'Medication') }}
+		</ActionCheckbox>
+		<ActionCheckbox
+			:checked="person.feelingColumnPain"
+			@change="$store.dispatch('setValue', { key: 'feelingColumnPain', value: $event.target.checked })">
+			{{ t('health', 'Pain') }}
+		</ActionCheckbox>
+		<ActionCheckbox
+			:checked="person.feelingColumnEnergy"
+			@change="$store.dispatch('setValue', { key: 'feelingColumnEnergy', value: $event.target.checked })">
+			{{ t('health', 'Energy') }}
+		</ActionCheckbox>
 	</ul>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
 
 export default {
 	name: 'FeelingSidebar',
-	data: function() {
-		return {
-			columns: {
-				mood: true,
-				sadnessLevel: true,
-				symptoms: true,
-				attacks: true,
-				medication: true,
-				pain: true,
-				energy: true,
-			},
-		}
+	components: {
+		ActionCheckbox,
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar']),
 		...mapGetters(['person']),
-	},
-	watch: {
-		person: function() {
-			this.updateLocalColumnData()
-		},
-	},
-	mounted() {
-		this.updateLocalColumnData()
-	},
-	methods: {
-		updateLocalColumnData() {
-			if (this.person) {
-				this.columns.mood = this.person.feelingColumnMood
-				this.columns.sadnessLevel = this.person.feelingColumnSadnessLevel
-				this.columns.symptoms = this.person.feelingColumnSymptoms
-				this.columns.attacks = this.person.feelingColumnAttacks
-				this.columns.medication = this.person.feelingColumnMedication
-				this.columns.pain = this.person.feelingColumnPain
-				this.columns.energy = this.person.feelingColumnEnergy
-			} else {
-				console.debug('no person found to update [watch person in FeelingSidebar]')
-			}
-		},
-		saveColumn(key) {
-			this.$store.dispatch('setValue', { key: 'feelingColumn' + key[0].toUpperCase() + key.substring(1), value: this.columns[key] })
-		},
 	},
 }
 </script>

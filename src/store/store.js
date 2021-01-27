@@ -22,8 +22,6 @@
 
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
 import { WeightApi } from './WeightApi'
 import { PersonApi } from './PersonApi'
 import { MeasurementApi } from './MeasurementApi'
@@ -40,25 +38,11 @@ const sleepApiClient = new SleepApi()
 export default new Vuex.Store({
 	state: {
 		loading: false,
-		// .
-		// static
 		app: 'health',
-		// .
-		// managing data
 		activePersonId: null,
-		activeModule: 'weight', // person
+		activeModule: 'person', // person
 		showSidebar: false,
-		// .
-		// complete data
 		persons: null,
-		moduleSettings: {},
-		moduleData: {},
-		// .
-		// individual data for actual person
-		personData: null,
-		// .
-		// rebuild data
-		// depending on the actual person
 		rWeightDatasets: [],
 		measurementDatasets: [],
 		feelingDatasets: [],
@@ -102,12 +86,6 @@ export default new Vuex.Store({
 		// directly called (without actions)
 		showSidebar(state, bool) {
 			state.showSidebar = bool
-		},
-		setModuleSettings(state, data) {
-			state.moduleSettings = data
-		},
-		setModuleData(state, data) {
-			state.moduleData = data
 		},
 		rWeightDatasets(state, data) {
 			state.rWeightDatasets = data
@@ -221,17 +199,26 @@ export default new Vuex.Store({
 			commit('activeModule', module)
 			dispatch('loadModuleContentForPerson')
 		},
-		async loadModuleContentForPerson({ getters, commit, dispatch }) {
+		async loadModuleContentForPerson({ getters, commit, dispatch, state }) {
 			// this ist called if the active person or module changed
 			// it should load all data, that is necessary for the active module
 			commit('loading', true)
 			// await dispatch('weightDatasetsLoadByPerson', [])
 			// await dispatch('measurementDatasetsLoadByPerson', [])
 			// await dispatch('feelingDatasetsLoadByPerson', [])
-			await dispatch('weightDatasetsLoadByPerson', getters.person.id)
-			await dispatch('measurementDatasetsLoadByPerson', getters.person.id)
-			await dispatch('feelingDatasetsLoadByPerson', getters.person.id)
-			await dispatch('sleepDatasetsLoadByPerson', getters.person.id)
+			commit('rWeightDatasets', [])
+			commit('feelingDatasets', [])
+			commit('sleepDatasets', [])
+			commit('measurementDatasets', [])
+			if (state.activeModule === 'weight') {
+				await dispatch('weightDatasetsLoadByPerson', getters.person.id)
+			} else if (state.activeModule === 'measurement') {
+				await dispatch('measurementDatasetsLoadByPerson', getters.person.id)
+			} else if (state.activeModule === 'feeling') {
+				await dispatch('feelingDatasetsLoadByPerson', getters.person.id)
+			} else if (state.activeModule === 'sleep') {
+				await dispatch('sleepDatasetsLoadByPerson', getters.person.id)
+			}
 			commit('loading', false)
 		},
 		async setValue({ commit, state, getters }, data) {
@@ -242,85 +229,17 @@ export default new Vuex.Store({
 			// console.debug('return from person api', o)
 			commit('personUpdate', o)
 		},
-		cesRequest({ commit, state, getters }, data) {
-			console.debug('CES DEPRECATED!')
-			// console.debug('start cesRequest')
-
-			if ('entityData' in data) {
-				// console.debug('add personId in $store')
-				data.entityData.personId = getters.person.id
-			}
-
-			// console.debug('request', data)
-
-			return axios.post(generateUrl('/apps/health/ces'), { data: data })
-				.then(
-					(response) => {
-						// console.debug('cesRequest SUCCESS-------------', { request: data, response: response })
-						return Promise.resolve(response.data)
-					},
-					(err) => {
-						console.debug('debug cesRequest ERROR-------------', err)
-					},
-				)
-				.catch((err) => {
-					console.debug('error detected cesRequest', err)
-				})
-		},
 		async addPerson({ state, dispatch, commit }, name) {
 			const p = await personApiClient.addPerson(name)
 			commit('personsAdd', p)
 		},
 		async deletePerson({ state, dispatch, commit }, person) {
 			const existingIndex = state.persons.findIndex(set => set.id === person.id)
-			await weightApiClient.deleteAllByPerson(person.id)
-			await measurementApiClient.deleteAllByPerson(person.id)
 			await personApiClient.deletePerson(person.id)
 			commit('personsDelete', person)
 			if (existingIndex !== -1) {
 				dispatch('setActivePerson', 0)
 			}
-		},
-		updateModuleSettings: function({ state, commit }, data) {
-			console.debug('CES DEPRECATED!')
-
-			// data: { module: ..., type: ..., data: ... }
-			// console.debug('updateModuleSettings', data)
-			const settings = Object.assign({}, state.moduleSettings)
-			if (!settings[data.module]) {
-				settings[data.module] = {}
-			}
-			settings[data.module][data.type] = data.data
-			// console.debug('try to set settings as following', settings)
-			this.commit('setModuleSettings', settings)
-		},
-		getModuleSetting: function({ state }, data) {
-			console.debug('CES DEPRECATED!')
-
-			// data: { module: ..., type: ..., key: ... }
-			if (
-				this.moduleSettings
-				&& this.moduleSettings[data.module]
-				&& this.moduleSettings[data.module][data.type]
-				&& this.moduleSettings[data.module][data.type][data.key]) {
-				console.debug('getModuleSetting', { request: data, result: this.moduleSettings[data.module][data.type][data.key] })
-				return this.moduleSettings[data.module][data.type][data.key]
-			} else {
-				return null
-			}
-		},
-		updateModuleData: function({ state, commit }, data) {
-			console.debug('CES DEPRECATED!')
-
-			// data: { module: ..., type: ..., data: ... }
-			// console.debug('updateModuleSettings', data)
-			const d = Object.assign({}, state.moduleData)
-			if (!d[data.module]) {
-				d[data.module] = {}
-			}
-			d[data.module][data.type] = data.data
-			// console.debug('try to set settings as following', settings)
-			this.commit('setModuleData', d)
 		},
 		// module weight
 		async weightDatasetsLoadByPerson({ commit }, personId) {

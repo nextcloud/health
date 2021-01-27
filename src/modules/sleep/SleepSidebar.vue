@@ -23,66 +23,31 @@
 <template>
 	<ul>
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="mood"
-					v-model="columns.quality"
-					type="checkbox"
-					@change="saveColumn('quality')">
-				{{ t('health', 'Quality', {}) }}
-			</label>
-		</div>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="wakeups"
-					v-model="columns.wakeups"
-					type="checkbox"
-					@change="saveColumn('wakeups')">
-				{{ t('health', 'Track wakeups', {}) }}
-			</label>
-		</div>
+		<ActionCheckbox
+			:checked="person.sleepColumnQuality"
+			@change="$store.dispatch('setValue', { key: 'sleepColumnQuality', value: $event.target.checked })">
+			{{ t('health', 'Quality', {}) }}
+		</ActionCheckbox>
+		<ActionCheckbox
+			:checked="person.sleepColumnWakeups"
+			@change="$store.dispatch('setValue', { key: 'sleepColumnWakeups', value: $event.target.checked })">
+			{{ t('health', 'Wakeups', {}) }}
+		</ActionCheckbox>
 	</ul>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
 
 export default {
 	name: 'SleepSidebar',
-	data: function() {
-		return {
-			columns: {
-				quality: true,
-				wakeups: true,
-			},
-		}
+	components: {
+		ActionCheckbox,
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar']),
 		...mapGetters(['person']),
-	},
-	watch: {
-		person: function() {
-			this.updateLocalColumnData()
-		},
-	},
-	mounted() {
-		this.updateLocalColumnData()
-	},
-	methods: {
-		updateLocalColumnData() {
-			if (this.person) {
-				this.columns.quality = this.person.sleepColumnQuality
-				this.columns.wakeups = this.person.sleepColumnWakeups
-			} else {
-				console.debug('no person found to update [watch person in SleepSidebar]')
-			}
-		},
-		saveColumn(key) {
-			this.$store.dispatch('setValue', { key: 'sleepColumn' + key[0].toUpperCase() + key.substring(1), value: this.columns[key] })
-		},
 	},
 }
 </script>

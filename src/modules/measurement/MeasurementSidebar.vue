@@ -23,155 +23,68 @@
 <template>
 	<ul>
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="temperature"
-					v-model="columns.temperature"
-					type="checkbox"
-					@change="saveColumn('temperature')">
-				{{ t('health', 'Temperature', {}) }}
-			</label>
-		</div>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="heartRate"
-					v-model="columns.heartRate"
-					type="checkbox"
-					@change="saveColumn('heartRate')">
-				{{ t('health', 'Heart rate', {}) }}
-			</label>
-		</div>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="bloodPres"
-					v-model="columns.bloodPres"
-					type="checkbox"
-					@change="saveColumn('bloodPres')">
-				{{ t('health', 'Blood pressure') }}
-			</label>
-		</div>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="oxygenSat"
-					v-model="columns.oxygenSat"
-					type="checkbox"
-					@change="saveColumn('oxygenSat')">
-				{{ t('health', 'Oxygen saturation', {}) }}
-			</label>
-		</div>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="bloodSugar"
-					v-model="columns.bloodSugar"
-					type="checkbox"
-					@change="saveColumn('bloodSugar')">
-				{{ t('health', 'Blood sugar', {}) }}
-			</label>
-		</div>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="defecation"
-					v-model="columns.defecation"
-					type="checkbox"
-					@change="saveColumn('defecation')">
-				{{ t('health', 'Defecation', {}) }}
-			</label>
-		</div>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="appetite"
-					v-model="columns.appetite"
-					type="checkbox"
-					@change="saveColumn('appetite')">
-				{{ t('health', 'Appetite', {}) }}
-			</label>
-		</div>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="allergies"
-					v-model="columns.allergies"
-					type="checkbox"
-					@change="saveColumn('allergies')">
-				{{ t('health', 'Allergies', {}) }}
-			</label>
-		</div>
+		<ActionCheckbox
+			:checked="person.measurementColumnTemperature"
+			@change="$store.dispatch('setValue', { key: 'measurementColumnTemperature', value: $event.target.checked })">
+			{{ t('health', 'Temperature', {}) }}
+		</ActionCheckbox>
+		<ActionCheckbox
+			:checked="person.measurementColumnHeartRate"
+			@change="$store.dispatch('setValue', { key: 'measurementColumnHeartRate', value: $event.target.checked })">
+			{{ t('health', 'Heart rate', {}) }}
+		</ActionCheckbox>
+		<ActionCheckbox
+			:checked="person.measurementColumnBloodPres"
+			@change="$store.dispatch('setValue', { key: 'measurementColumnBloodPres', value: $event.target.checked })">
+			{{ t('health', 'Blood pressure') }}
+		</ActionCheckbox>
+		<ActionCheckbox
+			:checked="person.measurementColumnOxygenSat"
+			@change="$store.dispatch('setValue', { key: 'measurementColumnOxygenSat', value: $event.target.checked })">
+			{{ t('health', 'Oxygen saturation', {}) }}
+		</ActionCheckbox>
+		<ActionCheckbox
+			:checked="person.measurementColumnBloodSugar"
+			@change="$store.dispatch('setValue', { key: 'measurementColumnBloodSugar', value: $event.target.checked })">
+			{{ t('health', 'Blood sugar', {}) }}
+		</ActionCheckbox>
+		<ActionCheckbox
+			:checked="person.measurementColumnDefecation"
+			@change="$store.dispatch('setValue', { key: 'measurementColumnDefecation', value: $event.target.checked })">
+			{{ t('health', 'Blood sugar', {}) }}
+		</ActionCheckbox>
+		<ActionCheckbox
+			:checked="person.measurementColumnAppetite"
+			@change="$store.dispatch('setValue', { key: 'measurementColumnAppetite', value: $event.target.checked })">
+			{{ t('health', 'Appetite', {}) }}
+		</ActionCheckbox>
+		<ActionCheckbox
+			:checked="person.measurementColumnAllergies"
+			@change="$store.dispatch('setValue', { key: 'measurementColumnAllergies', value: $event.target.checked })">
+			{{ t('health', 'Allergies', {}) }}
+		</ActionCheckbox>
 
 		<li><h3>{{ t('health', 'General settings', {}) }}</h3></li>
-		<div class="checkbox-wrapper">
-			<label>
-				<input
-					id="chartDetail"
-					v-model="chartDetail"
-					type="checkbox"
-					@change="saveField('chartDetail')">
-				{{ t('health', 'Show time detail chart', {}) }}
-			</label>
-		</div>
+		<ActionCheckbox
+			:checked="person.measurementChartDetail"
+			@change="$store.dispatch('setValue', { key: 'measurementChartDetail', value: $event.target.checked })">
+			{{ t('health', 'Show time detail chart', {}) }}
+		</ActionCheckbox>
 	</ul>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
 
 export default {
 	name: 'MeasurementSidebar',
-	data: function() {
-		return {
-			columns: {
-				temperature: true,
-				heartRate: true,
-				bloodPres: false,
-				oxygenSat: false,
-				bloodSugar: true,
-				defecation: false,
-				appetite: true,
-				allergies: true,
-			},
-			chartDetail: false,
-		}
+	components: {
+		ActionCheckbox,
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar']),
 		...mapGetters(['person']),
-	},
-	watch: {
-		person: function() {
-			this.updateLocalColumnData()
-		},
-	},
-	mounted() {
-		this.updateLocalColumnData()
-	},
-	methods: {
-		updateLocalColumnData() {
-			if (this.person) {
-				this.columns.temperature = this.person.measurementColumnTemperature
-				this.columns.heartRate = this.person.measurementColumnHeartRate
-				this.columns.bloodPres = this.person.measurementColumnBloodPres
-				this.columns.oxygenSat = this.person.measurementColumnOxygenSat
-				this.columns.bloodSugar = this.person.measurementColumnBloodSugar
-				this.columns.defecation = this.person.measurementColumnDefecation
-				this.columns.appetite = this.person.measurementColumnAppetite
-				this.columns.allergies = this.person.measurementColumnAllergies
-				this.chartDetail = this.person.measurementChartDetail
-			} else {
-				console.debug('no person found to update [watch person in MeasurementSidebar]')
-			}
-		},
-		saveColumn(key) {
-			this.$store.dispatch('setValue', { key: 'measurementColumn' + key[0].toUpperCase() + key.substring(1), value: this.columns[key] })
-		},
-		saveField(key) {
-			this.$store.dispatch('setValue', { key: 'measurement' + key[0].toUpperCase() + key.substring(1), value: this[key] })
-		},
 	},
 }
 </script>

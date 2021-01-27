@@ -223,20 +223,4 @@ export default {
 	.red {
 		color: #bd1500;
 	}
-
-	.app-sidebar input[type='checkbox'] {
-		min-height: auto;
-	}
-
-	.checkbox-wrapper {
-		padding: 10px;
-	}
-
-	.checkbox-wrapper label {
-		color: rgb(34,34,34);
-	}
-
-	.checkbox-wrapper:hover label {
-		color: black;
-	}
 </style>

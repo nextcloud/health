@@ -76,6 +76,7 @@ class Person extends Entity implements JsonSerializable {
 	protected $feelingSpecialAttackName;
 	protected $feelingDefaultMedication;
 	protected $feelingColumnEnergy;
+	protected $feelingColumnSadness; // deprecated, remove
 
 	// module measurement
 	protected $measurementColumnTemperature;

@@ -146,6 +146,11 @@ export default {
 							t: moment(d[def.timeId]),
 							y: def.getValueY(d),
 						})
+					} else if (def.valueId === 'static' && d[def.timeId] && this.isInTimeRange(d[def.timeId]) && def.show) {
+						data[def.columnId].push({
+							t: moment(d[def.timeId]),
+							y: def.getValueY,
+						})
 					}
 				})
 			})
@@ -161,6 +166,7 @@ export default {
 				}
 				if ('backgroundColor' in set) { push.backgroundColor = set.backgroundColor }
 				if ('borderColor' in set) { push.borderColor = set.borderColor }
+				if ('borderDash' in set) { push.borderDash = set.borderDash }
 				if ('borderWidth' in set) { push.borderWidth = set.borderWidth }
 				if ('fill' in set) { push.fill = set.fill }
 				if ('type' in set) { push.type = set.type }

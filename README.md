@@ -6,24 +6,28 @@ The app provides different modules to track your  health data.
 
 Following modules are served
 - Weight
-- Feeling (only basic for now)
-- Measurement (only basic for now)
-- Sleep (only basic for now)
+- Feeling
+- Measurement
+- Sleep
 
 More modules are scheduled
 - Breaks
 - Medicine
 - Activities
 - Nutrition
+- Smoking
 
 >Ideas for modules and functions are welcome. Please create issues on github.
 
 ### Changelog
 
 v0.3.0 [beta]
-- charts for feeling module
+- charts for all modules
 - show person creation time
 - weight data bodyfat accepts decimals
+- Rewriting backend for all modules except the weight module
+
+**Note: No data migration except weight module. This is still beta software.**
 
 v0.2.2 [beta]
 - css fixes, specially for mobile use
