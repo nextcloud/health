@@ -91,6 +91,9 @@ class PersonsService {
 		$p->setFeelingColumnMood(true);
 		$p->setFeelingColumnEnergy(true);
 		$p->setSleepColumnQuality(true);
+		$p->setSmokingDesireLevel(true);
+		$p->setSmokingCigarettes(true);
+		$p->setSmokingSavedMoney(true);
 		return $this->personMapper->insert($p);
 	}
 

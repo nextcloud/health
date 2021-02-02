@@ -63,6 +63,11 @@
 			@change="$store.dispatch('setValue', { key: 'measurementColumnAllergies', value: $event.target.checked })">
 			{{ t('health', 'Allergies', {}) }}
 		</ActionCheckbox>
+		<ActionCheckbox
+			:checked="person.measurementColumnDefecation"
+			@change="$store.dispatch('setValue', { key: 'measurementColumnDefecation', value: $event.target.checked })">
+			{{ t('health', 'Defecation', {}) }}
+		</ActionCheckbox>
 
 		<li><h3>{{ t('health', 'General settings', {}) }}</h3></li>
 		<ActionCheckbox

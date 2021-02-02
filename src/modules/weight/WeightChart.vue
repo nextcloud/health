@@ -32,6 +32,7 @@
 
 <script>
 import Chart from '../../general/Chart'
+import MixinBmi from './MixinBmi'
 
 export default {
 	name: 'WeightChart',
@@ -65,14 +66,31 @@ export default {
 					show: this.person.weightColumnWeight,
 				},
 				{
+					title: t('health', 'BMI', {}),
+					columnId: 'bmi',
+					timeId: 'date',
+					valueId: 'calculate',
+					getValueY: function(d) {
+						return this.calcData.bmiApi.methods.bmi(this.calcData.person, d.weight)
+					},
+					calcData: {
+						person: this.person,
+						bmiApi: MixinBmi,
+					},
+					borderColor: 'rgb(15,128,114)',
+					borderWidth: 1,
+					fill: false,
+					show: this.person.weightColumnBmi,
+				},
+				{
 					title: t('health', 'Target', {}),
 					columnId: 'target',
 					timeId: 'date',
 					valueId: 'static',
 					getValueY: this.person.weightTarget,
-					borderColor: 'darkred',
+					borderColor: 'darkgreen',
 					borderWidth: 2,
-					borderDash: [2, 5],
+					borderDash: [8, 5],
 					fill: false,
 					show: !!this.person.weightTarget,
 				},
@@ -82,9 +100,9 @@ export default {
 					timeId: 'date',
 					valueId: 'static',
 					getValueY: this.person.weightTargetInitialWeight,
-					borderColor: 'darkgreen',
+					borderColor: 'darkred',
 					borderWidth: 2,
-					borderDash: [8, 5],
+					borderDash: [2, 5],
 					fill: false,
 					show: !!this.person.weightTargetInitialWeight,
 				},

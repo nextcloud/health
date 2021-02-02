@@ -69,12 +69,27 @@ export default {
 					columnId: 'weight',
 					type: 'number',
 					show: this.person.weightColumnWeight,
+					suffix: this.person.weightUnit ? this.person.weightUnit : '',
+				},
+				{
+					name: t('health', 'BMI'),
+					columnId: 'bmi',
+					type: 'calculate',
+					calc: function(dataset) {
+						return this.calcData.bmiApi.methods.bmi(this.calcData.person, dataset.weight)
+					},
+					calcData: {
+						person: this.person,
+						bmiApi: MixinBmi,
+					},
+					show: this.person.weightColumnWeight,
 				},
 				{
 					name: t('health', 'Bodyfat'),
 					columnId: 'bodyfat',
 					type: 'number',
 					show: this.person.weightColumnBodyfat,
+					suffix: '%',
 				},
 				{
 					name: 'weightMeasurementName' in this.person && this.person.weightMeasurementName ? this.person.weightMeasurementName : t('health', 'Measurementdata'),
@@ -87,18 +102,21 @@ export default {
 					columnId: 'waistSize',
 					type: 'number',
 					show: this.person.weightColumnWaistSize,
+					suffix: 'cm',
 				},
 				{
 					name: t('health', 'Hip size'),
 					columnId: 'hipSize',
 					type: 'number',
 					show: this.person.weightColumnHipSize,
+					suffix: 'cm',
 				},
 				{
 					name: t('health', 'Muscle part'),
 					columnId: 'musclePart',
 					type: 'number',
 					show: this.person.weightColumnMusclePart,
+					suffix: '%',
 				},
 				{
 					name: t('health', 'Comment'),

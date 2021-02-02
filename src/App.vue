@@ -38,6 +38,7 @@
 			<FeelingContent v-if="person && activeModule === 'feeling' && person.enabledModuleFeeling" />
 			<MeasurementContent v-if="person && activeModule === 'measurement' && person.enabledModuleMeasurement" />
 			<SleepContent v-if="person && activeModule === 'sleep' && person.enabledModuleSleep" />
+			<SmokingContent v-if="person && activeModule === 'smoking' && person.enabledModuleSmoking" />
 		</AppContent>
 		<AppSidebar
 			v-show="showSidebar"
@@ -84,6 +85,14 @@
 				:order="4">
 				<SleepSidebar />
 			</AppSidebarTab>
+			<AppSidebarTab
+				v-if="person.enabledModuleSmoking"
+				id="smoking"
+				:name="t('health', 'Smoking')"
+				icon="icon-address"
+				:order="5">
+				<SmokingSidebar />
+			</AppSidebarTab>
 		</AppSidebar>
 	</Content>
 </template>
@@ -108,6 +117,8 @@ import MeasurementContent from './modules/measurement/MeasurementContent'
 import MeasurementSidebar from './modules/measurement/MeasurementSidebar'
 import SleepSidebar from './modules/sleep/SleepSidebar'
 import moment from '@nextcloud/moment'
+import SmokingSidebar from './modules/smoking/SmokingSidebar'
+import SmokingContent from './modules/smoking/SmokingContent'
 
 export default {
 	name: 'App',
@@ -129,6 +140,8 @@ export default {
 		WeightContent,
 		FeelingContent,
 		PersonsContent,
+		SmokingSidebar,
+		SmokingContent,
 	},
 	data: function() {
 		return {

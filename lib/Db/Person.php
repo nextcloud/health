@@ -40,6 +40,7 @@ class Person extends Entity implements JsonSerializable {
 	protected $personalMission;
 	protected $shared;
 	protected $sharedReadonly;
+	protected $currency;
 
     // modules
     protected $enabledModuleWeight;
@@ -50,6 +51,7 @@ class Person extends Entity implements JsonSerializable {
     protected $enabledModuleMeasurement;
     protected $enabledModuleNutrition;
     protected $enabledModuleSleep;
+    protected $enabledModuleSmoking;
 
     // module weight
     protected $weightMeasurementName;
@@ -64,6 +66,7 @@ class Person extends Entity implements JsonSerializable {
 	protected $weightColumnWaistSize;
 	protected $weightColumnHipSize;
 	protected $weightColumnMusclePart;
+	protected $weightColumnBmi;
 
     // module feeling
 	protected $feelingColumnMood;
@@ -93,11 +96,19 @@ class Person extends Entity implements JsonSerializable {
 	protected $sleepColumnQuality;
 	protected $sleepColumnWakeups;
 
+	// module smoking
+	protected $smokingColumnCigarettes;
+	protected $smokingColumnDesireLevel;
+	protected $smokingColumnSavedMoney;
+	protected $smokingGoal;
+	protected $smokingStartValue;
+	protected $smokingPrice;
+
     public function __construct() {
     	// general
         $this->addType('id','integer');
         $this->addType('age','integer');
-        $this->addType('size','integer');
+		$this->addType('size','integer');
 
 		// modules
 		$this->addType('enabledModuleWeight', 'boolean');
@@ -108,6 +119,7 @@ class Person extends Entity implements JsonSerializable {
 		$this->addType('enabledModuleMeasurement', 'boolean');
 		$this->addType('enabledModuleNutrition', 'boolean');
 		$this->addType('enabledModuleSleep', 'boolean');
+		$this->addType('enabledModuleSmoking', 'boolean');
 
         // module weight
         $this->addType('weightTarget', 'float');
@@ -118,6 +130,7 @@ class Person extends Entity implements JsonSerializable {
 		$this->addType('weightColumnWaistSize', 'boolean');
 		$this->addType('weightColumnHipSize', 'boolean');
 		$this->addType('weightColumnMusclePart', 'boolean');
+		$this->addType('weightColumnBmi', 'boolean');
 
         // module feeling
 		$this->addType('feelingColumnMood', 'boolean');
@@ -142,6 +155,16 @@ class Person extends Entity implements JsonSerializable {
 		// module sleep
 		$this->addType('sleepColumnQuality', 'boolean');
 		$this->addType('sleepColumnWakeups', 'boolean');
+
+		// module smoking
+		$this->addType('smokingColumnCigarettes', 'boolean');
+		$this->addType('smokingColumnDesireLevel', 'boolean');
+		$this->addType('smokingColumnGoal', 'boolean');
+		$this->addType('smokingColumnStartValue', 'boolean');
+		$this->addType('smokingColumnPrice', 'boolean');
+		$this->addType('smokingColumnSavedMoney', 'boolean');
+		$this->addType('smokingPrice', 'float');
+		$this->addType('smokingStartValue', 'integer');
     }
 
     public function jsonSerialize(): array
@@ -159,6 +182,7 @@ class Person extends Entity implements JsonSerializable {
 			'personalMission' => $this->personalMission,
 			'shared' => $this->shared,
 			'sharedReadonly' => $this->sharedReadonly,
+			'currency' => $this->currency,
 
 			// modules
             'enabledModuleWeight' => $this->enabledModuleWeight,
@@ -169,6 +193,7 @@ class Person extends Entity implements JsonSerializable {
 			'enabledModuleMeasurement' => $this->enabledModuleMeasurement,
 			'enabledModuleSleep' => $this->enabledModuleSleep,
 			'enabledModuleNutrition' => $this->enabledModuleNutrition,
+			'enabledModuleSmoking' => $this->enabledModuleSmoking,
 
 			// module weight
             'weightMeasurementName' => $this->weightMeasurementName,
@@ -207,10 +232,17 @@ class Person extends Entity implements JsonSerializable {
 			'measurementColumnAllergies' => $this->measurementColumnAllergies,
 			'measurementChartDetail' => $this->measurementChartDetail,
 
-
 			// module sleep
 			'sleepColumnQuality' => $this->sleepColumnQuality,
 			'sleepColumnWakeups' => $this->sleepColumnWakeups,
+
+			// module smoking
+			'smokingColumnCigarettes' => $this->smokingColumnCigarettes,
+			'smokingColumnDesireLevel' => $this->smokingColumnDesireLevel,
+			'smokingPrice' => $this->smokingPrice,
+			'smokingGoal' => $this->smokingGoal,
+			'smokingStartValue' => $this->smokingStartValue,
+			'smokingColumnSavedMoney' => $this->smokingColumnSavedMoney,
         ];
     }
 }

@@ -92,8 +92,4 @@ export class SleepApi {
 			})
 	}
 
-	deleteAllByPerson(personId) {
-		// TODO remove all weight data if a user is deleted
-	}
-
 }

@@ -69,20 +69,22 @@
 								</ul>
 							</div>
 							<div v-else-if="h.type === 'longtext' && d[h.columnId]" class="wrapper">
-								{{ d[h.columnId] }}
+								{{ 'prefix' in h ? h.prefix : '' }}{{ d[h.columnId] }}{{ 'suffix' in h ? h.suffix : '' }}
 							</div>
 							<div v-else-if="h.type === 'boolean' && d[h.columnId]" class="wrapper">
+								{{ 'prefix' in h ? h.prefix : '' }}
 								{{ d[h.columnId] ? ('textTrue' in h) ? h.textTrue : t('health', 'true') : '' }}
 								{{ !d[h.columnId] ? ('textFalse' in h) ? h.textFalse : t('health', 'false') : '' }}
+								{{ 'suffix' in h ? h.suffix : '' }}
 							</div>
 							<div v-else-if="h.type === 'text' && d[h.columnId]" class="wrapper">
-								{{ d[h.columnId] }}
+								{{ 'prefix' in h ? h.prefix : '' }}{{ d[h.columnId] }}{{ 'suffix' in h ? h.suffix : '' }}
 							</div>
 							<div v-else-if="h.type === 'number' && d[h.columnId]" class="wrapper">
-								{{ d[h.columnId] }}
+								{{ 'prefix' in h ? h.prefix : '' }}{{ d[h.columnId] }}{{ 'suffix' in h ? h.suffix : '' }}
 							</div>
 							<div v-else-if="h.type === 'calculate' && d" class="wrapper">
-								{{ h.calc(d) }}
+								{{ 'prefix' in h ? h.prefix : '' }}{{ h.calc(d) }}{{ 'suffix' in h ? h.suffix : '' }}
 							</div>
 						</div>
 					</td>

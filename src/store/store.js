@@ -27,6 +27,7 @@ import { PersonApi } from './PersonApi'
 import { MeasurementApi } from './MeasurementApi'
 import { FeelingApi } from './FeelingApi'
 import { SleepApi } from './SleepApi'
+import { SmokingApi } from './SmokingApi'
 
 Vue.use(Vuex)
 const weightApiClient = new WeightApi()
@@ -34,6 +35,7 @@ const personApiClient = new PersonApi()
 const measurementApiClient = new MeasurementApi()
 const feelingApiClient = new FeelingApi()
 const sleepApiClient = new SleepApi()
+const smokingApiClient = new SmokingApi()
 
 export default new Vuex.Store({
 	state: {
@@ -47,6 +49,7 @@ export default new Vuex.Store({
 		measurementDatasets: [],
 		feelingDatasets: [],
 		sleepDatasets: [],
+		smokingDatasets: [],
 	},
 	getters: {
 		person: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId] : null,
@@ -177,7 +180,28 @@ export default new Vuex.Store({
 			}
 			state.sleepDatasets = datasets
 		},
-
+		// -------------
+		smokingDatasets(state, data) {
+			state.smokingDatasets = data
+		},
+		smokingDatasetsAppend(state, data) {
+			state.smokingDatasets.push(data)
+		},
+		smokingDatasetsDelete(state, data) {
+			const existingIndex = state.smokingDatasets.findIndex(set => set.id === data.id)
+			if (existingIndex !== -1) {
+				state.smokingDatasets.splice(existingIndex, 1)
+			}
+		},
+		smokingDatasetsUpdate(state, data) {
+			const datasets = state.smokingDatasets
+			const existingIndex = datasets.findIndex(set => set.id === data.id)
+			if (existingIndex !== -1) {
+				datasets.splice(existingIndex, 1)
+				datasets.push(data)
+			}
+			state.smokingDatasets = datasets
+		},
 	},
 	actions: {
 		async loadPersons({ dispatch, state, commit }) {
@@ -210,6 +234,7 @@ export default new Vuex.Store({
 			commit('feelingDatasets', [])
 			commit('sleepDatasets', [])
 			commit('measurementDatasets', [])
+			commit('smokingDatasets', [])
 			if (state.activeModule === 'weight') {
 				await dispatch('weightDatasetsLoadByPerson', getters.person.id)
 			} else if (state.activeModule === 'measurement') {
@@ -218,6 +243,8 @@ export default new Vuex.Store({
 				await dispatch('feelingDatasetsLoadByPerson', getters.person.id)
 			} else if (state.activeModule === 'sleep') {
 				await dispatch('sleepDatasetsLoadByPerson', getters.person.id)
+			} else if (state.activeModule === 'smoking') {
+				await dispatch('smokingDatasetsLoadByPerson', getters.person.id)
 			}
 			commit('loading', false)
 		},
@@ -329,6 +356,27 @@ export default new Vuex.Store({
 			const o = await sleepApiClient.deleteSet(set)
 			// console.debug('returned o', o)
 			commit('sleepDatasetsDelete', o)
+		},
+		// module smoking
+		async smokingDatasetsLoadByPerson({ commit }, personId) {
+			const datasets = await smokingApiClient.findDatasetsByPerson(personId)
+			// console.debug('found datasets', datasets)
+			commit('smokingDatasets', datasets)
+		},
+		async smokingDatasetsAppend({ commit, getters }, set) {
+			const o = await smokingApiClient.addSet(getters.person.id, set)
+			// console.debug('returned o', o)
+			commit('smokingDatasetsAppend', o)
+		},
+		async smokingDatasetsUpdate({ commit, getters }, set) {
+			const o = await smokingApiClient.updateSet(set)
+			// console.debug('returned o', o)
+			commit('smokingDatasetsUpdate', o)
+		},
+		async smokingDatasetsDelete({ commit, getters }, set) {
+			const o = await smokingApiClient.deleteSet(set)
+			// console.debug('returned o', o)
+			commit('smokingDatasetsDelete', o)
 		},
 	},
 })

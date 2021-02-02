@@ -53,5 +53,11 @@ return [
 		['name' => 'sleepdata#create',	'url' => '/sleep/dataset/person/{personId}',	'verb' => 'POST'],
 		['name' => 'sleepdata#delete',	'url' => '/sleep/dataset/{id}',	'verb' => 'DELETE'],
 		['name' => 'sleepdata#update',	'url' => '/sleep/dataset/{id}',	'verb' => 'PUT'],
+
+		// smoking data
+		['name' => 'smokingdata#findByPerson',	'url' => '/smoking/dataset/person/{personId}',	'verb' => 'GET'],
+		['name' => 'smokingdata#create',	'url' => '/smoking/dataset/person/{personId}',	'verb' => 'POST'],
+		['name' => 'smokingdata#delete',	'url' => '/smoking/dataset/{id}',	'verb' => 'DELETE'],
+		['name' => 'smokingdata#update',	'url' => '/smoking/dataset/{id}',	'verb' => 'PUT'],
     ]
 ];

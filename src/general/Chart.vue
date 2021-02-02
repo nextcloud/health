@@ -171,7 +171,9 @@ export default {
 				if ('fill' in set) { push.fill = set.fill }
 				if ('type' in set) { push.type = set.type }
 
-				result.datasets.push(push)
+				if (set.show) {
+					result.datasets.push(push)
+				}
 			})
 
 			// console.debug('chartData', result)

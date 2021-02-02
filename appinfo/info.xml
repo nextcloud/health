@@ -16,7 +16,7 @@ Following modules are served
 => Sorry for that, but it is still beta software. But this should be the last change this way.
 
 Health is everything.]]></description>
-    <version>0.3.0</version>
+    <version>0.3.1</version>
     <licence>agpl</licence>
     <author mail="flost-dev@mailbox.org" >Florian Steffens</author>
     <namespace>Health</namespace>
