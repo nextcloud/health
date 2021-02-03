@@ -100,6 +100,9 @@ class Person extends Entity implements JsonSerializable {
 	protected $smokingColumnCigarettes;
 	protected $smokingColumnDesireLevel;
 	protected $smokingColumnSavedMoney;
+	protected $smokingDesireLevel;
+	protected $smokingCigarettes;
+	protected $smokingSavedMoney;
 	protected $smokingGoal;
 	protected $smokingStartValue;
 	protected $smokingPrice;
@@ -239,6 +242,9 @@ class Person extends Entity implements JsonSerializable {
 			// module smoking
 			'smokingColumnCigarettes' => $this->smokingColumnCigarettes,
 			'smokingColumnDesireLevel' => $this->smokingColumnDesireLevel,
+			'smokingDesireLevel' => $this->smokingDesireLevel,
+			'smokingCigarettes' => $this->smokingCigarettes,
+			'smokingSavedMoney' => $this->smokingSavedMoney,
 			'smokingPrice' => $this->smokingPrice,
 			'smokingGoal' => $this->smokingGoal,
 			'smokingStartValue' => $this->smokingStartValue,
