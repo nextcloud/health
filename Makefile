@@ -139,7 +139,6 @@ appstore:
 	rm -rf $(appstore_build_directory)
 	mkdir -p $(appstore_build_directory)
 	tar -c \
- 	--disable-copyfile \
 	--exclude="./.gitignore" \
 	--exclude="./.git" \
 	--exclude="./.idea" \
