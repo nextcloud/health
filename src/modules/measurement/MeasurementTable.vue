@@ -80,14 +80,14 @@ export default {
 				},
 				{
 					name: t('health', 'Blood pressure systolic'),
-					columnId: 'systolic',
+					columnId: 'bloodPressureS',
 					type: 'number',
 					show: this.person.measurementColumnBloodPres,
 					min: 0,
 				},
 				{
 					name: t('health', 'Blood pressure diastolic'),
-					columnId: 'diastolic',
+					columnId: 'bloodPressureD',
 					type: 'number',
 					show: this.person.measurementColumnBloodPres,
 					min: 0,
