@@ -95,7 +95,8 @@ export default {
 							return t('health', 'Nothing saved')
 						} else {
 							const count = this.calcData.start - dataset.cigarettes
-							return '' + Math.round(count * this.calcData.price * 100) / 100 + ' ' + this.calcData.currency
+							const currency = this.calcData.currency ? this.calcData.currency : ''
+							return '' + Math.round(count * this.calcData.price * 100) / 100 + ' ' + currency
 						}
 					},
 					calcData: {

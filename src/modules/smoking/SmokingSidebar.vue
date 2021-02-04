@@ -23,7 +23,7 @@
 <template>
 	<ul>
 		<li><h3>{{ t('health', 'General settings', {}) }}</h3></li>
-		<li><h4>{{ t('health', 'Price for a cigarette [{currency}]', { currency: person.currency }) }}</h4></li>
+		<li><h4>{{ t('health', 'Price for a cigarette') }}{{ person.currency ? ' [' + person.currency + ']' : '' }}</h4></li>
 		<ActionInput
 			type="number"
 			step="0.1"
@@ -61,6 +61,9 @@
 		</ActionCheckbox>
 		<div v-if="!person.smokingPrice" class="input-hint">
 			{{ t('health', 'Please set a price to calculate saved money.', {}) }}
+		</div>
+		<div v-if="!person.smokingStartValue" class="input-hint">
+			{{ t('health', 'Please set the number of cigarettes a day you are starting with to calculate saved money.', {}) }}
 		</div>
 	</ul>
 </template>
