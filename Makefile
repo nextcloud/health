@@ -121,7 +121,7 @@ dist:
 source:
 	rm -rf $(source_build_directory)
 	mkdir -p $(source_build_directory)
-	tar --disable-copyfile -c \
+	COPYFILE_DISABLE=1 tar -c \
 	--exclude="./.gitignore" \
 	--exclude="./.git" \
 	--exclude="./.idea" \
@@ -138,7 +138,7 @@ source:
 appstore:
 	rm -rf $(appstore_build_directory)
 	mkdir -p $(appstore_build_directory)
-	tar -c \
+	COPYFILE_DISABLE=1 tar -c \
 	--exclude="./.gitignore" \
 	--exclude="./.git" \
 	--exclude="./.idea" \
