@@ -1,7 +1,6 @@
-
+/vendor
 .DS_Store
 node_modules
 package-lock.json
-js/health.js
-js/health.js.map
+js/
 /build/
