@@ -170,6 +170,7 @@ export default {
 				if ('borderWidth' in set) { push.borderWidth = set.borderWidth }
 				if ('fill' in set) { push.fill = set.fill }
 				if ('type' in set) { push.type = set.type }
+				if ('axesId' in set) { push.yAxisID = set.axesId }
 
 				if (set.show) {
 					result.datasets.push(push)

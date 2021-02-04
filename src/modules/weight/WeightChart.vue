@@ -64,6 +64,7 @@ export default {
 					borderWidth: 2,
 					fill: true,
 					show: this.person.weightColumnWeight,
+					axesId: 'primary',
 				},
 				{
 					title: t('health', 'BMI', {}),
@@ -81,6 +82,7 @@ export default {
 					borderWidth: 1,
 					fill: false,
 					show: this.person.weightColumnBmi,
+					axesId: 'primary',
 				},
 				{
 					title: t('health', 'Target', {}),
@@ -130,7 +132,9 @@ export default {
 					borderColor: 'darkorange',
 					borderWidth: 2,
 					fill: true,
+					type: 'bar',
 					show: this.person.weightColumnMeasurement,
+					axesId: 'secondary',
 				},
 				{
 					title: t('health', 'Waist size', {}),
@@ -144,6 +148,7 @@ export default {
 					borderWidth: 2,
 					fill: false,
 					show: this.person.weightColumnWaistSize,
+					axesId: 'third',
 				},
 				{
 					title: t('health', 'Hip size', {}),
@@ -157,6 +162,7 @@ export default {
 					borderWidth: 2,
 					fill: false,
 					show: this.person.weightColumnHipSize,
+					axesId: 'third',
 				},
 				{
 					title: t('health', 'Muscle part', {}),
@@ -170,6 +176,7 @@ export default {
 					borderWidth: 2,
 					fill: false,
 					show: this.person.weightColumnMusclePart,
+					axesId: 'third',
 				},
 			]
 		},
@@ -191,6 +198,7 @@ export default {
 					],
 					yAxes: [
 						{
+							id: 'primary',
 							gridLines: {
 								display: true,
 								color: 'gray',
@@ -199,10 +207,32 @@ export default {
 							},
 							scaleLabel: {
 								display: true,
-								labelString: t('health', 'Values'),
+								labelString: t('health', 'Weight'),
 							},
 							min: 0,
 							max: 100,
+							position: 'left',
+						},
+						{
+							id: 'secondary',
+							gridLines: {
+								display: false,
+								color: 'gray',
+								z: 100,
+								lineWidth: 1,
+							},
+							scaleLabel: {
+								display: true,
+								labelString: t('health', ''),
+							},
+							position: 'right',
+							// min: 0,
+							// max: 100,
+						},
+						{
+							id: 'third',
+							// min: 0,
+							// max: 100,
 						},
 					],
 				},
