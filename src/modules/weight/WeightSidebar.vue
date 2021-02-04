@@ -29,6 +29,11 @@
 			{{ t('health', 'Weight', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
+			:checked="person.weightColumnBmi"
+			@change="$store.dispatch('setValue', { key: 'weightColumnBmi', value: $event.target.checked })">
+			{{ t('health', 'Boby mass index (BMI)', {}) }}
+		</ActionCheckbox>
+		<ActionCheckbox
 			:checked="person.weightColumnBodyfat"
 			@change="$store.dispatch('setValue', { key: 'weightColumnBodyfat', value: $event.target.checked })">
 			{{ t('health', 'Bodyfat', {}) }}

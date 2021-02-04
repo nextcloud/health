@@ -82,7 +82,7 @@ export default {
 						person: this.person,
 						bmiApi: MixinBmi,
 					},
-					show: this.person.weightColumnWeight,
+					show: this.person.weightColumnBmi,
 				},
 				{
 					name: t('health', 'Bodyfat'),

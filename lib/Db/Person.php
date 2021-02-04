@@ -208,6 +208,7 @@ class Person extends Entity implements JsonSerializable {
 			'weightColumnWaistSize' => $this->weightColumnWaistSize,
 			'weightColumnHipSize' => $this->weightColumnHipSize,
 			'weightColumnMusclePart' => $this->weightColumnMusclePart,
+			'weightColumnBmi' => $this->weightColumnBmi,
 
 			// module feeling
 			'feelingColumnMood' => $this->feelingColumnMood,
