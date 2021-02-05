@@ -31,6 +31,29 @@
 			icon="icon-add"
 			:entity-name="entityName"
 			@addItem="addItem" />
+
+		<div
+			v-if="!loading"
+			class="chartDataRangeSelector">
+			<select
+				id="rangeDays"
+				v-model="range"
+				name="range">
+				<option value="week">
+					{{ t('health', 'last week') }}
+				</option>
+				<option value="month">
+					{{ t('health', 'last month') }}
+				</option>
+				<option value="year">
+					{{ t('health', 'last year') }}
+				</option>
+				<option value="all">
+					{{ t('health', 'Show all') }}
+				</option>
+			</select>
+		</div>
+
 		<table v-if="!loading">
 			<thead>
 				<tr>
@@ -128,6 +151,7 @@
 <script>
 import ModalItem from './ModalItem'
 import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
+import moment from '@nextcloud/moment'
 // import moment from '@nextcloud/moment'
 
 export default {
@@ -163,12 +187,41 @@ export default {
 			default: false,
 		},
 	},
+	data: function() {
+		return {
+			range: 'week',
+		}
+	},
 	computed: {
 		datasets: function() {
-			return this.data
+			const d = []
+			this.data.forEach(item => {
+				if (this.isInTimeRange(item.date)) {
+					d.push(d)
+				}
+			})
+			return d
 		},
 	},
 	methods: {
+		isInTimeRange: function(date) {
+			if (this.rangeDays !== -1) {
+				return Math.abs(moment(date).diff(moment(), 'days')) <= this.rangeDays
+			} else {
+				return true
+			}
+		},
+		rangeDays: function() {
+			if (this.range === 'week') {
+				return 7
+			} else if (this.range === 'month') {
+				return 31
+			} else if (this.range === 'year') {
+				return 365
+			} else {
+				return -1
+			}
+		},
 		calcCount: function(items) {
 			return items.length
 		},

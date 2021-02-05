@@ -82,7 +82,7 @@ export default {
 					borderWidth: 1,
 					fill: false,
 					show: this.person.weightColumnBmi,
-					axesId: 'primary',
+					axesId: 'bmi',
 				},
 				{
 					title: t('health', 'Target', {}),
@@ -94,7 +94,8 @@ export default {
 					borderWidth: 2,
 					borderDash: [8, 5],
 					fill: false,
-					show: !!this.person.weightTarget,
+					show: !!this.person.weightTarget && this.person.weightColumnWeight,
+					axesId: 'primary',
 				},
 				{
 					title: t('health', 'Initial weight', {}),
@@ -106,7 +107,8 @@ export default {
 					borderWidth: 2,
 					borderDash: [2, 5],
 					fill: false,
-					show: !!this.person.weightTargetInitialWeight,
+					show: !!this.person.weightTargetInitialWeight && this.person.weightColumnWeight,
+					axesId: 'primary',
 				},
 				{
 					title: t('health', 'Bodyfat', {}),
@@ -120,6 +122,7 @@ export default {
 					borderWidth: 2,
 					fill: false,
 					show: this.person.weightColumnBodyfat,
+					axesId: 'bodyfat',
 				},
 				{
 					title: 'weightMeasurementName' in this.person && this.person.weightMeasurementName ? this.person.weightMeasurementName : t('health', 'Measurementdata'),
@@ -134,7 +137,7 @@ export default {
 					fill: true,
 					type: 'bar',
 					show: this.person.weightColumnMeasurement,
-					axesId: 'secondary',
+					axesId: 'measurement',
 				},
 				{
 					title: t('health', 'Waist size', {}),
@@ -176,7 +179,7 @@ export default {
 					borderWidth: 2,
 					fill: false,
 					show: this.person.weightColumnMusclePart,
-					axesId: 'third',
+					axesId: 'musclePart',
 				},
 			]
 		},
@@ -215,24 +218,47 @@ export default {
 						},
 						{
 							id: 'secondary',
-							gridLines: {
-								display: false,
-								color: 'gray',
-								z: 100,
-								lineWidth: 1,
-							},
 							scaleLabel: {
 								display: true,
 								labelString: t('health', ''),
 							},
-							position: 'right',
+						},
+						{
+							id: 'third',
+							scaleLabel: {
+								display: true,
+								labelString: t('health', 'Sizes'),
+							},
 							// min: 0,
 							// max: 100,
 						},
 						{
-							id: 'third',
-							// min: 0,
-							// max: 100,
+							id: 'bodyfat',
+							scaleLabel: {
+								display: true,
+								labelString: t('health', 'bodyfat'),
+							},
+						},
+						{
+							id: 'bmi',
+							scaleLabel: {
+								display: true,
+								labelString: t('health', 'Body mass index'),
+							},
+						},
+						{
+							id: 'measurement',
+							scaleLabel: {
+								display: true,
+								labelString: this.person.weightMeasurementName,
+							},
+						},
+						{
+							id: 'musclePart',
+							scaleLabel: {
+								display: true,
+								labelString: t('health', 'muscle part'),
+							},
 						},
 					],
 				},

@@ -59,7 +59,7 @@
 						<h2 v-if="isNewSection(index)">
 							{{ h.section.name }}
 						</h2>
-						<h3>{{ h.name }}</h3>
+						<h3>{{ 'prefix' in h ? h.prefix : '' }}{{ h.name }}{{ 'suffix' in h ? ' [' + h.suffix + ']' : '' }}</h3>
 						<div v-if="'hint' in h" class="hint">
 							{{ h.hint }}
 						</div>

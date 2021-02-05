@@ -69,7 +69,7 @@
 			v-if="data && data.length > 0 && definition && chartType === 'line'"
 			:chart-data="getChartData"
 			:style="chartStyle"
-			:options="options" />
+			:options="getOptions" />
 		<EmptyContent
 			v-if="!data || data.length === 0 || !definition"
 			icon="icon-category-monitoring">
@@ -125,9 +125,30 @@ export default {
 		}
 	},
 	computed: {
+		getOptions: function() {
+			if (!this.options) {
+				return []
+			}
+			const AllYAxes = this.options.scales.yAxes.slice()
+			// eslint-disable-next-line vue/no-side-effects-in-computed-properties
+			this.options.scales.yAxes = []
+			const axesIds = {}
+			this.getChartData.datasets.forEach(item => {
+				if ('yAxisID' in item) {
+					axesIds[item.yAxisID] = true
+				}
+			})
+			// console.debug('axesIds', axesIds)
+			AllYAxes.forEach((axes, i) => {
+				if (axes.id in axesIds && axesIds[axes.id]) {
+					this.options.scales.yAxes.push(AllYAxes[i])
+				}
+			})
+			return this.options
+		},
 		getChartData: function() {
 			if (!this.definition || !this.data) {
-				return null
+				return []
 			}
 
 			const data = {}
