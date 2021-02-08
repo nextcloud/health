@@ -131,8 +131,18 @@
 				</tr>
 			</tbody>
 		</table>
+		<div v-if="!loading && data.length - datasets.length > 0" class="gray">
+			{{ n('health', '%n item is hidden, because it is out of the chosen time range.', '%n items are hidden, because they are out of the chosen time range.', data.length - datasets.length, {}) }}
+		</div>
+		<JsonCSV
+			:data="getExportData"
+			:name="entityName + '.csv'">
+			<button class="export">
+				{{ t('health', 'Download (CSV)', {}) }}
+			</button>
+		</JsonCSV>
 		<EmptyContent
-			v-if="!datasets || datasets.length === 0 && !loading"
+			v-if="!datasets || data.length === 0 && !loading"
 			icon="icon-category-monitoring">
 			No data yet
 			<template #desc>
@@ -152,7 +162,7 @@
 import ModalItem from './ModalItem'
 import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
 import moment from '@nextcloud/moment'
-// import moment from '@nextcloud/moment'
+import JsonCSV from 'vue-json-csv'
 
 export default {
 	name: 'DataTable',
@@ -168,6 +178,7 @@ export default {
 	components: {
 		ModalItem,
 		EmptyContent,
+		JsonCSV,
 	},
 	props: {
 		header: {
@@ -195,21 +206,20 @@ export default {
 	computed: {
 		datasets: function() {
 			const d = []
+			// console.debug('try to return', this.data)
 			this.data.forEach(item => {
-				if (this.isInTimeRange(item.date)) {
-					d.push(d)
+				let dateColumnId = ''
+				dateColumnId = 'datetime' in item ? 'datetime' : dateColumnId
+				dateColumnId = 'date' in item ? 'date' : dateColumnId
+				dateColumnId = 'asleep' in item ? 'asleep' : dateColumnId
+				if (this.isInTimeRange(item[dateColumnId])) {
+					// console.debug('is in timerange', item)
+					d.push(item)
+				} else {
+					// console.debug('not in range', item)
 				}
 			})
 			return d
-		},
-	},
-	methods: {
-		isInTimeRange: function(date) {
-			if (this.rangeDays !== -1) {
-				return Math.abs(moment(date).diff(moment(), 'days')) <= this.rangeDays
-			} else {
-				return true
-			}
 		},
 		rangeDays: function() {
 			if (this.range === 'week') {
@@ -220,6 +230,33 @@ export default {
 				return 365
 			} else {
 				return -1
+			}
+		},
+		getExportData: function() {
+			if (!this.datasets && this.datasets.length > 0 && !this.header) {
+				console.debug('error datasets', this.datasets)
+				return []
+			}
+			const data = []
+			this.datasets.forEach(d => {
+				const item = {}
+				this.header.forEach(h => {
+					if (h.show) {
+						item[h.columnId] = d[h.columnId]
+					}
+				})
+				data.push(item)
+			})
+			return data
+		},
+	},
+	methods: {
+		isInTimeRange: function(date) {
+			if (this.rangeDays !== -1) {
+				// console.debug('diff', Math.abs(moment(date).diff(moment(), 'days')))
+				return Math.abs(moment(date).diff(moment(), 'days')) <= this.rangeDays
+			} else {
+				return true
 			}
 		},
 		calcCount: function(items) {
@@ -261,7 +298,7 @@ export default {
 	table {
 		width: 97%;
 		color: #2b2b2bd1;
-		margin-bottom: 20px;
+		margin-bottom: 5px;
 	}
 
 	table, td, tr, th {
@@ -365,6 +402,13 @@ export default {
 		padding: 13px 20px 13px 20px;
 	}
 
+	button.export {
+		min-width: 16px;
+		min-height: 16px;
+		padding: 6px 12px 6px 12px;
+		margin-top: 10px;
+	}
+
 	textarea {
 		width: 160px;
 		height: 100px;
@@ -386,6 +430,11 @@ export default {
 
 	.inlineButtons {
 		float: left;
+	}
+
+	.gray {
+		color: var(--color-text-lighter);
+		margin-left: 6px;
 	}
 
 </style>
