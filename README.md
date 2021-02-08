@@ -21,6 +21,14 @@ More modules are scheduled
 
 ### Changelog
 
+v0.4.0 [beta]
+- add module smoking
+- add bmi column for the weight module
+- add time range for data tables
+- add download csv for data tables
+- add multiple scales for charts
+- small fixes
+
 v0.3.0 [beta]
 - charts for all modules
 - show person creation time

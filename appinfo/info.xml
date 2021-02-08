@@ -11,12 +11,10 @@ Following modules are served
 - Feeling
 - Measurement
 - Sleep
-
-=> This update will not migrate data from the modules except weight due to big database changes!
-=> Sorry for that, but it is still beta software. But this should be the last change this way.
+- Smoking
 
 Health is everything.]]></description>
-    <version>0.3.1</version>
+    <version>0.4.0</version>
     <licence>agpl</licence>
     <author mail="flost-dev@mailbox.org" >Florian Steffens</author>
     <namespace>Health</namespace>
