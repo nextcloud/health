@@ -78,8 +78,6 @@ export default {
 					type: 'calculate',
 					show: true,
 					calc: function(dataset) {
-						// TODO wakeup duration abziehen!
-
 						if (!dataset || !dataset.asleep || !dataset.wakeup) {
 							return ''
 						}
