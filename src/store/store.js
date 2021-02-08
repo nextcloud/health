@@ -39,6 +39,7 @@ const smokingApiClient = new SmokingApi()
 
 export default new Vuex.Store({
 	state: {
+		initialLoading: true,
 		loading: false,
 		app: 'health',
 		activePersonId: null,
@@ -113,6 +114,9 @@ export default new Vuex.Store({
 		},
 		loading(state, status) {
 			state.loading = !!status
+		},
+		initialLoading(state, status) {
+			state.initialLoading = !!status
 		},
 		// -------------
 		measurementDatasets(state, data) {
@@ -205,6 +209,7 @@ export default new Vuex.Store({
 	},
 	actions: {
 		async loadPersons({ dispatch, state, commit }) {
+			commit('initialLoading', true)
 			const persons = await personApiClient.load()
 			if (persons && persons.length > 0) {
 				commit('persons', persons)
@@ -213,6 +218,7 @@ export default new Vuex.Store({
 				}
 				dispatch('loadModuleContentForPerson')
 			}
+			commit('initialLoading', false)
 		},
 		setActivePerson({ dispatch, commit }, id) {
 			commit('activePersonId', id)
@@ -283,9 +289,9 @@ export default new Vuex.Store({
 			commit('rWeightDatasetsAppend', o)
 		},
 		async rWeightDatasetsUpdate({ commit, getters }, set) {
-			// console.debug('update weight dataset', set)
+			console.debug('update weight dataset', set)
 			const o = await weightApiClient.updateSet(set)
-			// console.debug('returned o', o)
+			console.debug('returned o', o)
 			commit('rWeightDatasetsUpdate', o)
 		},
 		async rWeightDatasetsDelete({ commit, getters }, set) {

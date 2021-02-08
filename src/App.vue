@@ -21,7 +21,7 @@
 	-->
 
 <template>
-	<Content :class="{'icon-loading': loading}" app-name="health">
+	<Content :class="{'icon-loading': initialLoading}" app-name="health">
 		<PersonsNavigation />
 		<AppContent>
 			<div class="top-bar" />
@@ -149,7 +149,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['activePersonId', 'activeModule', 'showSidebar', 'persons']),
+		...mapState(['activePersonId', 'activeModule', 'showSidebar', 'persons', 'initialLoading']),
 		...mapGetters(['person']),
 	},
 	async beforeMount() {
