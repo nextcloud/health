@@ -75,7 +75,7 @@ export default {
 		background-color: var(--color-background-dark);
 		border-radius: 10px;
 		padding: 10px;
-		width: fit-content;
+		// width: fit-content;
 	}
 
 	.bmi .info {

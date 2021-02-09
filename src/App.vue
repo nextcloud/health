@@ -166,6 +166,87 @@ export default {
 </script>
 <style lang="scss">
 
+	.content-wrapper *:after, .content-wrapper *:before{
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	.row {
+		// background-color: blueviolet;
+		width: 100%;
+	}
+
+	.col-1 {
+		width: 8.33%;
+		min-width: 100px;
+	}
+
+	.col-2 {
+		width: 16.66%;
+		min-width: 200px;
+	}
+
+	.col-3 {
+		width: 25%;
+		min-width: 300px;
+	}
+
+	.col-4 {
+		width: 33.33%;
+	}
+
+	.col-5 {
+		width: 41.66%;
+	}
+
+	.col-6 {
+		width: 50%;
+	}
+
+	.col-7 {
+		width: 58.33%;
+	}
+
+	.col-8 {width: 66.66%;}
+
+	.col-9 {width: 75%;}
+
+	.col-10 {width: 83.33%;}
+
+	.col-11 {width: 91.66%;}
+
+	.col-12 {width: 100%;}
+
+	[class*='col-'] {
+		float: left;
+		padding: 15px;
+		// border: 1px solid red;
+		// background-color: aqua;
+	}
+
+	[class*='col-']:first-child {
+		// padding-left: 0;
+	}
+
+	.row::after {
+		content: '';
+		clear: both;
+		display: table;
+	}
+
+	@media only screen and (max-width: 641px) {
+		.hide-s {
+			display: none;
+		}
+	}
+
+	@media only screen and (max-width: 1025px) {
+		.hide-m {
+			display: none;
+		}
+	}
+
 	.content-wrapper {
 		padding: 35px 10px 10px 10px;
 	}

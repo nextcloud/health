@@ -34,52 +34,38 @@
 			<div v-if="!minWeightDataset || !person.size || !person.age">
 				{{ t('health', 'To calculate your BMI, please set your weight in the table below and you age and size in the person settings.') }}
 			</div>
-			<table v-if="minWeightDataset && person.size && person.age">
-				<tr>
-					<td style="font-weight: 200; padding-left: 10px;">
-						{{ t('health', 'minimum', {}) }}
-					</td>
-					<td style="font-weight: bold; padding-left: 10px;">
-						{{ t('health', 'actual', {}) }}
-					</td>
-					<td style="font-weight: 200; padding-left: 10px;">
-						{{ t('health', 'maximum', {}) }}
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<WeightBmi
-							v-if="minWeightDataset && person.size && person.age"
-							:title="t('health', 'minimum')"
-							:date="minWeightDataset ? minWeightDataset.date : null"
-							:weight="minWeightDataset ? minWeightDataset.weight : null"
-							:person="person" />
-					</td>
-					<td>
-						<WeightBmi
-							v-if="minWeightDataset && person.size && person.age"
-							:title="t('health', 'actual')"
-							:show-base-info="false"
-							:date="lastWeightDataset ? lastWeightDataset.date : null"
-							:weight="lastWeightDataset ? lastWeightDataset.weight : null"
-							:person="person" />
-					</td>
-					<td>
-						<WeightBmi
-							v-if="minWeightDataset && person.size && person.age"
-							:title="t('health', 'maximum')"
-							:show-base-info="false"
-							:date="maxWeightDataset ? maxWeightDataset.date : null"
-							:weight="maxWeightDataset ? maxWeightDataset.weight : null"
-							:person="person" />
-					</td>
-				</tr>
-				<tr>
-					<td colspan="3">
-						{{ t('health', 'The calculated value is valid only for adults. Its base are the tables from the WHO.') }}
-					</td>
-				</tr>
-			</table>
+			<div class="row">
+				<div class="col-2 hide-s">
+					{{ t('health', 'minimum', {}) }}
+					<WeightBmi
+						v-if="minWeightDataset && person.size && person.age"
+						:title="t('health', 'minimum')"
+						:date="minWeightDataset ? minWeightDataset.date : null"
+						:weight="minWeightDataset ? minWeightDataset.weight : null"
+						:person="person" />
+				</div>
+				<div class="col-2" style="font-weight: bold;">
+					{{ t('health', 'actual', {}) }}
+					<WeightBmi
+						v-if="minWeightDataset && person.size && person.age"
+						:title="t('health', 'actual')"
+						:show-base-info="false"
+						:date="lastWeightDataset ? lastWeightDataset.date : null"
+						:weight="lastWeightDataset ? lastWeightDataset.weight : null"
+						:person="person" />
+				</div>
+				<div class="col-2 hide-s">
+					{{ t('health', 'maximum', {}) }}
+					<WeightBmi
+						v-if="minWeightDataset && person.size && person.age"
+						:title="t('health', 'maximum')"
+						:show-base-info="false"
+						:date="maxWeightDataset ? maxWeightDataset.date : null"
+						:weight="maxWeightDataset ? maxWeightDataset.weight : null"
+						:person="person" />
+				</div>
+			</div>
+			{{ t('health', 'The calculated value is valid only for adults. Its base are the tables from the WHO.') }}
 		</div>
 		<div v-if="loading" class="icon-loading" />
 
