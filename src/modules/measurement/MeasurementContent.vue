@@ -64,6 +64,7 @@ import { mapState, mapGetters } from 'vuex'
 import MeasurementTable from './MeasurementTable'
 import MeasurementChart from './MeasurementChart'
 import MeasurementDetailChart from './MeasurementDetailChart'
+import moment from '@nextcloud/moment'
 
 export default {
 	name: 'MeasurementContent',
@@ -80,7 +81,7 @@ export default {
 				? null
 				// eslint-disable-next-line vue/no-side-effects-in-computed-properties
 				: this.measurementDatasets.sort(function(a, b) {
-					return new Date(b.datetime) - new Date(a.datetime)
+					return moment(b.datetime) - moment(a.datetime)
 				})
 		},
 	},

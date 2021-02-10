@@ -63,6 +63,7 @@ export default {
 					borderWidth: 2,
 					fill: true,
 					show: this.person.measurementColumnTemperature,
+					axesId: 'temperature',
 				},
 				{
 					title: t('health', 'Heart rate', {}),
@@ -76,6 +77,7 @@ export default {
 					borderWidth: 2,
 					fill: false,
 					show: this.person.measurementColumnHeartRate,
+					axesId: 'heartRate',
 				},
 				{
 					title: t('health', 'Blood pressure systolic', {}),
@@ -87,8 +89,9 @@ export default {
 					},
 					borderColor: 'rgb(110,20,128)',
 					borderWidth: 2,
-					fill: false,
+					fill: true,
 					show: this.person.measurementColumnBloodPres,
+					axesId: 'bloodPressure',
 				},
 				{
 					title: t('health', 'Blood pressure diastolic', {}),
@@ -100,8 +103,9 @@ export default {
 					},
 					borderColor: 'rgb(188,4,219)',
 					borderWidth: 2,
-					fill: false,
+					fill: true,
 					show: this.person.measurementColumnBloodPres,
+					axesId: 'bloodPressure',
 				},
 				{
 					title: t('health', 'Oxygen saturation', {}),
@@ -115,6 +119,7 @@ export default {
 					borderWidth: 2,
 					fill: true,
 					show: this.person.measurementColumnOxygenSat,
+					axesId: 'oxygenSat',
 				},
 				{
 					title: t('health', 'Blood sugar', {}),
@@ -128,6 +133,7 @@ export default {
 					borderWidth: 2,
 					fill: true,
 					show: this.person.measurementColumnBloodSugar,
+					axesId: 'bloodSugar',
 				},
 				{
 					title: t('health', 'Defecation', {}),
@@ -135,14 +141,17 @@ export default {
 					timeId: 'datetime',
 					valueId: 'defecation',
 					getValueY: function(v) {
-						const maxIndex = 3
-						return Math.round((v + 1) / (maxIndex + 1) * 100)
+						// console.debug('v for chart data', v)
+						return (v + 1)
+						// const maxIndex = 3
+						// return Math.round((v + 1) / (maxIndex + 1) * 100)
 					},
 					borderColor: 'darkgray',
 					borderWidth: 2,
 					fill: true,
 					type: 'bar',
 					show: this.person.measurementColumnDefecation,
+					axesId: 'defecation',
 				},
 			]
 		},
@@ -174,8 +183,84 @@ export default {
 								display: true,
 								labelString: t('health', 'Values'),
 							},
-							min: 0,
-							max: 100,
+						},
+						{
+							id: 'heartRate',
+							scaleLabel: {
+								display: true,
+								labelString: t('health', 'Heart rate'),
+							},
+							gridLines: {
+								display: false,
+							},
+							ticks: {
+								suggestedMin: 0,
+								suggestedMax: 100,
+								stepSize: 10,
+							},
+						},
+						{
+							id: 'temperature',
+							scaleLabel: {
+								display: true,
+								labelString: t('health', 'Temperature'),
+							},
+							gridLines: {
+								display: true,
+							},
+							ticks: {
+								stepSize: 0.2,
+							},
+						},
+						{
+							id: 'bloodPressure',
+							scaleLabel: {
+								display: true,
+								labelString: t('health', 'Blood pressure'),
+							},
+							gridLines: {
+								display: false,
+							},
+							ticks: {
+								suggestedMin: 0,
+								suggestedMax: 100,
+								stepSize: 10,
+							},
+						},
+						{
+							id: 'defecation',
+							scaleLabel: {
+								display: true,
+								labelString: t('health', 'Defecation'),
+							},
+							gridLines: {
+								display: false,
+							},
+							ticks: {
+								suggestedMin: 0,
+								suggestedMax: 4,
+								stepSize: 1,
+							},
+						},
+						{
+							id: 'bloodSugar',
+							scaleLabel: {
+								display: true,
+								labelString: t('health', 'Blood sugar'),
+							},
+							gridLines: {
+								display: false,
+							},
+						},
+						{
+							id: 'oxygenSat',
+							scaleLabel: {
+								display: true,
+								labelString: t('health', 'Oxygen saturation'),
+							},
+							gridLines: {
+								display: false,
+							},
 						},
 					],
 				},

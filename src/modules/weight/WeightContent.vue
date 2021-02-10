@@ -35,7 +35,7 @@
 				{{ t('health', 'To calculate your BMI, please set your weight in the table below and you age and size in the person settings.') }}
 			</div>
 			<div class="row">
-				<div class="col-2 hide-s">
+				<div class="col-1 hide-s">
 					{{ t('health', 'minimum', {}) }}
 					<WeightBmi
 						v-if="minWeightDataset && person.size && person.age"
@@ -44,7 +44,7 @@
 						:weight="minWeightDataset ? minWeightDataset.weight : null"
 						:person="person" />
 				</div>
-				<div class="col-2" style="font-weight: bold;">
+				<div class="col-1" style="font-weight: bold;">
 					{{ t('health', 'actual', {}) }}
 					<WeightBmi
 						v-if="minWeightDataset && person.size && person.age"
@@ -54,7 +54,7 @@
 						:weight="lastWeightDataset ? lastWeightDataset.weight : null"
 						:person="person" />
 				</div>
-				<div class="col-2 hide-s">
+				<div class="col-1 hide-s">
 					{{ t('health', 'maximum', {}) }}
 					<WeightBmi
 						v-if="minWeightDataset && person.size && person.age"

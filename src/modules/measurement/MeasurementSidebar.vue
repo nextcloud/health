@@ -49,11 +49,6 @@
 			{{ t('health', 'Blood sugar', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
-			:checked="person.measurementColumnDefecation"
-			@change="$store.dispatch('setValue', { key: 'measurementColumnDefecation', value: $event.target.checked })">
-			{{ t('health', 'Blood sugar', {}) }}
-		</ActionCheckbox>
-		<ActionCheckbox
 			:checked="person.measurementColumnAppetite"
 			@change="$store.dispatch('setValue', { key: 'measurementColumnAppetite', value: $event.target.checked })">
 			{{ t('health', 'Appetite', {}) }}

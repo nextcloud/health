@@ -136,7 +136,7 @@ export default {
 						{ id: 3, label: t('health', 'extreme', {}) },
 					],
 					style: function(value) {
-						if (value === 4) {
+						if (value === 3) {
 							return 'color: darkred; font-weight: bolder;'
 						} else {
 							return ''

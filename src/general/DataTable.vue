@@ -74,10 +74,10 @@
 						:class="{ hide: !h.show }"
 						:style="(h.style) ? h.style(d[h.columnId]): ''">
 						<div>
-							<div v-if="h.type === 'date' && d[h.columnId]" class="wrapper">
+							<div v-if="h.type === 'date' && d[h.columnId]" class="wrapper align-right">
 								{{ d[h.columnId] | formatMyDate }}
 							</div>
-							<div v-else-if="h.type === 'datetime' && d[h.columnId]" class="wrapper">
+							<div v-else-if="h.type === 'datetime' && d[h.columnId]" class="wrapper align-right">
 								{{ d[h.columnId] | formatMyDatetime }}
 							</div>
 							<div v-else-if="h.type === 'select' && d[h.columnId]" class="wrapper">
@@ -168,11 +168,14 @@ export default {
 	name: 'DataTable',
 	filters: {
 		formatMyDate: function(v) {
-			return new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'today') : new Date(v).toLocaleDateString()
+			// return new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'today') : new Date(v).toLocaleDateString()
+			// console.debug('is valid date', { date: moment(v), valid: moment(v).isValid() })
+			return moment(v) === moment() ? t('health', 'today') : moment(v).format('lll')
 		},
 		formatMyDatetime: function(v) {
-			const date = new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'today') : new Date(v).toLocaleDateString()
-			return date + ' ' + new Date(v).toLocaleTimeString().slice(0, 5)
+			return moment(v).format('L') === moment().format('L') ? t('health', 'today') + ' ' + moment(v).format('LT') : moment(v).format('lll')
+			// const date = new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'today') : new Date(v).toLocaleDateString()
+			// return date + ' ' + new Date(v).toLocaleTimeString().slice(0, 5)
 		},
 	},
 	components: {
@@ -435,6 +438,16 @@ export default {
 	.gray {
 		color: var(--color-text-lighter);
 		margin-left: 6px;
+	}
+
+	.chartDataRangeSelector {
+		margin-bottom: 10px;
+		margin-top: 15px;
+	}
+
+	.align-right {
+		text-align: right;
+		padding-right: 15px;
 	}
 
 </style>
