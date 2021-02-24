@@ -50,14 +50,14 @@ export default {
 		},
 	},
 	computed: {
-		setDefinitions: function() {
+		setDefinitions() {
 			return [
 				{
 					title: t('health', 'Weight', {}),
 					columnId: 'weight',
 					timeId: 'date',
 					valueId: 'weight',
-					getValueY: function(v) {
+					getValueY(v) {
 						return v
 					},
 					borderColor: 'darkblue',
@@ -71,7 +71,7 @@ export default {
 					columnId: 'bmi',
 					timeId: 'date',
 					valueId: 'calculate',
-					getValueY: function(d) {
+					getValueY(d) {
 						return this.calcData.bmiApi.methods.bmi(this.calcData.person, d.weight)
 					},
 					calcData: {
@@ -115,7 +115,7 @@ export default {
 					columnId: 'bodyfat',
 					timeId: 'date',
 					valueId: 'bodyfat',
-					getValueY: function(v) {
+					getValueY(v) {
 						return v
 					},
 					borderColor: 'rgb(99,22,122)',
@@ -129,7 +129,7 @@ export default {
 					columnId: 'measurement',
 					timeId: 'date',
 					valueId: 'measurement',
-					getValueY: function(v) {
+					getValueY(v) {
 						return v
 					},
 					borderColor: 'darkorange',
@@ -144,7 +144,7 @@ export default {
 					columnId: 'waistSize',
 					timeId: 'date',
 					valueId: 'waistSize',
-					getValueY: function(v) {
+					getValueY(v) {
 						return v
 					},
 					borderColor: 'gray',
@@ -158,7 +158,7 @@ export default {
 					columnId: 'hipSize',
 					timeId: 'date',
 					valueId: 'hipSize',
-					getValueY: function(v) {
+					getValueY(v) {
 						return v
 					},
 					borderColor: 'darkgray',
@@ -172,7 +172,7 @@ export default {
 					columnId: 'musclePart',
 					timeId: 'date',
 					valueId: 'musclePart',
-					getValueY: function(v) {
+					getValueY(v) {
 						return v
 					},
 					borderColor: 'lightgreen',
@@ -183,7 +183,7 @@ export default {
 				},
 			]
 		},
-		options: function() {
+		options() {
 			return {
 				title: {
 					text: t('health', 'Chart'),

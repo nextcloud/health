@@ -34,7 +34,7 @@
 
 <script>
 import DataTable from '../../general/DataTable'
-import moment from '@nextcloud/moment'
+import moment from 'moment'
 
 export default {
 	name: 'MeasurementTable',
@@ -59,7 +59,7 @@ export default {
 					columnId: 'datetime',
 					type: 'datetime',
 					show: true,
-					default: function() {
+					default() {
 						return moment().format('YYYY-MM-DDTHH:mm')
 					},
 				},
@@ -100,7 +100,7 @@ export default {
 					min: 80,
 					max: 100,
 					// unter 90 ist dramatisch
-					style: function(value) {
+					style(value) {
 						if (value < 90) {
 							return 'color: darkred; font-weight: bolder;'
 						} else {
@@ -116,7 +116,7 @@ export default {
 					min: 40,
 					max: 600,
 					// 80-120 ist normal
-					style: function(value) {
+					style(value) {
 						if (value < 80 || value > 120) {
 							return 'color: darkred; font-weight: bolder;'
 						} else {
@@ -135,7 +135,7 @@ export default {
 						{ id: 2, label: t('health', 'high', {}) },
 						{ id: 3, label: t('health', 'extreme', {}) },
 					],
-					style: function(value) {
+					style(value) {
 						if (value === 3) {
 							return 'color: darkred; font-weight: bolder;'
 						} else {
@@ -146,18 +146,40 @@ export default {
 				{
 					name: t('health', 'Appetite'),
 					columnId: 'appetite',
-					type: 'longtext',
+					type: 'select',
 					show: this.person.measurementColumnAppetite,
-					placeholder: t('health', 'What about your appetite...', {}),
-					maxlength: 1000,
+					options: [
+						{ id: 0, label: t('health', 'low', {}) },
+						{ id: 1, label: t('health', 'middle', {}) },
+						{ id: 2, label: t('health', 'high', {}) },
+						{ id: 3, label: t('health', 'extreme', {}) },
+					],
+					style(value) {
+						if (value === 3) {
+							return 'color: darkred; font-weight: bolder;'
+						} else {
+							return ''
+						}
+					},
 				},
 				{
 					name: t('health', 'Allergies'),
 					columnId: 'allergies',
-					type: 'longtext',
+					type: 'select',
 					show: this.person.measurementColumnAllergies,
-					placeholder: t('health', 'What about your allergies...', {}),
-					maxlength: 1000,
+					options: [
+						{ id: 0, label: t('health', 'low', {}) },
+						{ id: 1, label: t('health', 'middle', {}) },
+						{ id: 2, label: t('health', 'high', {}) },
+						{ id: 3, label: t('health', 'extreme', {}) },
+					],
+					style(value) {
+						if (value === 3) {
+							return 'color: darkred; font-weight: bolder;'
+						} else {
+							return ''
+						}
+					},
 				},
 				{
 					name: t('health', 'Comment'),

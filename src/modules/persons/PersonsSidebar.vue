@@ -140,13 +140,13 @@ export default {
 		...mapGetters(['person']),
 	},
 	methods: {
-		updateAge: function(e) {
+		updateAge(e) {
 			this.$store.dispatch('setValue', { key: 'age', value: e.target[1].value })
 		},
-		updateSize: function(e) {
+		updateSize(e) {
 			this.$store.dispatch('setValue', { key: 'size', value: e.target[1].value })
 		},
-		updateSex: function(sex) {
+		updateSex(sex) {
 			this.$store.dispatch('setValue', { key: 'sex', value: sex })
 		},
 	},

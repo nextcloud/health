@@ -53,8 +53,6 @@ class Measurementdata extends Entity implements JsonSerializable {
 		$this->addType('bloodSugar','float');
 		$this->addType('oxygenSat','float');
 		$this->addType('defecation','integer');
-		$this->addType('appetite','integer');
-		$this->addType('allergies','integer');
 		$this->addType('cigarettes','integer');
 		$this->addType('alcohol','integer');
 	}

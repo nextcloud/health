@@ -120,7 +120,7 @@ export default {
 		ActionButton,
 		Actions,
 	},
-	data: function() {
+	data() {
 		return {
 			menuOpenPersonId: 0,
 			showNewPersonForm: false,
@@ -137,17 +137,17 @@ export default {
 		},
 	},
 	methods: {
-		createPerson: function(e) {
+		createPerson(e) {
 			const name = e.currentTarget.childNodes[0].value
 			this.$store.dispatch('addPerson', name)
 			this.$store.commit('showSidebar', true)
 			this.showNewPersonForm = false
 			e.currentTarget.childNodes[0].value = ''
 		},
-		personUpdateName: function(v) {
+		personUpdateName(v) {
 			this.$store.dispatch('setValue', { id: this.persons[this.menuOpenPersonId].id, key: 'name', value: v })
 		},
-		closeNewPersonForm: function() {
+		closeNewPersonForm() {
 			this.$refs.newPersonName.value = ''
 			this.showNewPersonForm = false
 		},

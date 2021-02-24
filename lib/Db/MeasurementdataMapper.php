@@ -24,6 +24,7 @@
 namespace OCA\Health\Db;
 
 use OCP\AppFramework\Db\DoesNotExistException;
+use OCP\AppFramework\Db\Entity;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCP\IDbConnection;
 use OCP\AppFramework\Db\QBMapper;
@@ -34,7 +35,7 @@ class MeasurementdataMapper extends QBMapper {
         parent::__construct($db, 'health_measurementdata', Measurementdata::class);
     }
 
-    public function find(int $id): ?\OCP\AppFramework\Db\Entity
+    public function find(int $id): ?Entity
 	{
         $qb = $this->db->getQueryBuilder();
 

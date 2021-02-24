@@ -49,14 +49,14 @@ export default {
 		},
 	},
 	computed: {
-		setDefinitions: function() {
+		setDefinitions() {
 			return [
 				{
 					title: t('health', 'Temperature', {}),
 					columnId: 'temperature',
 					timeId: 'datetime',
 					valueId: 'temperature',
-					getValueY: function(v) {
+					getValueY(v) {
 						return v
 					},
 					borderColor: 'darkblue',
@@ -70,7 +70,7 @@ export default {
 					columnId: 'heartRate',
 					timeId: 'datetime',
 					valueId: 'heartRate',
-					getValueY: function(v) {
+					getValueY(v) {
 						return v
 					},
 					borderColor: 'darkgreen',
@@ -84,7 +84,7 @@ export default {
 					columnId: 'bloodPressureS',
 					timeId: 'datetime',
 					valueId: 'bloodPressureS',
-					getValueY: function(v) {
+					getValueY(v) {
 						return v
 					},
 					borderColor: 'rgb(110,20,128)',
@@ -98,7 +98,7 @@ export default {
 					columnId: 'bloodPressureD',
 					timeId: 'datetime',
 					valueId: 'bloodPressureD',
-					getValueY: function(v) {
+					getValueY(v) {
 						return v
 					},
 					borderColor: 'rgb(188,4,219)',
@@ -112,7 +112,7 @@ export default {
 					columnId: 'oxygenSat',
 					timeId: 'datetime',
 					valueId: 'oxygenSat',
-					getValueY: function(v) {
+					getValueY(v) {
 						return v
 					},
 					borderColor: 'rgb(12,147,159)',
@@ -126,7 +126,7 @@ export default {
 					columnId: 'bloodSugar',
 					timeId: 'datetime',
 					valueId: 'bloodSugar',
-					getValueY: function(v) {
+					getValueY(v) {
 						return v
 					},
 					borderColor: 'rgb(181,80,17)',
@@ -140,7 +140,7 @@ export default {
 					columnId: 'defecation',
 					timeId: 'datetime',
 					valueId: 'defecation',
-					getValueY: function(v) {
+					getValueY(v) {
 						// console.debug('v for chart data', v)
 						return (v + 1)
 						// const maxIndex = 3
@@ -155,7 +155,7 @@ export default {
 				},
 			]
 		},
-		options: function() {
+		options() {
 			return {
 				title: {
 					text: t('health', 'Chart'),

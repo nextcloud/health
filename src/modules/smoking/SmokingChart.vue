@@ -49,14 +49,14 @@ export default {
 		},
 	},
 	computed: {
-		setDefinitions: function() {
+		setDefinitions() {
 			return [
 				{
 					title: t('health', 'Cigarettes', {}),
 					columnId: 'cigarettes',
 					timeId: 'date',
 					valueId: 'cigarettes',
-					getValueY: function(v) {
+					getValueY(v) {
 						return v
 					},
 					borderColor: 'darkblue',
@@ -69,7 +69,7 @@ export default {
 					columnId: 'desireLevel',
 					timeId: 'date',
 					valueId: 'desireLevel',
-					getValueY: function(v) {
+					getValueY(v) {
 						const maxIndex = 6
 						return Math.round((v + 1) / (maxIndex + 1) * 10)
 					},
@@ -83,7 +83,7 @@ export default {
 					columnId: 'savedMoney',
 					timeId: 'date',
 					valueId: 'calculate',
-					getValueY: function(v) {
+					getValueY(v) {
 						if (!this.calcData.price || !this.calcData.start || v.cigarettes >= this.calcData.start) {
 							return null
 						} else {
@@ -128,7 +128,7 @@ export default {
 				},
 			]
 		},
-		options: function() {
+		options() {
 			return {
 				title: {
 					text: t('health', 'Chart'),

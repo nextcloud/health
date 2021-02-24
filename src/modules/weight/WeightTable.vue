@@ -60,7 +60,7 @@ export default {
 					columnId: 'date',
 					type: 'date',
 					show: true,
-					default: function() {
+					default() {
 						return new Date().toISOString().slice(0, 10)
 					},
 				},
@@ -75,7 +75,7 @@ export default {
 					name: t('health', 'BMI'),
 					columnId: 'bmi',
 					type: 'calculate',
-					calc: function(dataset) {
+					calc(dataset) {
 						return this.calcData.bmiApi.methods.bmi(this.calcData.person, dataset.weight)
 					},
 					calcData: {

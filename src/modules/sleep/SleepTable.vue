@@ -34,7 +34,7 @@
 
 <script>
 import DataTable from '../../general/DataTable'
-import moment from '@nextcloud/moment'
+import moment from 'moment'
 
 export default {
 	name: 'SleepTable',
@@ -59,7 +59,7 @@ export default {
 					columnId: 'asleep',
 					type: 'datetime',
 					show: true,
-					default: function() {
+					default() {
 						return moment().format('YYYY-MM-DDTHH:mm')
 					},
 				},
@@ -68,7 +68,7 @@ export default {
 					columnId: 'wakeup',
 					type: 'datetime',
 					show: true,
-					default: function() {
+					default() {
 						return moment().format('YYYY-MM-DDTHH:mm')
 					},
 				},
@@ -77,7 +77,7 @@ export default {
 					columnId: 'duration',
 					type: 'calculate',
 					show: true,
-					calc: function(dataset) {
+					calc(dataset) {
 						if (!dataset || !dataset.asleep || !dataset.wakeup) {
 							return ''
 						}

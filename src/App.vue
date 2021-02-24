@@ -116,7 +116,7 @@ import SleepContent from './modules/sleep/SleepContent'
 import MeasurementContent from './modules/measurement/MeasurementContent'
 import MeasurementSidebar from './modules/measurement/MeasurementSidebar'
 import SleepSidebar from './modules/sleep/SleepSidebar'
-import moment from '@nextcloud/moment'
+import moment from 'moment'
 import SmokingSidebar from './modules/smoking/SmokingSidebar'
 import SmokingContent from './modules/smoking/SmokingContent'
 
@@ -143,7 +143,7 @@ export default {
 		SmokingSidebar,
 		SmokingContent,
 	},
-	data: function() {
+	data() {
 		return {
 			loading: true,
 		}
@@ -158,7 +158,7 @@ export default {
 		this.loading = false
 	},
 	methods: {
-		formatMyDate: function(v) {
+		formatMyDate(v) {
 			return moment(v).format('DD.MM.YYYY')
 		},
 	},

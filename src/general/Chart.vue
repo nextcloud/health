@@ -85,7 +85,7 @@
 <script>
 import LineChart from './charts/LineChart'
 import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
-import moment from '@nextcloud/moment'
+import moment from 'moment'
 
 export default {
 	name: 'Chart',
@@ -119,13 +119,13 @@ export default {
 			default: null,
 		},
 	},
-	data: function() {
+	data() {
 		return {
 			range: this.rangeDefinition,
 		}
 	},
 	computed: {
-		getOptions: function() {
+		getOptions() {
 			if (!this.options) {
 				return []
 			}
@@ -141,12 +141,13 @@ export default {
 			// console.debug('axesIds', axesIds)
 			AllYAxes.forEach((axes, i) => {
 				if (axes.id in axesIds && axesIds[axes.id]) {
+					// eslint-disable-next-line vue/no-side-effects-in-computed-properties
 					this.options.scales.yAxes.push(AllYAxes[i])
 				}
 			})
 			return this.options
 		},
-		getChartData: function() {
+		getChartData() {
 			if (!this.definition || !this.data) {
 				return []
 			}
@@ -201,10 +202,10 @@ export default {
 			// console.debug('chartData', result)
 			return result
 		},
-		isDetailRange: function() {
+		isDetailRange() {
 			return !(this.rangeDefinition === 'week' || this.rangeDefinition === 'month' || this.rangeDefinition === 'year')
 		},
-		rangeDays: function() {
+		rangeDays() {
 			if (this.range === 'week') {
 				return 7
 			} else if (this.range === 'month') {
@@ -215,7 +216,7 @@ export default {
 				return -1
 			}
 		},
-		rangeHours: function() {
+		rangeHours() {
 			if (this.range === '1hour') {
 				return 1
 			} else if (this.range === '4hours') {
@@ -232,7 +233,7 @@ export default {
 		},
 	},
 	methods: {
-		isInTimeRange: function(date) {
+		isInTimeRange(date) {
 			if (this.rangeDays !== -1 && !this.isDetailRange) {
 				return Math.abs(moment(date).diff(moment(), 'days')) <= this.rangeDays
 			} else if (this.rangeHours !== -1 && this.isDetailRange) {

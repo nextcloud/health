@@ -128,7 +128,7 @@ export default {
 	computed: {
 		...mapState(['activeModule', 'showSidebar', 'rWeightDatasets', 'loading']),
 		...mapGetters(['person']),
-		getProgressbarValue: function() {
+		getProgressbarValue() {
 			const lostAlready = this.weightTargetInitialWeight - this.lastWeight
 			const wantToLost = this.weightTargetInitialWeight - this.weightTarget
 			const result = Math.round((100 - ((lostAlready / wantToLost)) * 100) * 100) / 100
@@ -146,13 +146,13 @@ export default {
 		weightUnit() {
 			return 'weightUnit' in this.person ? this.person.weightUnit : null
 		},
-		lastWeight: function() {
+		lastWeight() {
 			if (this.weightData && this.weightData.length >= 1) {
 				return this.weightData[0].weight
 			}
 			return null
 		},
-		lastWeightDataset: function() {
+		lastWeightDataset() {
 			if (!this.weightData || this.weightData.length === 0) {
 				return null
 			}

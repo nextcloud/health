@@ -135,6 +135,7 @@
 			{{ n('health', '%n item is hidden, because it is out of the chosen time range.', '%n items are hidden, because they are out of the chosen time range.', data.length - datasets.length, {}) }}
 		</div>
 		<JsonCSV
+			v-if="getExportData.length > 0"
 			:data="getExportData"
 			:name="entityName + '.csv'">
 			<button class="export">
@@ -161,18 +162,18 @@
 <script>
 import ModalItem from './ModalItem'
 import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
-import moment from '@nextcloud/moment'
+import moment from 'moment'
 import JsonCSV from 'vue-json-csv'
 
 export default {
 	name: 'DataTable',
 	filters: {
-		formatMyDate: function(v) {
+		formatMyDate(v) {
 			// return new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'today') : new Date(v).toLocaleDateString()
 			// console.debug('is valid date', { date: moment(v), valid: moment(v).isValid() })
 			return moment(v) === moment() ? t('health', 'today') : moment(v).format('lll')
 		},
-		formatMyDatetime: function(v) {
+		formatMyDatetime(v) {
 			return moment(v).format('L') === moment().format('L') ? t('health', 'today') + ' ' + moment(v).format('LT') : moment(v).format('lll')
 			// const date = new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'today') : new Date(v).toLocaleDateString()
 			// return date + ' ' + new Date(v).toLocaleTimeString().slice(0, 5)
@@ -201,13 +202,13 @@ export default {
 			default: false,
 		},
 	},
-	data: function() {
+	data() {
 		return {
 			range: 'week',
 		}
 	},
 	computed: {
-		datasets: function() {
+		datasets() {
 			const d = []
 			// console.debug('try to return', this.data)
 			this.data.forEach(item => {
@@ -224,7 +225,7 @@ export default {
 			})
 			return d
 		},
-		rangeDays: function() {
+		rangeDays() {
 			if (this.range === 'week') {
 				return 7
 			} else if (this.range === 'month') {
@@ -235,7 +236,7 @@ export default {
 				return -1
 			}
 		},
-		getExportData: function() {
+		getExportData() {
 			if (!this.datasets && this.datasets.length > 0 && !this.header) {
 				console.debug('error datasets', this.datasets)
 				return []
@@ -254,7 +255,7 @@ export default {
 		},
 	},
 	methods: {
-		isInTimeRange: function(date) {
+		isInTimeRange(date) {
 			if (this.rangeDays !== -1) {
 				// console.debug('diff', Math.abs(moment(date).diff(moment(), 'days')))
 				return Math.abs(moment(date).diff(moment(), 'days')) <= this.rangeDays
@@ -262,10 +263,10 @@ export default {
 				return true
 			}
 		},
-		calcCount: function(items) {
+		calcCount(items) {
 			return items.length
 		},
-		deleteItem: function(id) {
+		deleteItem(id) {
 			this.$emit('deleteItem', this.datasets[id])
 		},
 		handleDataIncome(item) {
@@ -277,10 +278,10 @@ export default {
 				this.addItem(item)
 			}
 		},
-		addItem: function(item) {
+		addItem(item) {
 			this.$emit('addItem', item)
 		},
-		updateItem: function(item) {
+		updateItem(item) {
 			this.$emit('updateItem', item)
 		},
 	},

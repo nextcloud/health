@@ -46,7 +46,7 @@ export class PersonApi {
 	}
 
 	addPerson(name) {
-		return axios.post(this.url(''), { name: name })
+		return axios.post(this.url(''), { name })
 			.then(
 				(response) => {
 					return Promise.resolve(response.data)
@@ -76,7 +76,7 @@ export class PersonApi {
 	}
 
 	updateValue(personId, key, value) {
-		return axios.put(this.url(`/${personId}`), { key: key, value: '' + value })
+		return axios.put(this.url(`/${personId}`), { key, value: '' + value })
 			.then(
 				(response) => {
 					return Promise.resolve(response.data)

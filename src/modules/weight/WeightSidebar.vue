@@ -143,19 +143,19 @@ export default {
 		...mapGetters(['person']),
 	},
 	methods: {
-		updateWeightUnit: function(e) {
+		updateWeightUnit(e) {
 			this.$store.dispatch('setValue', { key: 'weightUnit', value: e.target[1].value })
 		},
-		updateWeightTarget: function(e) {
+		updateWeightTarget(e) {
 			this.$store.dispatch('setValue', { key: 'weightTarget', value: e.target[1].value })
 		},
-		updateWeightTargetInitialWeight: function(e) {
+		updateWeightTargetInitialWeight(e) {
 			this.$store.dispatch('setValue', { key: 'weightTargetInitialWeight', value: e.target[1].value })
 		},
-		updateMeasurementName: function(e) {
+		updateMeasurementName(e) {
 			this.$store.dispatch('setValue', { key: 'weightMeasurementName', value: e.target[1].value })
 		},
-		updateWeightTargetBounty: function() {
+		updateWeightTargetBounty() {
 			this.$store.dispatch('setValue', { key: 'weightTargetBounty', value: this.$refs.weightTargetBounty.value })
 		},
 	},

@@ -58,7 +58,7 @@ export default {
 					columnId: 'date',
 					type: 'date',
 					show: true,
-					default: function() {
+					default() {
 						return new Date().toISOString().slice(0, 10)
 					},
 				},
@@ -87,7 +87,7 @@ export default {
 					name: t('health', 'Saved money'),
 					columnId: 'savedMoney',
 					type: 'calculate',
-					calc: function(dataset) {
+					calc(dataset) {
 						// console.debug('calc', { this: this, dataset: dataset })
 						if (!this.calcData.price || !this.calcData.start) {
 							return null

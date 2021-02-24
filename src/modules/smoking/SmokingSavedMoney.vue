@@ -51,7 +51,7 @@ export default {
 		},
 	},
 	computed: {
-		sum: function() {
+		sum() {
 			if (!this.price || !this.startValue) {
 				return null
 			} else {

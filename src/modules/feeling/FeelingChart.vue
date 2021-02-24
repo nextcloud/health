@@ -49,14 +49,14 @@ export default {
 		},
 	},
 	computed: {
-		setDefinitions: function() {
+		setDefinitions() {
 			return [
 				{
 					title: t('health', 'Mood', {}),
 					columnId: 'mood',
 					timeId: 'datetime',
 					valueId: 'mood',
-					getValueY: function(v) {
+					getValueY(v) {
 						const maxIndex = 3
 						return Math.round((v + 1) / (maxIndex + 1) * 100)
 					},
@@ -71,7 +71,7 @@ export default {
 					columnId: 'sadnessLevel',
 					timeId: 'datetime',
 					valueId: 'sadnessLevel',
-					getValueY: function(v) {
+					getValueY(v) {
 						const maxIndex = 3
 						return Math.round((v + 1) / (maxIndex + 1) * 100)
 					},
@@ -85,7 +85,7 @@ export default {
 					columnId: 'symptoms',
 					timeId: 'datetime',
 					valueId: 'symptoms',
-					getValueY: function(v) {
+					getValueY(v) {
 						const maxIndex = 6
 						return Math.round((v + 1) / (maxIndex + 1) * 100)
 					},
@@ -100,7 +100,7 @@ export default {
 					columnId: 'attacks',
 					timeId: 'datetime',
 					valueId: 'attacks',
-					getValueY: function(v) {
+					getValueY(v) {
 						const maxIndex = 6
 						return Math.round((v + 1) / (maxIndex + 1) * 100)
 					},
@@ -115,7 +115,7 @@ export default {
 					columnId: 'pain',
 					timeId: 'datetime',
 					valueId: 'pain',
-					getValueY: function(v) {
+					getValueY(v) {
 						const maxIndex = 10
 						return Math.round((v + 1) / (maxIndex + 1) * 100)
 					},
@@ -129,7 +129,7 @@ export default {
 					columnId: 'energy',
 					timeId: 'datetime',
 					valueId: 'energy',
-					getValueY: function(v) {
+					getValueY(v) {
 						const maxIndex = 10
 						return Math.round((v + 1) / (maxIndex + 1) * 100)
 					},
@@ -140,7 +140,7 @@ export default {
 				},
 			]
 		},
-		options: function() {
+		options() {
 			return {
 				title: {
 					text: t('health', 'Chart'),

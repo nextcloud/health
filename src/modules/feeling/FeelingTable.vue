@@ -34,7 +34,7 @@
 
 <script>
 import DataTable from '../../general/DataTable'
-import moment from '@nextcloud/moment'
+import moment from 'moment'
 
 export default {
 	name: 'FeelingTable',
@@ -59,7 +59,7 @@ export default {
 					columnId: 'datetime',
 					type: 'datetime',
 					show: true,
-					default: function() {
+					default() {
 						return moment().format('YYYY-MM-DDTHH:mm')
 					},
 				},

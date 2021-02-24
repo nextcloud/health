@@ -139,7 +139,7 @@
 <script>
 import Modal from '@nextcloud/vue/dist/Components/Modal'
 import Multiselect from '@nextcloud/vue/dist/Components/Multiselect'
-import moment from '@nextcloud/moment'
+import moment from 'moment'
 
 export default {
 	name: 'ModalItem',
@@ -158,7 +158,7 @@ export default {
 		},
 		itemData: {
 			type: Object,
-			default: function() { return {} },
+			default() { return {} },
 		},
 		icon: {
 			type: String,
@@ -173,14 +173,14 @@ export default {
 			default: 'add', // add or edit
 		},
 	},
-	data: function() {
+	data() {
 		return {
 			values: {},
 			showModal: false,
 		}
 	},
 	watch: {
-		itemData: function(newItemData) {
+		itemData(newItemData) {
 			// console.debug('newItemData', newItemData)
 			this.resetValues()
 		},
@@ -189,7 +189,7 @@ export default {
 		this.resetValues()
 	},
 	methods: {
-		sendData: function() {
+		sendData() {
 			// console.debug('modal transform values', this.values)
 			for (const [key] of Object.entries(this.values)) {
 				if (this.values[key] && this.values[key].id) {
@@ -209,7 +209,7 @@ export default {
 			this.resetValues()
 			this.showModal = false
 		},
-		isNewSection: function(index) {
+		isNewSection(index) {
 			// try to get header data
 			if (!this.header[index]) {
 				return false
@@ -237,11 +237,11 @@ export default {
 
 			return false
 		},
-		closeModal: function() {
+		closeModal() {
 			this.resetValues()
 			this.showModal = false
 		},
-		resetValues: function() {
+		resetValues() {
 			// console.debug('reset values in modal')
 			this.values = Object.assign({}, this.itemData)
 			this.header.forEach(h => {

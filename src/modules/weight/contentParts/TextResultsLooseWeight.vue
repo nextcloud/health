@@ -86,7 +86,7 @@ export default {
 	computed: {
 		...mapState(['activeModule', 'showSidebar', 'weightData']),
 		...mapGetters(['person']),
-		getProgressbarValue: function() {
+		getProgressbarValue() {
 			if (!this.weight || !this.initialWeight) {
 				return null
 			}
@@ -94,13 +94,13 @@ export default {
 			const result = Math.round((100 - ((this.diff / wantToLoose)) * 100) * 100) / 100
 			return (result > 100) ? 100 : result
 		},
-		diff: function() {
+		diff() {
 			return Math.round((this.initialWeight - this.weight) * 100) / 100
 		},
-		toGo: function() {
+		toGo() {
 			return Math.round((this.weight - this.target) * 100) / 100
 		},
-		transValues: function() {
+		transValues() {
 			return {
 				unit: this.unit,
 				weight: this.weight,

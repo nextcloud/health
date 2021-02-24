@@ -45,7 +45,7 @@ import MixinBmi from './MixinBmi'
 export default {
 	name: 'WeightBmi',
 	filters: {
-		formatMyDate: function(v) {
+		formatMyDate(v) {
 			return new Date(v).toLocaleDateString()
 		},
 	},

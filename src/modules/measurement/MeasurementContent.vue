@@ -64,7 +64,7 @@ import { mapState, mapGetters } from 'vuex'
 import MeasurementTable from './MeasurementTable'
 import MeasurementChart from './MeasurementChart'
 import MeasurementDetailChart from './MeasurementDetailChart'
-import moment from '@nextcloud/moment'
+import moment from 'moment'
 
 export default {
 	name: 'MeasurementContent',

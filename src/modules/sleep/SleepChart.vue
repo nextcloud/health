@@ -32,7 +32,7 @@
 
 <script>
 import Chart from '../../general/Chart'
-import moment from '@nextcloud/moment'
+import moment from 'moment'
 
 export default {
 	name: 'SleepChart',
@@ -50,14 +50,14 @@ export default {
 		},
 	},
 	computed: {
-		setDefinitions: function() {
+		setDefinitions() {
 			return [
 				{
 					title: t('health', 'Duration', {}),
 					columnId: 'duration',
 					timeId: 'asleep',
 					valueId: 'calculate',
-					getValueY: function(dataset) {
+					getValueY(dataset) {
 						if (!dataset || !dataset.asleep || !dataset.wakeup) {
 							console.debug('dataset not good')
 							return ''
@@ -70,7 +70,7 @@ export default {
 							if ('durationWakeups' in dataset && dataset.durationWakeups) {
 								duration = duration.subtract(dataset.durationWakeups, 'minutes')
 							}
-							console.debug('duration', { duration: duration, h: duration.asHours(), m: duration.asMinutes() })
+							console.debug('duration', { duration, h: duration.asHours(), m: duration.asMinutes() })
 							return duration.isValid() ? duration.asHours() : ''
 						}
 						return ''
@@ -87,7 +87,7 @@ export default {
 					columnId: 'quality',
 					timeId: 'asleep',
 					valueId: 'quality',
-					getValueY: function(v) {
+					getValueY(v) {
 						const maxIndex = 4
 						return Math.round((v + 1) / (maxIndex + 1) * 5)
 					},
@@ -101,7 +101,7 @@ export default {
 					columnId: 'countedWakeups',
 					timeId: 'asleep',
 					valueId: 'countedWakeups',
-					getValueY: function(v) {
+					getValueY(v) {
 						return v * 2
 					},
 					borderColor: 'rgb(115,32,32)',
@@ -111,7 +111,7 @@ export default {
 				},
 			]
 		},
-		options: function() {
+		options() {
 			return {
 				title: {
 					text: t('health', 'Chart'),

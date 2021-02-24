@@ -40,12 +40,12 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import moment from '@nextcloud/moment'
+import moment from 'moment'
 
 export default {
 	name: 'PersonsContent',
 	filters: {
-		formatMyDate: function(v) {
+		formatMyDate(v) {
 			return moment(v).format('DD.MM.YYYY')
 		},
 	},
@@ -54,7 +54,7 @@ export default {
 		...mapGetters(['person']),
 	},
 	methods: {
-		updateMission: function() {
+		updateMission() {
 			this.$store.dispatch('setValue', { key: 'personalMission', value: this.$refs.mission.value })
 		},
 	},
