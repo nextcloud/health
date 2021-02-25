@@ -1,5 +1,5 @@
 # Health
-##### version 1.0.0
+##### version 1.0.1
 ### Track your health. Use the advantages of a trusted platform.
 
 The app provides different modules to track your  health data.
@@ -13,6 +13,9 @@ Following modules are served
 
 
 ### Changelog
+
+v1.0.1
+- remove beta from title
 
 v1.0.0
 - various bugfixes
