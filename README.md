@@ -1,5 +1,5 @@
 # Health
-##### [beta] version 0.3.0
+##### version 1.0.0
 ### Track your health. Use the advantages of a trusted platform.
 
 The app provides different modules to track your  health data.
@@ -9,17 +9,13 @@ Following modules are served
 - Feeling
 - Measurement
 - Sleep
-
-More modules are scheduled
-- Breaks
-- Medicine
-- Activities
-- Nutrition
 - Smoking
 
->Ideas for modules and functions are welcome. Please create issues on github.
 
 ### Changelog
+
+v1.0.0
+- various bugfixes
 
 v0.4.0 [beta]
 - add module smoking

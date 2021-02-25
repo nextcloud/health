@@ -46,7 +46,7 @@ class PageController extends Controller {
 		// $this->cesService->transformDatasets();
 		// Util::addScript($this->appName, 'vue-chartjs.min');
 		Util::addScript($this->appName, 'health-main');
-		Util::addScript($this->appName, 'health');
+		// Util::addScript($this->appName, 'health');
 		Util::addStyle($this->appName, 'icons');
 		//Util::addStyle($this->appName, 'bulma.min');
 

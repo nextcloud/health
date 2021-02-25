@@ -14,7 +14,7 @@ Following modules are served
 - Smoking
 
 Health is everything.]]></description>
-    <version>0.4.0</version>
+    <version>1.0.0</version>
     <licence>agpl</licence>
     <author mail="flost-dev@mailbox.org" >Florian Steffens</author>
     <namespace>Health</namespace>
