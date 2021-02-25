@@ -3,7 +3,7 @@
       xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
     <id>health</id>
     <name>Health</name>
-    <summary>[beta] Track your health. Use the advantages of a trusted platform.</summary>
+    <summary>Track your health. Use the advantages of a trusted platform.</summary>
     <description><![CDATA[The app provides different modules to track health data.
 
 Following modules are served
