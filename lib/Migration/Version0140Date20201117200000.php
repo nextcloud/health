@@ -25,6 +25,7 @@
   use Closure;
   use Doctrine\DBAL\Types\Type;
   use OCP\DB\ISchemaWrapper;
+  use OCP\DB\Types;
   use OCP\Migration\SimpleMigrationStep;
   use OCP\Migration\IOutput;
 
@@ -54,7 +55,7 @@
 				'autoincrement' => true,
 				'notnull' => true,
 			]);
-			$table->addColumn('description', Type::TEXT, [
+			$table->addColumn('description', Types::TEXT, [
 				'notnull' => false,
 				'default' => null,
 			]);
@@ -77,11 +78,11 @@
 			$table->addColumn('context', 'integer', [
 				'notnull' => true,
 			]);
-			$table->addColumn('data', Type::TEXT, [
+			$table->addColumn('data', Types::TEXT, [
 				'notnull' => false,
 				'default' => null,
 			]);
-			$table->addColumn('ownership', Type::TEXT, [
+			$table->addColumn('ownership', Types::TEXT, [
 				'notnull' => false,
 				'default' => null,
 			]);

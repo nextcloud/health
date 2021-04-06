@@ -26,6 +26,7 @@
   use Doctrine\DBAL\Schema\SchemaException;
   use Doctrine\DBAL\Types\Type;
   use OCP\DB\ISchemaWrapper;
+  use OCP\DB\Types;
   use OCP\IDBConnection;
   use OCP\Migration\SimpleMigrationStep;
   use OCP\Migration\IOutput;
@@ -53,7 +54,7 @@
 		$table = $schema->getTable('health_weightdata');
 		if($table->hasColumn('bodyfat') && $table->hasColumn('bodyfat2')) {
 			$table->dropColumn('bodyfat');
-			$table->addColumn('bodyfat', Type::FLOAT, [
+			$table->addColumn('bodyfat', Types::FLOAT, [
 				'default' => null,
 				'notnull' => false,
 			]);

@@ -26,6 +26,7 @@
   use Doctrine\DBAL\Schema\SchemaException;
   use Doctrine\DBAL\Types\Type;
   use OCP\DB\ISchemaWrapper;
+  use OCP\DB\Types;
   use OCP\IDBConnection;
   use OCP\Migration\SimpleMigrationStep;
   use OCP\Migration\IOutput;
@@ -52,7 +53,7 @@
 
 		// create tmp column
 		if(!$table->hasColumn('bodyfat2')) {
-			$table->addColumn('bodyfat2', Type::FLOAT, [
+			$table->addColumn('bodyfat2', Types::FLOAT, [
 				'notnull' => false,
 				'default' => null,
 			]);

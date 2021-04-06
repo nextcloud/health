@@ -26,7 +26,8 @@ use Closure;
   use Doctrine\DBAL\Schema\SchemaException;
   use Doctrine\DBAL\Types\Type;
   use OCP\DB\ISchemaWrapper;
-  use OCP\IDBConnection;
+use OCP\DB\Types;
+use OCP\IDBConnection;
   use OCP\Migration\SimpleMigrationStep;
   use OCP\Migration\IOutput;
 
@@ -77,7 +78,7 @@ class Version0310Date20210130000000 extends SimpleMigrationStep {
 			];
 			foreach ($newColumns as $c) {
 				if(!$table->hasColumn($c)) {
-					$table->addColumn($c, TYPE::INTEGER, [ 'default' => null, 'notnull' => false ]);
+					$table->addColumn($c, Types::INTEGER, [ 'default' => null, 'notnull' => false ]);
 				}
 			}
 			$newColumns = [
@@ -85,7 +86,7 @@ class Version0310Date20210130000000 extends SimpleMigrationStep {
 			];
 			foreach ($newColumns as $c) {
 				if(!$table->hasColumn($c)) {
-					$table->addColumn($c, TYPE::FLOAT, [ 'default' => null, 'notnull' => false ]);
+					$table->addColumn($c, Types::FLOAT, [ 'default' => null, 'notnull' => false ]);
 				}
 			}
 			$newColumns = [
@@ -93,7 +94,7 @@ class Version0310Date20210130000000 extends SimpleMigrationStep {
 			];
 			foreach ($newColumns as $c) {
 				if(!$table->hasColumn($c)) {
-					$table->addColumn($c, TYPE::TEXT, [ 'default' => null, 'notnull' => false ]);
+					$table->addColumn($c, Types::TEXT, [ 'default' => null, 'notnull' => false ]);
 				}
 			}
 		} catch (SchemaException $e) {
@@ -120,7 +121,7 @@ class Version0310Date20210130000000 extends SimpleMigrationStep {
 			$table->addColumn('desire_level', 'integer', [
 				'notnull' => false,
 			]);
-			$table->addColumn('comment', Type::TEXT, [
+			$table->addColumn('comment', Types::TEXT, [
 				'notnull' => false,
 				'default' => null,
 			]);
