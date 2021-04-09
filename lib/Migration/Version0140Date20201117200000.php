@@ -23,9 +23,7 @@
   namespace OCA\Health\Migration;
 
   use Closure;
-  use Doctrine\DBAL\Types\Type;
   use OCP\DB\ISchemaWrapper;
-  use OCP\DB\Types;
   use OCP\Migration\SimpleMigrationStep;
   use OCP\Migration\IOutput;
 
@@ -55,7 +53,7 @@
 				'autoincrement' => true,
 				'notnull' => true,
 			]);
-			$table->addColumn('description', Types::TEXT, [
+			$table->addColumn('description', 'text', [
 				'notnull' => false,
 				'default' => null,
 			]);
@@ -78,11 +76,11 @@
 			$table->addColumn('context', 'integer', [
 				'notnull' => true,
 			]);
-			$table->addColumn('data', Types::TEXT, [
+			$table->addColumn('data', 'text', [
 				'notnull' => false,
 				'default' => null,
 			]);
-			$table->addColumn('ownership', Types::TEXT, [
+			$table->addColumn('ownership', 'text', [
 				'notnull' => false,
 				'default' => null,
 			]);

@@ -78,7 +78,7 @@ class Version0310Date20210130000000 extends SimpleMigrationStep {
 			];
 			foreach ($newColumns as $c) {
 				if(!$table->hasColumn($c)) {
-					$table->addColumn($c, Types::INTEGER, [ 'default' => null, 'notnull' => false ]);
+					$table->addColumn($c, 'integer', [ 'default' => null, 'notnull' => false ]);
 				}
 			}
 			$newColumns = [
@@ -86,7 +86,7 @@ class Version0310Date20210130000000 extends SimpleMigrationStep {
 			];
 			foreach ($newColumns as $c) {
 				if(!$table->hasColumn($c)) {
-					$table->addColumn($c, Types::FLOAT, [ 'default' => null, 'notnull' => false ]);
+					$table->addColumn($c, 'float', [ 'default' => null, 'notnull' => false ]);
 				}
 			}
 			$newColumns = [
@@ -94,7 +94,7 @@ class Version0310Date20210130000000 extends SimpleMigrationStep {
 			];
 			foreach ($newColumns as $c) {
 				if(!$table->hasColumn($c)) {
-					$table->addColumn($c, Types::TEXT, [ 'default' => null, 'notnull' => false ]);
+					$table->addColumn($c, 'text', [ 'default' => null, 'notnull' => false ]);
 				}
 			}
 		} catch (SchemaException $e) {
@@ -121,7 +121,7 @@ class Version0310Date20210130000000 extends SimpleMigrationStep {
 			$table->addColumn('desire_level', 'integer', [
 				'notnull' => false,
 			]);
-			$table->addColumn('comment', Types::TEXT, [
+			$table->addColumn('comment', 'text', [
 				'notnull' => false,
 				'default' => null,
 			]);

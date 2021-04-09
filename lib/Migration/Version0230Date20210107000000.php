@@ -53,7 +53,7 @@
 
 		// create tmp column
 		if(!$table->hasColumn('bodyfat2')) {
-			$table->addColumn('bodyfat2', Types::FLOAT, [
+			$table->addColumn('bodyfat2', 'float', [
 				'notnull' => false,
 				'default' => null,
 			]);

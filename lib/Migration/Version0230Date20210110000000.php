@@ -54,7 +54,7 @@
 		$table = $schema->getTable('health_weightdata');
 		if($table->hasColumn('bodyfat') && $table->hasColumn('bodyfat2')) {
 			$table->dropColumn('bodyfat');
-			$table->addColumn('bodyfat', Types::FLOAT, [
+			$table->addColumn('bodyfat', 'float', [
 				'default' => null,
 				'notnull' => false,
 			]);

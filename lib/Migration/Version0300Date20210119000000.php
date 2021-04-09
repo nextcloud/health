@@ -89,11 +89,11 @@ class Version0300Date20210119000000 extends SimpleMigrationStep {
 					$table->addColumn($c, 'boolean', [ 'default' => 0 ]);
 				}
 			}
-			$table->addColumn('shared', Types::TEXT, [
+			$table->addColumn('shared', 'text', [
 				'notnull' => false,
 				'default' => null,
 			]);
-			$table->addColumn('shared_readonly', Types::TEXT, [
+			$table->addColumn('shared_readonly', 'text', [
 				'notnull' => false,
 				'default' => null,
 			]);
@@ -104,19 +104,19 @@ class Version0300Date20210119000000 extends SimpleMigrationStep {
 	private function expandWeightdata(ISchemaWrapper $schema) {
 		try {
 			$table = $schema->getTable('health_weightdata');
-			$table->addColumn('waist_size', Types::FLOAT, [
+			$table->addColumn('waist_size', 'float', [
 				'notnull' => false,
 				'default' => null,
 			]);
-			$table->addColumn('hip_size', Types::FLOAT, [
+			$table->addColumn('hip_size', 'float', [
 				'notnull' => false,
 				'default' => null,
 			]);
-			$table->addColumn('muscle_part', Types::FLOAT, [
+			$table->addColumn('muscle_part', 'float', [
 				'notnull' => false,
 				'default' => null,
 			]);
-			$table->addColumn('comment', Types::TEXT, [
+			$table->addColumn('comment', 'text', [
 				'notnull' => false,
 				'default' => null,
 			]);
@@ -144,15 +144,15 @@ class Version0300Date20210119000000 extends SimpleMigrationStep {
 			$table->addColumn('sadness_level', 'integer', [
 				'notnull' => false,
 			]);
-			$table->addColumn('symptoms', Types::TEXT, [
+			$table->addColumn('symptoms', 'text', [
 				'notnull' => false,
 				'default' => null,
 			]);
-			$table->addColumn('attacks', Types::TEXT, [
+			$table->addColumn('attacks', 'text', [
 				'notnull' => false,
 				'default' => null,
 			]);
-			$table->addColumn('medication', Types::TEXT, [
+			$table->addColumn('medication', 'text', [
 				'notnull' => false,
 				'default' => null,
 			]);
@@ -162,7 +162,7 @@ class Version0300Date20210119000000 extends SimpleMigrationStep {
 			$table->addColumn('energy', 'integer', [
 				'notnull' => false,
 			]);
-			$table->addColumn('comment', Types::TEXT, [
+			$table->addColumn('comment', 'text', [
 				'notnull' => false,
 				'default' => null,
 			]);
@@ -218,7 +218,7 @@ class Version0300Date20210119000000 extends SimpleMigrationStep {
 			$table->addColumn('alcohol', 'integer', [
 				'notnull' => false,
 			]);
-			$table->addColumn('comment', Types::TEXT, [
+			$table->addColumn('comment', 'text', [
 				'notnull' => false,
 				'default' => null,
 			]);
@@ -254,7 +254,7 @@ class Version0300Date20210119000000 extends SimpleMigrationStep {
 			$table->addColumn('duration_wakeups', 'integer', [
 				'notnull' => false,
 			]);
-			$table->addColumn('comment', Types::TEXT, [
+			$table->addColumn('comment', 'text', [
 				'notnull' => false,
 				'default' => null,
 			]);
