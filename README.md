@@ -1,5 +1,5 @@
 # Health
-##### version 1.0.1
+##### version 1.0.2
 ### Track your health. Use the advantages of a trusted platform.
 
 The app provides different modules to track your  health data.
@@ -13,6 +13,10 @@ Following modules are served
 
 
 ### Changelog
+
+v1.0.2
+- fix db definitions to work with nc21
+- fix constructor parameter for mapper to work with nc21
 
 v1.0.1
 - remove beta from title
