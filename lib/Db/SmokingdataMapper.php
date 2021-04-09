@@ -23,12 +23,12 @@
 
 namespace OCA\Health\Db;
 
-use OCP\IDbConnection;
+use OCP\IDBConnection;
 use OCP\AppFramework\Db\QBMapper;
 
 class SmokingdataMapper extends QBMapper {
 
-    public function __construct(IDbConnection $db) {
+    public function __construct(IDBConnection $db) {
         parent::__construct($db, 'health_smokingdata', Smokingdata::class);
     }
 

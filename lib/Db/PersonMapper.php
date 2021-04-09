@@ -24,17 +24,19 @@
 namespace OCA\Health\Db;
 
 use OCP\AppFramework\Db\DoesNotExistException;
+use OCP\AppFramework\Db\Entity;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
-use OCP\IDbConnection;
+use OCP\IDBConnection;
 use OCP\AppFramework\Db\QBMapper;
 
 class PersonMapper extends QBMapper {
 
-    public function __construct(IDbConnection $db) {
+    public function __construct(IDBConnection $db) {
         parent::__construct($db, 'health_persons', Person::class);
     }
 
-    public function find(int $id, string $userId = "") {
+    public function find(int $id, string $userId = ""): ?Entity
+	{
         $qb = $this->db->getQueryBuilder();
 
         $qb->select('*');
@@ -47,14 +49,13 @@ class PersonMapper extends QBMapper {
 
 		try {
 			return $this->findEntity($qb);
-		} catch (DoesNotExistException $e) {
+		} catch (DoesNotExistException | MultipleObjectsReturnedException $e) {
         	return null;
-		} catch (MultipleObjectsReturnedException $e) {
-			return null;
 		}
 	}
 
-    public function findAll(string $userId) {
+    public function findAll(string $userId): array
+	{
         $qb = $this->db->getQueryBuilder();
 
         $qb->select('*')

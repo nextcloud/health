@@ -25,12 +25,12 @@ namespace OCA\Health\Db;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
-use OCP\IDbConnection;
+use OCP\IDBConnection;
 use OCP\AppFramework\Db\QBMapper;
 
 class SleepdataMapper extends QBMapper {
 
-    public function __construct(IDbConnection $db) {
+    public function __construct(IDBConnection $db) {
         parent::__construct($db, 'health_sleepdata', Sleepdata::class);
     }
 

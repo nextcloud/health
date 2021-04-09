@@ -42,11 +42,20 @@ class PersonsService {
 	protected $permissionService;
 	protected $userManager;
 
-	public function __construct(PersonMapper $pM, $userId, WeightdataService $wdS, FormatHelperService $fhS, PermissionService $permissionService, IUserManager $userManager, FeelingdataService $feelingdataService, SleepdataService $sleepdataService, MeasurementdataService $measurementdataService) {
-		$this->personMapper = $pM;
+	public function __construct(PersonMapper $personMapper,
+								$userId,
+								WeightdataService $weightdataService,
+								FormatHelperService $formatHelperService,
+								PermissionService $permissionService,
+								IUserManager $userManager,
+								FeelingdataService $feelingdataService,
+								SleepdataService $sleepdataService,
+								MeasurementdataService $measurementdataService
+	) {
+		$this->personMapper = $personMapper;
 		$this->userId = $userId;
-		$this->weightdataService = $wdS;
-		$this->formatHelperService = $fhS;
+		$this->weightdataService = $weightdataService;
+		$this->formatHelperService = $formatHelperService;
 		$this->permissionService = $permissionService;
 		$this->userManager = $userManager;
 		$this->sleepdataService = $sleepdataService;
