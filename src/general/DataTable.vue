@@ -80,7 +80,7 @@
 							<div v-else-if="h.type === 'datetime' && d[h.columnId]" class="wrapper align-right">
 								{{ d[h.columnId] | formatMyDatetime }}
 							</div>
-							<div v-else-if="h.type === 'select' && d[h.columnId]" class="wrapper">
+							<div v-else-if="h.type === 'select' && Number.isInteger(d[h.columnId])" class="wrapper">
 								{{ (h.options && h.options[d[h.columnId]] && h.options[d[h.columnId]].label) ? h.options[d[h.columnId]].label: 'no label found' }}
 							</div>
 							<div v-else-if="h.type === 'multiselect' && d[h.columnId]" class="wrapper">

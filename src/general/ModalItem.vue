@@ -192,7 +192,7 @@ export default {
 		sendData() {
 			// console.debug('modal transform values', this.values)
 			for (const [key] of Object.entries(this.values)) {
-				if (this.values[key] && this.values[key].id) {
+				if (this.values[key] && Number.isInteger(this.values[key].id)) {
 					this.values[key] = this.values[key].id
 				} else if (Array.isArray(this.values[key])) {
 					const d = []
