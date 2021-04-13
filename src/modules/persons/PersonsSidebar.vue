@@ -78,6 +78,13 @@
 			{{ t('health', 'Measurement') }}
 		</ActionCheckbox>
 		<ActionCheckbox
+			v-if="person"
+			:checked="person.enabledModuleActivities"
+			value="activities"
+			@change="$store.dispatch('setValue', { key: 'enabledModuleActivities', value: $event.target.checked })">
+			{{ t('health', 'Activities') }}
+		</ActionCheckbox>
+		<ActionCheckbox
 			v-if="person && false"
 			:checked="person.enabledModuleBreaks"
 			value="breaks"

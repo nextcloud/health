@@ -39,6 +39,7 @@
 			<MeasurementContent v-if="person && activeModule === 'measurement' && person.enabledModuleMeasurement" />
 			<SleepContent v-if="person && activeModule === 'sleep' && person.enabledModuleSleep" />
 			<SmokingContent v-if="person && activeModule === 'smoking' && person.enabledModuleSmoking" />
+			<ActivitiesContent v-if="person && activeModule === 'activities' && person.enabledModuleActivities" />
 		</AppContent>
 		<AppSidebar
 			v-show="showSidebar"
@@ -93,6 +94,14 @@
 				:order="5">
 				<SmokingSidebar />
 			</AppSidebarTab>
+			<AppSidebarTab
+				v-if="person.enabledModuleActivities"
+				id="activities"
+				:name="t('health', 'Activities')"
+				icon="icon-upload"
+				:order="6">
+				<ActivitiesSidebar />
+			</AppSidebarTab>
 		</AppSidebar>
 	</Content>
 </template>
@@ -119,10 +128,13 @@ import SleepSidebar from './modules/sleep/SleepSidebar'
 import moment from 'moment'
 import SmokingSidebar from './modules/smoking/SmokingSidebar'
 import SmokingContent from './modules/smoking/SmokingContent'
+import ActivitiesContent from './modules/activities/ActivitiesContent'
+import ActivitiesSidebar from './modules/activities/ActivitiesSidebar'
 
 export default {
 	name: 'App',
 	components: {
+		ActivitiesSidebar,
 		MeasurementContent,
 		SleepContent,
 		MeasurementSidebar,
@@ -142,6 +154,7 @@ export default {
 		PersonsContent,
 		SmokingSidebar,
 		SmokingContent,
+		ActivitiesContent,
 	},
 	data() {
 		return {

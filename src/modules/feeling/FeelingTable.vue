@@ -182,7 +182,7 @@ export default {
 			this.$store.dispatch('feelingDatasetsAppend', item)
 		},
 		updateItem(item) {
-			// console.debug('update item', item)
+			console.debug('update item', item)
 			this.$store.dispatch('feelingDatasetsUpdate', item)
 		},
 		deleteItem(item) {

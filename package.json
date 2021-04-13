@@ -1,7 +1,7 @@
 {
 	"name": "health",
 	"description": "Nextcloud health app",
-	"version": "1.0.2",
+	"version": "1.1.0",
 	"author": "Florian Steffens <flost-dev@mailbox.org>",
 	"contributors": [
 		"Florian Steffens <flost-dev@mailbox.org>"

@@ -59,5 +59,11 @@ return [
 		['name' => 'smokingdata#create',	'url' => '/smoking/dataset/person/{personId}',	'verb' => 'POST'],
 		['name' => 'smokingdata#delete',	'url' => '/smoking/dataset/{id}',	'verb' => 'DELETE'],
 		['name' => 'smokingdata#update',	'url' => '/smoking/dataset/{id}',	'verb' => 'PUT'],
+
+		// activities data
+		['name' => 'activitiesdata#findByPerson',	'url' => '/activities/dataset/person/{personId}',	'verb' => 'GET'],
+		['name' => 'activitiesdata#create',	'url' => '/activities/dataset/person/{personId}',	'verb' => 'POST'],
+		['name' => 'activitiesdata#delete',	'url' => '/activities/dataset/{id}',	'verb' => 'DELETE'],
+		['name' => 'activitiesdata#update',	'url' => '/activities/dataset/{id}',	'verb' => 'PUT'],
     ]
 ];

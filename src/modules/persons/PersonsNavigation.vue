@@ -80,6 +80,12 @@
 					icon="icon-address"
 					:class="(activeModule === 'smoking' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'smoking')" />
+				<AppNavigationItem
+					v-if="p.enabledModuleActivities"
+					:title="t('health', 'Activities')"
+					icon="icon-upload"
+					:class="(activeModule === 'activities' && index === activePersonId)?'active-module':''"
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'activities')" />
 			</AppNavigationItem>
 			<AppNavigationItem
 				:title="t('health', 'New person')"

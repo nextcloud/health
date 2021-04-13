@@ -80,10 +80,16 @@ class PermissionService {
 		return true;
 	}
 
-    public function smokingData($id, $userId): bool
+	public function smokingData($id, $userId): bool
 	{
 		// TODO
 		return true;
-    }
+	}
+
+	public function activitiesData($id, $userId): bool
+	{
+		// TODO
+		return true;
+	}
 
 }

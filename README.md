@@ -1,5 +1,5 @@
 # Health
-##### version 1.0.2
+##### version 1.1.0
 ### Track your health. Use the advantages of a trusted platform.
 
 The app provides different modules to track your  health data.
@@ -10,9 +10,13 @@ Following modules are served
 - Measurement
 - Sleep
 - Smoking
+- Activities
 
 
 ### Changelog
+
+v1.1.0
+- add module activities
 
 v1.0.2
 - fix db definitions to work with nc21

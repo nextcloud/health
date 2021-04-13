@@ -104,6 +104,15 @@ class Person extends Entity implements JsonSerializable {
 	protected $smokingStartValue;
 	protected $smokingPrice;
 
+	// module activities
+	protected $activitiesColumnCalories;
+	protected $activitiesColumnDuration;
+	protected $activitiesColumnCategory;
+	protected $activitiesColumnFeeling;
+	protected $activitiesColumnIntensity;
+	protected $activitiesColumnDistance;
+	protected $activitiesDistanceUnit;
+
     public function __construct() {
     	// general
         $this->addType('id','integer');
@@ -121,8 +130,16 @@ class Person extends Entity implements JsonSerializable {
 		$this->addType('enabledModuleSleep', 'boolean');
 		$this->addType('enabledModuleSmoking', 'boolean');
 
-        // module weight
-        $this->addType('weightTarget', 'float');
+		// module activities
+		$this->addType('activitiesColumnCalories', 'boolean');
+		$this->addType('activitiesColumnDuration', 'boolean');
+		$this->addType('activitiesColumnCategory', 'boolean');
+		$this->addType('activitiesColumnFeeling', 'boolean');
+		$this->addType('activitiesColumnIntensity', 'boolean');
+		$this->addType('activitiesColumnDistance', 'boolean');
+
+		// module weight
+		$this->addType('weightTarget', 'float');
 		$this->addType('weightTargetInitialWeight', 'float');
 		$this->addType('weightColumnWeight', 'boolean');
 		$this->addType('weightColumnBodyfat', 'boolean');
@@ -194,6 +211,15 @@ class Person extends Entity implements JsonSerializable {
 			'enabledModuleSleep' => $this->enabledModuleSleep,
 			'enabledModuleNutrition' => $this->enabledModuleNutrition,
 			'enabledModuleSmoking' => $this->enabledModuleSmoking,
+
+			// module activities
+			'activitiesColumnCalories' => $this->activitiesColumnCalories,
+			'activitiesColumnDuration' => $this->activitiesColumnDuration,
+			'activitiesColumnCategory' => $this->activitiesColumnCategory,
+			'activitiesColumnFeeling' => $this->activitiesColumnFeeling,
+			'activitiesColumnIntensity' => $this->activitiesColumnIntensity,
+			'activitiesColumnDistance' => $this->activitiesColumnDistance,
+			'activitiesDistanceUnit' => $this->activitiesDistanceUnit,
 
 			// module weight
             'weightMeasurementName' => $this->weightMeasurementName,
