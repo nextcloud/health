@@ -72,7 +72,7 @@ export default {
 					timeId: 'date',
 					valueId: 'calculate',
 					getValueY(d) {
-						return this.calcData.bmiApi.methods.bmi(this.calcData.person, d.weight)
+						return Math.round(this.calcData.bmiApi.methods.bmi(this.calcData.person, d.weight))
 					},
 					calcData: {
 						person: this.person,

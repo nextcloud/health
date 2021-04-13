@@ -118,8 +118,8 @@ export default {
 						{ id: 0, label: t('health', 'Perfect', {}) },
 						{ id: 1, label: t('health', 'Fine', {}) },
 						{ id: 2, label: t('health', 'Okay', {}) },
-						{ id: 3, label: t('health', 'Don\'t know', {}) },
-						{ id: 4, label: t('health', 'Don\'t ask me', {}) },
+						{ id: 3, label: t('health', 'Low', {}) },
+						{ id: 4, label: t('health', 'Very low', {}) },
 					],
 				},
 				{
