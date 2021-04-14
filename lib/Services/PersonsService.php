@@ -37,6 +37,7 @@ class PersonsService {
 	protected $sleepdataService;
 	protected $feelingdataService;
 	protected $measurementdataService;
+	protected $activitiesdataService;
 	protected $userId;
 	protected $formatHelperService;
 	protected $permissionService;
@@ -50,7 +51,8 @@ class PersonsService {
 								IUserManager $userManager,
 								FeelingdataService $feelingdataService,
 								SleepdataService $sleepdataService,
-								MeasurementdataService $measurementdataService
+								MeasurementdataService $measurementdataService,
+								ActivitiesdataService $activitiesdataService
 	) {
 		$this->personMapper = $personMapper;
 		$this->userId = $userId;
@@ -61,6 +63,7 @@ class PersonsService {
 		$this->sleepdataService = $sleepdataService;
 		$this->measurementdataService = $measurementdataService;
 		$this->feelingdataService = $feelingdataService;
+		$this->activitiesdataService = $activitiesdataService;
 	}
 
 	public function getAllPersons(): array
@@ -91,6 +94,7 @@ class PersonsService {
 		$p->setEnabledModuleSleep(true);
 		$p->setEnabledModuleNutrition(false);
 		$p->setEnabledModuleMeasurement(true);
+		$p->setEnabledModuleActivities(true);
 		$p->setWeightUnit('kg');
 		$p->setWeightColumnWeight(true);
 		$p->setWeightColumnBodyfat(true);
@@ -103,6 +107,10 @@ class PersonsService {
 		$p->setSmokingColumnDesireLevel(true);
 		$p->setSmokingColumnCigarettes(true);
 		$p->setSmokingColumnSavedMoney(true);
+		$p->setActivitiesColumnCalories(true);
+		$p->setActivitiesColumnDuration(true);
+		$p->setActivitiesColumnCategory(true);
+		$p->setActivitiesDistanceUnit('m');
 		return $this->personMapper->insert($p);
 	}
 
@@ -135,6 +143,11 @@ class PersonsService {
 		$wd = $this->measurementdataService->getAllByPersonId($id);
 		foreach( $wd as $i ) {
 			$this->measurementdataService->delete($i->id);
+		}
+
+		$ad = $this->activitiesdataService->getAllByPersonId($id);
+		foreach( $ad as $i ) {
+			$this->activitiesdataService->delete($i->id);
 		}
 
 		return $this->personMapper->delete($person);

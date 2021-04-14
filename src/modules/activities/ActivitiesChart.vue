@@ -161,6 +161,7 @@ export default {
 							position: 'left',
 							ticks: {
 								stepSize: 1,
+								beginAtZero: true,
 							},
 						},
 						{
@@ -179,6 +180,7 @@ export default {
 							position: 'left',
 							ticks: {
 								stepSize: 1,
+								beginAtZero: true,
 							},
 						},
 						{
@@ -198,6 +200,7 @@ export default {
 							position: 'left',
 							ticks: {
 								stepSize: 1,
+								beginAtZero: true,
 							},
 						},
 						{
@@ -217,6 +220,7 @@ export default {
 							position: 'left',
 							ticks: {
 								stepSize: 1,
+								beginAtZero: true,
 							},
 						},
 						{
@@ -235,6 +239,7 @@ export default {
 							position: 'left',
 							ticks: {
 								stepSize: 1,
+								beginAtZero: true,
 							},
 						},
 					],

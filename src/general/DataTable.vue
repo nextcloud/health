@@ -74,10 +74,10 @@
 						:class="{ hide: !h.show }"
 						:style="(h.style) ? h.style(d[h.columnId]): ''">
 						<div>
-							<div v-if="h.type === 'date' && d[h.columnId]" class="wrapper align-right">
+							<div v-if="h.type === 'date' && d[h.columnId]" class="wrapper">
 								{{ d[h.columnId] | formatMyDate }}
 							</div>
-							<div v-else-if="h.type === 'datetime' && d[h.columnId]" class="wrapper align-right">
+							<div v-else-if="h.type === 'datetime' && d[h.columnId]" class="wrapper">
 								{{ d[h.columnId] | formatMyDatetime }}
 							</div>
 							<div v-else-if="h.type === 'select' && Number.isInteger(d[h.columnId])" class="wrapper">
@@ -308,13 +308,13 @@ export default {
 	table, td, tr, th {
 		border-bottom: 1px solid gray;
 		border-collapse: collapse;
-		text-align: left;
+		text-align: right;
 		vertical-align: middle;
 		color: var(--color-main-text);
 	}
 
 	td, tr, th {
-		padding: 5px;
+		padding: 5px 5px 5px 10px;
 		vertical-align: top;
 	}
 
@@ -322,8 +322,7 @@ export default {
 		border-bottom: 2px solid gray;
 		font-weight: bold;
 		font-size: 0.92em;
-		padding: 5px;
-		text-align: left;
+		text-align: right;
 		vertical-align: middle;
 	}
 
@@ -433,7 +432,7 @@ export default {
 	}
 
 	.inlineButtons {
-		float: left;
+		float: right;
 	}
 
 	.gray {
@@ -444,11 +443,6 @@ export default {
 	.chartDataRangeSelector {
 		margin-bottom: 10px;
 		margin-top: 15px;
-	}
-
-	.align-right {
-		text-align: right;
-		padding-right: 15px;
 	}
 
 </style>
