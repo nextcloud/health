@@ -73,7 +73,7 @@ class MeasurementdataService {
 	 */
 	public function create($personId, $datetime, $temperature, $heartRate, $bloodPressureSystolic, $bloodPressureDiastolic, $bloodSugar, $oxygenSaturation, $defecation, $appetite, $allergies, $cigarettes, $alcohol, $comment): ?Entity
 	{
-		if( !$this->permissionService->measurementData($personId, $this->userId)) {
+		if( !$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		try {

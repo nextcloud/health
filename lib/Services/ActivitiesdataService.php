@@ -68,7 +68,7 @@ class ActivitiesdataService {
 	 */
 	public function create($personId, $datetime, $calories, $duration, $category, $feeling, $intensity, $distance, $comment): ?Entity
 	{
-		if( !$this->permissionService->activitiesData($personId, $this->userId)) {
+		if( !$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		try {

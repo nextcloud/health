@@ -26,7 +26,7 @@ namespace OCA\Health\Services;
 
 use Exception;
 use OCA\Health\Db\PersonMapper;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 
 class PermissionService {
 
@@ -34,10 +34,10 @@ class PermissionService {
 	protected $personMapper;
 	protected $logger;
 
-	public function __construct($userId, PersonMapper $pM, ILogger $ILogger) {
+	public function __construct($userId, PersonMapper $pM, LoggerInterface $logger) {
 		$this->userId = $userId;
 		$this->personMapper = $pM;
-		$this->logger = $ILogger;
+		$this->logger = $logger;
 	}
 
 	public function personData($destinationPersonId, $sourceUserId): bool

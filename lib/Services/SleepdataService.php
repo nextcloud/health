@@ -66,7 +66,7 @@ class SleepdataService {
 	 */
 	public function create($personId, $asleep, $wakeup, $quality, $countedWakeups, $durationWakeups, $comment): ?Entity
 	{
-		if( !$this->permissionService->sleepData($personId, $this->userId)) {
+		if( !$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		try {

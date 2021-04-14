@@ -69,7 +69,7 @@ class FeelingdataService {
 	 */
 	public function create($personId, $datetime, $mood, $sadnessLevel, $symptoms, $attacks, $medication, $pain, $energy, $comment): ?Entity
 	{
-		if( !$this->permissionService->feelingData($personId, $this->userId)) {
+		if( !$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		try {

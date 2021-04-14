@@ -59,7 +59,7 @@ class WeightdataService {
 	}
 
 	public function create($personId, $weight, $measurement, $bodyfat, $date, $waistSize, $hipSize, $musclePart, $comment) {
-		if( !$this->permissionService->weightData($personId, $this->userId)) {
+		if( !$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		$time = new \DateTime();

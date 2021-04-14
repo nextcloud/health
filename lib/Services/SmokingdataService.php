@@ -64,7 +64,7 @@ class SmokingdataService {
 	 */
 	public function create($personId, $date, $cigarettes, $desireLevel, $comment): ?Entity
 	{
-		if( !$this->permissionService->smokingData($personId, $this->userId)) {
+		if( !$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		try {
