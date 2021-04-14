@@ -17,6 +17,7 @@ Following modules are served
 
 v1.1.0
 - add module activities
+- many small fixes
 
 v1.0.2
 - fix db definitions to work with nc21
