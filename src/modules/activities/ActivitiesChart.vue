@@ -104,10 +104,10 @@ export default {
 						const maxIndex = 3
 						return Math.round((v + 1) / (maxIndex + 1) * 100)
 					},
-					borderColor: 'green',
+					borderColor: 'orange',
 					borderWidth: 1,
 					fill: false,
-					// type: 'bar',
+					type: 'bar',
 					show: this.person.activitiesColumnIntensity,
 					axesId: 'intensity',
 				},
@@ -122,7 +122,7 @@ export default {
 					borderColor: 'darkgreen',
 					borderWidth: 2,
 					borderDash: [8, 5],
-					fill: false,
+					fill: true,
 					show: this.person.activitiesColumnDistance,
 					axesId: 'distance',
 				},
@@ -191,7 +191,7 @@ export default {
 							},
 							scaleLabel: {
 								display: true,
-								labelString: t('health', 'Feeling after the activity'),
+								labelString: t('health', 'Feeling after the activity [%]'),
 							},
 							min: 0,
 							max: 100,
@@ -210,7 +210,7 @@ export default {
 							},
 							scaleLabel: {
 								display: true,
-								labelString: t('health', 'Intensity'),
+								labelString: t('health', 'Intensity [%]'),
 							},
 							min: 0,
 							max: 100,

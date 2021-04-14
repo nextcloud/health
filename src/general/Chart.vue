@@ -158,7 +158,7 @@ export default {
 					if (!data[def.columnId]) {
 						data[def.columnId] = []
 					}
-					if (def.valueId !== 'calculate' && d[def.timeId] && d[def.valueId] && this.isInTimeRange(d[def.timeId]) && def.show) {
+					if (def.valueId !== 'calculate' && d[def.timeId] && !Number.isNaN(d[def.valueId]) && this.isInTimeRange(d[def.timeId]) && def.show) {
 						data[def.columnId].push({
 							t: moment(d[def.timeId]),
 							y: def.getValueY(d[def.valueId]),
