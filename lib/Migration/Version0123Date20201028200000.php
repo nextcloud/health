@@ -90,6 +90,7 @@
 					'length'	=> 600
 				]);
 			}
+			return true;
 		} catch (SchemaException $e) {
 			return false;
 		}
