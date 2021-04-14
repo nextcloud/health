@@ -31,7 +31,7 @@ use OCP\IDBConnection;
   use OCP\Migration\SimpleMigrationStep;
   use OCP\Migration\IOutput;
 
-class Version1100Date20210413000000 extends SimpleMigrationStep {
+class Version1100Date20210414000000 extends SimpleMigrationStep {
 
 	/** @var IDBConnection */
 	protected $connection;
@@ -50,6 +50,14 @@ class Version1100Date20210413000000 extends SimpleMigrationStep {
 	{
 		/** @var ISchemaWrapper $schema */
 		$schema = $schemaClosure();
+
+		if($schema->hasTable('health_ces_contexts')) {
+			$schema->dropTable('health_ces_contexts');
+		}
+
+		if($schema->hasTable('health_ces_entities')) {
+			$schema->dropTable('health_ces_entities');
+		}
 
 		$this->expandPersons($schema);
 		$this->createActivitiesData($schema);
