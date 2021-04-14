@@ -65,6 +65,7 @@ export default {
 					fill: true,
 					type: 'bar',
 					show: this.person.feelingColumnMood,
+					axesId: 'percents',
 				},
 				{
 					title: t('health', 'Sadness level', {}),
@@ -79,6 +80,7 @@ export default {
 					borderWidth: 2,
 					fill: false,
 					show: this.person.feelingColumnSadnessLevel,
+					axesId: 'percents',
 				},
 				{
 					title: t('health', 'Symptoms', {}),
@@ -94,6 +96,7 @@ export default {
 					fill: true,
 					type: 'bar',
 					show: this.person.feelingColumnSymptoms,
+					axesId: 'percents',
 				},
 				{
 					title: t('health', 'Attacks', {}),
@@ -109,6 +112,7 @@ export default {
 					fill: true,
 					type: 'bar',
 					show: this.person.feelingColumnAttacks,
+					axesId: 'percents',
 				},
 				{
 					title: t('health', 'Pain', {}),
@@ -123,6 +127,7 @@ export default {
 					borderWidth: 2,
 					fill: true,
 					show: this.person.feelingColumnPain,
+					axesId: 'percents',
 				},
 				{
 					title: t('health', 'Energy', {}),
@@ -137,6 +142,7 @@ export default {
 					borderWidth: 2,
 					fill: true,
 					show: this.person.feelingColumnEnergy,
+					axesId: 'percents',
 				},
 			]
 		},
@@ -158,6 +164,7 @@ export default {
 					],
 					yAxes: [
 						{
+							id: 'percents',
 							gridLines: {
 								display: true,
 								color: 'gray',
@@ -166,10 +173,16 @@ export default {
 							},
 							scaleLabel: {
 								display: true,
-								labelString: t('health', 'Values'),
+								labelString: t('health', 'Values [%]'),
 							},
+							position: 'left',
 							min: 0,
 							max: 100,
+							ticks: {
+								stepSize: 10,
+								suggestedMax: 100,
+								suggestedMin: 0,
+							},
 						},
 					],
 				},

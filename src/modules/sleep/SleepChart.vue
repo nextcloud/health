@@ -81,6 +81,7 @@ export default {
 					fill: true,
 					type: 'bar',
 					show: true,
+					axesId: 'duration',
 				},
 				{
 					title: t('health', 'Quality', {}),
@@ -95,6 +96,7 @@ export default {
 					borderWidth: 2,
 					fill: true,
 					show: this.person.sleepColumnQuality,
+					axesId: 'quality',
 				},
 				{
 					title: t('health', 'Counted wakeups', {}),
@@ -102,12 +104,14 @@ export default {
 					timeId: 'asleep',
 					valueId: 'countedWakeups',
 					getValueY(v) {
-						return v * 2
+						return v
 					},
 					borderColor: 'rgb(115,32,32)',
 					borderWidth: 2,
+					borderDash: [8, 5],
 					fill: true,
 					show: this.person.sleepColumnWakeups,
+					axesId: 'wakeups',
 				},
 			]
 		},
@@ -129,6 +133,7 @@ export default {
 					],
 					yAxes: [
 						{
+							id: 'duration',
 							gridLines: {
 								display: true,
 								color: 'gray',
@@ -137,10 +142,49 @@ export default {
 							},
 							scaleLabel: {
 								display: true,
-								labelString: t('health', 'Values'),
+								labelString: t('health', 'Duration [hours]'),
+							},
+							ticks: {
+								stepSize: 1,
+								beginAtZero: true,
 							},
 							min: 0,
 							max: 100,
+						},
+						{
+							id: 'quality',
+							gridLines: {
+								display: false,
+								color: 'gray',
+								z: 100,
+								lineWidth: 1,
+							},
+							scaleLabel: {
+								display: true,
+								labelString: t('health', 'Quality'),
+							},
+							ticks: {
+								stepSize: 1,
+								beginAtZero: true,
+							},
+							min: 0,
+						},
+						{
+							id: 'wakeups',
+							gridLines: {
+								display: false,
+								color: 'gray',
+								z: 100,
+								lineWidth: 1,
+							},
+							scaleLabel: {
+								display: true,
+								labelString: t('health', 'Wakeups'),
+							},
+							ticks: {
+								stepSize: 1,
+								beginAtZero: true,
+							},
 						},
 					],
 				},

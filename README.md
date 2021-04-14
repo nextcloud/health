@@ -18,6 +18,8 @@ Following modules are served
 v1.1.0
 - add module activities
 - many small fixes
+- clean up database tables
+- chart scales more detailed
 
 v1.0.2
 - fix db definitions to work with nc21
