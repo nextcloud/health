@@ -29,6 +29,7 @@ import { FeelingApi } from './FeelingApi'
 import { SleepApi } from './SleepApi'
 import { SmokingApi } from './SmokingApi'
 import { ActivitiesApi } from './ActivitiesApi'
+import { showSuccess } from '@nextcloud/dialogs'
 
 Vue.use(Vuex)
 const weightApiClient = new WeightApi()
@@ -289,6 +290,7 @@ export default new Vuex.Store({
 			const o = await personApiClient.updateValue(id, data.key, data.value)
 			// console.debug('return from person api', o)
 			commit('personUpdate', o)
+			showSuccess(t('health', 'Value successfully saved', {}))
 		},
 		async addPerson({ state, dispatch, commit }, name) {
 			const p = await personApiClient.addPerson(name)
