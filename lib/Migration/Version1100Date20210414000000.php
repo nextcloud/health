@@ -81,14 +81,12 @@ class Version1100Date20210414000000 extends SimpleMigrationStep {
 					$table->addColumn($c, 'boolean', [ 'default' => 0 ]);
 				}
 			}
-		} catch (SchemaException $e) {
-		}
-		try {
 			$table->addColumn('activities_distance_unit', 'text', [
 				'notnull' => false,
 				'default' => 'meters',
 			]);
 		} catch (SchemaException $e) {
+			// TODO
 		}
 	}
 
