@@ -16,9 +16,10 @@ Following modules are served
 ### Changelog
 
 v1.1.0
+- nc21 ready
 - add module activities
 - many small fixes
-- clean up database tables
+- clean up database tables < old ces tables will be removed
 - chart scales more detailed
 
 v1.0.2

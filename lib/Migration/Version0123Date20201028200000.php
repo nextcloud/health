@@ -46,7 +46,7 @@
 		return $schema;
 	}
 
-    private function extendPersons(ISchemaWrapper $schema): bool
+    private function extendPersons(ISchemaWrapper $schema)
 	{
 		try {
 			$table = $schema->getTable('health_persons');
@@ -90,9 +90,7 @@
 					'length'	=> 600
 				]);
 			}
-			return true;
 		} catch (SchemaException $e) {
-			return false;
 		}
 	}
 }
