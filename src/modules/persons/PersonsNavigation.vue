@@ -30,7 +30,7 @@
 				:open="(index === 0)?true:false"
 				icon="icon-user"
 				:editable="true"
-				:edit-label="t('health', 'edit name')"
+				:edit-label="t('health', 'Edit name')"
 				:class="(index === activePersonId)?'active-person':''"
 				@update:menuOpen="menuOpenPersonId = index"
 				@update:title="personUpdateName"
