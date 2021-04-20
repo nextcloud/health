@@ -4,7 +4,7 @@
 
 The app provides different modules to track your  health data.
 
-Following modules are served
+Following modules are served:
 - Weight
 - Feeling
 - Measurement
