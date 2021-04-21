@@ -45,7 +45,7 @@
 			v-show="showSidebar"
 			v-if="person && !loading"
 			:title="person.name"
-			:subtitle="t('health', 'created at {creationTime}', { creationTime: formatMyDate(person.insertTime) })"
+			:subtitle="t('health', 'Created at {creationTime}', { creationTime: formatMyDate(person.insertTime) })"
 			@close="$store.commit('showSidebar', false)">
 			<AppSidebarTab
 				id="person"
