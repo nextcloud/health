@@ -257,7 +257,7 @@ export default {
 							id: 'musclePart',
 							scaleLabel: {
 								display: true,
-								labelString: t('health', 'muscle part'),
+								labelString: t('health', 'Muscle part'),
 							},
 						},
 					],
