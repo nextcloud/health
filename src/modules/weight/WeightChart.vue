@@ -111,7 +111,7 @@ export default {
 					axesId: 'primary',
 				},
 				{
-					title: t('health', 'Bodyfat', {}),
+					title: t('health', 'Body fat', {}),
 					columnId: 'bodyfat',
 					timeId: 'date',
 					valueId: 'bodyfat',
