@@ -116,7 +116,7 @@ export default {
 					type: 'multiselect',
 					options: [
 						t('health', 'Panic attack', {}),
-						t('health', 'Fit of range', {}),
+						t('health', 'Fit of rage', {}),
 						t('health', 'Asthma attack', {}),
 					],
 				},
