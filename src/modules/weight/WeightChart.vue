@@ -236,7 +236,7 @@ export default {
 							id: 'bodyfat',
 							scaleLabel: {
 								display: true,
-								labelString: t('health', 'bodyfat'),
+								labelString: t('health', 'Body fat'),
 							},
 						},
 						{
