@@ -170,7 +170,7 @@ export default {
 					columnId: 'comment',
 					type: 'longtext',
 					show: true,
-					placeholder: t('health', 'Give some comment, if you want...', {}),
+					placeholder: t('health', 'Give some comment, if you want …', {}),
 					maxlength: 1000,
 				},
 			]
