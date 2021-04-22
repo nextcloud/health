@@ -1,0 +1,27 @@
+{ "translations": {
+    "Health" : "Santat",
+    "Activities" : "Activitats",
+    "last week" : "la setmana passada",
+    "last month" : "lo mes passat",
+    "last year" : "l’an passat",
+    "Show all" : "O veire tot",
+    "last hour" : "la darrièra ora",
+    "last 4 hours" : "las 4 darrièras oras",
+    "last 12 hours" : "las 12 darrièras oras",
+    "last 24 hours" : "las 24 darrièras oras",
+    "last 48 hours" : "las 48 darrièras oras",
+    "Actions" : "Accions",
+    "true" : "verai",
+    "false" : "fals",
+    "Download (CSV)" : "Telecargar (CSV)",
+    "today" : "uèi",
+    "item" : "element",
+    "Cancel" : "Anullar",
+    "Duration" : "Durada",
+    "Intensity" : "Intensitat",
+    "Distance" : "Distància",
+    "Category" : "Categoria",
+    "Date" : "Data",
+    "kcal" : "kcal"
+},"pluralForm" :"nplurals=2; plural=(n > 1);"
+}
