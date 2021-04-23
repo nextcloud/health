@@ -69,7 +69,7 @@
 		</div>
 		<div v-if="loading" class="icon-loading" />
 
-		<h3>{{ t('health', 'Target') }}</h3>
+		<h3>{{ t('health', 'Target', {}) }}</h3>
 		<div
 			v-if="!loading">
 			<TextResultsLooseWeight
