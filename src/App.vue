@@ -49,7 +49,7 @@
 			@close="$store.commit('showSidebar', false)">
 			<AppSidebarTab
 				id="person"
-				name="Person"
+				:name="t('health', 'Person')"
 				icon="icon-user"
 				:order="0">
 				<PersonsSidebar />
@@ -57,7 +57,7 @@
 			<AppSidebarTab
 				v-if="person.enabledModuleWeight"
 				id="weight"
-				:name="t('health', 'Weight', {})"
+				:name="t('health', 'Weight')"
 				icon="icon-quota"
 				:order="1">
 				<WeightSidebar />
