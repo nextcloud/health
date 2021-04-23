@@ -133,7 +133,7 @@ export default {
 						{ id: 0, label: t('health', 'Low', {}) },
 						{ id: 1, label: t('health', 'Middle', {}) },
 						{ id: 2, label: t('health', 'High', {}) },
-						{ id: 3, label: t('health', 'Extreme', {}) },
+						{ id: 3, label: t('health', 'Very high', {}) },
 					],
 					style(value) {
 						if (value === 3) {
@@ -152,7 +152,7 @@ export default {
 						{ id: 0, label: t('health', 'Low', {}) },
 						{ id: 1, label: t('health', 'Middle', {}) },
 						{ id: 2, label: t('health', 'High', {}) },
-						{ id: 3, label: t('health', 'Extreme', {}) },
+						{ id: 3, label: t('health', 'Very high', {}) },
 					],
 					style(value) {
 						if (value === 3) {
@@ -171,7 +171,7 @@ export default {
 						{ id: 0, label: t('health', 'Low', {}) },
 						{ id: 1, label: t('health', 'Middle', {}) },
 						{ id: 2, label: t('health', 'High', {}) },
-						{ id: 3, label: t('health', 'Extreme', {}) },
+						{ id: 3, label: t('health', 'Very high', {}) },
 					],
 					style(value) {
 						if (value === 3) {
