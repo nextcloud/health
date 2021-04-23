@@ -73,7 +73,7 @@
 		<EmptyContent
 			v-if="!data || data.length === 0 || !definition"
 			icon="icon-category-monitoring">
-			No data for a chart
+			{{ t('health', 'No data for a chart') }}
 			<template #desc>
 				{{ t('health', 'More than one dataset is required.') }}<br>
 				<span v-if="data.length > 1">{{ t('health', 'You selected to show only data from the last {range}.', {range: range}) }}</span>
