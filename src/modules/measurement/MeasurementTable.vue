@@ -130,10 +130,10 @@ export default {
 					type: 'select',
 					show: this.person.measurementColumnDefecation,
 					options: [
-						{ id: 0, label: t('health', 'low', {}) },
-						{ id: 1, label: t('health', 'middle', {}) },
-						{ id: 2, label: t('health', 'high', {}) },
-						{ id: 3, label: t('health', 'extreme', {}) },
+						{ id: 0, label: t('health', 'Low', {}) },
+						{ id: 1, label: t('health', 'Middle', {}) },
+						{ id: 2, label: t('health', 'High', {}) },
+						{ id: 3, label: t('health', 'Very high', {}) },
 					],
 					style(value) {
 						if (value === 3) {
@@ -149,10 +149,10 @@ export default {
 					type: 'select',
 					show: this.person.measurementColumnAppetite,
 					options: [
-						{ id: 0, label: t('health', 'low', {}) },
-						{ id: 1, label: t('health', 'middle', {}) },
-						{ id: 2, label: t('health', 'high', {}) },
-						{ id: 3, label: t('health', 'extreme', {}) },
+						{ id: 0, label: t('health', 'Low', {}) },
+						{ id: 1, label: t('health', 'Middle', {}) },
+						{ id: 2, label: t('health', 'High', {}) },
+						{ id: 3, label: t('health', 'Very high', {}) },
 					],
 					style(value) {
 						if (value === 3) {
@@ -168,10 +168,10 @@ export default {
 					type: 'select',
 					show: this.person.measurementColumnAllergies,
 					options: [
-						{ id: 0, label: t('health', 'low', {}) },
-						{ id: 1, label: t('health', 'middle', {}) },
-						{ id: 2, label: t('health', 'high', {}) },
-						{ id: 3, label: t('health', 'extreme', {}) },
+						{ id: 0, label: t('health', 'Low', {}) },
+						{ id: 1, label: t('health', 'Middle', {}) },
+						{ id: 2, label: t('health', 'High', {}) },
+						{ id: 3, label: t('health', 'Very high', {}) },
 					],
 					style(value) {
 						if (value === 3) {

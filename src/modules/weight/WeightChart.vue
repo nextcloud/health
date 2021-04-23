@@ -111,7 +111,7 @@ export default {
 					axesId: 'primary',
 				},
 				{
-					title: t('health', 'Bodyfat', {}),
+					title: t('health', 'Body fat', {}),
 					columnId: 'bodyfat',
 					timeId: 'date',
 					valueId: 'bodyfat',
@@ -125,7 +125,7 @@ export default {
 					axesId: 'bodyfat',
 				},
 				{
-					title: 'weightMeasurementName' in this.person && this.person.weightMeasurementName ? this.person.weightMeasurementName : t('health', 'Measurementdata'),
+					title: 'weightMeasurementName' in this.person && this.person.weightMeasurementName ? this.person.weightMeasurementName : t('health', 'Measurement data'),
 					columnId: 'measurement',
 					timeId: 'date',
 					valueId: 'measurement',
@@ -236,7 +236,7 @@ export default {
 							id: 'bodyfat',
 							scaleLabel: {
 								display: true,
-								labelString: t('health', 'bodyfat'),
+								labelString: t('health', 'Body fat'),
 							},
 						},
 						{
@@ -257,7 +257,7 @@ export default {
 							id: 'musclePart',
 							scaleLabel: {
 								display: true,
-								labelString: t('health', 'muscle part'),
+								labelString: t('health', 'Muscle part'),
 							},
 						},
 					],

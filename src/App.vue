@@ -45,11 +45,11 @@
 			v-show="showSidebar"
 			v-if="person && !loading"
 			:title="person.name"
-			:subtitle="t('health', 'created at {creationTime}', { creationTime: formatMyDate(person.insertTime) })"
+			:subtitle="t('health', 'Created at {creationTime}', { creationTime: formatMyDate(person.insertTime) })"
 			@close="$store.commit('showSidebar', false)">
 			<AppSidebarTab
 				id="person"
-				name="Person"
+				:name="t('health', 'Person')"
 				icon="icon-user"
 				:order="0">
 				<PersonsSidebar />
@@ -57,7 +57,7 @@
 			<AppSidebarTab
 				v-if="person.enabledModuleWeight"
 				id="weight"
-				:name="t('health', 'Weight', {})"
+				:name="t('health', 'Weight')"
 				icon="icon-quota"
 				:order="1">
 				<WeightSidebar />
@@ -73,7 +73,7 @@
 			<AppSidebarTab
 				v-if="person.enabledModuleMeasurement"
 				id="measurement"
-				:name="t('health', 'Measurementdata')"
+				:name="t('health', 'Measurement')"
 				icon="icon-home"
 				:order="3">
 				<MeasurementSidebar />

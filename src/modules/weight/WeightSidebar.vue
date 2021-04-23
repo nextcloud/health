@@ -103,7 +103,7 @@
 				<span>
 					{{ t('health', 'in {unit}', { unit: person.weightUnit }) }}
 					<br>
-					{{ t('health', 'This is your reference weight for the target') }}
+					{{ t('health', 'This is your reference weight for the target.') }}
 				</span>
 			</h4>
 		</li>

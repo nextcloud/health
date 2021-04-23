@@ -145,7 +145,7 @@
 		<EmptyContent
 			v-if="!datasets || data.length === 0 && !loading"
 			icon="icon-category-monitoring">
-			No data yet
+			{{ t('health', 'No data yet') }}
 			<template #desc>
 				{{ t('health', 'Click at the + to add the first data.') }}
 				<ModalItem

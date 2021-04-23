@@ -35,20 +35,20 @@
 			:value="person.size"
 			icon="icon-fullscreen"
 			@submit="updateSize" />
-		<li><h4>Sex</h4></li>
+		<li><h4>{{ t('health', 'Sex') }}</h4></li>
 		<ActionRadio
 			name="sex"
 			value="female"
 			:checked="person.sex === 'female'"
 			@change="updateSex('female')">
-			female
+			{{ t('health', 'female') }}
 		</ActionRadio>
 		<ActionRadio
 			name="sex"
 			value="male"
 			:checked="person.sex === 'male'"
 			@change="updateSex('male')">
-			male
+			{{ t('health', 'male') }}
 		</ActionRadio>
 		<li><h4>{{ t('health', 'Currency') }}</h4></li>
 		<ActionInput
