@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/js/health.js" />
+    <file url="file://$PROJECT_DIR$/js/health-main.js" />
+    <file url="file://$PROJECT_DIR$/js/health-main.js.map" />
     <file url="file://$PROJECT_DIR$/Makefile" />
   </component>
 </project>
