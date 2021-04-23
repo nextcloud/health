@@ -90,7 +90,7 @@ OC.L10N.register(
     "Mood" : "情绪",
     "Sadness level" : "悲伤程度",
     "Symptoms" : "症状",
-    "Attacks" : "攻击",
+    "Attacks" : "发作",
     "Pain" : "痛苦",
     "Energy" : "能量",
     "Values [%]" : "值  [%]",
