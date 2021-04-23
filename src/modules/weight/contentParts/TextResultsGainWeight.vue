@@ -41,7 +41,7 @@
 				:class="{'small':true}" />
 		</p>
 		<p v-if="weight < initialWeight" class="alert red">
-			{{ t('health', 'Oops, you are loosing more and more. Be careful!', {}) }}
+			{{ t('health', 'Oops, you are losing more and more. Be careful!', {}) }}
 		</p>
 		<p v-if="weight >= target" class="green alert">
 			{{ t('health', 'Good, you reached your target!', {}) }}
