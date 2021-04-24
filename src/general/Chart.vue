@@ -34,7 +34,7 @@
 					{{ t('health', 'Last week') }}
 				</option>
 				<option value="month">
-					{{ t('health', 'last month') }}
+					{{ t('health', 'Last month') }}
 				</option>
 				<option value="year">
 					{{ t('health', 'Last year') }}
