@@ -169,13 +169,13 @@ export default {
 	name: 'DataTable',
 	filters: {
 		formatMyDate(v) {
-			// return new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'today') : new Date(v).toLocaleDateString()
+			// return new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'Today') : new Date(v).toLocaleDateString()
 			// console.debug('is valid date', { date: moment(v), valid: moment(v).isValid() })
-			return moment(v) === moment() ? t('health', 'today') : moment(v).format('lll')
+			return moment(v) === moment() ? t('health', 'Today') : moment(v).format('lll')
 		},
 		formatMyDatetime(v) {
-			return moment(v).format('L') === moment().format('L') ? t('health', 'today') + ' ' + moment(v).format('LT') : moment(v).format('lll')
-			// const date = new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'today') : new Date(v).toLocaleDateString()
+			return moment(v).format('L') === moment().format('L') ? t('health', 'Today') + ' ' + moment(v).format('LT') : moment(v).format('lll')
+			// const date = new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'Today') : new Date(v).toLocaleDateString()
 			// return date + ' ' + new Date(v).toLocaleTimeString().slice(0, 5)
 		},
 	},
