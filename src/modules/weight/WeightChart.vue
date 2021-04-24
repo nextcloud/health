@@ -125,7 +125,7 @@ export default {
 					axesId: 'bodyfat',
 				},
 				{
-					title: 'weightMeasurementName' in this.person && this.person.weightMeasurementName ? this.person.weightMeasurementName : t('health', 'Measurement data'),
+					title: 'weightMeasurementName' in this.person && this.person.weightMeasurementName ? this.person.weightMeasurementName : t('health', 'Measurement'),
 					columnId: 'measurement',
 					timeId: 'date',
 					valueId: 'measurement',
