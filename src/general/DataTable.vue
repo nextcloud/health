@@ -96,8 +96,8 @@
 							</div>
 							<div v-else-if="h.type === 'boolean' && d[h.columnId]" class="wrapper">
 								{{ 'prefix' in h ? h.prefix : '' }}
-								{{ d[h.columnId] ? ('textTrue' in h) ? h.textTrue : t('health', 'true') : '' }}
-								{{ !d[h.columnId] ? ('textFalse' in h) ? h.textFalse : t('health', 'false') : '' }}
+								{{ d[h.columnId] ? ('textTrue' in h) ? h.textTrue : t('health', 'True') : '' }}
+								{{ !d[h.columnId] ? ('textFalse' in h) ? h.textFalse : t('health', 'False') : '' }}
 								{{ 'suffix' in h ? h.suffix : '' }}
 							</div>
 							<div v-else-if="h.type === 'text' && d[h.columnId]" class="wrapper">
