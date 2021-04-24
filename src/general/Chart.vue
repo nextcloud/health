@@ -31,13 +31,13 @@
 				v-model="range"
 				name="range">
 				<option value="week">
-					{{ t('health', 'last week') }}
+					{{ t('health', 'Last week') }}
 				</option>
 				<option value="month">
 					{{ t('health', 'last month') }}
 				</option>
 				<option value="year">
-					{{ t('health', 'last year') }}
+					{{ t('health', 'Last year') }}
 				</option>
 				<option value="all">
 					{{ t('health', 'Show all') }}
