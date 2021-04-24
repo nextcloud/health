@@ -49,19 +49,19 @@
 				v-model="range"
 				name="range">
 				<option value="1hour">
-					{{ t('health', 'last hour') }}
+					{{ t('health', 'Last hour') }}
 				</option>
 				<option value="4hours">
-					{{ t('health', 'last 4 hours') }}
+					{{ t('health', 'Last 4 hours') }}
 				</option>
 				<option value="12hours">
-					{{ t('health', 'last 12 hours') }}
+					{{ t('health', 'Last 12 hours') }}
 				</option>
 				<option value="24hours">
-					{{ t('health', 'last 24 hours') }}
+					{{ t('health', 'Last 24 hours') }}
 				</option>
 				<option value="48hours">
-					{{ t('health', 'last 48 hours') }}
+					{{ t('health', 'Last 48 hours') }}
 				</option>
 			</select>
 		</div>
