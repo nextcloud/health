@@ -76,7 +76,7 @@
 			{{ t('health', 'No data for a chart') }}
 			<template #desc>
 				{{ t('health', 'More than one dataset is required.') }}<br>
-				<span v-if="data.length > 1">{{ t('health', 'You selected to show only data from the last {range}.', {range: range}) }}</span>
+				<span v-if="data.length > 1">{{ t('health', 'You selected to show only data from: {range}.', {range: range}) }}</span>
 			</template>
 		</EmptyContent>
 	</div>
