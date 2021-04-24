@@ -170,7 +170,7 @@ export default {
 		},
 		inputMode: {
 			type: String,
-			default: 'add', // add or edit
+			default: t('health', 'Add', {}), // add or edit
 		},
 	},
 	data() {
