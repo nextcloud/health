@@ -195,7 +195,7 @@ export default {
 		},
 		entityName: {
 			type: String,
-			default: t('health', 'item', {}),
+			default: t('health', 'Item', {}),
 		},
 		loading: {
 			type: Boolean,
