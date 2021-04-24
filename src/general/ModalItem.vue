@@ -154,7 +154,7 @@ export default {
 		},
 		entityName: {
 			type: String,
-			default: 'item',
+			default: t('health', 'Item', {}),
 		},
 		itemData: {
 			type: Object,
