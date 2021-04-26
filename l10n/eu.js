@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "Osasuna",
+    "Track your health. Use the advantages of a trusted platform." : "Egin zure osasunaren jarraipena. Erabili konfiantzazko plataforma baten abantailak.",
     "Weight" : "Pisua",
     "Smoking" : "Erretzen",
     "Activities" : "Jarduerak",
