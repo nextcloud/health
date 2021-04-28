@@ -98,14 +98,14 @@ export default {
 					show: this.person.weightColumnMeasurement,
 				},
 				{
-					name: t('health', 'Waist size'),
+					name: t('health', 'Waist circumference'),
 					columnId: 'waistSize',
 					type: 'number',
 					show: this.person.weightColumnWaistSize,
 					suffix: 'cm',
 				},
 				{
-					name: t('health', 'Hip size'),
+					name: t('health', 'Hip circumference'),
 					columnId: 'hipSize',
 					type: 'number',
 					show: this.person.weightColumnHipSize,

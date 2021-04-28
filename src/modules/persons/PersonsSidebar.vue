@@ -29,7 +29,7 @@
 			:value="person.age"
 			icon="icon-user"
 			@submit="updateAge" />
-		<li><h4>{{ t('health', 'Size') }}<span>{{ t('health', 'in cm') }}</span></h4></li>
+		<li><h4>{{ t('health', 'Height') }}<span>{{ t('health', 'in cm') }}</span></h4></li>
 		<ActionInput
 			type="number"
 			:value="person.size"

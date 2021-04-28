@@ -32,7 +32,7 @@
 		<div
 			v-if="!loading">
 			<div v-if="!minWeightDataset || !person.size || !person.age">
-				{{ t('health', 'To calculate your BMI, please set your weight in the table below and your age and size in the person settings.') }}
+				{{ t('health', 'To calculate your BMI, please set your weight in the table below and your age and height in the person settings.') }}
 			</div>
 			<div class="row">
 				<div class="col-1 hide-s">
