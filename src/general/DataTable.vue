@@ -40,13 +40,13 @@
 				v-model="range"
 				name="range">
 				<option value="week">
-					{{ t('health', 'last week') }}
+					{{ t('health', 'Last week') }}
 				</option>
 				<option value="month">
-					{{ t('health', 'last month') }}
+					{{ t('health', 'Last month') }}
 				</option>
 				<option value="year">
-					{{ t('health', 'last year') }}
+					{{ t('health', 'Last year') }}
 				</option>
 				<option value="all">
 					{{ t('health', 'Show all') }}
@@ -96,8 +96,8 @@
 							</div>
 							<div v-else-if="h.type === 'boolean' && d[h.columnId]" class="wrapper">
 								{{ 'prefix' in h ? h.prefix : '' }}
-								{{ d[h.columnId] ? ('textTrue' in h) ? h.textTrue : t('health', 'true') : '' }}
-								{{ !d[h.columnId] ? ('textFalse' in h) ? h.textFalse : t('health', 'false') : '' }}
+								{{ d[h.columnId] ? ('textTrue' in h) ? h.textTrue : t('health', 'True') : '' }}
+								{{ !d[h.columnId] ? ('textFalse' in h) ? h.textFalse : t('health', 'False') : '' }}
 								{{ 'suffix' in h ? h.suffix : '' }}
 							</div>
 							<div v-else-if="h.type === 'text' && d[h.columnId]" class="wrapper">
@@ -169,13 +169,13 @@ export default {
 	name: 'DataTable',
 	filters: {
 		formatMyDate(v) {
-			// return new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'today') : new Date(v).toLocaleDateString()
+			// return new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'Today') : new Date(v).toLocaleDateString()
 			// console.debug('is valid date', { date: moment(v), valid: moment(v).isValid() })
-			return moment(v) === moment() ? t('health', 'today') : moment(v).format('lll')
+			return moment(v) === moment() ? t('health', 'Today') : moment(v).format('lll')
 		},
 		formatMyDatetime(v) {
-			return moment(v).format('L') === moment().format('L') ? t('health', 'today') + ' ' + moment(v).format('LT') : moment(v).format('lll')
-			// const date = new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'today') : new Date(v).toLocaleDateString()
+			return moment(v).format('L') === moment().format('L') ? t('health', 'Today') + ' ' + moment(v).format('LT') : moment(v).format('lll')
+			// const date = new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'Today') : new Date(v).toLocaleDateString()
 			// return date + ' ' + new Date(v).toLocaleTimeString().slice(0, 5)
 		},
 	},
@@ -195,7 +195,7 @@ export default {
 		},
 		entityName: {
 			type: String,
-			default: t('health', 'item', {}),
+			default: t('health', 'Item', {}),
 		},
 		loading: {
 			type: Boolean,

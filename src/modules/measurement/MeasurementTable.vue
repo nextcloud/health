@@ -131,7 +131,7 @@ export default {
 					show: this.person.measurementColumnDefecation,
 					options: [
 						{ id: 0, label: t('health', 'Low', {}) },
-						{ id: 1, label: t('health', 'Middle', {}) },
+						{ id: 1, label: t('health', 'Medium', {}) },
 						{ id: 2, label: t('health', 'High', {}) },
 						{ id: 3, label: t('health', 'Very high', {}) },
 					],
@@ -150,7 +150,7 @@ export default {
 					show: this.person.measurementColumnAppetite,
 					options: [
 						{ id: 0, label: t('health', 'Low', {}) },
-						{ id: 1, label: t('health', 'Middle', {}) },
+						{ id: 1, label: t('health', 'Medium', {}) },
 						{ id: 2, label: t('health', 'High', {}) },
 						{ id: 3, label: t('health', 'Very high', {}) },
 					],
@@ -169,7 +169,7 @@ export default {
 					show: this.person.measurementColumnAllergies,
 					options: [
 						{ id: 0, label: t('health', 'Low', {}) },
-						{ id: 1, label: t('health', 'Middle', {}) },
+						{ id: 1, label: t('health', 'Medium', {}) },
 						{ id: 2, label: t('health', 'High', {}) },
 						{ id: 3, label: t('health', 'Very high', {}) },
 					],

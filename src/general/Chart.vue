@@ -31,13 +31,13 @@
 				v-model="range"
 				name="range">
 				<option value="week">
-					{{ t('health', 'last week') }}
+					{{ t('health', 'Last week') }}
 				</option>
 				<option value="month">
-					{{ t('health', 'last month') }}
+					{{ t('health', 'Last month') }}
 				</option>
 				<option value="year">
-					{{ t('health', 'last year') }}
+					{{ t('health', 'Last year') }}
 				</option>
 				<option value="all">
 					{{ t('health', 'Show all') }}
@@ -49,19 +49,19 @@
 				v-model="range"
 				name="range">
 				<option value="1hour">
-					{{ t('health', 'last hour') }}
+					{{ t('health', 'Last hour') }}
 				</option>
 				<option value="4hours">
-					{{ t('health', 'last 4 hours') }}
+					{{ t('health', 'Last 4 hours') }}
 				</option>
 				<option value="12hours">
-					{{ t('health', 'last 12 hours') }}
+					{{ t('health', 'Last 12 hours') }}
 				</option>
 				<option value="24hours">
-					{{ t('health', 'last 24 hours') }}
+					{{ t('health', 'Last 24 hours') }}
 				</option>
 				<option value="48hours">
-					{{ t('health', 'last 48 hours') }}
+					{{ t('health', 'Last 48 hours') }}
 				</option>
 			</select>
 		</div>
@@ -76,7 +76,7 @@
 			{{ t('health', 'No data for a chart') }}
 			<template #desc>
 				{{ t('health', 'More than one dataset is required.') }}<br>
-				<span v-if="data.length > 1">{{ t('health', 'You selected to show only data from the last {range}.', {range: range}) }}</span>
+				<span v-if="data.length > 1">{{ t('health', 'You selected to show only data from: {range}.', {range: range}) }}</span>
 			</template>
 		</EmptyContent>
 	</div>

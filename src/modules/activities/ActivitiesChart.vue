@@ -233,7 +233,7 @@ export default {
 							},
 							scaleLabel: {
 								display: true,
-								labelString: t('health', 'Distance' + '[' + this.person.activitiesDistanceUnit + ']'),
+								labelString: t('health', 'Distance') + ' [' + this.person.activitiesDistanceUnit + ']',
 							},
 							min: 0,
 							position: 'left',

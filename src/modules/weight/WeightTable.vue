@@ -92,7 +92,7 @@ export default {
 					suffix: '%',
 				},
 				{
-					name: 'weightMeasurementName' in this.person && this.person.weightMeasurementName ? this.person.weightMeasurementName : t('health', 'Measurement data'),
+					name: 'weightMeasurementName' in this.person && this.person.weightMeasurementName ? this.person.weightMeasurementName : t('health', 'Measurement'),
 					columnId: 'measurement',
 					type: 'number',
 					show: this.person.weightColumnMeasurement,
