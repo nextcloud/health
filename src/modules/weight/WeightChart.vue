@@ -218,15 +218,21 @@ export default {
 						},
 						{
 							id: 'secondary',
-							scaleLabel: {
+							gridLines: {
 								display: false,
-								labelString: t('health', ''),
+							},
+							scaleLabel: {
+								display: true,
+								labelString: '',
 							},
 						},
 						{
 							id: 'third',
-							scaleLabel: {
+							gridLines: {
 								display: false,
+							},
+							scaleLabel: {
+								display: true,
 								labelString: t('health', 'Sizes'),
 							},
 							// min: 0,
@@ -234,29 +240,41 @@ export default {
 						},
 						{
 							id: 'bodyfat',
-							scaleLabel: {
+							gridLines: {
 								display: false,
+							},
+							scaleLabel: {
+								display: true,
 								labelString: t('health', 'Body fat'),
 							},
 						},
 						{
 							id: 'bmi',
-							scaleLabel: {
+							gridLines: {
 								display: false,
+							},
+							scaleLabel: {
+								display: true,
 								labelString: t('health', 'Body mass index'),
 							},
 						},
 						{
 							id: 'measurement',
-							scaleLabel: {
+							gridLines: {
 								display: false,
-								labelString: this.person.weightMeasurementName,
+							},
+							scaleLabel: {
+								display: true,
+								labelString: this.person.weightMeasurementName ? this.person.weightMeasurementName : t('health', 'Measurement'),
 							},
 						},
 						{
 							id: 'musclePart',
-							scaleLabel: {
+							gridLines: {
 								display: false,
+							},
+							scaleLabel: {
+								display: true,
 								labelString: t('health', 'Muscle part'),
 							},
 						},
