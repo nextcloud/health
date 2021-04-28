@@ -219,14 +219,14 @@ export default {
 						{
 							id: 'secondary',
 							scaleLabel: {
-								display: true,
+								display: false,
 								labelString: t('health', ''),
 							},
 						},
 						{
 							id: 'third',
 							scaleLabel: {
-								display: true,
+								display: false,
 								labelString: t('health', 'Sizes'),
 							},
 							// min: 0,
@@ -235,28 +235,28 @@ export default {
 						{
 							id: 'bodyfat',
 							scaleLabel: {
-								display: true,
+								display: false,
 								labelString: t('health', 'Body fat'),
 							},
 						},
 						{
 							id: 'bmi',
 							scaleLabel: {
-								display: true,
+								display: false,
 								labelString: t('health', 'Body mass index'),
 							},
 						},
 						{
 							id: 'measurement',
 							scaleLabel: {
-								display: true,
+								display: false,
 								labelString: this.person.weightMeasurementName,
 							},
 						},
 						{
 							id: 'musclePart',
 							scaleLabel: {
-								display: true,
+								display: false,
 								labelString: t('health', 'Muscle part'),
 							},
 						},
