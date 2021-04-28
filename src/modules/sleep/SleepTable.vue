@@ -94,13 +94,13 @@ export default {
 							}
 							let text = ''
 							if (duration._data.days > 0) {
-								text = text + n('health', '%nd ', '%nd ', duration._data.days)
+								text = text + n('health', '%nd', '%nd', duration._data.days)
 							}
 							if (duration._data.hours > 0) {
-								text = text + n('health', '%nh ', '%nh ', duration._data.hours)
+								text = text + n('health', '%nh', '%nh', duration._data.hours)
 							}
 							if (duration._data.minutes > 0) {
-								text = text + n('health', '%nmin ', '%nmin ', duration._data.minutes)
+								text = text + n('health', '%nmin', '%nmin', duration._data.minutes)
 							}
 							return text
 						} else {
