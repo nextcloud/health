@@ -103,7 +103,7 @@ export default {
 						t('health', 'Lack of Concentration', {}),
 						t('health', 'Anxiety', {}),
 						t('health', 'Isolation self from others', {}),
-						t('health', 'Thoughts of death/sicide', {}),
+						t('health', 'Thoughts of death/suicide', {}),
 						t('health', 'Feeling hopeless', {}),
 						t('health', 'Feeling worthless', {}),
 						t('health', 'Indecisive', {}),
