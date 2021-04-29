@@ -154,43 +154,45 @@ export default {
 
 			const data = {}
 			this.data.forEach(d => {
-				console.debug('before try to insert', { d })
 				this.definition.forEach(def => {
-					if (d[def.columnId] !== undefined && d[def.columnId] !== null) {
-						if (!data[def.columnId]) {
-							data[def.columnId] = []
-						}
-						console.debug('try to add data to chartData', { data: d[def.columnId], columnId: def.columnId })
-						if (def.valueId !== 'calculate' && d[def.timeId] && !Number.isNaN(d[def.valueId]) && this.isInTimeRange(d[def.timeId]) && def.show) {
-							data[def.columnId].push({
-								t: moment(d[def.timeId]),
-								y: def.getValueY(d[def.valueId]),
-							})
-							console.debug('y value / case 1', { y: def.getValueY(d[def.valueId]) })
-							console.debug('new data state', { data })
-						} else if (def.valueId === 'calculate' && d[def.timeId] && this.isInTimeRange(d[def.timeId]) && def.show) {
-							data[def.columnId].push({
-								t: moment(d[def.timeId]),
-								y: def.getValueY(d),
-							})
-							console.debug('y value / case 2', { y: def.getValueY(d) })
-							console.debug('new data state', { data })
-						} else if (def.valueId === 'static' && d[def.timeId] && this.isInTimeRange(d[def.timeId]) && def.show) {
-							data[def.columnId].push({
-								t: moment(d[def.timeId]),
+					if (!data[def.columnId]) {
+						data[def.columnId] = []
+					}
+
+					if (def.valueId === 'static' && d[def.timeId] && this.isInTimeRange(d[def.timeId]) && def.show) {
+						data[def.columnId].push({
+							t: moment(d[def.timeId]),
+							y: def.getValueY,
+						})
+					} else if (def.valueId === 'calculate' && d[def.timeId] && this.isInTimeRange(d[def.timeId]) && def.show) {
+						data[def.columnId].push({
+							t: moment(d[def.timeId]),
+							y: def.getValueY(d),
+						})
+					} else if (def.valueId !== 'calculate' && def.valueId !== 'static' && d[def.timeId] && !Number.isNaN(d[def.valueId]) && this.isInTimeRange(d[def.timeId]) && def.show) {
+						data[def.columnId].push({
+							t: moment(d[def.timeId]),
+							y: def.getValueY(d[def.valueId]),
+						})
+					}
+
+					// eslint-disable-next-line no-tabs
+					/*	if (def.show && this.isInTimeRange(d[def.timeId])) {
+							console.debug('try to add value', {
+								def,
+								data: d,
+								valueId: def.valueId,
+								x: d[def.timeId],
+								isNumber: !Number.isNaN(d[def.valueId]),
+								isInTimeRange: this.isInTimeRange(d[def.timeId]),
+								show: def.show,
 								y: def.getValueY,
 							})
-							console.debug('y value / case 3', { y: def.getValueY })
-							console.debug('new data state', { data })
-						} else {
-							console.debug('error for including data', { data: d[def.columnId], columnId: def.columnId })
-						}
-					} else {
-						// console.debug('not included: ', { data: d[def.columnId], columnId: def.columnId })
-					}
+						console.debug('error for including data', { data: d[def.columnId], columnId: def.columnId })
+						console.debug('---')
+					} */
 				})
 			})
-			console.debug('data in get datasets for chartData', data)
 
 			const result = {
 				datasets: [],
@@ -213,7 +215,6 @@ export default {
 				}
 			})
 
-			console.debug('chartData', result)
 			return result
 		},
 		isDetailRange() {
