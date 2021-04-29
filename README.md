@@ -1,5 +1,5 @@
 # Health
-##### version 1.1.0
+##### version 1.2.0
 ### Track your health. Use the advantages of a trusted platform.
 
 The app provides different modules to track your  health data.
@@ -14,6 +14,14 @@ Following modules are served:
 
 
 ### Changelog
+
+v1.2.0
+- many small fixes
+- many string fixes
+- add translations
+- removed official support for nc19, but should work
+- npm updates
+> many thanks to @Valdnet
 
 v1.1.0
 - nc21 ready

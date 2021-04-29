@@ -111,10 +111,72 @@ distclean: clean
 	rm -rf js/node_modules
 
 # Builds the source and appstore package
+.PHONY: macdist
+macdist:
+	make macsource
+	make macappstore
+
+# Builds the source package
+.PHONY: macsource
+macsource:
+	rm -rf $(source_build_directory)
+	mkdir -p $(source_build_directory)
+	tar --disable-copyfile -c \
+	--exclude="./.gitignore" \
+	--exclude="./.git" \
+	--exclude="./.idea" \
+	--exclude="./build" \
+	--exclude="./js/node_modules" \
+	--exclude="./node_modules" \
+	--exclude="./*.log" \
+	--exclude="./js/*.log" \
+	--exclude="./*.tar.gz" \
+	-zf $(source_package_name).tar.gz ./* \
+
+# Builds the source package for the app store, ignores php and js tests
+.PHONY: macappstore
+macappstore:
+	rm -rf $(appstore_build_directory)
+	mkdir -p $(appstore_build_directory)
+	tar --disable-copyfile -c \
+	--exclude="./.gitignore" \
+	--exclude="./.git" \
+	--exclude="./.idea" \
+	--exclude="./build" \
+	--exclude="./build/*" \
+	--exclude="./tests" \
+	--exclude="./Makefile" \
+	--exclude="./*.log" \
+	--exclude="./phpunit*xml" \
+	--exclude="./composer.*" \
+	--exclude="./node_modules" \
+	--exclude="./js/tests" \
+	--exclude="./js/test" \
+	--exclude="./js/*.log" \
+	--exclude="./js/package.json" \
+	--exclude="./js/bower.json" \
+	--exclude="./js/karma.*" \
+	--exclude="./js/protractor.*" \
+	--exclude="./package.json" \
+	--exclude="./bower.json" \
+	--exclude="./karma.*" \
+	--exclude="./protractor\.*" \
+	--exclude="./js/.*" \
+	-zf $(appstore_package_name).tar.gz ./* \
+
+
+
+
+
+
+
+
+# Builds the source and appstore package
 .PHONY: dist
 dist:
 	make source
 	make appstore
+
 
 # Builds the source package
 .PHONY: source
