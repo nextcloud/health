@@ -50,7 +50,7 @@
 			:data="measurementData" />
 		<div v-if="loading && person.measurementChartDetail" class="icon-loading" />
 
-		<h3>Data</h3>
+		<h3>{{ t('health', 'Data', {}) }}</h3>
 		<MeasurementTable
 			v-if="!loading"
 			:data="measurementData"
