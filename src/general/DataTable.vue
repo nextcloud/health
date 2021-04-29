@@ -171,7 +171,7 @@ export default {
 		formatMyDate(v) {
 			// return new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'Today') : new Date(v).toLocaleDateString()
 			// console.debug('is valid date', { date: moment(v), valid: moment(v).isValid() })
-			return moment(v) === moment() ? t('health', 'Today') : moment(v).format('lll')
+			return moment(v) === moment() ? t('health', 'Today') : moment(v).format('ll')
 		},
 		formatMyDatetime(v) {
 			return moment(v).format('L') === moment().format('L') ? t('health', 'Today') + ' ' + moment(v).format('LT') : moment(v).format('lll')
