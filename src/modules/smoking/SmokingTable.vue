@@ -25,7 +25,7 @@
 		<DataTable
 			:data="data"
 			:header="headerDefinition"
-			entity-name="smoking"
+			:entity-name="t('health', 'smoking data')"
 			@addItem="addItem"
 			@updateItem="updateItem"
 			@deleteItem="deleteItem" />
