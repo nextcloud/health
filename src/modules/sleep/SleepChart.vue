@@ -32,7 +32,7 @@
 
 <script>
 import Chart from '../../general/Chart'
-import moment from 'moment'
+import moment from '@nextcloud/moment'
 
 export default {
 	name: 'SleepChart',

@@ -40,7 +40,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import moment from 'moment'
+import moment from '@nextcloud/moment'
 
 export default {
 	name: 'PersonsContent',

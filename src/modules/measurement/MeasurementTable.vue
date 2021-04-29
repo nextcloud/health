@@ -34,7 +34,7 @@
 
 <script>
 import DataTable from '../../general/DataTable'
-import moment from 'moment'
+import moment from '@nextcloud/moment'
 
 export default {
 	name: 'MeasurementTable',
