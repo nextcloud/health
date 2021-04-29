@@ -85,7 +85,7 @@
 <script>
 import LineChart from './charts/LineChart'
 import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
-import moment from 'moment'
+import moment from '@nextcloud/moment'
 
 export default {
 	name: 'Chart',

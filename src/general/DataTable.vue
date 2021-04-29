@@ -162,21 +162,17 @@
 <script>
 import ModalItem from './ModalItem'
 import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
-import moment from 'moment'
+import moment from '@nextcloud/moment'
 import JsonCSV from 'vue-json-csv'
 
 export default {
 	name: 'DataTable',
 	filters: {
 		formatMyDate(v) {
-			// return new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'Today') : new Date(v).toLocaleDateString()
-			// console.debug('is valid date', { date: moment(v), valid: moment(v).isValid() })
 			return moment(v) === moment() ? t('health', 'Today') : moment(v).format('ll')
 		},
 		formatMyDatetime(v) {
 			return moment(v).format('L') === moment().format('L') ? t('health', 'Today') + ' ' + moment(v).format('LT') : moment(v).format('lll')
-			// const date = new Date(v).toLocaleDateString() === new Date().toLocaleDateString() ? t('health', 'Today') : new Date(v).toLocaleDateString()
-			// return date + ' ' + new Date(v).toLocaleTimeString().slice(0, 5)
 		},
 	},
 	components: {
