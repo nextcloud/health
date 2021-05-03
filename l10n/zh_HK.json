@@ -230,6 +230,7 @@
     "Leave blank for none." : "留空為空。",
     "Weight target initial weight" : "體重目標：開始體重",
     "This is your reference weight for the target." : "這是你目標的參考體重。",
+    "weight dataset" : "體重數據集",
     "Waist circumference" : "腰圍",
     "Hip circumference" : "臀圍",
     "You started with {initialWeight}{unit} for your target." : "您以{initialWeight} {unit}為開始目標。",
