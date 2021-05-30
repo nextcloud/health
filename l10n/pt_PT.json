@@ -229,6 +229,7 @@
     "Add some bounty to motivate yourself, if you like to." : "Se quiser adicione uma recompensa como motivação",
     "Save bounty" : "Guardar recompensa",
     "weight dataset" : "Conjunto de dados de peso",
+    "Waist circumference" : "Circunferência da cintura",
     "Hip circumference" : "Circunferência da anca",
     "You started with {initialWeight}{unit} for your target." : "Começou com {initialWeight}{unit} para o seu objectivo.",
     "Your actual weight is now {weight}{unit} and your target values {target}{unit}." : "O seu peso actual é {weight}{unit} e o objectivo é {target}{unit}.",
