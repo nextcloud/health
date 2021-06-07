@@ -251,6 +251,7 @@ OC.L10N.register(
     "Oops, you are losing more and more. Be careful!" : "哎呀，您的體重越來越輕。 小心！",
     "Good, you reached your target!" : "恭喜，您已達到目標！",
     "You lost already {diff}{unit} and you have {toGo}{unit} to go." : "您已經減掉了 {diff}{unit}，還有 {diff}{unit} 要減。",
+    "Oops, you become more and more. Be careful!" : "哎呀，你比剛開始的時候重。小心！",
     "If you want, you can set your initial weight and a target for your weight. Do this in the settings in the sidebar. You will see right here how much you added or lost and what is left. Maybe you can be motivated this way." : "如果你願意，你可以設定你的初始體重和目標體重。在側邊欄的設置中執行此操作。你會在這裡看到你增重了多少或減輕了多少，還剩下什麼。也許你可以這樣激勵自己。",
     "Underweight" : "體重過輕",
     "Normal weight" : "體重正常",
