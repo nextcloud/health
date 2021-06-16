@@ -33,7 +33,7 @@
 			:data="feelingData" />
 		<div v-if="loading" class="icon-loading" />
 
-		<h3>Data</h3>
+		<h3>{{ t('health', 'Data', {}) }}</h3>
 		<FeelingTable
 			v-if="!loading"
 			:data="feelingData"
