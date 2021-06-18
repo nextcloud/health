@@ -57,6 +57,7 @@ OC.L10N.register(
     "Feeling after the activity" : "Samopoczucie po aktywności",
     "Activity intensity" : "Intensywność aktywności",
     "Unit for distance" : "Jednostka odległości",
+    "Activity" : "Aktywność",
     "Date" : "Data",
     "kcal" : "kcal",
     "Activity duration" : "Czas trwania aktywności",

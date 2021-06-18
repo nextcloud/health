@@ -57,6 +57,7 @@ OC.L10N.register(
     "Feeling after the activity" : "活動後的感覺",
     "Activity intensity" : "活動強度",
     "Unit for distance" : "距離單位",
+    "Activity" : "活動",
     "Date" : "日期",
     "kcal" : "大卡",
     "Activity duration" : "活動時間",
