@@ -50,6 +50,7 @@ OC.L10N.register(
     "Category" : "Categoria",
     "Activity intensity" : "Intensità dell'attività",
     "Unit for distance" : "Unità di distanza",
+    "Activity" : "Attività",
     "Date" : "Data",
     "kcal" : "kcal",
     "Activity duration" : "Durata dell'attività",
