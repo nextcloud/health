@@ -57,6 +57,7 @@ OC.L10N.register(
     "Feeling after the activity" : "Jarduera osteko sentimendua",
     "Activity intensity" : "Jardueraren intentsitatea",
     "Unit for distance" : "Distantzia-unitatea",
+    "Activity" : "Jarduera",
     "Date" : "Data",
     "kcal" : "kcal",
     "Activity duration" : "Jardueraren iraupena",
