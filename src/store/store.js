@@ -40,6 +40,7 @@ const sleepApiClient = new SleepApi()
 const smokingApiClient = new SmokingApi()
 const activitiesApiClient = new ActivitiesApi()
 
+// eslint-disable-next-line import/no-named-as-default-member
 export default new Vuex.Store({
 	state: {
 		initialLoading: true,
