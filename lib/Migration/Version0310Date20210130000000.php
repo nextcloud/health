@@ -69,7 +69,7 @@ class Version0310Date20210130000000 extends SimpleMigrationStep {
 			];
 			foreach ($newColumns as $c) {
 				if(!$table->hasColumn($c)) {
-					$table->addColumn($c, 'boolean', [ 'default' => 0 ]);
+					$table->addColumn($c, 'boolean', [ 'default' => 0, 'notnull' => false ]);
 				}
 			}
 			$newColumns = [

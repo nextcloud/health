@@ -86,7 +86,7 @@ class Version0300Date20210119000000 extends SimpleMigrationStep {
 			];
 			foreach ($newColumns as $c) {
 				if(!$table->hasColumn($c)) {
-					$table->addColumn($c, 'boolean', [ 'default' => 0 ]);
+					$table->addColumn($c, 'boolean', [ 'default' => 0, 'notnull' => false ]);
 				}
 			}
 			$table->addColumn('shared', 'text', [

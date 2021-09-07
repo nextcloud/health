@@ -113,18 +113,23 @@
             ]);
             $table->addColumn('enabled_module_weight', 'boolean', [
                 'default' => 0,
+				'notnull' => false,
             ]);
             $table->addColumn('enabled_module_breaks', 'boolean', [
                 'default' => 0,
+				'notnull' => false,
             ]);
             $table->addColumn('enabled_module_feeling', 'boolean', [
                 'default' => 0,
+				'notnull' => false,
             ]);
             $table->addColumn('enabled_module_medicine', 'boolean', [
                 'default' => 0,
+				'notnull' => false,
             ]);
             $table->addColumn('enabled_module_activities', 'boolean', [
                 'default' => 0,
+				'notnull' => false,
             ]);
             $table->addColumn('sex', 'string', [
                 'length' => 6,

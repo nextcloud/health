@@ -58,7 +58,7 @@
 			];
 			foreach ($newColumns as $c) {
 				if(!$table->hasColumn($c)) {
-					$table->addColumn($c, 'boolean', [ 'default' => 0 ]);
+					$table->addColumn($c, 'boolean', [ 'default' => 0, 'notnull' => false ]);
 				}
 			}
 		} catch (SchemaException $e) {

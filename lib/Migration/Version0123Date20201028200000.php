@@ -60,7 +60,7 @@
 			];
 			foreach ($newColumns as $c) {
 				if(!$table->hasColumn($c)) {
-					$table->addColumn($c, 'boolean', [ 'default' => 1 ]);
+					$table->addColumn($c, 'boolean', [ 'default' => 1, 'notnull' => false ]);
 				}
 			}
 
