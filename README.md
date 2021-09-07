@@ -1,5 +1,5 @@
 # Health
-##### version 1.2.1
+##### version 1.2.2
 ### Track your health. Use the advantages of a trusted platform.
 
 The app provides different modules to track your  health data.

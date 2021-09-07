@@ -1,3 +1,7 @@
+v1.2.2
+- npm updates
+- nc22 compatible - db fix
+
 v1.2.1
 - integrate new translations
 - background updates
