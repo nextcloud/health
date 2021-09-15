@@ -48,8 +48,20 @@ OC.L10N.register(
     "Quality" : "Ποιότητα",
     "Cigarettes" : "Τσιγάρα",
     "Goal" : "Στόχος",
+    "BMI" : "ΔΜΣ",
     "Target" : "Στόχος",
+    "Body fat" : "Σωματικό λίπος",
     "minimum" : "ελάχιστο",
-    "maximum" : "μέγιστο"
+    "maximum" : "μέγιστο",
+    "Boby mass index (BMI)" : "Δείκτης μάζας σώματος (ΔΜΣ)",
+    "Bodyfat" : "Σωματικό λίπος",
+    "Unit for weight" : "Μονάδα για το βάρος",
+    "in {unit}" : "σε {unit}",
+    "Underweight" : "Λιποβαρής",
+    "Normal weight" : "Φυσιολογικό βάρος",
+    "Obesity class I" : "Τάξη παχυσαρκίας Ι",
+    "Obesity class II" : "Τάξη παχυσαρκίας II",
+    "Obesity class III" : "Τάξη παχυσαρκίας ΙII",
+    "Value successfully saved" : "Η τιμή αποθηκεύτηκε με επιτυχία"
 },
 "nplurals=2; plural=(n != 1);");
