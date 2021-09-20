@@ -129,9 +129,9 @@ export default {
 			if (!this.options) {
 				return []
 			}
-			const AllYAxes = this.options.scales.yAxes.slice()
-			// eslint-disable-next-line vue/no-side-effects-in-computed-properties
-			this.options.scales.yAxes = []
+			const optionsArray = this.options
+			const AllYAxes = optionsArray.scales.yAxes.slice()
+			optionsArray.scales.yAxes = []
 			const axesIds = {}
 			this.getChartData.datasets.forEach(item => {
 				if ('yAxisID' in item) {
@@ -142,10 +142,10 @@ export default {
 			AllYAxes.forEach((axes, i) => {
 				if (axes.id in axesIds && axesIds[axes.id]) {
 					// eslint-disable-next-line vue/no-side-effects-in-computed-properties
-					this.options.scales.yAxes.push(AllYAxes[i])
+					optionsArray.scales.yAxes.push(AllYAxes[i])
 				}
 			})
-			return this.options
+			return optionsArray
 		},
 		getChartData() {
 			if (!this.definition || !this.data) {

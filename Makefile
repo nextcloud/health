@@ -21,7 +21,7 @@ npm-init:
 	npm install
 
 npm-upgrade:
-	npm-upgrade
+	npm upgrade
 	npm install
 
 npm-update:
@@ -83,7 +83,6 @@ watch-js:
 
 
 ##### Testing #####
-
 test: test-api
 
 test-api:
