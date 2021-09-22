@@ -87,7 +87,6 @@ OC.L10N.register(
     "Energy" : "Energia",
     "Values [%]" : "Valori [%]",
     "Medication" : "Farmaco",
-    "Repeated thoughts" : "Pensieri ossessivi",
     "Irritable" : "Irritabile",
     "Lack of Concentration" : "Mancanza di concentrazione",
     "Anxiety" : "Ansia",

@@ -104,7 +104,6 @@ OC.L10N.register(
     "Fatigue" : "Väsymys",
     "No Appetite" : "Ei ruokahalua",
     "Overeating" : "Ylensyönti",
-    "Repeated thoughts" : "Toistuvia ajatuksia",
     "Unmotivated" : "Motivoitumaton",
     "Irritable" : "Ärtynyt",
     "Lack of Concentration" : "Keskittymisen puute",

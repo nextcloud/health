@@ -107,7 +107,6 @@ OC.L10N.register(
     "Fatigue" : "疲勞",
     "No Appetite" : "冇胃口",
     "Overeating" : "暴飲暴食",
-    "Repeated thoughts" : "重複思考",
     "Unmotivated" : "豪不積極",
     "Irritable" : "易怒的",
     "Lack of Concentration" : "缺乏集中力",

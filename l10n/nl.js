@@ -107,7 +107,6 @@ OC.L10N.register(
     "Fatigue" : "Moe",
     "No Appetite" : "Geen trek",
     "Overeating" : "Te veel eten",
-    "Repeated thoughts" : "Herhaalde gedachten",
     "Unmotivated" : "Ongemotiveerd",
     "Irritable" : "Prikkelbaar",
     "Lack of Concentration" : "Concentratiegebrek",

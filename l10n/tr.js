@@ -107,7 +107,6 @@ OC.L10N.register(
     "Fatigue" : "Yorgunluk",
     "No Appetite" : "İştahsızlık",
     "Overeating" : "Aşırı yeme",
-    "Repeated thoughts" : "Yinelenen düşünceler",
     "Unmotivated" : "Motivasyonsuz",
     "Irritable" : "Gergin",
     "Lack of Concentration" : "Odaklanma sorunu",

@@ -107,7 +107,6 @@ OC.L10N.register(
     "Fatigue" : "Fadiga",
     "No Appetite" : "Sena fàmine",
     "Overeating" : "Isbuddare",
-    "Repeated thoughts" : "Meledare",
     "Unmotivated" : "Sena motivu",
     "Irritable" : "Pilisadu",
     "Lack of Concentration" : "Farta de concentratzione",
