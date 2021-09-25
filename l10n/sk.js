@@ -107,6 +107,7 @@ OC.L10N.register(
     "Fatigue" : "Únava",
     "No Appetite" : "Žiadna chuť do jedla",
     "Overeating" : "Prejedanie sa",
+    "Repeated thoughts (Rumination)" : "Opakované myšlienky (prežúvanie)",
     "Unmotivated" : "Bez motivácie",
     "Irritable" : "Podráždenosť",
     "Lack of Concentration" : "Porucha koncentrácie",
