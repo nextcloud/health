@@ -137,6 +137,7 @@
 		<JsonCSV
 			v-if="getExportData.length > 0"
 			:data="getExportData"
+			:labels="getExportLabels"
 			:name="entityName + '.csv'">
 			<button class="export">
 				{{ t('health', 'Download (CSV)', {}) }}
@@ -242,12 +243,40 @@ export default {
 				const item = {}
 				this.header.forEach(h => {
 					if (h.show) {
-						item[h.columnId] = d[h.columnId]
+						let value = d[h.columnId]
+						// replace id from db with label from selection
+						if (h.type === 'select') {
+							const tmp = h.options.filter(o => o.id === value)
+							if (tmp && tmp[0] && tmp[0].label) {
+								value = tmp[0].label
+							}
+						}
+						// clean array values for output, comma-seperated
+						if (value && h.type === 'multiselect') {
+							value = value.replace(/\[|]|"/g, '')
+							value = value.replace(/,/g, ' & ')
+						}
+						item[h.columnId] = value
 					}
 				})
 				data.push(item)
 			})
 			return data
+		},
+		getExportLabels() {
+			if (!this.datasets && this.datasets.length > 0 && !this.header) {
+				console.debug('error datasets', this.datasets)
+				return []
+			}
+
+			const labels = {}
+			this.header.forEach(h => {
+				if (h.show) {
+					labels[h.columnId] = h.name
+				}
+			})
+
+			return labels
 		},
 	},
 	methods: {
