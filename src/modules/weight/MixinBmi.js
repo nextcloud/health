@@ -12,7 +12,7 @@ export default {
 			const s = person.size / 100
 			const bmi = weight / (s * s)
 			// console.debug('bmi: ' + bmi)
-			return Math.round(bmi)
+			return Math.round(bmi * 10) / 10
 		},
 		status(bmi) {
 			if (bmi === null) {
