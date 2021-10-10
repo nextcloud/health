@@ -1,7 +1,7 @@
 {
 	"name": "health",
 	"description": "Nextcloud health app",
-	"version": "1.2.2",
+	"version": "1.3.0",
 	"author": "Florian Steffens <flost-dev@mailbox.org>",
 	"contributors": [
 		"Florian Steffens <flost-dev@mailbox.org>"
@@ -22,7 +22,7 @@
 	"license": "agpl",
 	"private": true,
 	"scripts": {
-		"build": "NODE_ENV=production webpack --progress --hide-modules --config webpack.js",
+		"build": "NODE_ENV=production webpack --progress --config webpack.js",
 		"dev": "NODE_ENV=development webpack --progress --config webpack.js",
 		"watch": "NODE_ENV=development webpack --progress --watch --config webpack.js",
 		"lint": "eslint --ext .js,.vue src",
