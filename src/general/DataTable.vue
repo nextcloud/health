@@ -263,6 +263,7 @@ export default {
 			return items.length
 		},
 		deleteItem(id) {
+			// eslint-disable-next-line vue/custom-event-name-casing
 			this.$emit('deleteItem', this.datasets[id])
 		},
 		handleDataIncome(item) {
@@ -275,9 +276,11 @@ export default {
 			}
 		},
 		addItem(item) {
+			// eslint-disable-next-line vue/custom-event-name-casing
 			this.$emit('addItem', item)
 		},
 		updateItem(item) {
+			// eslint-disable-next-line vue/custom-event-name-casing
 			this.$emit('updateItem', item)
 		},
 	},

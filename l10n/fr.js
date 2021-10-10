@@ -107,7 +107,6 @@ OC.L10N.register(
     "Fatigue" : "Fatigue",
     "No Appetite" : "Pas d'appétit",
     "Overeating" : "Trop manger",
-    "Repeated thoughts" : "Pensées répétées",
     "Unmotivated" : "Démotivé",
     "Irritable" : "Irritable",
     "Lack of Concentration" : "Manque de concentration",

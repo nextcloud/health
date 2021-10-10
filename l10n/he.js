@@ -107,7 +107,6 @@ OC.L10N.register(
     "Fatigue" : "עייפות",
     "No Appetite" : "חוסר תיאבון",
     "Overeating" : "אכילת יתר",
-    "Repeated thoughts" : "מחשבות נשנות",
     "Unmotivated" : "חוסר מוטיבציה",
     "Irritable" : "עצבנות",
     "Lack of Concentration" : "חוסר ריכוז",

@@ -107,7 +107,7 @@ OC.L10N.register(
     "Fatigue" : "Nekea",
     "No Appetite" : "Goserik gabe",
     "Overeating" : "Gehiegi jaten",
-    "Repeated thoughts" : "Pentsamendu errepikakorrak",
+    "Repeated thoughts (Rumination)" : "Pentsamendu errepikakorrak (Marmarketa)",
     "Unmotivated" : "Motibaziorik gabe",
     "Irritable" : "Haserrekor",
     "Lack of Concentration" : "Kontzentrazio falta",

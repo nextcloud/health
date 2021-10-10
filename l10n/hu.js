@@ -82,7 +82,6 @@ OC.L10N.register(
     "Fatigue" : "Kimerültség",
     "No Appetite" : "Étvágytalan",
     "Overeating" : "Túlzott étvágy",
-    "Repeated thoughts" : "Visszatérő gondolatok",
     "Unmotivated" : "Demotivált",
     "Irritable" : "Ideges",
     "Lack of Concentration" : "Szétszórt",

@@ -97,7 +97,7 @@ export default {
 						t('health', 'Fatigue', {}),
 						t('health', 'No Appetite', {}),
 						t('health', 'Overeating', {}),
-						t('health', 'Repeated thoughts', {}),
+						t('health', 'Repeated thoughts (Rumination)', {}),
 						t('health', 'Unmotivated', {}),
 						t('health', 'Irritable', {}),
 						t('health', 'Lack of Concentration', {}),

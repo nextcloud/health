@@ -205,6 +205,7 @@ export default {
 			}
 			// console.debug('modal send values', this.values)
 
+			// eslint-disable-next-line vue/custom-event-name-casing
 			this.$emit('addItem', this.values)
 			this.resetValues()
 			this.showModal = false
@@ -304,7 +305,7 @@ export default {
 	}
 
 	.modal__content h3 {
-		margin-bottom: 0px;
+		margin-bottom: 0;
 	}
 
 	.modal__content .hint {
