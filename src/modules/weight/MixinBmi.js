@@ -10,7 +10,13 @@ export default {
 				return null
 			}
 			const s = person.size / 100
-			const bmi = weight / (s * s)
+			
+			if (person.weightUnit === 'lb' {
+				const bmi = (weight / 2.20462262) / (s * s)
+			}
+			else {
+				const bmi = weight / (s * s)
+			}
 			// console.debug('bmi: ' + bmi)
 			return Math.round(bmi * 10) / 10
 		},
