@@ -225,7 +225,6 @@ OC.L10N.register(
     "actual" : "ממשי",
     "maximum" : "מרבי",
     "The calculated value is valid only for adults. Its base are the tables from the WHO." : "הערך המחושב תקף רק למבוגרים. הוא מבוסס על טבלאות מארגון הבריאות העולמי.",
-    "Body mass index (BMI)" : "מדד מסת גוף (BMI)",
     "Bodyfat" : "שומן גוף",
     "Custom measurement" : "מדדים בהתאמה אישית",
     "Unit for weight" : "יחידה למשקל",

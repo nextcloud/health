@@ -102,7 +102,6 @@ OC.L10N.register(
     "Body mass index (BMI)" : "Δείκτης μάζας σώματος (ΔΜΣ)",
     "minimum" : "ελάχιστο",
     "maximum" : "μέγιστο",
-    "Boby mass index (BMI)" : "Δείκτης μάζας σώματος (ΔΜΣ)",
     "Bodyfat" : "Σωματικό λίπος",
     "Unit for weight" : "Μονάδα για το βάρος",
     "in {unit}" : "σε {unit}",

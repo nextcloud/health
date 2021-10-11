@@ -226,7 +226,6 @@ OC.L10N.register(
     "actual" : "benetakoa",
     "maximum" : "maximoa",
     "The calculated value is valid only for adults. Its base are the tables from the WHO." : "Kalkulatutako balioa helduentzat soilik da baliozkoa. Oinarria OMEren taulak dira.",
-    "Body mass index (BMI)" : "Gorputz-masaren indizea (GMI)",
     "Bodyfat" : "Gorputz-koipea",
     "Custom measurement" : "Pertsonalizatu neurketa ",
     "Unit for weight" : "Pisu-unitatea",

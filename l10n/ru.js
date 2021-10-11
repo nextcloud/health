@@ -158,7 +158,6 @@ OC.L10N.register(
     "To calculate your BMI, please set your weight in the table below and your age and height in the person settings." : "Чтобы рассчитать свой индекс массы тела (BMI), пожалуйста, задавайте ваш вес в таблице ниже, ваш возраст и рост в настройках персоны.",
     "minimum" : "минимум",
     "maximum" : "максимум",
-    "Boby mass index (BMI)" : "Индекс массы тела (ИМТ)",
     "Waist circumference" : "Окружность талии",
     "Hip circumference" : "Окружность бедра"
 },

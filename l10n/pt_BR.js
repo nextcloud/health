@@ -226,7 +226,6 @@ OC.L10N.register(
     "actual" : "atual",
     "maximum" : "máximo",
     "The calculated value is valid only for adults. Its base are the tables from the WHO." : "O valor calculado é válido apenas para adultos. Sua base são as mesas da OMS.",
-    "Body mass index (BMI)" : "Índice de massa Corporal (IMC)",
     "Bodyfat" : "Gordura corporal",
     "Custom measurement" : "Medidas personalizada",
     "Unit for weight" : "Unidade para peso",

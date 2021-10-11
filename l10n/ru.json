@@ -156,7 +156,6 @@
     "To calculate your BMI, please set your weight in the table below and your age and height in the person settings." : "Чтобы рассчитать свой индекс массы тела (BMI), пожалуйста, задавайте ваш вес в таблице ниже, ваш возраст и рост в настройках персоны.",
     "minimum" : "минимум",
     "maximum" : "максимум",
-    "Boby mass index (BMI)" : "Индекс массы тела (ИМТ)",
     "Waist circumference" : "Окружность талии",
     "Hip circumference" : "Окружность бедра"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"

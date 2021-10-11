@@ -225,7 +225,6 @@ OC.L10N.register(
     "actual" : "atuale",
     "maximum" : "màssimu",
     "The calculated value is valid only for adults. Its base are the tables from the WHO." : "Su balore calculadu est bàlidu pro is mannos. Si basat subra de is tabellas de sa OMS.",
-    "Boby mass index (BMI)" : "Ìnditze de massa de carena (BMI)",
     "Bodyfat" : "Grassu in corpus",
     "Custom measurement" : "Medida personalizada",
     "Unit for weight" : "Unidade de pesu",

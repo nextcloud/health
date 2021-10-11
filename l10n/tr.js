@@ -226,7 +226,6 @@ OC.L10N.register(
     "actual" : "güncel",
     "maximum" : "en çok",
     "The calculated value is valid only for adults. Its base are the tables from the WHO." : "Hesaplanan değer yalnız yetişkinler için geçerlidir. WHO tabloları temel alınmıştır.",
-    "Body mass index (BMI)" : "Vücut kitle indeksi (BMI)",
     "Bodyfat" : "Vücut yağı",
     "Custom measurement" : "Özel ölçüm",
     "Unit for weight" : "Kilo birimi",

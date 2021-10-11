@@ -214,7 +214,6 @@ OC.L10N.register(
     "actual" : "todellinen",
     "maximum" : "enintään",
     "The calculated value is valid only for adults. Its base are the tables from the WHO." : "Laskettu arvo pätee vain aikuisiin. Se perustuu WHO:n tietoihin.",
-    "Body mass index (BMI)" : "Painoindeksi (BMI)",
     "Bodyfat" : "Kehon rasva",
     "Custom measurement" : "Valinnainen mittaus",
     "Unit for weight" : "Painon yksikkö",
