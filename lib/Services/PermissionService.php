@@ -92,4 +92,10 @@ class PermissionService {
 		return true;
 	}
 
+	public function canAccessGadgetBridgeSettings($userId, $personId, $mode = 'read'): bool
+	{
+		// TODO
+		return true;
+	}
+
 }

@@ -43,7 +43,7 @@
 						{{ t('health', 'Show details') }}
 					</ActionButton>
 					<ActionButton
-						v-show="personsLength != 1"
+						v-show="personsLength !== 1"
 						:close-after-click="true"
 						icon="icon-delete"
 						@click="$store.dispatch('deletePerson', persons[menuOpenPersonId])">
@@ -86,6 +86,12 @@
 					icon="icon-upload"
 					:class="(activeModule === 'activities' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'activities')" />
+				<AppNavigationItem
+					v-if="p.enabledModuleGadgetbridge"
+					:title="t('health', 'Gadgetbridge')"
+					icon="icon-clippy"
+					:class="(activeModule === 'gadgetbridge' && index === activePersonId)?'active-module':''"
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'gadgetbridge')" />
 			</AppNavigationItem>
 			<AppNavigationItem
 				:title="t('health', 'New person')"

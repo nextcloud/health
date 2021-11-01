@@ -52,6 +52,7 @@ class Person extends Entity implements JsonSerializable {
     protected $enabledModuleNutrition;
     protected $enabledModuleSleep;
     protected $enabledModuleSmoking;
+	protected $enabledModuleGadgetbridge;
 
     // module weight
     protected $weightMeasurementName;
@@ -129,6 +130,7 @@ class Person extends Entity implements JsonSerializable {
 		$this->addType('enabledModuleNutrition', 'boolean');
 		$this->addType('enabledModuleSleep', 'boolean');
 		$this->addType('enabledModuleSmoking', 'boolean');
+		$this->addType('enabledModuleGadgetbridge', 'boolean');
 
 		// module activities
 		$this->addType('activitiesColumnCalories', 'boolean');
@@ -211,6 +213,7 @@ class Person extends Entity implements JsonSerializable {
 			'enabledModuleSleep' => $this->enabledModuleSleep,
 			'enabledModuleNutrition' => $this->enabledModuleNutrition,
 			'enabledModuleSmoking' => $this->enabledModuleSmoking,
+			'enabledModuleGadgetbridge' => $this->enabledModuleGadgetbridge,
 
 			// module activities
 			'activitiesColumnCalories' => $this->activitiesColumnCalories,

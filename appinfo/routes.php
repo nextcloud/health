@@ -30,6 +30,10 @@ return [
 	   	['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
 	   	['name' => 'persons#data', 'url' => '/person/{personId}/data', 'verb' => 'GET'],
 
+		// gadgetbridge settings
+		['name' => 'gadgetbridgeSettings#find', 'url' => '/gadgetbridge/settings/person/{personId}', 'verb' => 'GET'],
+		['name' => 'gadgetbridgeSettings#createOrUpdate', 'url' => '/gadgetbridge/settings', 'verb' => 'POST'],
+
 		// weight data
 		['name' => 'weightdata#findByPerson',	'url' => '/weight/dataset/person/{personId}',	'verb' => 'GET'],
 		['name' => 'weightdata#create',	'url' => '/weight/dataset/person/{personId}',	'verb' => 'POST'],

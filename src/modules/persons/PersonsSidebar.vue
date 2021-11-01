@@ -126,6 +126,13 @@
 			@change="$store.dispatch('setValue', { key: 'enabledModuleSmoking', value: $event.target.checked })">
 			{{ t('health', 'Smoking') }}
 		</ActionCheckbox>
+		<ActionCheckbox
+			v-if="person"
+			:checked="person.enabledModuleGadgetbridge"
+			value="gadgetbridge"
+			@change="$store.dispatch('setValue', { key: 'enabledModuleGadgetbridge', value: $event.target.checked })">
+			{{ t('health', 'Gadgetbridge') }}
+		</ActionCheckbox>
 	</ul>
 </template>
 

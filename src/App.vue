@@ -40,6 +40,7 @@
 			<SleepContent v-if="person && activeModule === 'sleep' && person.enabledModuleSleep" />
 			<SmokingContent v-if="person && activeModule === 'smoking' && person.enabledModuleSmoking" />
 			<ActivitiesContent v-if="person && activeModule === 'activities' && person.enabledModuleActivities" />
+			<GadgetbridgeContent v-if="person && activeModule === 'gadgetbridge' && person.enabledModuleGadgetbridge" />
 		</AppContent>
 		<AppSidebar
 			v-show="showSidebar"
@@ -102,6 +103,14 @@
 				:order="6">
 				<ActivitiesSidebar />
 			</AppSidebarTab>
+			<AppSidebarTab
+				v-if="person.enabledModuleGadgetbridge"
+				id="gadgetbridge"
+				:name="t('health', 'Gadgetbridge')"
+				icon="icon-clippy"
+				:order="7">
+				<GadgetbridgeSidebar />
+			</AppSidebarTab>
 		</AppSidebar>
 	</Content>
 </template>
@@ -130,10 +139,14 @@ import SmokingSidebar from './modules/smoking/SmokingSidebar'
 import SmokingContent from './modules/smoking/SmokingContent'
 import ActivitiesContent from './modules/activities/ActivitiesContent'
 import ActivitiesSidebar from './modules/activities/ActivitiesSidebar'
+import GadgetbridgeContent from './modules/gadgetbridge/GadgetbridgeContent'
+import GadgetbridgeSidebar from './modules/gadgetbridge/GadgetbridgeSidebar'
 
 export default {
 	name: 'App',
 	components: {
+		GadgetbridgeSidebar,
+		GadgetbridgeContent,
 		ActivitiesSidebar,
 		MeasurementContent,
 		SleepContent,
