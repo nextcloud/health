@@ -158,3 +158,7 @@ clean-dev:
 	rm -rf node_modules
 	rm -rf vendor
 
+# logging
+log:
+	clear
+	sudo -u www-data php /var/www/html/nextcloud/occ log:watch
