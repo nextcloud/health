@@ -25,6 +25,7 @@ declare(strict_types=1);
 namespace OCA\Health\Controller;
 
 use OCA\Health\Services\GadgetbridgeSettingsService;
+use OCP\AppFramework\Http;
 use OCP\IRequest;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
@@ -47,7 +48,27 @@ class GadgetbridgeSettingsController extends Controller {
 	 */
 	public function find(int $personId): DataResponse
 	{
-        return new DataResponse($this->service->find($personId));
+		try {
+			return new DataResponse($this->service->findOrNew($personId));
+		} catch (\Exception $e) {
+			return new DataResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	/**
+	 * @NoAdminRequired
+	 *
+	 * @param int $personId
+	 * @param bool $backgroundImport
+	 * @return DataResponse
+	 */
+	public function setBackgroundImport(int $personId, bool $backgroundImport = false): DataResponse
+	{
+		try {
+			return new DataResponse($this->service->setBackgroundImport($personId, $backgroundImport));
+		} catch (\Exception $e) {
+			return new DataResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	/**
@@ -55,11 +76,24 @@ class GadgetbridgeSettingsController extends Controller {
 	 *
 	 * @param int $personId
 	 * @param string $sqliteSourcePath
-	 * @param bool $backgroundImport
 	 * @return DataResponse
 	 */
-	public function createOrUpdate(int $personId, string $sqliteSourcePath = '', bool $backgroundImport = false): DataResponse
+	public function setSourcePath(int $personId, string $sqliteSourcePath = ''): DataResponse
 	{
-		return new DataResponse($this->service->createOrUpdate($personId, $sqliteSourcePath, $backgroundImport));
+		try {
+			return new DataResponse($this->service->setSourcePath($personId, $sqliteSourcePath));
+		} catch (\Exception $e) {
+			return new DataResponse([], Http::STATUS_INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	/**
+	 * @NoAdminRequired
+	 *
+	 * @param int $personId
+	 * @return DataResponse
+	 */
+	public function triggerImport(int $personId) {
+		return new DataResponse();
 	}
 }

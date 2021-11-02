@@ -26,10 +26,13 @@ namespace OCA\Health\Services;
 
 use OCA\Health\Db\GadgetbridgeSettings;
 use OCA\Health\Db\GadgetbridgeSettingsMapper;
-use Exception;
+use OCA\Health\Exceptions\NoPermissionException;
+use OCA\Health\Exceptions\ParameterInputException;
 use OCP\AppFramework\Db\DoesNotExistException;
+use OCP\AppFramework\Db\Entity;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCP\AppFramework\Http;
+use OCP\DB\Exception;
 
 class GadgetbridgeSettingsService {
 
@@ -49,50 +52,108 @@ class GadgetbridgeSettingsService {
 		$this->mapper = $gadgetbridgeSettingsMapper;
 	}
 
-	public function find(int $personId)
+	/**
+	 * @throws \Exception
+	 */
+	public function findOrNew(int $personId)
+	{
+		// try to find the settings item from db, else make new (empty) settings return
+		try {
+			return $this->find($personId);
+		} catch (NoPermissionException | ParameterInputException | MultipleObjectsReturnedException | Exception $e) {
+			throw new \Exception($e->getMessage());
+		} catch (DoesNotExistException $e) {
+			return new GadgetbridgeSettings();
+		}
+	}
+
+
+	/**
+	 * @param int $personId
+	 * @return Entity
+	 * @throws DoesNotExistException
+	 * @throws MultipleObjectsReturnedException
+	 * @throws NoPermissionException
+	 * @throws Exception
+	 */
+	public function find(int $personId): Entity
 	{
 		if(!$this->permissionService->canAccessGadgetBridgeSettings($this->userId, $personId)) {
-			return HTTP::STATUS_FORBIDDEN;
+			throw new NoPermissionException('No access to the given person id ('.$personId.').');
 		}
 
-		if(!$personId) {
-			return HTTP::STATUS_BAD_REQUEST;
+		return $this->mapper->findBy($this->userId, $personId);
+	}
+
+	/** @noinspection PhpUndefinedMethodInspection */
+	/**
+	 * @param int $personId
+	 * @param bool $backgroundImport
+	 * @param string|null $userId
+	 * @return GadgetbridgeSettings
+	 * @throws \Exception
+	 */
+	public function setBackgroundImport(int $personId, bool $backgroundImport, string $userId = null): GadgetbridgeSettings {
+		if($userId === null) {
+			$userId = $this->userId;
 		}
 
 		try {
-			return $this->mapper->findBy($this->userId, $personId);
+			$settings = $this->mapper->findBy($userId, $personId);
+			$settings->setBackgroundImport($backgroundImport);
+			try {
+				return $this->mapper->update($settings);
+			} catch (Exception $e) {
+				throw new \Exception($e->getMessage());
+			}
 		} catch (DoesNotExistException $e) {
-			return HTTP::STATUS_NOT_FOUND;
-		} catch (MultipleObjectsReturnedException $e) {
-			return HTTP::STATUS_BAD_REQUEST;
-		} catch (\OCP\DB\Exception $e) {
-			return HTTP::STATUS_INTERNAL_SERVER_ERROR;
+			$settings = new GadgetbridgeSettings();
+			$settings->setPersonId($personId);
+			$settings->setUserId($userId);
+			$settings->setBackgroundImport($backgroundImport);
+			try {
+				return $this->mapper->insert($settings);
+			} catch (Exception $e) {
+				throw new \Exception($e->getMessage());
+			}
+		} catch (MultipleObjectsReturnedException | Exception $e) {
+			throw new \Exception($e->getMessage());
 		}
 	}
 
 	/** @noinspection PhpUndefinedMethodInspection */
-	public function createOrUpdate(int $personId, string $sqliteSourcePath, bool $backgroundImport) {
-		$settings = null;
+	/**
+	 * @param int $personId
+	 * @param string $sqliteSourcePath
+	 * @param string|null $userId
+	 * @return GadgetbridgeSettings
+	 * @throws \Exception
+	 */
+	public function setSourcePath(int $personId, string $sqliteSourcePath, string $userId = null): GadgetbridgeSettings {
+		if($userId === null) {
+			$userId = $this->userId;
+		}
+
 		try {
-			$settings = $this->mapper->findBy($this->userId, $personId);
+			$settings = $this->mapper->findBy($userId, $personId);
 			$settings->setSqliteSourcePath($sqliteSourcePath);
-			$settings->setBackgroundImport($backgroundImport);
 			try {
-				$this->mapper->update($settings);
-			} catch (\OCP\DB\Exception $e) {
-				return HTTP::STATUS_INTERNAL_SERVER_ERROR;
+				return $this->mapper->update($settings);
+			} catch (Exception $e) {
+				throw new \Exception($e->getMessage());
 			}
-		} catch (Exception $e) {
+		} catch (DoesNotExistException $e) {
 			$settings = new GadgetbridgeSettings();
 			$settings->setPersonId($personId);
-			$settings->setUserId($this->userId);
+			$settings->setUserId($userId);
 			$settings->setSqliteSourcePath($sqliteSourcePath);
-			$settings->setBackgroundImport($backgroundImport);
 			try {
-				$this->mapper->insert($settings);
-			} catch (\OCP\DB\Exception $e) {
-				return HTTP::STATUS_INTERNAL_SERVER_ERROR;
+				return $this->mapper->insert($settings);
+			} catch (Exception $e) {
+				throw new \Exception($e->getMessage());
 			}
+		} catch (MultipleObjectsReturnedException | Exception $e) {
+			throw new \Exception($e->getMessage());
 		}
 	}
 }

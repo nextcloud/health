@@ -35,6 +35,9 @@
 			<ActionCheckbox :checked="backgroundImport" @change="setCheckboxValue($event.target.checked)">
 				{{ t('health', 'Auto import') }}
 			</ActionCheckbox>
+			<button @click="startImportSource">
+				{{ t('health', 'Import now') }}
+			</button>
 		</div>
 	</ul>
 </template>
@@ -91,25 +94,48 @@ export default {
 		},
 		setCheckboxValue(value) {
 			this.backgroundImport = !!value
-			this.sendSettingsToBE()
+			this.sendBackgroundImportSettingsToBE()
 		},
 		setSourcePathValue(e) {
 			this.sourcePath = e.target[1].value
-			this.sendSettingsToBE()
+			this.sendSourcePathSettingsToBE()
 		},
-		async sendSettingsToBE() {
+		async sendBackgroundImportSettingsToBE() {
+			try {
+				const data = {
+					personId: this.person.id,
+					backgroundImport: this.backgroundImport,
+				}
+				const response = await axios.post(generateUrl('/apps/health/gadgetbridge/settings/backgroundimport'), data)
+				console.debug('backgroundImport setting saved: ', response)
+				showSuccess(t('health', 'Gadgetbridge background import setting saved successfully.'))
+			} catch (e) {
+				console.error(e)
+				showError(t('health', 'Could not save gadgetbridge settings.'))
+			}
+		},
+		async sendSourcePathSettingsToBE() {
 			try {
 				const data = {
 					personId: this.person.id,
 					sqliteSourcePath: this.sourcePath,
-					backgroundImport: this.backgroundImport,
 				}
-				const response = await axios.post(generateUrl('/apps/health/gadgetbridge/settings'), data)
+				const response = await axios.post(generateUrl('/apps/health/gadgetbridge/settings/sourcepath'), data)
 				console.debug('settings saved: ', response)
-				showSuccess(t('health', 'Gadgetbridge settings saved successfully.'))
+				showSuccess(t('health', 'Gadgetbridge source path setting saved successfully.'))
 			} catch (e) {
 				console.error(e)
 				showError(t('health', 'Could not save gadgetbridge settings.'))
+			}
+		},
+		async startImportSource() {
+			try {
+				const response = await axios.post(generateUrl('/apps/health/gadgetbridge/settings/import/trigger/person/' + this.person.id))
+				console.debug('import finished: ', response)
+				showSuccess(t('health', 'Gadgetbridge import successfully.'))
+			} catch (e) {
+				console.error(e)
+				showError(t('health', 'Could not save import data source.'))
 			}
 		},
 	},

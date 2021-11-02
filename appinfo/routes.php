@@ -32,7 +32,9 @@ return [
 
 		// gadgetbridge settings
 		['name' => 'gadgetbridgeSettings#find', 'url' => '/gadgetbridge/settings/person/{personId}', 'verb' => 'GET'],
-		['name' => 'gadgetbridgeSettings#createOrUpdate', 'url' => '/gadgetbridge/settings', 'verb' => 'POST'],
+		['name' => 'gadgetbridgeSettings#setSourcePath', 'url' => '/gadgetbridge/settings/sourcepath', 'verb' => 'POST'],
+		['name' => 'gadgetbridgeSettings#setBackgroundImport', 'url' => '/gadgetbridge/settings/backgroundimport', 'verb' => 'POST'],
+		['name' => 'gadgetbridgeSettings#triggerImport', 'url' => '/gadgetbridge/settings/import/trigger/person/{personId}', 'verb' => 'GET'],
 
 		// weight data
 		['name' => 'weightdata#findByPerson',	'url' => '/weight/dataset/person/{personId}',	'verb' => 'GET'],
