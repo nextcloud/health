@@ -24,12 +24,12 @@ declare(strict_types=1);
 
 namespace OCA\Health\Services;
 
+use DateTime;
 use OC\Files\Node\File;
 use OC\User\NoUserException;
 use OCA\Health\Db\GadgetbridgeDevices;
 use OCA\Health\Db\GadgetbridgeDevicesMapper;
 use OCA\Health\Db\GadgetbridgeSettingsMapper;
-use OCA\Health\Exceptions\ParameterInputException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCP\DB\Exception;
@@ -119,6 +119,7 @@ class GadgetbridgeImportService {
 		return !!$this->connection = new PDO('sqlite:' . $tmpPath);
 	}
 
+	/** @noinspection PhpUndefinedMethodInspection */
 	public function importFromSqlite($personId, $userId = null): array
 	{
 		$this->personId = $personId;
@@ -138,6 +139,10 @@ class GadgetbridgeImportService {
 			$errors[] = $this->l->t('No source path found.');
 		}
 
+		if(!$this->isSqliteAvailable()) {
+			$errors[] = $this->l->t('No sqlite support. Please contact your system administrator.');
+		}
+
 		if(!$this->isSourcePathValid($sourcePath)) {
 			$errors[] = $this->l->t('Source path not valid.');
 		}
@@ -146,40 +151,45 @@ class GadgetbridgeImportService {
 			$errors[] = $this->l->t('Could not connect to sqlite db.');
 		}
 
-		$this->loadDevicesFromDB();
+		// starting import data -------------------
+		$importSuccessfully = true;
+		if(!$this->loadDevicesFromDB()) {
+			$importSuccessfully = false;
+		}
+
+		$importMessage = 'import not yet runnable';
+		// TODO
+		// end import data ------------------------
+
+		$this->connection = null;
+
+		if($importSuccessfully) {
+			try {
+				/** @noinspection PhpUndefinedMethodInspection */
+				$settings = $this->settingsMapper->findBy($userId, $personId);
+				$date = new DateTime();
+				$settings->setLastImportTime($date->format('Y-m-d H:i:s'));
+				$settings->setLastImportType('manually');
+				$settings->setLastImportMessage($importMessage);
+				$settings->setLastImportMessageType('warning');
+				$this->settingsMapper->update($settings);
+			}
+			 catch (DoesNotExistException | MultipleObjectsReturnedException | \Exception $e) {
+				$errors[] = $this->l->t('No settings in context found. Update not possible.');
+			}
+		}
 
 		return [
-			'status' => 'success',
-			'message' => 'just a test',
-			'sqliteAvailable' => $this->isSqliteAvailable(),
-			'sourcePath' => $sourcePath,
-			'sourcePathValid' => $this->isSourcePathValid($sourcePath),
 			'errors' => $errors,
 		];
-		// test if sqlite is enabled
-
-		// check if all prerequisites are set
-
-		// open connection
-
-		// private function - import devices
-
-		// more to import?
-
-		// private function - import watch data
-
-		// close connection
-
-		// update timestamps in settings
-
-		// send feedback to FE
 	}
 
 	/** @noinspection PhpUndefinedMethodInspection
 	 * @noinspection PhpPossiblePolymorphicInvocationInspection
 	 */
-	private function loadDevicesFromDB()
+	private function loadDevicesFromDB(): bool
 	{
+		$success = true;
 		$sql = "SELECT * FROM 'DEVICE' LIMIT 0,10";
 		foreach ($this->connection->query($sql) as $row) {
 			try {
@@ -204,7 +214,9 @@ class GadgetbridgeImportService {
 				}
 			} catch (Exception $e) {
 				$this->logger->warning('error while writing device to db', $device->jsonSerialize());
+				$success = false;
 			}
 		}
+		return $success;
 	}
 }
