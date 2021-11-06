@@ -67,6 +67,9 @@ class Version1400Date20211030000000 extends SimpleMigrationStep {
 			$table->addColumn('gb_id', 'integer', [
 				'notnull' => true,
 			]);
+			$table->addColumn('person_id', 'integer', [
+				'notnull' => true,
+			]);
 			$table->addColumn('user_id', 'string', [
 				'notnull' => true,
 				'length' => 200,

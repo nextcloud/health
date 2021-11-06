@@ -10,6 +10,7 @@
 	  "lint": "find . -name \\*.php -not -path './vendor/*' -exec php -l \"{}\" \\;"
 	},
   "require": {
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-pdo": "*"
   }
 }

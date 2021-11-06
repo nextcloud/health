@@ -24,6 +24,7 @@ declare(strict_types=1);
 
 namespace OCA\Health\Controller;
 
+use OCA\Health\Services\GadgetbridgeImportService;
 use OCA\Health\Services\GadgetbridgeSettingsService;
 use OCP\AppFramework\Http;
 use OCP\IRequest;
@@ -33,10 +34,12 @@ use OCP\AppFramework\Http\DataResponse;
 class GadgetbridgeSettingsController extends Controller {
 
 	protected $service;
+	protected $importService;
 
-	public function __construct($appName, IRequest $request, GadgetbridgeSettingsService $gadgetbridgeSettingsService) {
+	public function __construct($appName, IRequest $request, GadgetbridgeSettingsService $gadgetbridgeSettingsService, GadgetbridgeImportService $gadgetbridgeImportService) {
 		parent::__construct($appName, $request);
 		$this->service = $gadgetbridgeSettingsService;
+		$this->importService = $gadgetbridgeImportService;
 	}
 
 	/**
@@ -93,7 +96,8 @@ class GadgetbridgeSettingsController extends Controller {
 	 * @param int $personId
 	 * @return DataResponse
 	 */
-	public function triggerImport(int $personId) {
-		return new DataResponse();
+	public function triggerImport(int $personId): DataResponse
+	{
+		return new DataResponse($this->importService->importFromSqlite($personId));
 	}
 }

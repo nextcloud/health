@@ -130,8 +130,8 @@ export default {
 		},
 		async startImportSource() {
 			try {
-				const response = await axios.post(generateUrl('/apps/health/gadgetbridge/settings/import/trigger/person/' + this.person.id))
-				console.debug('import finished: ', response)
+				const response = await axios.get(generateUrl('/apps/health/gadgetbridge/settings/import/trigger/person/' + this.person.id))
+				console.debug('import finished: ', response.data)
 				showSuccess(t('health', 'Gadgetbridge import successfully.'))
 			} catch (e) {
 				console.error(e)
