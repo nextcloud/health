@@ -57,6 +57,7 @@ class GadgetbridgeImportService {
 	private $connection;
 	/** @var File */
 	private $sourceFileNode;
+	private $mappingDeviceGbId2Id = [];
 
 	public function __construct($userId,
 								GadgetbridgeSettingsMapper $gadgetbridgeSettingsMapper,
@@ -206,6 +207,7 @@ class GadgetbridgeImportService {
 			$device->setType($row['TYPE']);
 			$device->setModel($row['MODEL']);
 			$device->setAlias($row['ALIAS']);
+			$this->mappingDeviceGbId2Id[$device->getGbId()] = $device->getId();
 			try {
 				if($device->getId()) {
 					$this->devicesMapper->update($device);

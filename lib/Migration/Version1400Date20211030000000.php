@@ -54,7 +54,10 @@ class Version1400Date20211030000000 extends SimpleMigrationStep {
 		// add module gadgetbridge
 		if($schema->hasTable('health_persons')) {
 			$table = $schema->getTable('health_persons');
-			$table->addColumn('enabled_module_gadgetbridge', 'boolean', [ 'default' => 0, 'notnull' => false ]);
+			if(!$table->hasColumn('enabled_module_gadgetbridge'))
+			{
+				$table->addColumn('enabled_module_gadgetbridge', 'boolean', [ 'default' => 0, 'notnull' => false ]);
+			}
 		}
 
 		// add table gb_devices
@@ -156,6 +159,25 @@ class Version1400Date20211030000000 extends SimpleMigrationStep {
 			$table->addColumn('last_import_type', Types::TEXT, ['notnull' => false]);
 			$table->addColumn('last_import_message', Types::TEXT, ['notnull' => false]);
 			$table->addColumn('last_import_message_type', Types::TEXT, ['notnull' => false]);
+
+			$table->setPrimaryKey(['id']);
+		}
+
+		// add table gb_battery
+		if (!$schema->hasTable('health_gb_battery')) {
+			$table = $schema->createTable('health_gb_battery');
+			$table->addColumn('id', 'integer', [
+				'autoincrement' => true,
+				'notnull' => true,
+			]);
+			$table->addColumn('user_id', 'string', [
+				'notnull' => true,
+				'length' => 200,
+			]);
+			$table->addColumn('person_id', 'integer', ['notnull' => false]);
+			$table->addColumn('device_id', 'integer', ['notnull' => false]);
+			$table->addColumn('time', Types::DATETIME, ['notnull' => false]);
+			$table->addColumn('level', 'integer', ['notnull' => false]);
 
 			$table->setPrimaryKey(['id']);
 		}
