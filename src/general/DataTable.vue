@@ -91,7 +91,7 @@
 									</li>
 								</ul>
 							</div>
-							<div v-else-if="h.type === 'longtext' && d[h.columnId]" class="wrapper">
+							<div v-else-if="h.type === 'longtext' && d[h.columnId]" class="wrapper align-left">
 								{{ 'prefix' in h ? h.prefix : '' }}{{ d[h.columnId] }}{{ 'suffix' in h ? h.suffix : '' }}
 							</div>
 							<div v-else-if="h.type === 'boolean' && d[h.columnId]" class="wrapper">
@@ -100,7 +100,7 @@
 								{{ !d[h.columnId] ? ('textFalse' in h) ? h.textFalse : t('health', 'False') : '' }}
 								{{ 'suffix' in h ? h.suffix : '' }}
 							</div>
-							<div v-else-if="h.type === 'text' && d[h.columnId]" class="wrapper">
+							<div v-else-if="h.type === 'text' && d[h.columnId]" class="wrapper align-left">
 								{{ 'prefix' in h ? h.prefix : '' }}{{ d[h.columnId] }}{{ 'suffix' in h ? h.suffix : '' }}
 							</div>
 							<div v-else-if="h.type === 'number' && d[h.columnId]" class="wrapper">
@@ -370,6 +370,10 @@ export default {
 	.datatable ul {
 		list-style: square;
 		padding-left: 20px;
+	}
+	
+	td div.align-left {
+	    text-align: left;
 	}
 
 	@media screen and (max-width:700px) {
