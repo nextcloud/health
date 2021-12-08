@@ -259,7 +259,7 @@ export default {
 
 	.content-menu-topright {
 		position: fixed;
-		right: 0px;
+		right: 0;
 		z-index: 1001;
 	}
 

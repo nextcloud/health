@@ -371,7 +371,7 @@ export default {
 		list-style: square;
 		padding-left: 20px;
 	}
-	
+
 	td div.align-left {
 	    text-align: left;
 	}
