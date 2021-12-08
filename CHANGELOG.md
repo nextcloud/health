@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+##  [1.4.0] - 2021-10-10
+### Added
+- support for nextcloud 23
+
+### Changed
+- Update dependencies
+- merged 2 pulls (thanks)
+- updated translations
+
 ##  [1.3.0] - 2021-10-10
 ### Added
 - calculate bmi with lb unit correctly (thanks for help)

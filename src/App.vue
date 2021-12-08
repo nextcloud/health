@@ -312,4 +312,5 @@ export default {
 	.red {
 		color: #bd1500;
 	}
+
 </style>
