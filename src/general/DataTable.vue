@@ -373,7 +373,7 @@ export default {
 	}
 
 	td div.align-left {
-	    text-align: left;
+		text-align: left;
 	}
 
 	@media screen and (max-width:700px) {
