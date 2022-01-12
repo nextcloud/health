@@ -42,7 +42,12 @@ OC.L10N.register(
     "Comment" : "コメント",
     "Symptoms" : "症状",
     "Energy" : "エネルギー",
+    "None" : "なし",
+    "Panic attack" : "パニック発作",
+    "Asthma attack" : "ぜんそく発作 ",
     "Temperature" : "体温",
+    "Heart rate" : "心拍数",
+    "Blood sugar" : "血糖",
     "Allergies" : "アレルギー",
     "Save " : "保存",
     "Edit name" : "名前を変更",
@@ -65,6 +70,10 @@ OC.L10N.register(
     "Goal" : "目標",
     "BMI" : "BMI",
     "Target" : "目標",
-    "Bodyfat" : "体脂肪"
+    "Body fat" : "体脂肪",
+    "Bodyfat" : "体脂肪",
+    "Unit for weight" : "体重単位",
+    "Weight target" : "目標体重",
+    "Good, you reached your target!" : "お見事です。あなたの目標が達成しました！"
 },
 "nplurals=1; plural=0;");
