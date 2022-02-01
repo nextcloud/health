@@ -38,7 +38,8 @@
 		<MeasurementChart
 			v-if="!loading"
 			:person="person"
-			:data="measurementData" />
+			:data="measurementData"
+		/>
 		<div v-if="loading" class="icon-loading" />
 
 		<h4 v-if="person.measurementChartDetail">
@@ -47,14 +48,16 @@
 		<MeasurementDetailChart
 			v-if="!loading && person.measurementChartDetail"
 			:person="person"
-			:data="measurementData" />
+			:data="measurementData"
+		/>
 		<div v-if="loading && person.measurementChartDetail" class="icon-loading" />
 
 		<h3>{{ t('health', 'Data', {}) }}</h3>
 		<MeasurementTable
 			v-if="!loading"
 			:data="measurementData"
-			:person="person" />
+			:person="person"
+		/>
 		<div v-if="loading" class="icon-loading" />
 	</div>
 </template>

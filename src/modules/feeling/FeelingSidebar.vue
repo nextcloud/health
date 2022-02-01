@@ -25,37 +25,44 @@
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
 		<ActionCheckbox
 			:checked="person.feelingColumnMood"
-			@change="$store.dispatch('setValue', { key: 'feelingColumnMood', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'feelingColumnMood', value: $event.target.checked })"
+		>
 			{{ t('health', 'Mood', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.feelingColumnSadnessLevel"
-			@change="$store.dispatch('setValue', { key: 'feelingColumnSadnessLevel', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'feelingColumnSadnessLevel', value: $event.target.checked })"
+		>
 			{{ t('health', 'Sadness level', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.feelingColumnSymptoms"
-			@change="$store.dispatch('setValue', { key: 'feelingColumnSymptoms', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'feelingColumnSymptoms', value: $event.target.checked })"
+		>
 			{{ t('health', 'Symptoms') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.feelingColumnAttacks"
-			@change="$store.dispatch('setValue', { key: 'feelingColumnAttacks', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'feelingColumnAttacks', value: $event.target.checked })"
+		>
 			{{ t('health', 'Attacks') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.feelingColumnMedication"
-			@change="$store.dispatch('setValue', { key: 'feelingColumnMedication', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'feelingColumnMedication', value: $event.target.checked })"
+		>
 			{{ t('health', 'Medication') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.feelingColumnPain"
-			@change="$store.dispatch('setValue', { key: 'feelingColumnPain', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'feelingColumnPain', value: $event.target.checked })"
+		>
 			{{ t('health', 'Pain') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.feelingColumnEnergy"
-			@change="$store.dispatch('setValue', { key: 'feelingColumnEnergy', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'feelingColumnEnergy', value: $event.target.checked })"
+		>
 			{{ t('health', 'Energy') }}
 		</ActionCheckbox>
 	</ul>

@@ -25,49 +25,58 @@
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
 		<ActionCheckbox
 			:checked="person.measurementColumnTemperature"
-			@change="$store.dispatch('setValue', { key: 'measurementColumnTemperature', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'measurementColumnTemperature', value: $event.target.checked })"
+		>
 			{{ t('health', 'Temperature', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.measurementColumnHeartRate"
-			@change="$store.dispatch('setValue', { key: 'measurementColumnHeartRate', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'measurementColumnHeartRate', value: $event.target.checked })"
+		>
 			{{ t('health', 'Heart rate', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.measurementColumnBloodPres"
-			@change="$store.dispatch('setValue', { key: 'measurementColumnBloodPres', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'measurementColumnBloodPres', value: $event.target.checked })"
+		>
 			{{ t('health', 'Blood pressure') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.measurementColumnOxygenSat"
-			@change="$store.dispatch('setValue', { key: 'measurementColumnOxygenSat', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'measurementColumnOxygenSat', value: $event.target.checked })"
+		>
 			{{ t('health', 'Oxygen saturation', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.measurementColumnBloodSugar"
-			@change="$store.dispatch('setValue', { key: 'measurementColumnBloodSugar', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'measurementColumnBloodSugar', value: $event.target.checked })"
+		>
 			{{ t('health', 'Blood sugar', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.measurementColumnAppetite"
-			@change="$store.dispatch('setValue', { key: 'measurementColumnAppetite', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'measurementColumnAppetite', value: $event.target.checked })"
+		>
 			{{ t('health', 'Appetite', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.measurementColumnAllergies"
-			@change="$store.dispatch('setValue', { key: 'measurementColumnAllergies', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'measurementColumnAllergies', value: $event.target.checked })"
+		>
 			{{ t('health', 'Allergies', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.measurementColumnDefecation"
-			@change="$store.dispatch('setValue', { key: 'measurementColumnDefecation', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'measurementColumnDefecation', value: $event.target.checked })"
+		>
 			{{ t('health', 'Defecation', {}) }}
 		</ActionCheckbox>
 
 		<li><h3>{{ t('health', 'General settings', {}) }}</h3></li>
 		<ActionCheckbox
 			:checked="person.measurementChartDetail"
-			@change="$store.dispatch('setValue', { key: 'measurementChartDetail', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'measurementChartDetail', value: $event.target.checked })"
+		>
 			{{ t('health', 'Show time detail chart', {}) }}
 		</ActionCheckbox>
 	</ul>

@@ -30,14 +30,16 @@
 		<ActivitiesChart
 			v-if="!loading"
 			:person="person"
-			:data="activitiesData" />
+			:data="activitiesData"
+		/>
 		<div v-if="loading" class="icon-loading" />
 
 		<h3>{{ t('health', 'Data', {}) }}</h3>
 		<ActivitiesTable
 			v-if="!loading"
 			:data="activitiesData"
-			:person="person" />
+			:person="person"
+		/>
 		<div v-if="loading" class="icon-loading" />
 	</div>
 </template>

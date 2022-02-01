@@ -28,102 +28,117 @@
 			type="number"
 			:value="person.age"
 			icon="icon-user"
-			@submit="updateAge" />
+			@submit="updateAge"
+		/>
 		<li><h4>{{ t('health', 'Height') }}<span>{{ t('health', 'in cm') }}</span></h4></li>
 		<ActionInput
 			type="number"
 			:value="person.size"
 			icon="icon-fullscreen"
-			@submit="updateSize" />
+			@submit="updateSize"
+		/>
 		<li><h4>{{ t('health', 'Sex') }}</h4></li>
 		<ActionRadio
 			name="sex"
 			value="female"
 			:checked="person.sex === 'female'"
-			@change="updateSex('female')">
+			@change="updateSex('female')"
+		>
 			{{ t('health', 'female') }}
 		</ActionRadio>
 		<ActionRadio
 			name="sex"
 			value="male"
 			:checked="person.sex === 'male'"
-			@change="updateSex('male')">
+			@change="updateSex('male')"
+		>
 			{{ t('health', 'male') }}
 		</ActionRadio>
 		<li><h4>{{ t('health', 'Currency') }}</h4></li>
 		<ActionInput
 			:value="person.currency"
 			icon="icon-rename"
-			@submit="$store.dispatch('setValue', { key: 'currency', value: $event.target[1].value })" />
+			@submit="$store.dispatch('setValue', { key: 'currency', value: $event.target[1].value })"
+		/>
 		<li><h3>{{ t('health', 'Manage modules') }}</h3></li>
 		<ActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleWeight"
 			value="weight"
-			@change="$store.dispatch('setValue', { key: 'enabledModuleWeight', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'enabledModuleWeight', value: $event.target.checked })"
+		>
 			{{ t('health', 'Weight') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleFeeling"
 			value="feeling"
-			@change="$store.dispatch('setValue', { key: 'enabledModuleFeeling', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'enabledModuleFeeling', value: $event.target.checked })"
+		>
 			{{ t('health', 'Feeling') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleMeasurement"
 			value="measurement"
-			@change="$store.dispatch('setValue', { key: 'enabledModuleMeasurement', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'enabledModuleMeasurement', value: $event.target.checked })"
+		>
 			{{ t('health', 'Measurement') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleActivities"
 			value="activities"
-			@change="$store.dispatch('setValue', { key: 'enabledModuleActivities', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'enabledModuleActivities', value: $event.target.checked })"
+		>
 			{{ t('health', 'Activities') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			v-if="person && false"
 			:checked="person.enabledModuleBreaks"
 			value="breaks"
-			@change="$store.dispatch('setValue', { key: 'enabledModuleBreaks', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'enabledModuleBreaks', value: $event.target.checked })"
+		>
 			{{ t('health', 'Breaks') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			v-if="person && false"
 			:checked="person.enabledModuleMedicine"
 			value="medicine"
-			@change="$store.dispatch('setValue', { key: 'enabledModuleMedicine', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'enabledModuleMedicine', value: $event.target.checked })"
+		>
 			{{ t('health', 'Medicine') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			v-if="person && false"
 			:checked="person.enabledModuleActivities"
 			value="activities"
-			@change="$store.dispatch('setValue', { key: 'enabledModuleActivities', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'enabledModuleActivities', value: $event.target.checked })"
+		>
 			{{ t('health', 'Activities') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleSleep"
 			value="sleep"
-			@change="$store.dispatch('setValue', { key: 'enabledModuleSleep', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'enabledModuleSleep', value: $event.target.checked })"
+		>
 			{{ t('health', 'Sleep') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			v-if="person && false"
 			:checked="person.enabledModuleNutrition"
 			value="nutrition"
-			@change="$store.dispatch('setValue', { key: 'enabledModuleNutrition', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'enabledModuleNutrition', value: $event.target.checked })"
+		>
 			{{ t('health', 'Nutrition') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleSmoking"
 			value="smoking"
-			@change="$store.dispatch('setValue', { key: 'enabledModuleSmoking', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'enabledModuleSmoking', value: $event.target.checked })"
+		>
 			{{ t('health', 'Smoking') }}
 		</ActionCheckbox>
 	</ul>

@@ -24,12 +24,14 @@
 	<div>
 		<div
 			v-if="data && data.length > 0 && definition"
-			class="chartDataRangeSelector">
+			class="chartDataRangeSelector"
+		>
 			<select
 				v-if="!isDetailRange"
 				id="rangeDays"
 				v-model="range"
-				name="range">
+				name="range"
+			>
 				<option value="week">
 					{{ t('health', 'Last week') }}
 				</option>
@@ -47,7 +49,8 @@
 				v-if="isDetailRange"
 				id="rangeHours"
 				v-model="range"
-				name="range">
+				name="range"
+			>
 				<option value="1hour">
 					{{ t('health', 'Last hour') }}
 				</option>
@@ -64,15 +67,25 @@
 					{{ t('health', 'Last 48 hours') }}
 				</option>
 			</select>
+			<ul>
+				<ActionCheckbox
+					:checked="axisScaleRelative"
+					@change="axisScaleRelative = $event.target.checked"
+				>
+					{{ t('health', 'Only show relative values on y-axis.') }}
+				</ActionCheckbox>
+			</ul>
 		</div>
 		<LineChart
 			v-if="data && data.length > 0 && definition && chartType === 'line'"
 			:chart-data="getChartData"
 			:style="chartStyle"
-			:options="getOptions" />
+			:options="getOptions"
+		/>
 		<EmptyContent
 			v-if="!data || data.length === 0 || !definition"
-			icon="icon-category-monitoring">
+			icon="icon-category-monitoring"
+		>
 			{{ t('health', 'No data for a chart') }}
 			<template #desc>
 				{{ t('health', 'More than one dataset is required.') }}<br>
@@ -86,12 +99,14 @@
 import LineChart from './charts/LineChart'
 import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
 import moment from '@nextcloud/moment'
+import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
 
 export default {
 	name: 'Chart',
 	components: {
 		LineChart,
 		EmptyContent,
+		ActionCheckbox,
 	},
 	props: {
 		chartType: {
@@ -122,6 +137,7 @@ export default {
 	data() {
 		return {
 			range: this.rangeDefinition,
+			axisScaleRelative: false,
 		}
 	},
 	computed: {
@@ -141,11 +157,12 @@ export default {
 			// console.debug('axesIds', axesIds)
 			AllYAxes.forEach((axes, i) => {
 				if (axes.id in axesIds && axesIds[axes.id]) {
-					// eslint-disable-next-line vue/no-side-effects-in-computed-properties
+					if (!AllYAxes[i].ticks) { AllYAxes[i].ticks = {} }
+					AllYAxes[i].ticks.beginAtZero = !this.axisScaleRelative
 					optionsArray.scales.yAxes.push(AllYAxes[i])
 				}
 			})
-			return optionsArray
+			return Object.assign({}, optionsArray)
 		},
 		getChartData() {
 			if (!this.definition || !this.data) {
@@ -245,6 +262,11 @@ export default {
 			} else {
 				return -1
 			}
+		},
+	},
+	watch: {
+		options() {
+			console.debug('options changed')
 		},
 	},
 	methods: {

@@ -30,14 +30,16 @@
 		<FeelingChart
 			v-if="!loading"
 			:person="person"
-			:data="feelingData" />
+			:data="feelingData"
+		/>
 		<div v-if="loading" class="icon-loading" />
 
 		<h3>{{ t('health', 'Data', {}) }}</h3>
 		<FeelingTable
 			v-if="!loading"
 			:data="feelingData"
-			:person="person" />
+			:person="person"
+		/>
 		<div v-if="loading" class="icon-loading" />
 	</div>
 </template>

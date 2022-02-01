@@ -40,7 +40,8 @@
 	<div>
 		<button
 			:class="{[icon]: icon !== null}"
-			@click="showModal = true">
+			@click="showModal = true"
+		>
 			{{ icon === null ? t('health', 'Add new {eName}', {eName: entityName}) : '' }}
 		</button>
 		<Modal v-if="showModal" title="add item" @close="showModal = false">
@@ -55,7 +56,8 @@
 					<div
 						v-for="(h, index) in header"
 						:key="index"
-						:class="{ hide: !h.show, field: true }">
+						:class="{ hide: !h.show, field: true }"
+					>
 						<h2 v-if="isNewSection(index)">
 							{{ h.section.name }}
 						</h2>
@@ -67,26 +69,30 @@
 							<input
 								v-model="values[h.columnId]"
 								type="date"
-								class="widthfitcontent">
+								class="widthfitcontent"
+							>
 						</div>
 						<div v-else-if="h.type === 'datetime'">
 							<input
 								v-model="values[h.columnId]"
 								type="datetime-local"
-								class="widthfitcontent">
+								class="widthfitcontent"
+							>
 						</div>
 						<div v-else-if="h.type === 'select'" class="wrapper">
 							<Multiselect
 								v-model="values[h.columnId]"
 								:options="h.options"
 								track-by="id"
-								label="label" />
+								label="label"
+							/>
 						</div>
 						<div v-else-if="h.type === 'multiselect'" class="wrapper">
 							<Multiselect
 								v-model="values[h.columnId]"
 								:options="h.options"
-								:multiple="true" />
+								:multiple="true"
+							/>
 							<div v-if="values[h.columnId]">
 								<div v-for="(selection, i) in values[h.columnId]" :key="i">
 									{{ selection.label }}
@@ -110,12 +116,14 @@
 								type="Number"
 								:min="'min' in h ? h.min : ''"
 								:max="'max' in h ? h.max : ''"
-								class="widthfitcontent">
+								class="widthfitcontent"
+							>
 						</div>
 						<div v-else-if="h.type === 'text'">
 							<input
 								v-model="values[h.columnId]"
-								class="widthfitcontent">
+								class="widthfitcontent"
+							>
 						</div>
 						<div v-else-if="h.type === 'calculate'">
 							{{ t('health', 'Will be calculated', {}) }}
@@ -124,11 +132,13 @@
 				</div>
 				<button
 					class="primary"
-					@click="sendData">
+					@click="sendData"
+				>
 					{{ t('health', 'Send {eName}', {eName: entityName}) }}
 				</button>
 				<button
-					@click="closeModal">
+					@click="closeModal"
+				>
 					{{ t('health', 'Cancel', {}) }}
 				</button>
 			</div>

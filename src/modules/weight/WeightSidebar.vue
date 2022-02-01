@@ -25,37 +25,44 @@
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
 		<ActionCheckbox
 			:checked="person.weightColumnWeight"
-			@change="$store.dispatch('setValue', { key: 'weightColumnWeight', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'weightColumnWeight', value: $event.target.checked })"
+		>
 			{{ t('health', 'Weight', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.weightColumnBmi"
-			@change="$store.dispatch('setValue', { key: 'weightColumnBmi', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'weightColumnBmi', value: $event.target.checked })"
+		>
 			{{ t('health', 'Body mass index (BMI)', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.weightColumnBodyfat"
-			@change="$store.dispatch('setValue', { key: 'weightColumnBodyfat', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'weightColumnBodyfat', value: $event.target.checked })"
+		>
 			{{ t('health', 'Bodyfat', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.weightColumnMeasurement"
-			@change="$store.dispatch('setValue', { key: 'weightColumnMeasurement', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'weightColumnMeasurement', value: $event.target.checked })"
+		>
 			{{ person.weightMeasurementName ? person.weightMeasurementName : t('health', 'Custom measurement') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.weightColumnWaistSize"
-			@change="$store.dispatch('setValue', { key: 'weightColumnWaistSize', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'weightColumnWaistSize', value: $event.target.checked })"
+		>
 			{{ t('health', 'Waist size', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.weightColumnHipSize"
-			@change="$store.dispatch('setValue', { key: 'weightColumnHipSize', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'weightColumnHipSize', value: $event.target.checked })"
+		>
 			{{ t('health', 'Hip size', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.weightColumnMusclePart"
-			@change="$store.dispatch('setValue', { key: 'weightColumnMusclePart', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'weightColumnMusclePart', value: $event.target.checked })"
+		>
 			{{ t('health', 'Muscle part', {}) }}
 		</ActionCheckbox>
 
@@ -65,7 +72,8 @@
 			type="text"
 			:value="person.weightUnit"
 			icon="icon-category-customization"
-			@submit="updateWeightUnit" />
+			@submit="updateWeightUnit"
+		/>
 		<li>
 			<h4>
 				{{ t('health', 'Custom column name', {}) }}<span><br>{{ t('health', 'What else do you want to track? Set here a name and you can add data in the data-table. The values have to be numbers. Please do not forget to activate the column in the column selections.', {}) }}</span>
@@ -75,10 +83,12 @@
 			type="text"
 			:value="person.weightMeasurementName"
 			icon="icon-rename"
-			@submit="updateMeasurementName" />
+			@submit="updateMeasurementName"
+		/>
 		<li>
 			<h3 class="toggable"
-				@click="showTargetOptions = !showTargetOptions">
+				@click="showTargetOptions = !showTargetOptions"
+			>
 				{{ t('health', 'Target', {}) }}
 			</h3>
 		</li>
@@ -96,7 +106,8 @@
 			type="number"
 			:value="person.weightTarget"
 			icon="icon-category-monitoring"
-			@submit="updateWeightTarget" />
+			@submit="updateWeightTarget"
+		/>
 		<li>
 			<h4>
 				{{ t('health', 'Weight target initial weight') }}
@@ -111,7 +122,8 @@
 			type="number"
 			:value="(person.weightTargetInitialWeight !== null )? person.weightTargetInitialWeight: ''"
 			icon="icon-quota"
-			@submit="updateWeightTargetInitialWeight" />
+			@submit="updateWeightTargetInitialWeight"
+		/>
 		<li>
 			<h4>
 				{{ t('health', 'Weight target bounty', {}) }}
@@ -121,7 +133,8 @@
 			<textarea ref="weightTargetBounty" :value="person.weightTargetBounty" :placeholder="t('health', 'Add some bounty to motivate yourself, if you like to.', {})" />
 		</div>
 		<button
-			@click="updateWeightTargetBounty">
+			@click="updateWeightTargetBounty"
+		>
 			{{ t('health', 'Save bounty', {}) }}
 		</button>
 	</ul>

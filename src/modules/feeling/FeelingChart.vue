@@ -26,7 +26,8 @@
 			:chart-style="chartStyle"
 			:data="data"
 			:definition="setDefinitions"
-			:options="options" />
+			:options="options"
+		/>
 	</div>
 </template>
 
@@ -176,12 +177,8 @@ export default {
 								labelString: t('health', 'Values [%]'),
 							},
 							position: 'left',
-							min: 0,
-							max: 100,
 							ticks: {
 								stepSize: 10,
-								suggestedMax: 100,
-								suggestedMin: 0,
 							},
 						},
 					],

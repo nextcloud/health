@@ -30,7 +30,8 @@
 			{{ t('health', 'Body mass index (BMI)') }}
 		</h3>
 		<div
-			v-if="!loading">
+			v-if="!loading"
+		>
 			<div v-if="!minWeightDataset || !person.size || !person.age">
 				{{ t('health', 'To calculate your BMI, please set your weight in the table below and your age and height in the person settings.') }}
 			</div>
@@ -42,7 +43,8 @@
 						:title="t('health', 'minimum')"
 						:date="minWeightDataset ? minWeightDataset.date : null"
 						:weight="minWeightDataset ? minWeightDataset.weight : null"
-						:person="person" />
+						:person="person"
+					/>
 				</div>
 				<div class="col-1" style="font-weight: bold;">
 					{{ t('health', 'actual', {}) }}
@@ -52,7 +54,8 @@
 						:show-base-info="false"
 						:date="lastWeightDataset ? lastWeightDataset.date : null"
 						:weight="lastWeightDataset ? lastWeightDataset.weight : null"
-						:person="person" />
+						:person="person"
+					/>
 				</div>
 				<div class="col-1 hide-s">
 					{{ t('health', 'maximum', {}) }}
@@ -62,7 +65,8 @@
 						:show-base-info="false"
 						:date="maxWeightDataset ? maxWeightDataset.date : null"
 						:weight="maxWeightDataset ? maxWeightDataset.weight : null"
-						:person="person" />
+						:person="person"
+					/>
 				</div>
 			</div>
 			{{ t('health', 'The calculated value is valid only for adults. Its base are the tables from the WHO.') }}
@@ -71,21 +75,24 @@
 
 		<h3>{{ t('health', 'Target', {}) }}</h3>
 		<div
-			v-if="!loading">
+			v-if="!loading"
+		>
 			<TextResultsLooseWeight
 				v-if="lastWeight && weightTarget && weightTargetInitialWeight && weightTarget <= weightTargetInitialWeight"
 				:bounty="weightTargetBounty"
 				:initial-weight="weightTargetInitialWeight"
 				:target="weightTarget"
 				:weight="lastWeight"
-				:unit="weightUnit" />
+				:unit="weightUnit"
+			/>
 			<TextResultsGainWeight
 				v-else-if="lastWeight && weightTarget && weightTargetInitialWeight && weightTarget > weightTargetInitialWeight"
 				:bounty="weightTargetBounty"
 				:initial-weight="weightTargetInitialWeight"
 				:target="weightTarget"
 				:weight="lastWeight"
-				:unit="weightUnit" />
+				:unit="weightUnit"
+			/>
 			<TextResultsNoData v-else />
 		</div>
 		<div v-if="loading" class="icon-loading" />
@@ -94,14 +101,16 @@
 		<WeightChart
 			v-if="!loading"
 			:person="person"
-			:data="weightData" />
+			:data="weightData"
+		/>
 		<div v-if="loading" class="icon-loading" />
 
 		<h3>{{ t('health', 'Data', {}) }}</h3>
 		<WeightTable
 			v-if="!loading"
 			:data="weightData"
-			:person="person" />
+			:person="person"
+		/>
 		<div v-if="loading" class="icon-loading" />
 	</div>
 </template>

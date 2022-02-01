@@ -1,25 +1,3 @@
-<!--
-	- @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
-	-
-	- @author Florian Steffens
-	-
-	- @license GNU AGPL version 3 or any later version
-	-
-	- This program is free software: you can redistribute it and/or modify
-	- it under the terms of the GNU Affero General Public License as
-	- published by the Free Software Foundation, either version 3 of the
-	- License, or (at your option) any later version.
-	-
-	- This program is distributed in the hope that it will be useful,
-	- but WITHOUT ANY WARRANTY; without even the implied warranty of
-	- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-	- GNU Affero General Public License for more details.
-	-
-	- You should have received a copy of the GNU Affero General Public License
-	- along with this program. If not, see <http://www.gnu.org/licenses/>.
-	-
-	-->
-
 <template>
 	<Content :class="{'icon-loading': initialLoading}" app-name="health">
 		<PersonsNavigation />
@@ -46,12 +24,14 @@
 			v-if="person && !loading"
 			:title="person.name"
 			:subtitle="t('health', 'Created at {creationTime}', { creationTime: formatMyDate(person.insertTime) })"
-			@close="$store.commit('showSidebar', false)">
+			@close="$store.commit('showSidebar', false)"
+		>
 			<AppSidebarTab
 				id="person"
 				:name="t('health', 'Person')"
 				icon="icon-user"
-				:order="0">
+				:order="0"
+			>
 				<PersonsSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
@@ -59,7 +39,8 @@
 				id="weight"
 				:name="t('health', 'Weight')"
 				icon="icon-quota"
-				:order="1">
+				:order="1"
+			>
 				<WeightSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
@@ -67,7 +48,8 @@
 				id="feeling"
 				:name="t('health', 'Feeling')"
 				icon="icon-category-monitoring"
-				:order="2">
+				:order="2"
+			>
 				<FeelingSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
@@ -75,7 +57,8 @@
 				id="measurement"
 				:name="t('health', 'Measurement')"
 				icon="icon-home"
-				:order="3">
+				:order="3"
+			>
 				<MeasurementSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
@@ -83,7 +66,8 @@
 				id="sleep"
 				:name="t('health', 'Sleep')"
 				icon="icon-download"
-				:order="4">
+				:order="4"
+			>
 				<SleepSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
@@ -91,7 +75,8 @@
 				id="smoking"
 				:name="t('health', 'Smoking')"
 				icon="icon-address"
-				:order="5">
+				:order="5"
+			>
 				<SmokingSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
@@ -99,7 +84,8 @@
 				id="activities"
 				:name="t('health', 'Activities')"
 				icon="icon-upload"
-				:order="6">
+				:order="6"
+			>
 				<ActivitiesSidebar />
 			</AppSidebarTab>
 		</AppSidebar>

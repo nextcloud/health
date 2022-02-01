@@ -30,14 +30,16 @@
 		<SleepChart
 			v-if="!loading"
 			:person="person"
-			:data="sleepData" />
+			:data="sleepData"
+		/>
 		<div v-if="loading" class="icon-loading" />
 
 		<h3>{{ t('health', 'Data', {}) }}</h3>
 		<SleepTable
 			v-if="!loading"
 			:data="sleepData"
-			:person="person" />
+			:person="person"
+		/>
 		<div v-if="loading" class="icon-loading" />
 	</div>
 </template>

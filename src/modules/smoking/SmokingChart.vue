@@ -26,7 +26,8 @@
 			:chart-style="chartStyle"
 			:data="data"
 			:definition="setDefinitions"
-			:options="options" />
+			:options="options"
+		/>
 	</div>
 </template>
 

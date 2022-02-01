@@ -30,15 +30,18 @@
 			:header="header"
 			icon="icon-add"
 			:entity-name="entityName"
-			@addItem="addItem" />
+			@addItem="addItem"
+		/>
 
 		<div
 			v-if="!loading"
-			class="chartDataRangeSelector">
+			class="chartDataRangeSelector"
+		>
 			<select
 				id="rangeDays"
 				v-model="range"
-				name="range">
+				name="range"
+			>
 				<option value="week">
 					{{ t('health', 'Last week') }}
 				</option>
@@ -72,7 +75,8 @@
 						:key="ii"
 						:data-label="h.name"
 						:class="{ hide: !h.show }"
-						:style="(h.style) ? h.style(d[h.columnId]): ''">
+						:style="(h.style) ? h.style(d[h.columnId]): ''"
+					>
 						<div>
 							<div v-if="h.type === 'date' && d[h.columnId]" class="wrapper">
 								{{ d[h.columnId] | formatMyDate }}
@@ -86,7 +90,8 @@
 							<div v-else-if="h.type === 'multiselect' && d[h.columnId]" class="wrapper">
 								<ul>
 									<li v-for="(option, optionIndex) in JSON.parse(d[h.columnId])"
-										:key="optionIndex">
+										:key="optionIndex"
+									>
 										{{ option ? option: 'no label found' }}
 									</li>
 								</ul>
@@ -120,12 +125,14 @@
 								input-mode="edit"
 								:entity-name="entityName"
 								icon="icon-rename"
-								@addItem="updateItem" />
+								@addItem="updateItem"
+							/>
 						</div>
 						<div class="inlineButtons">
 							<button
 								class="icon-delete"
-								@click="deleteItem(i)" />
+								@click="deleteItem(i)"
+							/>
 						</div>
 					</td>
 				</tr>
@@ -138,14 +145,16 @@
 			v-if="getExportData.length > 0"
 			:data="getExportData"
 			:labels="getExportLabels"
-			:name="entityName + '.csv'">
+			:name="entityName + '.csv'"
+		>
 			<button class="export">
 				{{ t('health', 'Download (CSV)', {}) }}
 			</button>
 		</JsonCSV>
 		<EmptyContent
 			v-if="!datasets || data.length === 0 && !loading"
-			icon="icon-category-monitoring">
+			icon="icon-category-monitoring"
+		>
 			{{ t('health', 'No data yet') }}
 			<template #desc>
 				{{ t('health', 'Click at the + to add the first data.') }}
@@ -154,7 +163,8 @@
 					:entity-name="entityName"
 					input-mode="add"
 					icon="icon-add"
-					@addItem="addItem" />
+					@addItem="addItem"
+				/>
 			</template>
 		</EmptyContent>
 	</div>

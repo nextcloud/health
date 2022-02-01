@@ -27,7 +27,8 @@
 			<div class="col-2">
 				<textarea ref="mission" class="textarea-mission" :value="person.personalMission" />
 				<button
-					@click="updateMission">
+					@click="updateMission"
+				>
 					{{ t('health', 'Save ') }}
 				</button>
 			</div>

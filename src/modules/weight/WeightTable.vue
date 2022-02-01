@@ -28,7 +28,8 @@
 			:entity-name="t('health', 'weight dataset')"
 			@addItem="addItem"
 			@updateItem="updateItem"
-			@deleteItem="deleteItem" />
+			@deleteItem="deleteItem"
+		/>
 	</div>
 </template>
 

@@ -34,19 +34,22 @@
 				:class="(index === activePersonId)?'active-person':''"
 				@update:menuOpen="menuOpenPersonId = index"
 				@update:title="personUpdateName"
-				@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'person')">
+				@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'person')"
+			>
 				<template slot="actions">
 					<ActionButton
 						:close-after-click="true"
 						icon="icon-details"
-						@click="$store.commit('showSidebar', true); $store.dispatch('setActivePerson', index)">
+						@click="$store.commit('showSidebar', true); $store.dispatch('setActivePerson', index)"
+					>
 						{{ t('health', 'Show details') }}
 					</ActionButton>
 					<ActionButton
 						v-show="personsLength != 1"
 						:close-after-click="true"
 						icon="icon-delete"
-						@click="$store.dispatch('deletePerson', persons[menuOpenPersonId])">
+						@click="$store.dispatch('deletePerson', persons[menuOpenPersonId])"
+					>
 						{{ t('health', 'Delete') }}
 					</ActionButton>
 				</template>
@@ -55,51 +58,60 @@
 					:title="t('health', 'Weight')"
 					icon="icon-quota"
 					:class="(activeModule === 'weight' && index === activePersonId)?'active-module':''"
-					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'weight')" />
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'weight')"
+				/>
 				<AppNavigationItem
 					v-if="p.enabledModuleFeeling"
 					:title="t('health', 'Feeling')"
 					icon="icon-category-monitoring"
 					:class="(activeModule === 'feeling' && index === activePersonId)?'active-module':''"
-					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'feeling')" />
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'feeling')"
+				/>
 				<AppNavigationItem
 					v-if="p.enabledModuleMeasurement"
 					:title="t('health', 'Measurement')"
 					icon="icon-home"
 					:class="(activeModule === 'measurement' && index === activePersonId)?'active-module':''"
-					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'measurement')" />
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'measurement')"
+				/>
 				<AppNavigationItem
 					v-if="p.enabledModuleSleep"
 					:title="t('health', 'Sleep')"
 					icon="icon-download"
 					:class="(activeModule === 'sleep' && index === activePersonId)?'active-module':''"
-					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'sleep')" />
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'sleep')"
+				/>
 				<AppNavigationItem
 					v-if="p.enabledModuleSmoking"
 					:title="t('health', 'Smoking')"
 					icon="icon-address"
 					:class="(activeModule === 'smoking' && index === activePersonId)?'active-module':''"
-					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'smoking')" />
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'smoking')"
+				/>
 				<AppNavigationItem
 					v-if="p.enabledModuleActivities"
 					:title="t('health', 'Activities')"
 					icon="icon-upload"
 					:class="(activeModule === 'activities' && index === activePersonId)?'active-module':''"
-					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'activities')" />
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'activities')"
+				/>
 			</AppNavigationItem>
 			<AppNavigationItem
 				:title="t('health', 'New person')"
 				icon="icon-add"
 				:pinned="false"
-				@click.prevent.stop="showNewPersonForm = true">
+				@click.prevent.stop="showNewPersonForm = true"
+			>
 				<div v-show="showNewPersonForm" class="person-create">
 					<form
-						@submit.prevent.stop="createPerson">
+						@submit.prevent.stop="createPerson"
+					>
 						<input
 							ref="newPersonName"
 							:placeholder="t('health', 'Name')"
 							type="text"
-							required>
+							required
+						>
 						<input type="submit" value="" class="icon-confirm">
 						<Actions>
 							<ActionButton class="ab-integrated" icon="icon-close" @click.stop.prevent="closeNewPersonForm" />

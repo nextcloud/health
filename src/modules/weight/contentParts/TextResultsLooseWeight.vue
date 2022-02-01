@@ -38,7 +38,8 @@
 			{{ t('health', 'Go on and eliminate the blue bar:', {}) }}
 			<ProgressBar
 				:value="getProgressbarValue"
-				:class="{'small':true}" />
+				:class="{'small':true}"
+			/>
 		</p>
 		<p v-if="weight > initialWeight && initialWeight !== null" class="alert red">
 			{{ t('health', 'Oops, you become more and more. Be careful!', {}) }}

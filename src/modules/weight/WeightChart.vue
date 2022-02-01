@@ -26,7 +26,8 @@
 			:chart-style="chartStyle"
 			:data="data"
 			:definition="setDefinitions"
-			:options="options" />
+			:options="options"
+		/>
 	</div>
 </template>
 
@@ -212,8 +213,6 @@ export default {
 								display: true,
 								labelString: t('health', 'Weight'),
 							},
-							min: 0,
-							max: 100,
 							position: 'left',
 						},
 						{
@@ -235,8 +234,6 @@ export default {
 								display: true,
 								labelString: t('health', 'Sizes'),
 							},
-							// min: 0,
-							// max: 100,
 						},
 						{
 							id: 'bodyfat',

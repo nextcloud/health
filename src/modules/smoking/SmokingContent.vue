@@ -30,20 +30,23 @@
 			:datasets="smokingData"
 			:start-value="person.smokingStartValue"
 			:price="person.smokingPrice"
-			:currency="person.currency" />
+			:currency="person.currency"
+		/>
 
 		<h3>{{ t('health', 'Chart', {}) }}</h3>
 		<SmokingChart
 			v-if="!loading"
 			:person="person"
-			:data="smokingData" />
+			:data="smokingData"
+		/>
 		<div v-if="loading" class="icon-loading" />
 
 		<h3>{{ t('health', 'Data', {}) }}</h3>
 		<SmokingTable
 			v-if="!loading"
 			:data="smokingData"
-			:person="person" />
+			:person="person"
+		/>
 		<div v-if="loading" class="icon-loading" />
 	</div>
 </template>

@@ -26,7 +26,8 @@
 			:chart-style="chartStyle"
 			:data="data"
 			:definition="setDefinitions"
-			:options="options" />
+			:options="options"
+		/>
 	</div>
 </template>
 
@@ -194,7 +195,6 @@ export default {
 								display: false,
 							},
 							ticks: {
-								suggestedMin: 0,
 								suggestedMax: 100,
 								stepSize: 10,
 							},
@@ -222,7 +222,6 @@ export default {
 								display: false,
 							},
 							ticks: {
-								suggestedMin: 0,
 								suggestedMax: 100,
 								stepSize: 10,
 							},
@@ -237,7 +236,6 @@ export default {
 								display: false,
 							},
 							ticks: {
-								suggestedMin: 0,
 								suggestedMax: 4,
 								stepSize: 1,
 							},

@@ -27,7 +27,8 @@
 			:data="data"
 			range-definition="12hours"
 			:definition="setDefinitions"
-			:options="options" />
+			:options="options"
+		/>
 	</div>
 </template>
 

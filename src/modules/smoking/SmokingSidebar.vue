@@ -29,34 +29,40 @@
 			step="0.1"
 			:value="person.smokingPrice"
 			icon="icon-category-customization"
-			@submit="$store.dispatch('setValue', { key: 'smokingPrice', value: $event.target[1].value })" />
+			@submit="$store.dispatch('setValue', { key: 'smokingPrice', value: $event.target[1].value })"
+		/>
 		<li><h4>{{ t('health', 'Starting with how many cigarettes a day') }}</h4></li>
 		<ActionInput
 			type="number"
 			:value="person.smokingStartValue"
 			icon="icon-category-customization"
-			@submit="$store.dispatch('setValue', { key: 'smokingStartValue', value: $event.target[1].value })" />
+			@submit="$store.dispatch('setValue', { key: 'smokingStartValue', value: $event.target[1].value })"
+		/>
 		<li><h4>{{ t('health', 'Goal cigarettes per day') }}</h4></li>
 		<ActionInput
 			type="number"
 			:value="person.smokingGoal"
 			icon="icon-category-customization"
-			@submit="$store.dispatch('setValue', { key: 'smokingGoal', value: $event.target[1].value })" />
+			@submit="$store.dispatch('setValue', { key: 'smokingGoal', value: $event.target[1].value })"
+		/>
 
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
 		<ActionCheckbox
 			:checked="person.smokingColumnCigarettes"
-			@change="$store.dispatch('setValue', { key: 'smokingColumnCigarettes', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'smokingColumnCigarettes', value: $event.target.checked })"
+		>
 			{{ t('health', 'Cigarettes', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.smokingColumnDesireLevel"
-			@change="$store.dispatch('setValue', { key: 'smokingColumnDesireLevel', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'smokingColumnDesireLevel', value: $event.target.checked })"
+		>
 			{{ t('health', 'Desire level', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.smokingColumnSavedMoney"
-			@change="$store.dispatch('setValue', { key: 'smokingColumnSavedMoney', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'smokingColumnSavedMoney', value: $event.target.checked })"
+		>
 			{{ t('health', 'Saved money', {}) }}
 		</ActionCheckbox>
 		<div v-if="!person.smokingPrice" class="input-hint">

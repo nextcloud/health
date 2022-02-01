@@ -25,12 +25,14 @@
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
 		<ActionCheckbox
 			:checked="person.sleepColumnQuality"
-			@change="$store.dispatch('setValue', { key: 'sleepColumnQuality', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'sleepColumnQuality', value: $event.target.checked })"
+		>
 			{{ t('health', 'Quality', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.sleepColumnWakeups"
-			@change="$store.dispatch('setValue', { key: 'sleepColumnWakeups', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'sleepColumnWakeups', value: $event.target.checked })"
+		>
 			{{ t('health', 'Wakeups', {}) }}
 		</ActionCheckbox>
 	</ul>

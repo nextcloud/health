@@ -25,32 +25,38 @@
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
 		<ActionCheckbox
 			:checked="person.activitiesColumnCalories"
-			@change="$store.dispatch('setValue', { key: 'activitiesColumnCalories', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'activitiesColumnCalories', value: $event.target.checked })"
+		>
 			{{ t('health', 'Burned calories', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.activitiesColumnDuration"
-			@change="$store.dispatch('setValue', { key: 'activitiesColumnDuration', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'activitiesColumnDuration', value: $event.target.checked })"
+		>
 			{{ t('health', 'Activity duration [minutes]', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.activitiesColumnCategory"
-			@change="$store.dispatch('setValue', { key: 'activitiesColumnCategory', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'activitiesColumnCategory', value: $event.target.checked })"
+		>
 			{{ t('health', 'Category', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.activitiesColumnFeeling"
-			@change="$store.dispatch('setValue', { key: 'activitiesColumnFeeling', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'activitiesColumnFeeling', value: $event.target.checked })"
+		>
 			{{ t('health', 'Feeling after the activity', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.activitiesColumnIntensity"
-			@change="$store.dispatch('setValue', { key: 'activitiesColumnIntensity', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'activitiesColumnIntensity', value: $event.target.checked })"
+		>
 			{{ t('health', 'Activity intensity', {}) }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			:checked="person.activitiesColumnDistance"
-			@change="$store.dispatch('setValue', { key: 'activitiesColumnDistance', value: $event.target.checked })">
+			@change="$store.dispatch('setValue', { key: 'activitiesColumnDistance', value: $event.target.checked })"
+		>
 			{{ t('health', 'Distance', {}) }}
 		</ActionCheckbox>
 		<li><h4>{{ t('health', 'Unit for distance', {}) }}</h4></li>
@@ -58,7 +64,8 @@
 			type="text"
 			:value="person.activitiesDistanceUnit"
 			icon="icon-category-customization"
-			@submit="updateDistanceUnit" />
+			@submit="updateDistanceUnit"
+		/>
 	</ul>
 </template>
 
