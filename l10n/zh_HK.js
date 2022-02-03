@@ -21,6 +21,7 @@ OC.L10N.register(
     "Last 12 hours" : "過去12小時",
     "Last 24 hours" : "過去24小時",
     "Last 48 hours" : "過去48小時",
+    "Only show relative values on y-axis." : "僅在 y 軸上顯示相對值。",
     "No data for a chart" : "缺乏數據以構成圖表",
     "More than one dataset is required." : "需要多個數據集。",
     "You selected to show only data from: {range}." : "您選擇了僅顯示{range}中的數據。",

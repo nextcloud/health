@@ -21,6 +21,7 @@ OC.L10N.register(
     "Last 12 hours" : "Posledních 12 hodin",
     "Last 24 hours" : "Uplynulých 24 hodin",
     "Last 48 hours" : "Uplynulých 48 hodin",
+    "Only show relative values on y-axis." : "Na svislé ose zobrazovat pouze vztažené hodnoty.",
     "No data for a chart" : "Žádná data pro graf",
     "More than one dataset is required." : "Je potřeba více než jedna sada dat.",
     "You selected to show only data from: {range}." : "K zobrazení jste vybrali pouze data z: {range}.",
