@@ -19,6 +19,7 @@
     "Last 12 hours" : "Posledných 12 hodín",
     "Last 24 hours" : "Posledných 24 hodín",
     "Last 48 hours" : "Posledných 48 hodín",
+    "Only show relative values on y-axis." : "Zobraziť iba relatívne hodnoty na osi y.",
     "No data for a chart" : "Pre graf nie sú k dispozícii žiadne údaje",
     "More than one dataset is required." : "Vyžaduje sa viac ako jedna množina údajov.",
     "You selected to show only data from: {range}." : "Vybrali ste zobrazovať údaje iba z: {range}.",
