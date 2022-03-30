@@ -19,6 +19,7 @@
     "Last 12 hours" : "Últimas 12 horas",
     "Last 24 hours" : "Últimas 24 horas",
     "Last 48 hours" : "Últimas 48 horas",
+    "Only show relative values on y-axis." : "Mostrar solo valores relativos en el eje Y.",
     "No data for a chart" : "No hay datos para el gráfico",
     "More than one dataset is required." : "Se necesita más de un set de datos",
     "You selected to show only data from: {range}." : "Has seleccionado mostrar solo datos desde: {range}.",
