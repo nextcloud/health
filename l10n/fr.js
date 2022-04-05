@@ -261,4 +261,4 @@ OC.L10N.register(
     "Obesity class III" : "Obésité type III",
     "Value successfully saved" : "Valeur enregistrée avec succès"
 },
-"nplurals=2; plural=(n > 1);");
+"nplurals=3; plural=(n==0 || n==1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
