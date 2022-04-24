@@ -1,0 +1,25 @@
+OC.L10N.register(
+    "health",
+    {
+    "Activities" : "Aktivitas",
+    "Last 24 hours" : "24 Jam lalu",
+    "Actions" : "Tindakan",
+    "Today" : "Hari ini",
+    "Cancel" : "Membatalkan",
+    "Add" : "Masukkan",
+    "Category" : "Kategori",
+    "Activity" : "Aktivitas",
+    "Date" : "Date",
+    "Other" : "Lainnya",
+    "Good" : "Bagus",
+    "Bad" : "Buruk",
+    "Comment" : "Komentar",
+    "None" : "Tidak ada",
+    "Temperature" : "Suhu",
+    "Values" : "Nilai",
+    "Edit name" : "Edit nama",
+    "Show details" : "Tampilkan detail",
+    "Delete" : "Hapus",
+    "Name" : "Nama"
+},
+"nplurals=1; plural=0;");

@@ -1,0 +1,23 @@
+{ "translations": {
+    "Activities" : "Darbības",
+    "Last 24 hours" : "Pēdējās 24 stundas",
+    "Actions" : "Darbības",
+    "Today" : "Šodien",
+    "Cancel" : "Atcelt",
+    "Add" : "Pievienot",
+    "Category" : "Kategorija",
+    "Activity" : "Darbības",
+    "Date" : "Datums",
+    "Other" : "Cits",
+    "Good" : "Labs",
+    "Bad" : "Slikts",
+    "Comment" : "Komentārs",
+    "None" : "Nav",
+    "Temperature" : "Temperatūra",
+    "General settings" : "Vispārīgie iestatījumi",
+    "Show details" : "Rādīt detaļas",
+    "Delete" : "Dzēst",
+    "Name" : "Vārds",
+    "Strong" : "Stipra"
+},"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"
+}

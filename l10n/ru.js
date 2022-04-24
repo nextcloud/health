@@ -96,6 +96,7 @@ OC.L10N.register(
     "Pain" : "Болевые ощущения",
     "Energy" : "Уровень энергии",
     "Medication" : "Лекарственные препараты",
+    "None" : "Отсутствует",
     "Fatigue" : "Усталость",
     "No Appetite" : "Отсутствие аппетита ",
     "Overeating" : "Переедание",
@@ -113,6 +114,7 @@ OC.L10N.register(
     "Asthma attack" : "Приступ астмы",
     "No pain" : "Боль отсуствует",
     "Very Mild" : "Очень мягкие",
+    "Normal" : "Обычный",
     "Temperature" : "Температура",
     "Heart rate" : "Частота сердечных сокращений",
     "Blood pressure systolic" : "Систолическое кровяное давление",
@@ -120,6 +122,7 @@ OC.L10N.register(
     "Oxygen saturation" : "Насыщенность кислородом",
     "Blood sugar" : "Уровень сахара в крови",
     "Defecation" : "Дефекация",
+    "Values" : "Значения",
     "Blood pressure" : "Кровяное давление",
     "Charts" : "Графики",
     "Appetite" : "Аппетит",
@@ -146,6 +149,7 @@ OC.L10N.register(
     "Saved money" : "Денег не потрачено",
     "Goal" : "Цель",
     "Price for a cigarette" : "Цена сигареты",
+    "Strong" : "Надёжный",
     "BMI" : "ИМС",
     "Target" : "Цель",
     "Initial weight" : "Начальный вес",
@@ -159,6 +163,7 @@ OC.L10N.register(
     "minimum" : "минимум",
     "maximum" : "максимум",
     "Waist circumference" : "Окружность талии",
-    "Hip circumference" : "Окружность бедра"
+    "Hip circumference" : "Окружность бедра",
+    "Underweight" : "Пониженный вес"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

@@ -1,0 +1,26 @@
+OC.L10N.register(
+    "health",
+    {
+    "Health" : "Tervis",
+    "Activities" : "Tegevused",
+    "Last 24 hours" : "Viimased 24 tundi",
+    "Actions" : "Tegevused",
+    "Today" : "Täna",
+    "Cancel" : "Loobu",
+    "Add" : "Lisa",
+    "Category" : "Kategooria",
+    "Activity" : "Tegevus",
+    "Date" : "Kuupäev",
+    "Running" : "Jooksmine",
+    "Biking" : "Jalgrattaga sõitmine",
+    "Other" : "Muu",
+    "Good" : "Hea",
+    "Bad" : "Halb",
+    "Comment" : "Kommentaar",
+    "None" : "Pole",
+    "Temperature" : "Temperatuur",
+    "Edit name" : "Muuda nime",
+    "Delete" : "Kustuta",
+    "Name" : "Nimi"
+},
+"nplurals=2; plural=(n != 1);");

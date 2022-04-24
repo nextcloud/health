@@ -1,0 +1,25 @@
+OC.L10N.register(
+    "health",
+    {
+    "Activities" : "აქტივობები",
+    "Last 24 hours" : "ბოლო 24 საათი",
+    "Actions" : "მოქმედებები",
+    "Today" : "დღეს",
+    "Cancel" : "უარყოფა",
+    "Add" : "დამატება",
+    "Category" : "კატეგორია",
+    "Activity" : "აქტივობა",
+    "Date" : "თარიღი",
+    "Other" : "სხვა",
+    "Good" : "კარგია",
+    "Bad" : "ცუდი",
+    "Comment" : "კომენტარი",
+    "None" : "არც ერთი",
+    "Normal" : "ნორმალური",
+    "Temperature" : "ტემპერატურა",
+    "General settings" : "მთავარი პარამეტრები",
+    "Delete" : "წაშლა",
+    "Name" : "სახელი",
+    "Strong" : "ძლიერია"
+},
+"nplurals=2; plural=(n!=1);");
