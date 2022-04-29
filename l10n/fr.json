@@ -19,7 +19,6 @@
     "Last 12 hours" : "12 dernières heures",
     "Last 24 hours" : "24 dernières heures",
     "Last 48 hours" : "48 dernières heures",
-    "Only show relative values on y-axis." : "Afficher uniquement les valeurs relatives sur l'axe des abscisses (y).",
     "No data for a chart" : "Pas de données pour le graphique",
     "More than one dataset is required." : "Au moins 2 données sont obligatoires.",
     "You selected to show only data from: {range}." : "Vous avez sélectionné d'afficher uniquement les données de : {range}.",

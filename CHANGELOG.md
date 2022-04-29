@@ -1,12 +1,23 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+##  [1.5.0] - 2022-02-01
+### Added
+- API v1 - you can request and interact with every data within this app
+  - The API follows the internal structure, no official formats and structures are implemented
+  - have a look at the *routes.php* and the following function headers to see what data are expected
+- Button to show charts with only relative data on the y-axis
+
+### Changed
+- update dependencies
+- updated translations
+
 ##  [1.4.0] - 2021-10-10
 ### Added
 - support for nextcloud 23
 
 ### Changed
-- Update dependencies
+- update dependencies
 - merged 2 pulls (thanks)
 - updated translations
 

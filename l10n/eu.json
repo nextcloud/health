@@ -19,7 +19,6 @@
     "Last 12 hours" : "Azken 12 orduak",
     "Last 24 hours" : "Azken 24 orduak",
     "Last 48 hours" : "Azken 48 orduak",
-    "Only show relative values on y-axis." : "Erakutsi soilik balio erlatiboak y ardatzean.",
     "No data for a chart" : "Ez dago daturik diagrama sortzeko",
     "More than one dataset is required." : "Datu multzo bat baino gehiago behar da.",
     "You selected to show only data from: {range}." : "{range} barrutiko datuak soilik erakustea hautatu duzu.",

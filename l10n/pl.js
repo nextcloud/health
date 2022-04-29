@@ -21,7 +21,6 @@ OC.L10N.register(
     "Last 12 hours" : "Ostatnie 12 godzin",
     "Last 24 hours" : "Ostatnie 24 godziny",
     "Last 48 hours" : "Ostatnie 48 godziny",
-    "Only show relative values on y-axis." : "Pokaż tylko wartości względne na osi y.",
     "No data for a chart" : "Brak danych do wykresu",
     "More than one dataset is required." : "Wymagany jest więcej niż jeden zbiór danych.",
     "You selected to show only data from: {range}." : "Wybrałeś do pokazania tylko dane: {range}.",

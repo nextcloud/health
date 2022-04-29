@@ -19,7 +19,6 @@
     "Last 12 hours" : "Последните 12 часа",
     "Last 24 hours" : "Последните 24 часа",
     "Last 48 hours" : "Последните 48 часа",
-    "Only show relative values on y-axis." : "Показване само относителните стойности по оста y.",
     "No data for a chart" : "Няма данни за диаграма",
     "More than one dataset is required." : "Нужни са повече от един набор от данни.",
     "You selected to show only data from: {range}." : "Избрахте да се показват само данни от: {диапазон}.",

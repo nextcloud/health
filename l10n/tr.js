@@ -21,7 +21,6 @@ OC.L10N.register(
     "Last 12 hours" : "Son 12 saat",
     "Last 24 hours" : "Son 24 saat",
     "Last 48 hours" : "Son 48 saat",
-    "Only show relative values on y-axis." : "Y ekseninde yalnız göreli değerler görüntülensin",
     "No data for a chart" : "Çizelge oluşturacak bir veri yok",
     "More than one dataset is required." : "Bir veri kümesinden fazlası gerekli.",
     "You selected to show only data from: {range}." : "Yalnız {range} aralığındaki verileri görüntülemeyi seçtiniz. ",

@@ -57,7 +57,6 @@ OC.L10N.register(
     "Feeling after the activity" : "Tunne aktiviteetin jälkeen",
     "Activity intensity" : "Aktiviteetin intensiteetti",
     "Unit for distance" : "Etäisyyden yksikkö",
-    "Activity" : "Tapahtumat",
     "Date" : "Päivämäärä",
     "kcal" : "kcal",
     "Activity duration" : "Aktiviteetin kesto",
