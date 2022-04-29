@@ -120,6 +120,15 @@
 				</div>
 			</AppNavigationItem>
 		</template>
+		<template #footer>
+			<AppNavigationSettings :title="t('health', 'Information')">
+				<AppNavigationItem
+					:title="t('tables', 'Donations')"
+					icon="icon-category-workflow"
+					@click="openLink('https://github.com/datenangebot/health/wiki/Donations')"
+				/>
+			</AppNavigationSettings>
+		</template>
 	</AppNavigation>
 </template>
 
@@ -155,6 +164,9 @@ export default {
 		},
 	},
 	methods: {
+		openLink(link) {
+			window.open(link, '_blank')
+		},
 		createPerson(e) {
 			const name = e.currentTarget.childNodes[0].value
 			this.$store.dispatch('addPerson', name)
