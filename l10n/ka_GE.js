@@ -20,6 +20,7 @@ OC.L10N.register(
     "General settings" : "მთავარი პარამეტრები",
     "Delete" : "წაშლა",
     "Name" : "სახელი",
+    "Information" : "ინფორმაცია",
     "Strong" : "ძლიერია"
 },
 "nplurals=2; plural=(n!=1);");

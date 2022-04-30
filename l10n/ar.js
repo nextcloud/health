@@ -32,6 +32,7 @@ OC.L10N.register(
     "Show details" : "عرض التفاصيل",
     "Delete" : "إزالة",
     "Name" : "الاسم",
+    "Information" : "معلومات",
     "Quality" : "الجودة",
     "Strong" : "قوية"
 },

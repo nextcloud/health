@@ -36,6 +36,7 @@ OC.L10N.register(
     "Show details" : "Amosar os detalles",
     "Delete" : "Eliminar",
     "Name" : "Nome",
+    "Information" : "Información",
     "Age" : "Idade",
     "Height" : "Altura",
     "Quality" : "Calidade",

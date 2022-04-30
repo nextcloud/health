@@ -17,6 +17,7 @@ OC.L10N.register(
     "None" : "юу ч үгүй",
     "Normal" : "Хэвийн",
     "Delete" : "Устгах",
-    "Name" : "Нэр"
+    "Name" : "Нэр",
+    "Information" : "Мэдээлэл"
 },
 "nplurals=2; plural=(n != 1);");

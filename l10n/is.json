@@ -29,6 +29,7 @@
     "Show details" : "Birta nánari upplýsingar",
     "Delete" : "Eyða",
     "Name" : "Heiti",
+    "Information" : "Upplýsingar",
     "Quality" : "Quality",
     "Strong" : "Sterkt"
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"

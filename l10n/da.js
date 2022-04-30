@@ -29,6 +29,7 @@ OC.L10N.register(
     "Show details" : "Vis detaljer",
     "Delete" : "Slet",
     "Name" : "Navn",
+    "Information" : "Information",
     "Strong" : "Stærkt"
 },
 "nplurals=2; plural=(n != 1);");

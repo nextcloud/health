@@ -20,6 +20,7 @@ OC.L10N.register(
     "Edit name" : "Edit nama",
     "Show details" : "Tampilkan detail",
     "Delete" : "Hapus",
-    "Name" : "Nama"
+    "Name" : "Nama",
+    "Information" : "Informasi"
 },
 "nplurals=1; plural=0;");

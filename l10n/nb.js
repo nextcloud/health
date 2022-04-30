@@ -33,6 +33,8 @@ OC.L10N.register(
     "Show details" : "Vis detaljer",
     "Delete" : "Slett",
     "Name" : "Navn",
+    "Information" : "Informasjo",
+    "Donations" : "Donasjoner",
     "Strong" : "Sterk",
     "Target" : "Mål"
 },

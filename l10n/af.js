@@ -20,6 +20,7 @@ OC.L10N.register(
     "Temperature" : "Temperatuur",
     "Delete" : "Skrap",
     "Name" : "Naam",
+    "Information" : "Inligting",
     "Quality" : "Kwaliteit"
 },
 "nplurals=2; plural=(n != 1);");

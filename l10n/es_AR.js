@@ -25,6 +25,7 @@ OC.L10N.register(
     "Show details" : "Mostrar detalles",
     "Delete" : "Eliminar",
     "Name" : "Nombre",
+    "Information" : "Información",
     "Strong" : "Fuerte"
 },
 "nplurals=2; plural=(n != 1);");

@@ -17,6 +17,7 @@ OC.L10N.register(
     "Bad" : "නරකයි",
     "Comment" : "අදහස",
     "Edit name" : "නම සංස්කරණය",
-    "Name" : "නම"
+    "Name" : "නම",
+    "Information" : "තොරතුරු"
 },
 "nplurals=2; plural=(n != 1);");

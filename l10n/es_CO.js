@@ -21,6 +21,7 @@ OC.L10N.register(
     "General settings" : "Configuraciones generales",
     "Delete" : "Borrar",
     "Name" : "Nombre",
+    "Information" : "Información",
     "Strong" : "Fuerte"
 },
 "nplurals=2; plural=(n != 1);");

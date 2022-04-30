@@ -34,6 +34,7 @@ OC.L10N.register(
     "Show details" : "Mostra detalls",
     "Delete" : "Eliminar",
     "Name" : "Cognom",
+    "Information" : "Informació",
     "Quality" : "Qualitat",
     "Strong" : "Forta"
 },

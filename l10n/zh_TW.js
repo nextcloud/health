@@ -36,6 +36,7 @@ OC.L10N.register(
     "Show details" : "顯示細節",
     "Delete" : "刪除",
     "Name" : "名稱",
+    "Information" : "資訊",
     "Age" : "年齡",
     "Height" : "高度",
     "Underweight" : "過輕"

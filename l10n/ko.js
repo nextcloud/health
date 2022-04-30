@@ -37,6 +37,7 @@ OC.L10N.register(
     "Show details" : "세부 정보",
     "Delete" : "삭제",
     "Name" : "이름",
+    "Information" : "정보",
     "Age" : "나이",
     "Height" : "신장",
     "Quality" : "품질",

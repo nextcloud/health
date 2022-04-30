@@ -21,6 +21,7 @@ OC.L10N.register(
     "Temperature" : "Temperatuur",
     "Edit name" : "Muuda nime",
     "Delete" : "Kustuta",
-    "Name" : "Nimi"
+    "Name" : "Nimi",
+    "Information" : "Informatsioon"
 },
 "nplurals=2; plural=(n != 1);");

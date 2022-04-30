@@ -30,6 +30,7 @@ OC.L10N.register(
     "Edit name" : "ویرایش نام",
     "Delete" : "حذف",
     "Name" : "نام",
+    "Information" : "اطلاعات",
     "Strong" : "قوی"
 },
 "nplurals=2; plural=(n > 1);");

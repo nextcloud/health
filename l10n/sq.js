@@ -20,6 +20,7 @@ OC.L10N.register(
     "General settings" : "Opsjonet e Pergjithshme",
     "Delete" : "Fshij",
     "Name" : "Emri",
+    "Information" : "Informacion",
     "Strong" : "I fortë"
 },
 "nplurals=2; plural=(n != 1);");

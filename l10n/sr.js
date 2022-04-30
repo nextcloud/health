@@ -28,6 +28,7 @@ OC.L10N.register(
     "Show details" : "Прикажи детаље",
     "Delete" : "Избриши",
     "Name" : "Име",
+    "Information" : "Информације",
     "Strong" : "Јака"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

@@ -31,6 +31,7 @@ OC.L10N.register(
     "Show details" : "Birta nánari upplýsingar",
     "Delete" : "Eyða",
     "Name" : "Heiti",
+    "Information" : "Upplýsingar",
     "Quality" : "Quality",
     "Strong" : "Sterkt"
 },

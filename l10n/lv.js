@@ -20,6 +20,7 @@ OC.L10N.register(
     "Show details" : "Rādīt detaļas",
     "Delete" : "Dzēst",
     "Name" : "Vārds",
+    "Information" : "Informācija",
     "Strong" : "Stipra"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");
