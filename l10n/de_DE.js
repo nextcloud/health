@@ -162,6 +162,7 @@ OC.L10N.register(
     "Give some comment, if you want..." : "Geben Sie einen Kommentar ab, wenn Sie wollen…",
     "Welcome to your health center" : "Willkommen in Ihrem Gesundheitscenter",
     "Save " : "Speichern",
+    "You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …" : "Sie können hier damit beginnen, sich selbst eine persönliche Mission zu geben. Vielleicht haben Sie ein besonderes Ziel, eine medizinische Vorgabe oder eine Wette mit Ihren Freunden oder Ihrem Partner. Es könnte Ihnen helfen, es hier zu beschreiben. Es ist auch eine gute Idee, sich eine Belohnung zu gönnen, wenn Sie die Ziele erreichen, oder über einen Notfallplan nachzudenken, wenn die Dinge schlechter werden …",
     "Edit name" : "Name bearbeiten",
     "Show details" : "Details anzeigen",
     "Delete" : "Löschen",

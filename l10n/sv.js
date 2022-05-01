@@ -40,6 +40,7 @@ OC.L10N.register(
     "Show details" : "Visa detaljer",
     "Delete" : "Radera",
     "Name" : "Namn",
+    "Information" : "Information",
     "Age" : "Ålder",
     "Height" : "Höjd",
     "Strong" : "Starkt",
