@@ -168,6 +168,7 @@ OC.L10N.register(
     "New person" : "Pertsona berria",
     "Name" : "Izena",
     "Information" : "Informazioa",
+    "Donations" : "Dohaintzak",
     "Age" : "Adina",
     "Height" : "Altuera",
     "in cm" : "cm-tan",

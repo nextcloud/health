@@ -162,6 +162,7 @@ OC.L10N.register(
     "Give some comment, if you want..." : "Pokud chcete, zadejte nějaký komentář…",
     "Welcome to your health center" : "Vítejte v centru pro své zdraví",
     "Save " : "Uložit",
+    "You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …" : "Zde můžete začít tím, že si dáte svou osobní misi. Možná máte konkrétní cíl, zdravotní specifikaci nebo jste se vsadili s přáteli či partnerem. Může pomoci ji zde popsat. Tím, že si dáte odměnu při dosažení cílů nebo je také dobrý nápad myslet na nouzový plán, pokud se věci zhorší…",
     "Edit name" : "Upravit jméno",
     "Show details" : "Zobrazit podrobnosti",
     "Delete" : "Smazat",
