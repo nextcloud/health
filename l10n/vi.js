@@ -23,6 +23,7 @@ OC.L10N.register(
     "Bad" : "Xấu",
     "Medium" : "Trung bình",
     "Comment" : "Bình luận",
+    "Energy" : "Năng lượng",
     "None" : "Không có",
     "Normal" : "Bình thường",
     "General settings" : "Cài đặt chung",
