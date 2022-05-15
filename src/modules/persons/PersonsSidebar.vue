@@ -102,12 +102,12 @@
 			{{ t('health', 'Breaks') }}
 		</ActionCheckbox>
 		<ActionCheckbox
-			v-if="person && false"
+			v-if="person"
 			:checked="person.enabledModuleMedicine"
 			value="medicine"
 			@change="$store.dispatch('setValue', { key: 'enabledModuleMedicine', value: $event.target.checked })"
 		>
-			{{ t('health', 'Medicine') }}
+			{{ t('health', 'Medication') }}
 		</ActionCheckbox>
 		<ActionCheckbox
 			v-if="person && false"

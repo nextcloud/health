@@ -95,6 +95,13 @@
 					:class="(activeModule === 'activities' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'activities')"
 				/>
+				<AppNavigationItem
+					v-if="p.enabledModuleMedicine"
+					:title="t('health', 'Medication')"
+					icon="icon-public"
+					:class="(activeModule === 'medicine' && index === activePersonId)?'active-module':''"
+					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'medicine')"
+				/>
 			</AppNavigationItem>
 			<AppNavigationItem
 				:title="t('health', 'New person')"

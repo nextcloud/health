@@ -34,7 +34,7 @@
 		/>
 
 		<div
-			v-if="!loading"
+			v-if="!loading && !hideRange"
 			class="chartDataRangeSelector"
 		>
 			<select
@@ -69,7 +69,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(d, i) in datasets" :key="i">
+				<tr v-for="(d, i) in datasets"
+					:key="i"
+					:class="{ active: selectedItem && selectedItem.id === d.id }"
+					@click="selectItem(d)"
+				>
 					<td
 						v-for="(h, ii) in header"
 						:key="ii"
@@ -108,7 +112,7 @@
 							<div v-else-if="h.type === 'text' && d[h.columnId]" class="wrapper align-left">
 								{{ 'prefix' in h ? h.prefix : '' }}{{ d[h.columnId] }}{{ 'suffix' in h ? h.suffix : '' }}
 							</div>
-							<div v-else-if="h.type === 'number' && d[h.columnId]" class="wrapper">
+							<div v-else-if="h.type === 'number' && d[h.columnId] !== null" class="wrapper">
 								{{ 'prefix' in h ? h.prefix : '' }}{{ d[h.columnId] }}{{ 'suffix' in h ? h.suffix : '' }}
 							</div>
 							<div v-else-if="h.type === 'calculate' && d" class="wrapper">
@@ -208,10 +212,15 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		hideRange: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
 			range: 'week',
+			selectedItem: null,
 		}
 	},
 	computed: {
@@ -322,6 +331,13 @@ export default {
 			// eslint-disable-next-line vue/custom-event-name-casing
 			this.$emit('updateItem', item)
 		},
+		selectItem(item) {
+			if (!this.selectedItem || item.id !== this.selectedItem.id) {
+				this.selectedItem = item
+				// eslint-disable-next-line vue/custom-event-name-casing
+				this.$emit('selectItem', item)
+			}
+		},
 	},
 }
 </script>
@@ -375,6 +391,10 @@ export default {
 
 	tr:hover td {
 		opacity: 1;
+	}
+
+	tr.active {
+		background: var(--color-primary-light);
 	}
 
 	.datatable ul {

@@ -29,6 +29,7 @@ import { FeelingApi } from './FeelingApi'
 import { SleepApi } from './SleepApi'
 import { SmokingApi } from './SmokingApi'
 import { ActivitiesApi } from './ActivitiesApi'
+import { MedicationApi } from './MedicationApi'
 import { showSuccess } from '@nextcloud/dialogs'
 
 Vue.use(Vuex)
@@ -39,6 +40,7 @@ const feelingApiClient = new FeelingApi()
 const sleepApiClient = new SleepApi()
 const smokingApiClient = new SmokingApi()
 const activitiesApiClient = new ActivitiesApi()
+const medicationApiClient = new MedicationApi()
 
 // eslint-disable-next-line import/no-named-as-default-member
 export default new Vuex.Store({
@@ -56,6 +58,9 @@ export default new Vuex.Store({
 		sleepDatasets: [],
 		smokingDatasets: [],
 		activitiesDatasets: [],
+		medicationDatasets: [],
+		medicationPlanDatasets: [],
+		selectedMedicationPlan: null,
 	},
 	getters: {
 		person: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId] : null,
@@ -233,6 +238,54 @@ export default new Vuex.Store({
 			}
 			state.activitiesDatasets = datasets
 		},
+		// -------------
+		medicationDatasets(state, data) {
+			state.medicationDatasets = data
+		},
+		medicationDatasetsAppend(state, data) {
+			state.medicationDatasets.push(data)
+		},
+		medicationDatasetsDelete(state, data) {
+			const existingIndex = state.medicationDatasets.findIndex(set => set.id === data.id)
+			if (existingIndex !== -1) {
+				state.medicationDatasets.splice(existingIndex, 1)
+			}
+		},
+		medicationDatasetsUpdate(state, data) {
+			const datasets = state.medicationDatasets
+			const existingIndex = datasets.findIndex(set => set.id === data.id)
+			if (existingIndex !== -1) {
+				datasets.splice(existingIndex, 1)
+				datasets.push(data)
+			}
+			state.medicationDatasets = datasets
+		},
+		// -------------
+		medicationPlanDatasets(state, data) {
+			state.medicationPlanDatasets = data
+		},
+		medicationPlanDatasetsAppend(state, data) {
+			state.medicationPlanDatasets.push(data)
+			state.selectedMedicationPlan = data.id
+		},
+		medicationPlanDatasetsDelete(state, data) {
+			const existingIndex = state.medicationPlanDatasets.findIndex(set => set.id === data.id)
+			if (existingIndex !== -1) {
+				state.medicationPlanDatasets.splice(existingIndex, 1)
+			}
+		},
+		medicationPlanDatasetsUpdate(state, data) {
+			const datasets = state.medicationPlanDatasets
+			const existingIndex = datasets.findIndex(set => set.id === data.id)
+			if (existingIndex !== -1) {
+				datasets.splice(existingIndex, 1)
+				datasets.push(data)
+			}
+			state.medicationPlanDatasets = datasets
+		},
+		medicationPlanSelected(state, planId) {
+			state.selectedMedicationPlan = planId
+		},
 	},
 	actions: {
 		async loadPersons({ dispatch, state, commit }) {
@@ -269,6 +322,7 @@ export default new Vuex.Store({
 			commit('measurementDatasets', [])
 			commit('smokingDatasets', [])
 			commit('activitiesDatasets', [])
+			commit('medicationDatasets', [])
 			if (state.activeModule === 'weight') {
 				await dispatch('weightDatasetsLoadByPerson', getters.person.id)
 			} else if (state.activeModule === 'measurement') {
@@ -281,6 +335,8 @@ export default new Vuex.Store({
 				await dispatch('smokingDatasetsLoadByPerson', getters.person.id)
 			} else if (state.activeModule === 'activities') {
 				await dispatch('activitiesDatasetsLoadByPerson', getters.person.id)
+			} else if (state.activeModule === 'medicine') {
+				await dispatch('medicationPlanDatasetsLoadByPerson', getters.person.id)
 			}
 			commit('loading', false)
 		},
@@ -435,6 +491,49 @@ export default new Vuex.Store({
 			const o = await activitiesApiClient.deleteSet(set)
 			// console.debug('returned o', o)
 			commit('activitiesDatasetsDelete', o)
+		},
+		// module medication
+		async medicationDatasetsAppend({ commit, state }, set) {
+			console.debug(state)
+			const o = await medicationApiClient.addMedication(state.selectedMedicationPlan, set)
+			// console.debug('returned o', o)
+			commit('medicationDatasetsAppend', o)
+		},
+		async medicationDatasetsUpdate({ commit }, set) {
+			const o = await medicationApiClient.updateMedication(set)
+			// console.debug('returned o', o)
+			commit('medicationDatasetsUpdate', o)
+		},
+		async medicationDatasetsDelete({ commit }, set) {
+			const o = await medicationApiClient.deleteMedication(set)
+			// console.debug('returned o', o)
+			commit('medicationDatasetsDelete', o)
+		},
+		// module medicationPlan
+		async medicationPlanDatasetsLoadByPerson({ commit }, personId) {
+			const datasets = await medicationApiClient.findMedicationPlansByPerson(personId)
+			// console.debug('found datasets', datasets)
+			commit('medicationPlanDatasets', datasets)
+		},
+		async medicationPlanDatasetsAppend({ commit, getters }, set) {
+			const o = await medicationApiClient.addMedicationPlan(getters.person.id, set)
+			// console.debug('returned o', o)
+			commit('medicationPlanDatasetsAppend', o)
+		},
+		async medicationPlanDatasetsUpdate({ commit }, set) {
+			const o = await medicationApiClient.updateMedicationPlan(set)
+			// console.debug('returned o', o)
+			commit('medicationPlanDatasetsUpdate', o)
+		},
+		async medicationPlanDatasetsDelete({ commit }, set) {
+			const o = await medicationApiClient.deleteMedicationPlan(set)
+			// console.debug('returned o', o)
+			commit('medicationPlanDatasetsDelete', o)
+		},
+		async medicationPlanSelected({ commit }, plan) {
+			commit('medicationPlanSelected', plan.id)
+			const o = await medicationApiClient.findMedicationByPlan(plan.id)
+			commit('medicationDatasets', o)
 		},
 	},
 })
