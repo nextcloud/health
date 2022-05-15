@@ -87,6 +87,7 @@ class MedicationdataService {
 				$d = new Medicationdata();
 				$d->setPlanId($newPlan->id);
 				$d->setName($med->getName());
+				$d->setIdentifier($med->getIdentifier());
 				$d->setMorning($med->getMorning());
 				$d->setNoon($med->getNoon());
 				$d->setEvening($med->getEvening());
