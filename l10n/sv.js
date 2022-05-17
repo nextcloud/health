@@ -44,6 +44,7 @@ OC.L10N.register(
     "Age" : "Ålder",
     "Height" : "Höjd",
     "Strong" : "Starkt",
+    "Target" : "Mål",
     "Underweight" : "Undervikt"
 },
 "nplurals=2; plural=(n != 1);");

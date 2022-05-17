@@ -42,6 +42,7 @@
     "Age" : "Ålder",
     "Height" : "Höjd",
     "Strong" : "Starkt",
+    "Target" : "Mål",
     "Underweight" : "Undervikt"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
