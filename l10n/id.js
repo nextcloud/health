@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Activities" : "Aktivitas",
+    "Last 12 hours" : "12 jam lalu",
     "Last 24 hours" : "24 Jam lalu",
     "Actions" : "Tindakan",
     "Today" : "Hari ini",

@@ -33,7 +33,7 @@ OC.L10N.register(
     "Click at the + to add the first data." : "Fai clic su + per aggiungere i primi dati.",
     "Today" : "Oggi",
     "Item" : "Elemento",
-    "_%n item is hidden, because it is out of the chosen time range._::_%n items are hidden, because they are out of the chosen time range._" : ["%n elemento è nascosto, perché non rientra nell'intervallo di tempo selezionato.","%n elementi sono nascosti, perché non rientrano nell'intervallo di tempo selezionato."],
+    "_%n item is hidden, because it is out of the chosen time range._::_%n items are hidden, because they are out of the chosen time range._" : ["%n elemento è nascosto, perché non rientra nell'intervallo di tempo selezionato.","%n elementi sono nascosti, perché non rientrano nell'intervallo di tempo selezionato.","%n elementi sono nascosti, perché non rientrano nell'intervallo di tempo selezionato."],
     "Add new {eName}" : "Aggiungi nuovo {eName}",
     "Add new {entityName}" : "Aggiungi nuova {entityName}",
     "Edit {entityName}" : "Modifica {entityName}",
@@ -190,9 +190,9 @@ OC.L10N.register(
     "Perfect" : "Perfetto",
     "Fine" : "Bene",
     "Duration wakeups (minutes)" : "Durata risvegli (minuti)",
-    "_%nd_::_%nd_" : ["%ng","%ng"],
-    "_%nh_::_%nh_" : ["%nh","%nh"],
-    "_%nmin_::_%nmin_" : ["%nmin","%nmin"],
+    "_%nd_::_%nd_" : ["%ng","%ng","%ng"],
+    "_%nh_::_%nh_" : ["%nh","%nh","%nh"],
+    "_%nmin_::_%nmin_" : ["%nmin","%nmin","%nmin"],
     "Cigarettes" : "Sigarette",
     "Desire level" : "Livello di desiderio",
     "Saved money" : "Denaro risparmiato",
@@ -262,4 +262,4 @@ OC.L10N.register(
     "Obesity class III" : "Obesità classe III",
     "Value successfully saved" : "Valore salvato correttamente"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
