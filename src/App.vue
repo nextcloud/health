@@ -18,6 +18,7 @@
 			<SleepContent v-if="person && activeModule === 'sleep' && person.enabledModuleSleep" />
 			<SmokingContent v-if="person && activeModule === 'smoking' && person.enabledModuleSmoking" />
 			<ActivitiesContent v-if="person && activeModule === 'activities' && person.enabledModuleActivities" />
+			<MedicationContent v-if="person && activeModule === 'medicine' && person.enabledModuleMedicine" />
 		</AppContent>
 		<AppSidebar
 			v-show="showSidebar"
@@ -116,6 +117,7 @@ import SmokingSidebar from './modules/smoking/SmokingSidebar'
 import SmokingContent from './modules/smoking/SmokingContent'
 import ActivitiesContent from './modules/activities/ActivitiesContent'
 import ActivitiesSidebar from './modules/activities/ActivitiesSidebar'
+import MedicationContent from './modules/medication/MedicationContent'
 
 export default {
 	name: 'App',
@@ -141,6 +143,7 @@ export default {
 		SmokingSidebar,
 		SmokingContent,
 		ActivitiesContent,
+		MedicationContent,
 	},
 	data() {
 		return {

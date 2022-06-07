@@ -92,4 +92,10 @@ class PermissionService {
 		return true;
 	}
 
+	public function medicationData($id, $userId): bool
+	{
+		// TODO
+		return true;
+	}
+
 }

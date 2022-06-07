@@ -101,5 +101,24 @@ return [
 		['name' => 'activitiesdata_api#create',	'url' => 'api/1/activities/dataset/person/{personId}',	'verb' => 'POST'],
 		['name' => 'activitiesdata_api#delete',	'url' => 'api/1/activities/dataset/{id}',	'verb' => 'DELETE'],
 		['name' => 'activitiesdata_api#update',	'url' => 'api/1/activities/dataset/{id}',	'verb' => 'PUT'],
+
+		// medication data
+		['name' => 'medicationdata#findPlanByPerson',	'url' => '/medication/plans/person/{personId}',	'verb' => 'GET'],
+		['name' => 'medicationdata#createPlan',	'url' => '/medication/plans/person/{personId}',	'verb' => 'POST'],
+		['name' => 'medicationdata#deletePlan',	'url' => '/medication/plans/{id}',	'verb' => 'DELETE'],
+		['name' => 'medicationdata#updatePlan',	'url' => '/medication/plans/{id}',	'verb' => 'PUT'],
+		['name' => 'medicationdata#findMedicationByPlan',	'url' => '/medication/medication/plan/{planId}',	'verb' => 'GET'],
+		['name' => 'medicationdata#createMedication',	'url' => '/medication/medication/plan/{planId}',	'verb' => 'POST'],
+		['name' => 'medicationdata#deleteMedication',	'url' => '/medication/medication/{id}',	'verb' => 'DELETE'],
+		['name' => 'medicationdata#updateMedication',	'url' => '/medication/medication/{id}',	'verb' => 'PUT'],
+
+		['name' => 'medicationdata_api#findPlanByPerson',	'url' => 'api/1/medication/plans/person/{personId}',	'verb' => 'GET'],
+		['name' => 'medicationdata_api#createPlan',	'url' => 'api/1/medication/plans/person/{personId}',	'verb' => 'POST'],
+		['name' => 'medicationdata_api#deletePlan',	'url' => 'api/1/medication/plans/{id}',	'verb' => 'DELETE'],
+		['name' => 'medicationdata_api#updatePlan',	'url' => 'api/1/medication/plans/{id}',	'verb' => 'PUT'],
+		['name' => 'medicationdata_api#findMedicationByPlan',	'url' => 'api/1/medication/medication/plan/{planId}',	'verb' => 'GET'],
+		['name' => 'medicationdata_api#createMedication',	'url' => 'api/1/medication/medication/plan/{planId}',	'verb' => 'POST'],
+		['name' => 'medicationdata_api#deleteMedication',	'url' => 'api/1/medication/medication/{id}',	'verb' => 'DELETE'],
+		['name' => 'medicationdata_api#updateMedication',	'url' => 'api/1/medication/medication/{id}',	'verb' => 'PUT'],
     ]
 ];
