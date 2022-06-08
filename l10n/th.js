@@ -18,8 +18,8 @@ OC.L10N.register(
     "Comment" : "แสดงความคิดเห็น",
     "None" : "ไม่มี",
     "Normal" : "ปกติ",
+    "Name" : "ชื่อ",
     "Show details" : "แสดงข้อมูล",
-    "Delete" : "ลบ",
-    "Name" : "ชื่อ"
+    "Delete" : "ลบ"
 },
 "nplurals=1; plural=0;");

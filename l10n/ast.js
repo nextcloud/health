@@ -16,8 +16,8 @@ OC.L10N.register(
     "Normal" : "Normal",
     "Temperature" : "Temperatura",
     "General settings" : "Axustes xenerales",
-    "Delete" : "Desaniciar",
     "Name" : "Nome",
+    "Delete" : "Desaniciar",
     "Information" : "Información"
 },
 "nplurals=2; plural=(n != 1);");

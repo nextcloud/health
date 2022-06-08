@@ -21,10 +21,10 @@ OC.L10N.register(
     "Normal" : "Normal",
     "Temperature" : "Temperatura",
     "General settings" : "Configuraciones generales",
+    "Name" : "Nombre",
     "Edit name" : "Editar nombre",
     "Show details" : "Mostrar detalles",
     "Delete" : "Eliminar",
-    "Name" : "Nombre",
     "Information" : "Información",
     "Strong" : "Fuerte"
 },

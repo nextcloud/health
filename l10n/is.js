@@ -27,10 +27,11 @@ OC.L10N.register(
     "Temperature" : "Hitastig",
     "Values" : "Gildi",
     "General settings" : "Almennar stillingar",
+    "Name" : "Heiti",
+    "Identifier" : "Auðkenni",
     "Edit name" : "Breyta heiti",
     "Show details" : "Birta nánari upplýsingar",
     "Delete" : "Eyða",
-    "Name" : "Heiti",
     "Information" : "Upplýsingar",
     "Quality" : "Quality",
     "Strong" : "Sterkt"

@@ -25,10 +25,10 @@ OC.L10N.register(
     "None" : "Cap",
     "Normal" : "Normala",
     "General settings" : "Paramètres generals",
+    "Name" : "Nom",
     "Edit name" : "Modificar lo nom",
     "Show details" : "Mostrar detalhs",
     "Delete" : "Suprimir",
-    "Name" : "Nom",
     "Information" : "Informacions"
 },
 "nplurals=2; plural=(n > 1);");

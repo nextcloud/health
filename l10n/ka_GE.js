@@ -18,8 +18,8 @@ OC.L10N.register(
     "Normal" : "ნორმალური",
     "Temperature" : "ტემპერატურა",
     "General settings" : "მთავარი პარამეტრები",
-    "Delete" : "წაშლა",
     "Name" : "სახელი",
+    "Delete" : "წაშლა",
     "Information" : "ინფორმაცია",
     "Strong" : "ძლიერია"
 },

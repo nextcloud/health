@@ -16,8 +16,8 @@ OC.L10N.register(
     "Comment" : "undefined",
     "None" : "юу ч үгүй",
     "Normal" : "Хэвийн",
-    "Delete" : "Устгах",
     "Name" : "Нэр",
+    "Delete" : "Устгах",
     "Information" : "Мэдээлэл"
 },
 "nplurals=2; plural=(n != 1);");

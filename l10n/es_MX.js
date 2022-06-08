@@ -19,8 +19,8 @@ OC.L10N.register(
     "Normal" : "Normal",
     "Temperature" : "Temperatura",
     "General settings" : "Configuraciones generales",
-    "Delete" : "Eliminar",
     "Name" : "Nombre",
+    "Delete" : "Eliminar",
     "Information" : "Información",
     "Strong" : "Fuerte"
 },

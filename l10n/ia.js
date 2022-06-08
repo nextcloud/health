@@ -13,7 +13,7 @@ OC.L10N.register(
     "Other" : "Altere",
     "Comment" : "Commentario",
     "None" : "Nulle",
-    "Delete" : "Deler",
-    "Name" : "Nomine"
+    "Name" : "Nomine",
+    "Delete" : "Deler"
 },
 "nplurals=2; plural=(n != 1);");

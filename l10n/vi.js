@@ -27,8 +27,8 @@ OC.L10N.register(
     "None" : "Không có",
     "Normal" : "Bình thường",
     "General settings" : "Cài đặt chung",
+    "Name" : "Tên",
     "Edit name" : "Sửa đổi tên",
-    "Delete" : "Xóa",
-    "Name" : "Tên"
+    "Delete" : "Xóa"
 },
 "nplurals=1; plural=0;");

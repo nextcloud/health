@@ -16,9 +16,9 @@ OC.L10N.register(
     "Comment" : "Komento",
     "None" : "Nenio",
     "Temperature" : "Temperaturo",
+    "Name" : "Nomo",
     "Show details" : "Montri la detalojn",
     "Delete" : "Forigi",
-    "Name" : "Nomo",
     "Strong" : "Forta"
 },
 "nplurals=2; plural=(n != 1);");

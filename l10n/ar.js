@@ -28,10 +28,10 @@ OC.L10N.register(
     "Normal" : "عادي",
     "Temperature" : "درجة الحرارة",
     "General settings" : "الإعدادات العامة",
+    "Name" : "الاسم",
     "Edit name" : "تعديل الاسم",
     "Show details" : "عرض التفاصيل",
     "Delete" : "إزالة",
-    "Name" : "الاسم",
     "Information" : "معلومات",
     "Quality" : "الجودة",
     "Strong" : "قوية"

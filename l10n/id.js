@@ -18,10 +18,10 @@ OC.L10N.register(
     "None" : "Tidak ada",
     "Temperature" : "Suhu",
     "Values" : "Nilai",
+    "Name" : "Nama",
     "Edit name" : "Edit nama",
     "Show details" : "Tampilkan detail",
     "Delete" : "Hapus",
-    "Name" : "Nama",
     "Information" : "Informasi"
 },
 "nplurals=1; plural=0;");

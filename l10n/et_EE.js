@@ -19,9 +19,9 @@ OC.L10N.register(
     "Comment" : "Kommentaar",
     "None" : "Pole",
     "Temperature" : "Temperatuur",
+    "Name" : "Nimi",
     "Edit name" : "Muuda nime",
     "Delete" : "Kustuta",
-    "Name" : "Nimi",
     "Information" : "Informatsioon"
 },
 "nplurals=2; plural=(n != 1);");

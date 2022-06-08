@@ -27,9 +27,9 @@ OC.L10N.register(
     "None" : "هیچ‌کدام",
     "Normal" : "معمولی",
     "General settings" : "تنظیمات عمومی",
+    "Name" : "نام",
     "Edit name" : "ویرایش نام",
     "Delete" : "حذف",
-    "Name" : "نام",
     "Information" : "اطلاعات",
     "Strong" : "قوی"
 },

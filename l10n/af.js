@@ -18,8 +18,8 @@ OC.L10N.register(
     "None" : "Geen",
     "Normal" : "Normaal",
     "Temperature" : "Temperatuur",
-    "Delete" : "Skrap",
     "Name" : "Naam",
+    "Delete" : "Skrap",
     "Information" : "Inligting",
     "Quality" : "Kwaliteit"
 },

@@ -24,10 +24,10 @@ OC.L10N.register(
     "Normal" : "Нормална",
     "Temperature" : "Температура",
     "General settings" : "Опште поставке",
+    "Name" : "Име",
     "Edit name" : "Измени име",
     "Show details" : "Прикажи детаље",
     "Delete" : "Избриши",
-    "Name" : "Име",
     "Information" : "Информације",
     "Strong" : "Јака"
 },

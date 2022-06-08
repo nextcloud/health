@@ -21,10 +21,10 @@ OC.L10N.register(
     "Comment" : "Comentariu",
     "None" : "Niciuna",
     "Normal" : "Normal",
+    "Name" : "Nume",
     "Edit name" : "Modifică numele",
     "Show details" : "Arată detaliile",
     "Delete" : "Șterge",
-    "Name" : "Nume",
     "Information" : "Informații"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

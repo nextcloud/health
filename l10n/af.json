@@ -16,8 +16,8 @@
     "None" : "Geen",
     "Normal" : "Normaal",
     "Temperature" : "Temperatuur",
-    "Delete" : "Skrap",
     "Name" : "Naam",
+    "Delete" : "Skrap",
     "Information" : "Inligting",
     "Quality" : "Kwaliteit"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

@@ -17,9 +17,9 @@ OC.L10N.register(
     "None" : "Nav",
     "Temperature" : "Temperatūra",
     "General settings" : "Vispārīgie iestatījumi",
+    "Name" : "Vārds",
     "Show details" : "Rādīt detaļas",
     "Delete" : "Dzēst",
-    "Name" : "Vārds",
     "Information" : "Informācija",
     "Strong" : "Stipra"
 },

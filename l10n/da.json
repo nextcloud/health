@@ -23,10 +23,10 @@
     "Normal" : "Normal",
     "Temperature" : "Temperatur",
     "General settings" : "Generelle indstillinger",
+    "Name" : "Navn",
     "Edit name" : "Rediger navn",
     "Show details" : "Vis detaljer",
     "Delete" : "Slet",
-    "Name" : "Navn",
     "Information" : "Information",
     "Strong" : "Stærkt"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

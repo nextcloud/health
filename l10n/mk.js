@@ -25,10 +25,10 @@ OC.L10N.register(
     "None" : "Ништо",
     "Temperature" : "Температура",
     "General settings" : "Општи параметри",
+    "Name" : "Име",
     "Edit name" : "Уреди име",
     "Show details" : "Прикажи детали",
     "Delete" : "Избриши",
-    "Name" : "Име",
     "Quality" : "Квалитет"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

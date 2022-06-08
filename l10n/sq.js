@@ -18,8 +18,8 @@ OC.L10N.register(
     "Normal" : "Normal",
     "Temperature" : "Temperatura",
     "General settings" : "Opsjonet e Pergjithshme",
-    "Delete" : "Fshij",
     "Name" : "Emri",
+    "Delete" : "Fshij",
     "Information" : "Informacion",
     "Strong" : "I fortë"
 },

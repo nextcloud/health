@@ -25,10 +25,10 @@ OC.L10N.register(
     "Normal" : "Normal",
     "Temperature" : "Temperatur",
     "General settings" : "Generelle indstillinger",
+    "Name" : "Navn",
     "Edit name" : "Rediger navn",
     "Show details" : "Vis detaljer",
     "Delete" : "Slet",
-    "Name" : "Navn",
     "Information" : "Information",
     "Strong" : "Stærkt"
 },

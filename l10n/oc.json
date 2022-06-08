@@ -23,10 +23,10 @@
     "None" : "Cap",
     "Normal" : "Normala",
     "General settings" : "Paramètres generals",
+    "Name" : "Nom",
     "Edit name" : "Modificar lo nom",
     "Show details" : "Mostrar detalhs",
     "Delete" : "Suprimir",
-    "Name" : "Nom",
     "Information" : "Informacions"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

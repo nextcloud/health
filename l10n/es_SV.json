@@ -16,8 +16,8 @@
     "Normal" : "Normal",
     "Temperature" : "Temperatura",
     "General settings" : "Configuraciones generales",
-    "Delete" : "Borrar",
     "Name" : "Nombre",
+    "Delete" : "Borrar",
     "Information" : "Información",
     "Strong" : "Fuerte"
 },"pluralForm" :"nplurals=2; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"

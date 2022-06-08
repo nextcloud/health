@@ -30,10 +30,11 @@ OC.L10N.register(
     "Normal" : "Normal",
     "Temperature" : "Temperatura",
     "General settings" : "Paràmetres generals",
+    "Name" : "Cognom",
+    "Identifier" : "Identificador",
     "Edit name" : "Edita el nom",
     "Show details" : "Mostra detalls",
     "Delete" : "Eliminar",
-    "Name" : "Cognom",
     "Information" : "Informació",
     "Quality" : "Qualitat",
     "Strong" : "Forta"

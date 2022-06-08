@@ -26,8 +26,9 @@
     "Normal" : "Normal",
     "Temperature" : "Temperature",
     "General settings" : "General settings",
-    "Delete" : "Delete",
     "Name" : "Surname",
+    "Identifier" : "Identifier",
+    "Delete" : "Delete",
     "Information" : "Information",
     "Strong" : "Strong"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

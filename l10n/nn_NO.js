@@ -16,8 +16,8 @@ OC.L10N.register(
     "Bad" : "Dårleg",
     "Comment" : "Kommentér",
     "None" : "Ingen",
-    "Delete" : "Slett",
     "Name" : "Namn",
+    "Delete" : "Slett",
     "Information" : "Informasjon"
 },
 "nplurals=2; plural=(n != 1);");
