@@ -159,6 +159,7 @@ OC.L10N.register(
     "measurement dataset" : "podatkovna zbirka meritev",
     "Give some comment, if you want..." : "Dodajte morda še kako opombo ...",
     "Name" : "Ime",
+    "Identifier" : "Določilo",
     "Welcome to your health center" : "Dobrodošli v osebnem zdravstvenem programu",
     "Save " : "Shrani",
     "Edit name" : "Uredi ime",

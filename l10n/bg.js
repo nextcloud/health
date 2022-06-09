@@ -161,6 +161,7 @@ OC.L10N.register(
     "measurement dataset" : "набор от данни за измерване",
     "Give some comment, if you want..." : "Направете коментар, ако искате...",
     "Name" : "Име",
+    "Identifier" : "Идентификатор",
     "Welcome to your health center" : "Добре дошли във вашия здравен център",
     "Save " : "Запиши",
     "Edit name" : "Редактиране на името",

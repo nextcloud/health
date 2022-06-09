@@ -7,6 +7,7 @@ OC.L10N.register(
     "Today" : "Sot",
     "Cancel" : "Anullo",
     "Add" : "Shto",
+    "Duration" : "Kohëzgjatja",
     "Category" : "Kategori",
     "Activity" : "Aktiviteti",
     "Date" : "Data",

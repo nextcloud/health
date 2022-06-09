@@ -32,6 +32,7 @@ OC.L10N.register(
     "Temperature" : "Temperatūra",
     "General settings" : "Bendri nustatymai",
     "Name" : "Vardas, pavardė",
+    "Identifier" : "Identifikatorius",
     "Save " : "Įrašyti",
     "Edit name" : "Taisyti pavadinimą",
     "Show details" : "Rodyti išsamiau",
