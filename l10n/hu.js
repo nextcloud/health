@@ -162,6 +162,7 @@ OC.L10N.register(
     "Give some comment, if you want..." : "Ha szeretne, írjon megjegyzést…",
     "Medication plans" : "Gyógyszeres kezelések tervei",
     "Select a medication plan" : "Válasszon egy gyógyszeres kezelési tervet",
+    "Medication plan" : "Gyógyszeres kezelési terv",
     "Name" : "Név",
     "Identifier" : "Azonosító",
     "Morning" : "Reggel",

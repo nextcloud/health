@@ -162,6 +162,7 @@ OC.L10N.register(
     "Give some comment, if you want..." : "Deixe algum comentário, se quiser... ",
     "Medication plans" : "Planos de medicamentos",
     "Select a medication plan" : "Selecione um plano de medicamento",
+    "Medication plan" : "Plano de medicação",
     "Name" : "Nome",
     "Identifier" : "Identificador",
     "Morning" : "Manhã",

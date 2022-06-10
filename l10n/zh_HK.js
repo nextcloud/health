@@ -162,6 +162,7 @@ OC.L10N.register(
     "Give some comment, if you want..." : "如有需要，請發表評論...",
     "Medication plans" : "藥物計劃",
     "Select a medication plan" : "選擇藥物計劃",
+    "Medication plan" : "藥物計劃",
     "Name" : "姓名",
     "Identifier" : "標識符",
     "Morning" : "早上",

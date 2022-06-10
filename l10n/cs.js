@@ -162,6 +162,7 @@ OC.L10N.register(
     "Give some comment, if you want..." : "Pokud chcete, zadejte nějaký komentář…",
     "Medication plans" : "Rozvrhy podávání léků",
     "Select a medication plan" : "Vyberte rozvrh podávání léků",
+    "Medication plan" : "Rozvrh podávání léků",
     "Name" : "Název",
     "Identifier" : "Identifikátor",
     "Morning" : "Ráno",
