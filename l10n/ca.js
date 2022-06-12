@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "Salut",
+    "Weight" : "Pes",
     "Activities" : "Activitat",
     "Last week" : "La setmana passada",
     "Last month" : "El mes passat",
@@ -36,7 +37,10 @@ OC.L10N.register(
     "Show details" : "Mostra detalls",
     "Delete" : "Eliminar",
     "Information" : "Informació",
+    "Age" : "Edat",
+    "Height" : "Alçada",
     "Quality" : "Qualitat",
-    "Strong" : "Forta"
+    "Strong" : "Forta",
+    "Underweight" : "Baix pes"
 },
 "nplurals=2; plural=(n != 1);");
