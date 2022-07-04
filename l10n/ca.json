@@ -19,6 +19,7 @@
     "Running" : "Córrer",
     "Job" : "Feina",
     "Biking" : "Anar en bici",
+    "Driving" : "Conducció",
     "Other" : "Altres",
     "Good" : "Bona",
     "Bad" : "Dolent",
@@ -35,10 +36,13 @@
     "Show details" : "Mostra detalls",
     "Delete" : "Eliminar",
     "Information" : "Informació",
+    "Donations" : "Donatius",
     "Age" : "Edat",
     "Height" : "Alçada",
     "Quality" : "Qualitat",
     "Strong" : "Forta",
+    "Target" : "Objectiu",
+    "Body fat" : "Greix corporal",
     "Underweight" : "Baix pes"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

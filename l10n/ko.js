@@ -21,6 +21,7 @@ OC.L10N.register(
     "Running" : "달리기",
     "Job" : "직업",
     "Biking" : "오토바이 타기",
+    "Driving" : "운전",
     "Other" : "기타",
     "Good" : "좋음",
     "Bad" : "나쁨",

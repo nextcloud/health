@@ -21,6 +21,7 @@ OC.L10N.register(
     "Running" : "Córrer",
     "Job" : "Feina",
     "Biking" : "Anar en bici",
+    "Driving" : "Conducció",
     "Other" : "Altres",
     "Good" : "Bona",
     "Bad" : "Dolent",
@@ -37,10 +38,13 @@ OC.L10N.register(
     "Show details" : "Mostra detalls",
     "Delete" : "Eliminar",
     "Information" : "Informació",
+    "Donations" : "Donatius",
     "Age" : "Edat",
     "Height" : "Alçada",
     "Quality" : "Qualitat",
     "Strong" : "Forta",
+    "Target" : "Objectiu",
+    "Body fat" : "Greix corporal",
     "Underweight" : "Baix pes"
 },
 "nplurals=2; plural=(n != 1);");
