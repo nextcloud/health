@@ -65,7 +65,7 @@ class MedicationdataService {
 		return $this->medicationdataMapper->findAll($planId);
 	}
 
-	public function createPlan($personId, $date, $comment): ?Entity
+	public function createPlan($personId, $date, $comment, $takeOver): ?Entity
 	{
 		if( !$this->permissionService->personData($personId, $this->userId)) {
 			return null;
@@ -81,7 +81,7 @@ class MedicationdataService {
 		$d->setComment($comment);
 		$newPlan = $this->medicationPlanMapper->insert($d);
 
-		if ($lastPlan != null) {
+		if ($lastPlan != null && $takeOver == true) {
 			$medication = $this->medicationdataMapper->findAll($lastPlan->id);
 			foreach( $medication as $med ) {
 				$d = new Medicationdata();
