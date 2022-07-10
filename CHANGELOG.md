@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+##  [1.6.0] - 2022-07-10
+### Added
+- Medication module (many thanks to kenda)
+
+### Updated
+- translations
+
 ##  [1.5.1] - 2022-04-28
 ### Updated
 - translations

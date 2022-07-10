@@ -1,5 +1,5 @@
 # Health
-##### version 1.5.1
+##### version 1.6.0
 ### Track your health. Use the advantages of a trusted platform.
 
 The app provides different modules to track your  health data.
@@ -11,3 +11,4 @@ Following modules are served:
 - Sleep
 - Smoking
 - Activities
+- Medication
