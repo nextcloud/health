@@ -70,6 +70,15 @@ export default {
 					type: 'longtext',
 					show: true,
 				},
+				{
+					name: t('health', 'Take over previous medication'),
+					columnId: 'takeOver',
+					hint: t('health', 'A new plan will take over the medication from the previous medication plan by default. Uncheck this option to create an empty medication plan.'),
+					type: 'boolean',
+					default: () => true,
+					show: false,
+					inputMode: 'add',
+				}
 			]
 		},
 	},

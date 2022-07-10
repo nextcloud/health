@@ -74,11 +74,12 @@ class MedicationdataApiController extends ApiController {
 	 * @param int $personId
 	 * @param string $date
 	 * @param string $comment
+	 * @param bool $takeOver
 	 * @return DataResponse
 	 */
-	public function createPlan(int $personId, string $date, string $comment = ''): DataResponse
+	public function createPlan(int $personId, string $date, string $comment = '', bool $takeOver = true): DataResponse
 	{
-		return new DataResponse($this->medicationdataService->createPlan($personId, $date, $comment));
+		return new DataResponse($this->medicationdataService->createPlan($personId, $date, $comment, $takeOver));
 	}
 
 	/**

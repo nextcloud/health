@@ -56,7 +56,7 @@
 					<div
 						v-for="(h, index) in header"
 						:key="index"
-						:class="{ hide: !h.show, field: true }"
+						:class="{ hide: h.inputMode ? h.inputMode !== inputMode : !h.show, field: true }"
 					>
 						<h2 v-if="isNewSection(index)">
 							{{ h.section.name }}
@@ -180,7 +180,7 @@ export default {
 		},
 		inputMode: {
 			type: String,
-			default: t('health', 'Add', {}), // add or edit
+			default: 'add', // add or edit
 		},
 	},
 	data() {
