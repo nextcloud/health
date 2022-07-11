@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Health" : "Salude",
     "Track your health. Use the advantages of a trusted platform." : "Controlla·ti sa salude. Piga·ti ampramanu de una prataforma de cunfiàntzia.",
-    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n\nHealth is everything." : "Custa aplicatzione oferit paritzos mòdulos pro si mantènnere passu passu cun is datos de sa salude.\n\nSunt a disponimentu is mòdulos in fatu:\n- Pesu\n- Sensatzione\n- Medidas\n- Sonnu\n- Pipòngiu\n- Fainas\n\nSa salude est totu.",
     "Created at {creationTime}" : "Creadu su {creationTime}",
     "Person" : "Persone",
     "Weight" : "Pesu",
@@ -39,7 +38,6 @@ OC.L10N.register(
     "Will be calculated" : "S'at a calculare",
     "Send {eName}" : "Imbia {eName}",
     "Cancel" : "Annulla",
-    "Add" : "Agiunghe",
     "Burned calories" : "Calorias brusiadas",
     "Duration" : "Durada",
     "Intensity" : "Intensidade",

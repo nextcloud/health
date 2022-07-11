@@ -9,7 +9,6 @@ OC.L10N.register(
     "Actions" : "Hành động",
     "Today" : "Hôm nay",
     "Cancel" : "Hủy",
-    "Add" : "Thêm",
     "Duration" : "Khoảng thời gian",
     "Data" : "Dữ liệu",
     "Category" : "Hạng mục",

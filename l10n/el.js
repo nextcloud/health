@@ -26,7 +26,6 @@ OC.L10N.register(
     "Edit {entityName}" : "Επεξεργασία {entityName}",
     "Send {eName}" : "Αποστολή {eName}",
     "Cancel" : "Ακύρωση",
-    "Add" : "Προσθήκη",
     "Burned calories" : "Καμένες θερμίδες",
     "Duration" : "Διάρκεια",
     "Distance" : "Απόσταση",

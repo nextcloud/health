@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Health" : "Zdrowie",
     "Track your health. Use the advantages of a trusted platform." : "Monitoruj swoje zdrowie. Skorzystaj z zalet zaufanej platformy.",
-    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n\nHealth is everything." : "Aplikacja udostępnia różne moduły do monitorowania danych zdrowotnych.\n\nObsługiwane są następujące moduły:\n- Waga\n- Samopoczucie\n- Pomiary\n- Sen\n- Palenie\n- Aktywność\n\nZdrowie jest wszystkim.",
     "Created at {creationTime}" : "Utworzono o {creationTime}",
     "Person" : "Osoba",
     "Weight" : "Waga",
@@ -40,7 +39,6 @@ OC.L10N.register(
     "Will be calculated" : "Zostanie obliczony",
     "Send {eName}" : "Wyślij {eName}",
     "Cancel" : "Anuluj",
-    "Add" : "Dodaj",
     "Burned calories" : "Spalone kalorie",
     "Duration" : "Czas trwania",
     "Intensity" : "Intensywność",

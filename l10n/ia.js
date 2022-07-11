@@ -6,7 +6,6 @@ OC.L10N.register(
     "Actions" : "Actiones",
     "Today" : "Hodie",
     "Cancel" : "Cancellar",
-    "Add" : "Adder",
     "Category" : "Categoria",
     "Activity" : "Activitate",
     "Date" : "Date",

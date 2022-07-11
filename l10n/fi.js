@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Health" : "Hyvinvointi",
     "Track your health. Use the advantages of a trusted platform." : "Seuraa hyvinvointiasi. Hyödynnä luotetun järjestelmän etuja.",
-    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n\nHealth is everything." : "Tämä sovellus tarjoaa eri moduuleja terveystietojen seurantaan.\n\nSeuraavat moduulit ovat saatavilla:\n- Paino\n- Mieliala\n- Mittaukset\n- Uni\n- Tupakointi\n- Aktiviteetit\n\nTerveys on kaikki kaikessa.",
     "Created at {creationTime}" : "Luotu {creationTime}",
     "Person" : "Henkilö",
     "Weight" : "Paino",
@@ -39,7 +38,6 @@ OC.L10N.register(
     "Will be calculated" : "Lasketaan",
     "Send {eName}" : "Lähetä {eName}",
     "Cancel" : "Peruuta",
-    "Add" : "Lisää",
     "Burned calories" : "Poltetut kalorit",
     "Duration" : "Kesto",
     "Intensity" : "Intensiteetti",

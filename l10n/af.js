@@ -6,7 +6,6 @@ OC.L10N.register(
     "Actions" : "Aksies",
     "Today" : "Vandag",
     "Cancel" : "Kanselleer",
-    "Add" : "Voeg by",
     "Duration" : "Duur",
     "Category" : "Kategorie",
     "Activity" : "Aktiwiteit",

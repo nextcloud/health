@@ -6,7 +6,6 @@ OC.L10N.register(
     "Actions" : "Darbības",
     "Today" : "Šodien",
     "Cancel" : "Atcelt",
-    "Add" : "Pievienot",
     "Category" : "Kategorija",
     "Activity" : "Darbības",
     "Date" : "Datums",

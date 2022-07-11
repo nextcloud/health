@@ -7,7 +7,6 @@ OC.L10N.register(
     "Actions" : "Acțiuni",
     "Today" : "Astăzi",
     "Cancel" : "Anulare",
-    "Add" : "Adaugă",
     "Duration" : "Durată",
     "Category" : "Categorie",
     "Activity" : "Activitate",

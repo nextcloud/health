@@ -11,7 +11,6 @@ OC.L10N.register(
     "Actions" : "Åtgärder",
     "Today" : "Idag",
     "Cancel" : "Avbryt",
-    "Add" : "Lägg till",
     "Duration" : "Varaktighet",
     "Distance" : "Distans",
     "Chart" : "Diagram",

@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Health" : "Здоровье",
     "Track your health. Use the advantages of a trusted platform." : "Следите за своим здоровьем, используя преимущества платформы, которой вы доверяете.",
-    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n\nHealth is everything." : "Это приложение позволяет отслеживать показатели здоровья.\n\nПоддерживается работа со следующими показателями:\n - Вес\n - Самочувствие\n - Измерения\n - Сон\n - Курение\n - Физическая нагрузка\n\nЗдоровье — это главное.",
     "Created at {creationTime}" : "Создано {creationTime}",
     "Person" : "Персона",
     "Weight" : "Вес",
@@ -35,7 +34,6 @@ OC.L10N.register(
     "Edit {entityName}" : "Изменить {entityName}",
     "Send {eName}" : "Отправить {eName}",
     "Cancel" : "Отмена",
-    "Add" : "Добавить",
     "Burned calories" : "Калорий сожжено",
     "Duration" : "Продолжительность",
     "Intensity" : "Интенсивность",

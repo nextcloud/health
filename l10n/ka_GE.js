@@ -6,7 +6,6 @@ OC.L10N.register(
     "Actions" : "მოქმედებები",
     "Today" : "დღეს",
     "Cancel" : "უარყოფა",
-    "Add" : "დამატება",
     "Category" : "კატეგორია",
     "Activity" : "აქტივობა",
     "Date" : "თარიღი",

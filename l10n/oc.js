@@ -10,7 +10,6 @@ OC.L10N.register(
     "Download (CSV)" : "Telecargar (CSV)",
     "Today" : "Uèi",
     "Cancel" : "Anullar",
-    "Add" : "Apondre",
     "Duration" : "Durada",
     "Intensity" : "Intensitat",
     "Distance" : "Distància",

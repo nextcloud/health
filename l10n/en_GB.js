@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Health" : "Health",
     "Track your health. Use the advantages of a trusted platform." : "Track your health. Use the advantages of a trusted platform.",
-    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n\nHealth is everything." : "The app provides different modules to track health data.\n\nThe following modules are provided:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n\nHealth is everything.",
     "Created at {creationTime}" : "Created at {creationTime}",
     "Person" : "Person",
     "Weight" : "Weight",
@@ -15,7 +14,6 @@ OC.L10N.register(
     "Actions" : "Actions",
     "Today" : "Today",
     "Cancel" : "Cancel",
-    "Add" : "Add",
     "Category" : "Category",
     "Activity" : "Activity",
     "Date" : "Date",

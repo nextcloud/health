@@ -11,7 +11,6 @@ OC.L10N.register(
     "Actions" : "동작",
     "Today" : "오늘",
     "Cancel" : "취소",
-    "Add" : "추가",
     "Duration" : "길이",
     "Distance" : "거리",
     "Data" : "데이터",

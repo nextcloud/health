@@ -6,7 +6,6 @@ OC.L10N.register(
     "Actions" : "ක්‍රියාමාර්ග",
     "Today" : "අද",
     "Cancel" : "අවලංගු කරන්න",
-    "Add" : "එකතු කරන්න",
     "Duration" : "කාල සීමාව",
     "Category" : "ප්‍රවර්ගය",
     "Activity" : "ක්‍රියාකාරකම",

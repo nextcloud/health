@@ -11,7 +11,6 @@ OC.L10N.register(
     "Actions" : "Accions",
     "Today" : "Avui",
     "Cancel" : "Cancel·la",
-    "Add" : "Afegeix",
     "Duration" : "Durada",
     "Distance" : "Distància",
     "Data" : "Dades",

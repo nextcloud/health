@@ -9,7 +9,6 @@ OC.L10N.register(
     "Actions" : "الإجراءات",
     "Today" : "اليوم",
     "Cancel" : "إلغاء",
-    "Add" : "إضافة",
     "Duration" : "المدة الزمنية",
     "Distance" : "المسافة",
     "Category" : "الفئة",

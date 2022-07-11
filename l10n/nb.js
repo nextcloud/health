@@ -10,7 +10,6 @@ OC.L10N.register(
     "Actions" : "Handlinger",
     "Today" : "I dag",
     "Cancel" : "Avbryt",
-    "Add" : "Legg til",
     "Duration" : "Varighet",
     "Distance" : "Distanse",
     "Data" : "Data",

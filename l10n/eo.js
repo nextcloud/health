@@ -6,7 +6,6 @@ OC.L10N.register(
     "Actions" : "Agoj",
     "Today" : "Hodiaŭ",
     "Cancel" : "Nuligi",
-    "Add" : "Aldoni",
     "Category" : "Kategorio",
     "Activity" : "Aktivaĵoj",
     "Date" : "Date",

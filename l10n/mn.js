@@ -6,7 +6,6 @@ OC.L10N.register(
     "Actions" : "Үйл ажиллагаа",
     "Today" : "өнөөдөр",
     "Cancel" : "болиулах",
-    "Add" : "нэмэх",
     "Category" : "Ангилал",
     "Activity" : "Үйлдлүүд",
     "Date" : "Он сар өдөр",

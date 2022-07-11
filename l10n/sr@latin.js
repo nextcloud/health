@@ -6,7 +6,6 @@ OC.L10N.register(
     "Last month" : "Prošlog meseca",
     "Today" : "Danas",
     "Cancel" : "Otkaži",
-    "Add" : "Dodaj",
     "Category" : "Kategorija",
     "Activity" : "Aktivnost",
     "Date" : "Date",

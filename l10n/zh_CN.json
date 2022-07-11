@@ -1,7 +1,6 @@
 { "translations": {
     "Health" : "健康",
     "Track your health. Use the advantages of a trusted platform." : "利用一个可信平台的优势。 追踪你的健康状况。",
-    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n\nHealth is everything." : "该应用程序提供了不同的模块来跟踪健康数据。\n已提供下面这些模块：\n- 体重\n- 心情\n- 测量\n- 睡眠\n- 抽烟\n- 运动\n\n健康就是一切。",
     "Created at {creationTime}" : "创建于 {creationTime} ",
     "Person" : "个人",
     "Weight" : "体重",
@@ -37,7 +36,6 @@
     "Will be calculated" : "将被计算",
     "Send {eName}" : "发送 {eName}",
     "Cancel" : "取消",
-    "Add" : "添加",
     "Burned calories" : "燃烧的热量",
     "Duration" : "持续时间",
     "Intensity" : "强度",

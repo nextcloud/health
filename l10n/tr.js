@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Health" : "Sağlık",
     "Track your health. Use the advantages of a trusted platform." : "Sağlığınızı izleyin. Güvenilir bir platformun avantajlarından yararlanın.",
-    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n\nHealth is everything." : "Bu uygulamanın farklı sağlık verilerini izleme modülleri vardır.\n\nŞu modülleri kullanabilirsiniz:\n- Kilo\n- Duygu durumu\n- Ölçümler\n- Uyku\n- Sigara\n- Etkinlik\n\nÖnce sağlık gelir.",
     "Created at {creationTime}" : "{creationTime} zamanında oluşturuldu",
     "Person" : "Kişi",
     "Weight" : "Kilo",
@@ -40,7 +39,6 @@ OC.L10N.register(
     "Will be calculated" : "Hesaplanacak",
     "Send {eName}" : "{eName} gönder",
     "Cancel" : "İptal",
-    "Add" : "Ekle",
     "Burned calories" : "Yakılan kalori",
     "Duration" : "Süre",
     "Intensity" : "Yoğunluk",

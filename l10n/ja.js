@@ -20,7 +20,6 @@ OC.L10N.register(
     "Add new {entityName}" : "新しい{entityName}",
     "Edit {entityName}" : "{entityName}を編集",
     "Cancel" : "キャンセル",
-    "Add" : "追加",
     "Duration" : "期間",
     "Distance" : "距離",
     "Chart" : "チャート",

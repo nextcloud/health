@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Health" : "בריאות",
     "Track your health. Use the advantages of a trusted platform." : "מעקב אחר הבריאות שלך. להשתמש ביתרונות של פלטפורמה מאובטחת.",
-    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n\nHealth is everything." : "היישומון מספק מגוון מודולים למעקב אחר נתוני בריאות.\n\nהמודולים הבאים מוגשים:\n- משקל\n- תחושה\n- מדדים\n- שינה\n- פעילויות\n\nבריאות היא הכול.",
     "Created at {creationTime}" : "נוצר ב־{creationTime}",
     "Person" : "משתמש",
     "Weight" : "משקל",
@@ -39,7 +38,6 @@ OC.L10N.register(
     "Will be calculated" : "יחושב",
     "Send {eName}" : "שליחת {eName}",
     "Cancel" : "ביטול",
-    "Add" : "הוספה",
     "Burned calories" : "קלוריות שנשרפו",
     "Duration" : "משך",
     "Intensity" : "קושי",

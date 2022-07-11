@@ -13,7 +13,6 @@ OC.L10N.register(
     "No data yet" : "Kol kas duomenų nėra",
     "Today" : "Šiandiena",
     "Cancel" : "Atšaukti",
-    "Add" : "Pridėti",
     "Duration" : "Trukmė",
     "Distance" : "Atstumas",
     "Category" : "Kategorija",

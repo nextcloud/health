@@ -1,7 +1,6 @@
 { "translations": {
     "Health" : "Gezondheid",
     "Track your health. Use the advantages of a trusted platform." : "Volg je gezondheid. Maak gebruik van de voordelen van een vertrouwd platform.",
-    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n\nHealth is everything." : "De app biedt verschillende modules om gezondheidsgegevens bij te houden.\n\nDe volgende modules zijn beschikbaar:\n- Gewicht\n- Gevoel\n- Meting\n- Slaap\n- Roken\n- Activiteiten\n\nGezondheid is alles.",
     "Created at {creationTime}" : "Gecreëerd op {creationTime}",
     "Person" : "Persoon",
     "Weight" : "Gewicht",
@@ -37,7 +36,6 @@
     "Will be calculated" : "Wordt berekend",
     "Send {eName}" : "Versturen {eName}",
     "Cancel" : "Annuleren",
-    "Add" : "Toevoegen",
     "Burned calories" : "Verbrande calorieën",
     "Duration" : "Duur",
     "Intensity" : "Intensiteit",

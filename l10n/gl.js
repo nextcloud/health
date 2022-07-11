@@ -11,7 +11,6 @@ OC.L10N.register(
     "Actions" : "Accións",
     "Today" : "Hoxe",
     "Cancel" : "Cancelar",
-    "Add" : "Engadir",
     "Duration" : "Duración",
     "Distance" : "Distancia",
     "Category" : "Categoría",

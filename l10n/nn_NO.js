@@ -6,7 +6,6 @@ OC.L10N.register(
     "Actions" : "Handlingar",
     "Today" : "I dag",
     "Cancel" : "Avbryt",
-    "Add" : "Legg til",
     "Data" : "Data",
     "Category" : "Kategori",
     "Activity" : "Aktivitet",

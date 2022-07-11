@@ -1,7 +1,6 @@
 { "translations": {
     "Health" : "Здраве",
     "Track your health. Use the advantages of a trusted platform." : "Следете здравето си. Използвайте предимствата на доверена платформа.",
-    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n\nHealth is everything." : "Приложението предоставя различни модули за проследяване на здравни данни.\n\nОбслужват се следните модули:\n- Тегло\n- Усещане\n- Измерване\n- Сън\n- Пушене\n- Активности\n\nЗдравето е всичко.",
     "Created at {creationTime}" : "Създадено на {creationTime}",
     "Person" : "Лице",
     "Weight" : "Тегло",
@@ -38,7 +37,6 @@
     "Will be calculated" : "Ще се изчисли",
     "Send {eName}" : "Изпращане на {eName}",
     "Cancel" : "Отказ",
-    "Add" : "Добавяне",
     "Burned calories" : "Изгорени калории",
     "Duration" : "Продължителност",
     "Intensity" : "Интензивност",

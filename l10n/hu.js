@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Health" : "Egészség",
     "Track your health. Use the advantages of a trusted platform." : "Kövesse az egészségét. Használja ki a megbízható platform előnyeit.",
-    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n\nHealth is everything." : "Az alkalmazás különböző modulokat kínál az egészségügyi adatai követéséhez.\n\nA következő modulokat biztosítja:\n- Súly\n- Közérzet\n- Mérés\n- Alvás\n- Dohányzás\n- Tevékenységek\n\nAz egészség a legfontosabb.",
     "Created at {creationTime}" : "Létrehozva: {creationTime}",
     "Person" : "Személy",
     "Weight" : "Testsúly",
@@ -40,7 +39,6 @@ OC.L10N.register(
     "Will be calculated" : "Ki lesz számítva",
     "Send {eName}" : "{eName} küldése",
     "Cancel" : "Mégse",
-    "Add" : "Hozzáadás",
     "Burned calories" : "Elégetett kalóriák",
     "Duration" : "Időtartam",
     "Intensity" : "Intenzitás",

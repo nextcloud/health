@@ -9,7 +9,6 @@ OC.L10N.register(
     "Actions" : "Радње",
     "Today" : "Данас",
     "Cancel" : "Поништи",
-    "Add" : "Додај",
     "Duration" : "Трајање",
     "Distance" : "Удаљеност",
     "Category" : "Категорија",

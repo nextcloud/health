@@ -8,7 +8,6 @@ OC.L10N.register(
     "Actions" : "Aðgerðir",
     "Today" : "Í dag",
     "Cancel" : "Hætta við",
-    "Add" : "Bæta við",
     "Duration" : "Duration",
     "Distance" : "Vegalengd",
     "Category" : "Flokkur",

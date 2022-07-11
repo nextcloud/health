@@ -6,7 +6,6 @@ OC.L10N.register(
     "Actions" : "Veprimet",
     "Today" : "Sot",
     "Cancel" : "Anullo",
-    "Add" : "Shto",
     "Duration" : "Kohëzgjatja",
     "Category" : "Kategori",
     "Activity" : "Aktiviteti",

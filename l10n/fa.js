@@ -10,7 +10,6 @@ OC.L10N.register(
     "Actions" : "فعالیت ها",
     "Today" : "امروز",
     "Cancel" : "لغو",
-    "Add" : "افزودن",
     "Duration" : "مدت زمان",
     "Distance" : "فاصله",
     "Category" : "دسته‌بندی",

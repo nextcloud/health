@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Health" : "Zdravlje",
     "Track your health. Use the advantages of a trusted platform." : "Pratite svoje zdravlje. Iskoristite pogodnosti pouzdane platforme.",
-    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n\nHealth is everything." : "Aplikacija nudi različite module za praćenje zdravstvenih podataka.\n\nRaspoloživi su sljedeći moduli:\n- Masa\n-Osjećaj\n- Mjerenje\n- Spavanje\n- Pušenje\n- Aktivnosti\n\nZdravlje je sve.",
     "Created at {creationTime}" : "Stvoreno u {creationTime}",
     "Person" : "Osoba",
     "Weight" : "Masa",
@@ -39,7 +38,6 @@ OC.L10N.register(
     "Will be calculated" : "Izračunat će se",
     "Send {eName}" : "Pošalji {eName}",
     "Cancel" : "Odustani",
-    "Add" : "Dodaj",
     "Burned calories" : "Potrošene kalorije",
     "Duration" : "Trajanje",
     "Intensity" : "Intenzitet",

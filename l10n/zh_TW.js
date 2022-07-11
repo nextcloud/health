@@ -11,7 +11,6 @@ OC.L10N.register(
     "Actions" : "動作",
     "Today" : "今天",
     "Cancel" : "取消",
-    "Add" : "新增",
     "Duration" : "持續時間",
     "Distance" : "距離",
     "Data" : "資料",

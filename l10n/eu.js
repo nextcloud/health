@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Health" : "Osasuna",
     "Track your health. Use the advantages of a trusted platform." : "Egin zure osasunaren jarraipena. Erabili konfiantzazko plataforma baten abantailak.",
-    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n\nHealth is everything." : "Aplikazio honek osasun datuen jarraipena egiteko modulu desberdinak dakartza.\n\nHurrengo moduluekin hornitzen da:\n- Pisua\n- Sentimendua\n- Neurketa\n- Loa\n- Erretzea\n- Jarduerak\n\nOsasuna dena da.",
     "Created at {creationTime}" : "{creationTime} sortua",
     "Person" : "Pertsona",
     "Weight" : "Pisua",
@@ -40,7 +39,6 @@ OC.L10N.register(
     "Will be calculated" : "Kalkulatuko da",
     "Send {eName}" : "Bidali {eName}",
     "Cancel" : "Ezeztatu",
-    "Add" : "Gehitu",
     "Burned calories" : "Erretako kaloriak",
     "Duration" : "Iraupena",
     "Intensity" : "Intentsitatea",

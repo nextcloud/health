@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Health" : "Zdravie",
     "Track your health. Use the advantages of a trusted platform." : "Sledujte svoje zdravie. Využite výhody dôveryhodnej platformy.",
-    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n\nHealth is everything." : "Aplikácia poskytuje rôzne moduly na sledovanie zdravotných údajov.\n\nPoskytujú sa nasledujúce moduly:\n- Hmotnosť\n- Pocity\n- Meranie\n- Spánok\n- Fajčenie\n- Činnosti\n\nZdravie je všetko.",
     "Created at {creationTime}" : "Vytvorené {creationTime}",
     "Person" : "Osoba",
     "Weight" : "Váha",
@@ -40,7 +39,6 @@ OC.L10N.register(
     "Will be calculated" : "Bude spočítané",
     "Send {eName}" : "Odoslať {eName}",
     "Cancel" : "Zrušiť",
-    "Add" : "Pridať",
     "Burned calories" : "Spálené kalórie",
     "Duration" : "Trvanie",
     "Intensity" : "Intenzita",

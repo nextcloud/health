@@ -7,7 +7,6 @@ OC.L10N.register(
     "Actions" : "การกระทำ",
     "Today" : "วันนี้",
     "Cancel" : "ยกเลิก",
-    "Add" : "เพิ่ม",
     "Category" : "หมวดหมู่",
     "Activity" : "กิจกรรม",
     "Date" : "วันที่",

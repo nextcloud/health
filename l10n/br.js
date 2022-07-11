@@ -6,7 +6,6 @@ OC.L10N.register(
     "Actions" : "Oberoù",
     "Today" : "Hiziv",
     "Cancel" : "Arrest",
-    "Add" : "Ouzhpennañ",
     "Activity" : "Obererezh",
     "Date" : "Deiz",
     "Running" : "O redek",

@@ -6,7 +6,6 @@ OC.L10N.register(
     "Actions" : "Aiciones",
     "Today" : "Güei",
     "Cancel" : "Encaboxar",
-    "Add" : "Amestar",
     "Category" : "Estaya",
     "Activity" : "Actividá",
     "Date" : "Date",

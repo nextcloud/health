@@ -6,7 +6,6 @@ OC.L10N.register(
     "Actions" : "Gweithredoedd",
     "Today" : "Heddiw",
     "Cancel" : "Diddymu",
-    "Add" : "Ychwanegu",
     "Duration" : "Hyd",
     "Category" : "Categori",
     "Activity" : "Gweithred",

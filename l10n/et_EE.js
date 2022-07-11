@@ -7,7 +7,6 @@ OC.L10N.register(
     "Actions" : "Tegevused",
     "Today" : "Täna",
     "Cancel" : "Loobu",
-    "Add" : "Lisa",
     "Category" : "Kategooria",
     "Activity" : "Tegevus",
     "Date" : "Kuupäev",
