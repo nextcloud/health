@@ -1,6 +1,7 @@
 { "translations": {
     "Health" : "健康中心",
     "Track your health. Use the advantages of a trusted platform." : "使用一個可信平台的優勢。追踪你的健康狀況。",
+    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "該應用程式提供了不同的模塊來記錄健康數據。\n已提供下面這些模塊：\n- 體重\n- 情緒\n- 指數\n- 睡眠\n- 吸煙\n- 運動\n- 藥物\n\n健康至上。",
     "Created at {creationTime}" : "創建日期 {creationTime}",
     "Person" : "個人",
     "Weight" : "體重",
@@ -159,6 +160,8 @@
     "Medication plans" : "藥物計劃",
     "Select a medication plan" : "選擇藥物計劃",
     "Medication plan" : "藥物計劃",
+    "Take over previous medication" : "推翻以前的藥物",
+    "A new plan will take over the medication from the previous medication plan by default. Uncheck this option to create an empty medication plan." : "默認情況下，新計劃將推翻先前藥物計劃中的藥物。取消選中此選項以創建一個空的用藥計劃。",
     "Name" : "姓名",
     "Identifier" : "標識符",
     "Morning" : "早上",

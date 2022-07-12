@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Health" : "Zdraví",
     "Track your health. Use the advantages of a trusted platform." : "Sledujte svůj zdravotní stav. Využijte výhody důvěryhodné platformy.",
+    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "Tato aplikace poskytuje různé moduly pro sledování zdravotních údajů.\n\nK dispozici jsou následující moduly:\n- Váha\n- Pocit\n- Měření\n- Spánek\n- Kouření\n- Aktivity\n- Braní léků\n\nZdraví je vším.",
     "Created at {creationTime}" : "Vytvořeno v {creationTime}",
     "Person" : "Osoba",
     "Weight" : "Hmotnost",
@@ -161,6 +162,8 @@ OC.L10N.register(
     "Medication plans" : "Rozvrhy podávání léků",
     "Select a medication plan" : "Vyberte rozvrh podávání léků",
     "Medication plan" : "Rozvrh podávání léků",
+    "Take over previous medication" : "Převzít předchozí dávkování léků",
+    "A new plan will take over the medication from the previous medication plan by default. Uncheck this option to create an empty medication plan." : "Ve výchozím stavu, nový plán převezme dávkování léků od toho předchozího. Zrušením zaškrtnutí této volby vytvoří prázdný plán. ",
     "Name" : "Název",
     "Identifier" : "Identifikátor",
     "Morning" : "Ráno",

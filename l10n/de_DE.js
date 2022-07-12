@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Health" : "Gesundheit",
     "Track your health. Use the advantages of a trusted platform." : "Beobachten Sie Ihre Gesundheit. Nutzen Sie die Vorteile einer vertrauenswürdigen Plattform.",
+    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "Die App bietet verschiedene Module zur Erfassung von Gesundheitsdaten.\n\nFolgende Module sind vorhanden:\n- Gewicht\n- Fühlen\n- Messen\n- Schlaf\n- Rauchen\n- Aktivitäten\n- Medikation\n\nGesundheit ist alles.",
     "Created at {creationTime}" : "Erstellt um {creationTime}",
     "Person" : "Person",
     "Weight" : "Gewicht",
@@ -161,6 +162,8 @@ OC.L10N.register(
     "Medication plans" : "Medikationspläne",
     "Select a medication plan" : "Medikationsplan wählen",
     "Medication plan" : "Medikationsplan",
+    "Take over previous medication" : "Bisherige Medikamente übernehmen",
+    "A new plan will take over the medication from the previous medication plan by default. Uncheck this option to create an empty medication plan." : "Ein neuer Plan übernimmt standardmäßig die Medikation aus dem vorherigen Medikationsplan. Deaktivieren Sie diese Option, um einen leeren Medikationsplan zu erstellen.",
     "Name" : "Name",
     "Identifier" : "Kennung",
     "Morning" : "Morgens",
