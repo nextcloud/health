@@ -1,6 +1,7 @@
 { "translations": {
     "Health" : "Saúde",
     "Track your health. Use the advantages of a trusted platform." : "Monitore sua saúde. Use as vantagens de uma plataforma confiável. ",
+    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "O aplicativo fornece diferentes módulos para rastrear dados de saúde.\n\nOs seguintes módulos são disponibilizados:\n- Peso\n- Sentimento\n- Medição\n- Sono\n- Fumo\n- Atividades\n- Medicção\n\nSaúde é tudo.",
     "Created at {creationTime}" : "Criado em {creationTime}",
     "Person" : "Pessoa ",
     "Weight" : "Peso ",
@@ -159,6 +160,8 @@
     "Medication plans" : "Planos de medicamentos",
     "Select a medication plan" : "Selecione um plano de medicamento",
     "Medication plan" : "Plano de medicação",
+    "Take over previous medication" : "Assumir a medicação anterior",
+    "A new plan will take over the medication from the previous medication plan by default. Uncheck this option to create an empty medication plan." : "Um novo plano substituirá a medicação do plano de medicação anterior por padrão. Desmarque esta opção para criar um plano de medicação vazio.",
     "Name" : "Nome",
     "Identifier" : "Identificador",
     "Morning" : "Manhã",
