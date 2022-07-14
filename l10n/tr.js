@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Health" : "Sağlık",
     "Track your health. Use the advantages of a trusted platform." : "Sağlığınızı izleyin. Güvenilir bir platformun avantajlarından yararlanın.",
+    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "Bu uygulamanın farklı sağlık verilerini izleme modülleri vardır.\n\nŞu modülleri kullanabilirsiniz:\n- Kilo\n- Duygu durumu\n- Ölçümler\n- Uyku\n- Sigara\n- Etkinlikler\n- İlaçlar\n\nÖnce sağlık gelir.",
     "Created at {creationTime}" : "{creationTime} zamanında oluşturuldu",
     "Person" : "Kişi",
     "Weight" : "Kilo",
@@ -161,6 +162,8 @@ OC.L10N.register(
     "Medication plans" : "İlaç zamanlaması",
     "Select a medication plan" : "Bir ilaç zamanlaması seçin",
     "Medication plan" : "İlaç zamanlaması",
+    "Take over previous medication" : "Önceki ilaçlar devralınsın",
+    "A new plan will take over the medication from the previous medication plan by default. Uncheck this option to create an empty medication plan." : "Yeni bir plan, ilaçları varsayılan olarak önceki ilaç planından alır. Boş bir ilaç planı oluşturmak için bu seçeneğin işaretini kaldırın.",
     "Name" : "Ad",
     "Identifier" : "Belirteç",
     "Morning" : "Sabah",
