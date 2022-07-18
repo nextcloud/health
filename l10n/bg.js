@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Health" : "Здраве",
     "Track your health. Use the advantages of a trusted platform." : "Следете здравето си. Използвайте предимствата на доверена платформа.",
+    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "Приложението предоставя различни модули за проследяване на здравни данни.\n\nОбслужват се следните модули:\n- Тегло\n- Усещане\n- Измервания\n- Сън\n- Пушене\n- Активности\n- Лекарствени продукти\n\nЗдравето е всичко.",
     "Created at {creationTime}" : "Създадено на {creationTime}",
     "Person" : "Лице",
     "Weight" : "Тегло",
@@ -161,6 +162,8 @@ OC.L10N.register(
     "Medication plans" : "Планове за лечение",
     "Select a medication plan" : "Избор на план за лечение",
     "Medication plan" : "План за лечение",
+    "Take over previous medication" : "Предимство пред предишния план за лечение",
+    "A new plan will take over the medication from the previous medication plan by default. Uncheck this option to create an empty medication plan." : "По подразбиране нов план за лечение ще има предимство пред предишния план за лечение. Премахнете отметката от тази опция, за да създадете опция за празен план за лечение.",
     "Name" : "Име",
     "Identifier" : "Идентификатор",
     "Morning" : "Сутрин",
