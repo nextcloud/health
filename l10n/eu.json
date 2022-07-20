@@ -161,6 +161,7 @@
     "Select a medication plan" : "Hautatu sendagai plana",
     "Medication plan" : "Sendagai plana",
     "Take over previous medication" : "Hartu aurreko sendagaia",
+    "A new plan will take over the medication from the previous medication plan by default. Uncheck this option to create an empty medication plan." : "Plan berri batek aurreko sendagai planeko sendagaiak hartuko ditu modu lehenetsian. Kendu aukera hau sendagai plan hutsa sortzeko.",
     "Name" : "Izena",
     "Identifier" : "Identifikatzailea",
     "Morning" : "Goiza",
