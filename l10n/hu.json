@@ -1,6 +1,7 @@
 { "translations": {
     "Health" : "Egészség",
     "Track your health. Use the advantages of a trusted platform." : "Kövesse az egészségét. Használja ki a megbízható platform előnyeit.",
+    "The app provides different modules to track health data.\n\nFollowing modules are served:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "Az alkalmazás különböző modulokat kínál az egészségügyi adatai követéséhez.\n\nA következő modulokat biztosítja:\n- Súly\n- Közérzet\n- Mérés\n- Alvás\n- Dohányzás\n- Tevékenységek\n- Gyógyszerek\n\nAz egészség a legfontosabb.",
     "Created at {creationTime}" : "Létrehozva: {creationTime}",
     "Person" : "Személy",
     "Weight" : "Testsúly",
@@ -159,6 +160,8 @@
     "Medication plans" : "Gyógyszeres kezelések tervei",
     "Select a medication plan" : "Válasszon egy gyógyszeres kezelési tervet",
     "Medication plan" : "Gyógyszeres kezelési terv",
+    "Take over previous medication" : "Előző gyógyszerek átvétele",
+    "A new plan will take over the medication from the previous medication plan by default. Uncheck this option to create an empty medication plan." : "Az új terv alapértelmezés szerint átveszi a gyógyszereket az előző gyógyszerezési tervből. Kapcsolja ki ezt a beállítást, hogy üres gyógyszerezési tervet hozzon létre.",
     "Name" : "Név",
     "Identifier" : "Azonosító",
     "Morning" : "Reggel",
