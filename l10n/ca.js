@@ -13,6 +13,7 @@ OC.L10N.register(
     "Cancel" : "Cancel·la",
     "Duration" : "Durada",
     "Distance" : "Distància",
+    "Chart" : "Gràfic",
     "Data" : "Dades",
     "Category" : "Categoria",
     "Activity" : "Activitat",
