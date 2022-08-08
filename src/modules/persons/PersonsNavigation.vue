@@ -162,7 +162,7 @@ export default {
 	},
 	computed: {
 		...mapState(['activePersonId', 'activeModule', 'showSidebar', 'persons']),
-		...mapGetters(['person', 'personsLength', 'canManage']),
+		...mapGetters(['person', 'personsLength']),
 		getPersons() {
 			return this.persons && this.persons.length > 0
 				// eslint-disable-next-line vue/no-side-effects-in-computed-properties

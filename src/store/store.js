@@ -23,8 +23,6 @@
 
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from '@nextcloud/axios'
-import { generateOcsUrl } from '@nextcloud/router'
 import { WeightApi } from './WeightApi'
 import { PersonApi } from './PersonApi'
 import { MeasurementApi } from './MeasurementApi'
@@ -70,10 +68,10 @@ export default new Vuex.Store({
 		person: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId] : null,
 		personsLength: state => state.persons ? state.persons.length : 0,
 		canEdit: state => {
-			return state.persons[state.activePersonId] ? state.persons[state.activePersonId].permissions.PERMISSION_EDIT : false
+			return state.activePersonId !== null && state.persons[state.activePersonId] ? state.persons[state.activePersonId].permissions.PERMISSION_EDIT : false
 		},
 		canManage: state => {
-			return state.persons[state.activePersonId] ? state.persons[state.activePersonId].permissions.PERMISSION_MANAGE : false
+			return state.activePersonId !== null && state.persons[state.activePersonId] ? state.persons[state.activePersonId].permissions.PERMISSION_MANAGE : false
 		},
 	},
 	mutations: {
@@ -341,10 +339,10 @@ export default new Vuex.Store({
 			params.append('search', query)
 			params.append('format', 'json')
 			params.append('perPage', 20)
-			params.append('itemType', [0, 1, 4, 7])
+			params.append('itemType', [0, 1])
 			params.append('lookup', false)
 
-			const response = await axios.get(generateOcsUrl('apps/files_sharing/api/v1/sharees'), { params })
+			const response = await personApiClient.searchSharees(params)
 			commit('setSharees', response.data.ocs.data)
 		},
 		async addAclToCurrentPerson({ dispatch, commit }, newAcl) {

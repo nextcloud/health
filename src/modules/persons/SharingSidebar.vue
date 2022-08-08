@@ -24,8 +24,8 @@
 	<div>
 		<Multiselect
 			v-if="isCurrentUser(person.userId)"
-			class="user-group-multiselect"
 			v-model="addAcl"
+			class="user-group-multiselect"
 			:placeholder="t('health', 'Share person with a user or group …')"
 			:options="formatedSharees"
 			:user-select="true"
@@ -61,7 +61,6 @@
 			<li v-for="acl in person.acl" :key="acl.id">
 				<Avatar v-if="acl.type===0" :user="acl.participant.uid" />
 				<div v-if="acl.type===1" class="avatardiv icon icon-group" />
-				<div v-if="acl.type===7" class="avatardiv icon icon-circles" />
 				<span class="has-tooltip username">
 					{{ acl.participant.displayname }}
 					<span v-if="acl.type===1">({{ t('health', 'Group') }})</span>
@@ -131,10 +130,6 @@ export default {
 
 				if (item.value.shareType === 1) {
 					sharee.icon = 'icon-group'
-					sharee.isNoUser = true
-				}
-				if (item.value.shareType === 7) {
-					sharee.icon = 'icon-circles'
 					sharee.isNoUser = true
 				}
 

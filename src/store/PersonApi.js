@@ -22,7 +22,7 @@
  */
 
 import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
+import { generateUrl, generateOcsUrl } from '@nextcloud/router'
 
 export class PersonApi {
 
@@ -134,6 +134,10 @@ export class PersonApi {
 			.catch((err) => {
 				return Promise.reject(err)
 			})
+	}
+
+	searchSharees(params) {
+		return axios.get(generateOcsUrl('apps/files_sharing/api/v1/sharees'), { params })
 	}
 
 }
