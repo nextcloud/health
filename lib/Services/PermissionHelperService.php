@@ -42,6 +42,12 @@ class PermissionHelperService {
 		$this->groupManager = $groupManager;
 	}
 
+	/**
+	 * Resolved the permission of a person according to existing ACL's.
+	 *
+	 * @param Person $person
+	 * @return array
+	 */
 	public function matchPermissions(Person $person) {
 		$owner = $person->getUserId() === $this->userId;
 		$acls = $person->getAcl() ?? [];
@@ -53,7 +59,7 @@ class PermissionHelperService {
 	}
 
 	/**
-	 * Check if permission matches the acl rules for current user and groups
+	 * Check if permission matches the acl rules for current user and groups.
 	 *
 	 * @param Acl[] $acls
 	 * @param $permission

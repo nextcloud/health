@@ -117,9 +117,9 @@ class PersonsController extends Controller {
 
 	/**
 	 * @NoAdminRequired
-	 * @param $id
+	 * @param $personId
+	 * @param $aclId
 	 * @param $permissionEdit
-	 * @param $permissionShare
 	 * @param $permissionManage
 	 * @return DataResponse
 	 */

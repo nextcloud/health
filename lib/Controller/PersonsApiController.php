@@ -131,9 +131,9 @@ class PersonsApiController extends ApiController {
 	 * @CORS
 	 * @NoCSRFRequired
 
-	 * @param $id
+	 * @param $personId
+	 * @param $aclId
 	 * @param $permissionEdit
-	 * @param $permissionShare
 	 * @param $permissionManage
 	 * @return DataResponse
 	 */

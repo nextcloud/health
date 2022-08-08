@@ -46,7 +46,7 @@ class PersonMapper extends QBMapper {
 		IGroupManager $groupManager,
 		PermissionHelperService $permissionHelper
 	) {
-        parent::__construct($db, 'health_persons', Person::class);
+		parent::__construct($db, 'health_persons', Person::class);
 		$this->aclMapper = $aclMapper;
 		$this->groupManager = $groupManager;
 		$this->permissionHelper = $permissionHelper;
@@ -54,45 +54,45 @@ class PersonMapper extends QBMapper {
 
     public function find(int $id, string $userId = ""): ?Entity
 	{
-        $qb = $this->db->getQueryBuilder();
+		$qb = $this->db->getQueryBuilder();
 
-        $qb->select('p.*');
+		$qb->select('p.*');
 		$qb->from($this->getTableName(), 'p');
 		if($userId !== "") {
 			$qb->leftJoin('p', 'health_persons_acl', 'acl', 'p.id=acl.person_id');
 		}
 		$qb->where( $qb->expr()->eq('p.id', $qb->createNamedParameter($id)) );
 
-        if($userId !== "") {
-            $qb->andWhere( $qb->expr()->orX(
+		if($userId !== "") {
+			$qb->andWhere( $qb->expr()->orX(
 				$qb->expr()->eq('acl.participant', $qb->createNamedParameter($userId) ),
 				$qb->expr()->eq('p.user_id', $qb->createNamedParameter($userId) )
 			));
-        }
+		}
 		$qb->groupBy('p.id');
 		try {
 			return $this->findEntity($qb);
 		} catch (DoesNotExistException | MultipleObjectsReturnedException $e) {
-        	return null;
+			return null;
 		}
 	}
 
     public function findAll(string $userId): array
 	{
-        $qb = $this->db->getQueryBuilder();
+		$qb = $this->db->getQueryBuilder();
 
 		// get all acl's
 		$acls = $this->aclMapper->findAll();
 		$personIds = $this->permissionHelper->getSharedPersonsOfCurrentUser($acls);
 
-        $qb->select('*')
+		$qb->select('*')
 			->from($this->getTableName())
 			->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)));
 
 		if (count($personIds) > 0) {
 			$qb->orWhere("id IN (".implode(",", $personIds).")");
 		}
-        return $this->findEntities($qb);
-    }
+		return $this->findEntities($qb);
+	}
 
 }

@@ -30,34 +30,30 @@ use OCP\IDBConnection;
 use OCP\IUserManager;
 use OCP\IGroupManager;
 use OCP\AppFramework\Db\QBMapper;
-use Psr\Log\LoggerInterface;
 
 class AclMapper extends QBMapper {
 
 	private $userManager;
 	private $groupManager;
-	protected $logger;
 
 	public function __construct(
 		IDBConnection $db,
 		IUserManager $userManager,
 		IGroupManager $groupManager
-		, LoggerInterface $logger
 	) {
 		parent::__construct($db, 'health_persons_acl', Acl::class);
 		$this->userManager = $userManager;
 		$this->groupManager = $groupManager;
-				$this->logger = $logger;
 	}
 
 	public function findAllByPerson($personId) {
 		$qb = $this->db->getQueryBuilder();
 
-        $qb->select('*')
-           ->from($this->getTableName())
-           ->where(
-            $qb->expr()->eq('person_id', $qb->createNamedParameter($personId))
-           );
+		$qb->select('*')
+			->from($this->getTableName())
+			->where(
+				$qb->expr()->eq('person_id', $qb->createNamedParameter($personId))
+			);
 
 		$entities = $this->findEntities($qb);
 		foreach ($entities as $acl) {

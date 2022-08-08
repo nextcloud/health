@@ -216,7 +216,7 @@ class PersonsService {
 		];
 	}
 
-		/**
+	/**
 	 * @param $personId
 	 * @param $type
 	 * @param $participant
@@ -225,7 +225,6 @@ class PersonsService {
 	 * @return \OCP\AppFramework\Db\Entity
 	 */
 	public function addAcl(int $personId, int $type, string $participant, bool $edit, bool $manage) {
-		// check if user is 'owner' of this person to allow sharing
 		if( !$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
@@ -236,9 +235,8 @@ class PersonsService {
 		$acl->setParticipant($participant);
 		$acl->setPermissionEdit($edit);
 		$acl->setPermissionManage($manage);
-		$newAcl = $this->aclMapper->insert($acl);
 
-		return $this->aclMapper->mapParticipant($newAcl);
+		return $this->aclMapper->mapParticipant($this->aclMapper->insert($acl));
 	}
 
 	/**
@@ -256,16 +254,15 @@ class PersonsService {
 		}
 
 		$acl = $this->aclMapper->find($aclId);
-		//[$edit, $share, $manage] = $this->applyPermissions($acl->getBoardId(), $edit, $share, $manage);
 		$acl->setPermissionEdit($edit);
 		$acl->setPermissionManage($manage);
-		$updatedAcl = $this->aclMapper->mapParticipant($this->aclMapper->update($acl));
 
-		return $updatedAcl;
+		return $this->aclMapper->mapParticipant($this->aclMapper->update($acl));
 	}
 
 	/**
-	 * @param $id
+	 * @param $personId
+	 * @param $aclId
 	 * @return \OCP\AppFramework\Db\Entity
 	 * @throws DoesNotExistException
 	 * @throws \OCA\Deck\NoPermissionException
@@ -277,9 +274,8 @@ class PersonsService {
 			return null;
 		}
 		$acl = $this->aclMapper->find($aclId);
-		$delete = $this->aclMapper->delete($acl);
 
-		return $delete;
+		return $this->aclMapper->delete($acl);
 	}
 
 }

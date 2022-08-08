@@ -56,22 +56,22 @@ class PermissionService {
 	{
 		try {
 			// check for ownership
-            if($this->personMapper->find($destinationPersonId, $sourceUserId) !== null) {
-            	return true;
-            }
-        } catch(Exception $e) {
+			if($this->personMapper->find($destinationPersonId, $sourceUserId) !== null) {
+				return true;
+			}
+		} catch(Exception $e) {
 			$context = [
 				'personId' => $destinationPersonId,
 				'userId' => $sourceUserId
 			];
 			$this->logger->error('User tries to fetch data from personId that is not permitted.', $context);
-        }
+		}
 		// check ACL's
 		$acls = $this->aclMapper->findAllByPerson($destinationPersonId);
 		if ($this->permissionHelper->userCan($acls, Acl::PERMISSION_EDIT)) {
 			return true;
 		}
-        return false;
+		return false;
 	}
 
 	public function weightData($id, $userId): bool
