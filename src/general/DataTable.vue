@@ -26,7 +26,7 @@
 	<div style="margin-bottom: 100px;">
 		<div v-if="loading" class="icon-loading" />
 		<ModalItem
-			v-if="!loading"
+			v-if="!loading && canEdit"
 			:header="header"
 			icon="icon-add"
 			:entity-name="entityName"
@@ -63,7 +63,7 @@
 					<th v-for="(h, i) in header" :key="i" :class="{ hide: !h.show }">
 						{{ h.name }}
 					</th>
-					<th>
+					<th v-if="canEdit">
 						{{ t('health', 'Actions', {}) }}
 					</th>
 				</tr>
@@ -120,7 +120,7 @@
 							</div>
 						</div>
 					</td>
-					<td>
+					<td v-if="canEdit">
 						<div class="inlineButtons">
 							<ModalItem
 								:id="i"
@@ -160,7 +160,7 @@
 			icon="icon-category-monitoring"
 		>
 			{{ t('health', 'No data yet') }}
-			<template #desc>
+			<template v-if="canEdit" #desc>
 				{{ t('health', 'Click at the + to add the first data.') }}
 				<ModalItem
 					:header="header"
@@ -175,6 +175,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import ModalItem from './ModalItem'
 import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
 import moment from '@nextcloud/moment'
@@ -224,6 +225,9 @@ export default {
 		}
 	},
 	computed: {
+		...mapGetters([
+			'canEdit',
+		]),
 		datasets() {
 			const d = []
 			// console.debug('try to return', this.data)

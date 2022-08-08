@@ -25,24 +25,37 @@ declare(strict_types=1);
 namespace OCA\Health\Services;
 
 use Exception;
+use OCA\Health\Db\Acl;
+use OCA\Health\Db\AclMapper;
 use OCA\Health\Db\PersonMapper;
 use Psr\Log\LoggerInterface;
 
 class PermissionService {
 
 	protected $userId;
+	protected $aclMapper;
 	protected $personMapper;
+	protected $permissionHelper;
 	protected $logger;
 
-	public function __construct($userId, PersonMapper $pM, LoggerInterface $logger) {
+	public function __construct(
+		$userId,
+		AclMapper $aM,
+		PersonMapper $pM,
+		LoggerInterface $logger,
+		PermissionHelperService $permissionHelper
+	) {
 		$this->userId = $userId;
+		$this->aclMapper = $aM;
 		$this->personMapper = $pM;
 		$this->logger = $logger;
+		$this->permissionHelper = $permissionHelper;
 	}
 
 	public function personData($destinationPersonId, $sourceUserId): bool
 	{
 		try {
+			// check for ownership
             if($this->personMapper->find($destinationPersonId, $sourceUserId) !== null) {
             	return true;
             }
@@ -53,6 +66,11 @@ class PermissionService {
 			];
 			$this->logger->error('User tries to fetch data from personId that is not permitted.', $context);
         }
+		// check ACL's
+		$acls = $this->aclMapper->findAllByPerson($destinationPersonId);
+		if ($this->permissionHelper->userCan($acls, Acl::PERMISSION_EDIT)) {
+			return true;
+		}
         return false;
 	}
 
@@ -97,5 +115,4 @@ class PermissionService {
 		// TODO
 		return true;
 	}
-
 }

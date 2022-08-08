@@ -29,14 +29,14 @@
 				:allow-collapse="true"
 				:open="(index === 0)?true:false"
 				icon="icon-user"
-				:editable="true"
+				:editable="p.permissions['PERMISSION_MANAGE']"
 				:edit-label="t('health', 'Edit name')"
 				:class="(index === activePersonId)?'active-person':''"
 				@update:menuOpen="menuOpenPersonId = index"
 				@update:title="personUpdateName"
 				@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'person')"
 			>
-				<template slot="actions">
+				<template v-if="p.permissions['PERMISSION_MANAGE']" slot="actions">
 					<ActionButton
 						:close-after-click="true"
 						icon="icon-details"
@@ -162,7 +162,7 @@ export default {
 	},
 	computed: {
 		...mapState(['activePersonId', 'activeModule', 'showSidebar', 'persons']),
-		...mapGetters(['person', 'personsLength']),
+		...mapGetters(['person', 'personsLength', 'canManage']),
 		getPersons() {
 			return this.persons && this.persons.length > 0
 				// eslint-disable-next-line vue/no-side-effects-in-computed-properties

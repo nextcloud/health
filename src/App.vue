@@ -4,7 +4,7 @@
 		<AppContent>
 			<div class="top-bar" />
 			<div class="content-menu-topright">
-				<Actions :title="'Details'">
+				<Actions v-if="canManage" :title="'Details'">
 					<ActionButton icon="icon-menu-sidebar" @click="$store.commit('showSidebar', !showSidebar)" />
 				</Actions>
 			</div>
@@ -22,7 +22,7 @@
 		</AppContent>
 		<AppSidebar
 			v-show="showSidebar"
-			v-if="person && !loading"
+			v-if="person && !loading && canManage"
 			:title="person.name"
 			:subtitle="t('health', 'Created at {creationTime}', { creationTime: formatMyDate(person.insertTime) })"
 			@close="$store.commit('showSidebar', false)"
@@ -34,6 +34,14 @@
 				:order="0"
 			>
 				<PersonsSidebar />
+			</AppSidebarTab>
+			<AppSidebarTab
+				id="sharing"
+				:name="t('health', 'Share')"
+				icon="icon-share"
+				:order="0.5"
+			>
+				<SharingSidebar />
 			</AppSidebarTab>
 			<AppSidebarTab
 				v-if="person.enabledModuleWeight"
@@ -100,6 +108,7 @@ import AppSidebar from '@nextcloud/vue/dist/Components/AppSidebar'
 import AppSidebarTab from '@nextcloud/vue/dist/Components/AppSidebarTab'
 import PersonsNavigation from './modules/persons/PersonsNavigation'
 import PersonsSidebar from './modules/persons/PersonsSidebar'
+import SharingSidebar from './modules/persons/SharingSidebar'
 import WeightSidebar from './modules/weight/WeightSidebar'
 import FeelingSidebar from './modules/feeling/FeelingSidebar'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
@@ -137,6 +146,7 @@ export default {
 		WeightSidebar,
 		FeelingSidebar,
 		PersonsSidebar,
+		SharingSidebar,
 		WeightContent,
 		FeelingContent,
 		PersonsContent,
@@ -152,7 +162,7 @@ export default {
 	},
 	computed: {
 		...mapState(['activePersonId', 'activeModule', 'showSidebar', 'persons', 'initialLoading']),
-		...mapGetters(['person']),
+		...mapGetters(['person', 'canManage']),
 	},
 	async beforeMount() {
 		this.loading = true

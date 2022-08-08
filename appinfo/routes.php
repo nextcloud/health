@@ -36,6 +36,13 @@ return [
 		['name' => 'persons#data', 'url' => '/person/{personId}/data', 'verb' => 'GET'],
 		['name' => 'persons_api#data', 'url' => '/api/1/person/{personId}/data', 'verb' => 'GET'],
 
+		['name' => 'persons#addAcl', 'url' => '/persons/{personId}/acl', 'verb' => 'POST'],
+		['name' => 'persons#updateAcl', 'url' => '/persons/{personId}/acl/{aclId}', 'verb' => 'PUT'],
+		['name' => 'persons#deleteAcl', 'url' => '/persons/{personId}/acl/{aclId}', 'verb' => 'DELETE'],
+		['name' => 'persons_api#addAcl', 'url' => '/api/1/persons/{personId}/acl', 'verb' => 'POST'],
+		['name' => 'persons_api#updateAcl', 'url' => '/api/1/persons/{personId}/acl/{aclId}', 'verb' => 'PUT'],
+		['name' => 'persons_api#deleteAcl', 'url' => '/api/1/persons/{personId}/acl/{aclId}', 'verb' => 'DELETE'],
+
 		// weight data
 		['name' => 'weightdata#findByPerson',	'url' => '/weight/dataset/person/{personId}',	'verb' => 'GET'],
 		['name' => 'weightdata#create',	'url' => '/weight/dataset/person/{personId}',	'verb' => 'POST'],

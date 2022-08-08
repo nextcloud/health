@@ -109,4 +109,48 @@ class PersonsApiController extends ApiController {
 	{
 		return new DataResponse($this->personsService->updatePerson($id, $key, $value));
 	}
+
+	/**
+	 * @NoAdminRequired
+	 * @CORS
+	 * @NoCSRFRequired
+
+	 * @param $personId
+	 * @param $type
+	 * @param $participant
+	 * @param $permissionEdit
+	 * @param $permissionManage
+	 * @return DataResponse
+	 */
+	public function addAcl(int $personId, int $type, string $participant, bool $permissionEdit, bool $permissionManage) {
+		return new DataResponse($this->personsService->addAcl($personId, $type, $participant, $permissionEdit, $permissionManage));
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @CORS
+	 * @NoCSRFRequired
+
+	 * @param $id
+	 * @param $permissionEdit
+	 * @param $permissionShare
+	 * @param $permissionManage
+	 * @return DataResponse
+	 */
+	public function updateAcl(int $personId, int $aclId, bool $permissionEdit, bool $permissionManage) {
+		return new DataResponse($this->personsService->updateAcl($personId, $aclId, $permissionEdit, $permissionManage));
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @CORS
+	 * @NoCSRFRequired
+
+	 * @param $personId
+	 * @param $aclId
+	 * @return DataResponse
+	 */
+	public function deleteAcl(int $personId, int $aclId) {
+		return new DataResponse($this->personsService->deleteAcl($personId, $aclId));
+	}
 }

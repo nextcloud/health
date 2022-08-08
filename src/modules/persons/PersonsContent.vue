@@ -25,8 +25,12 @@
 		<h2>{{ t('health', 'Welcome to your health center') }}</h2>
 		<div class="row">
 			<div class="col-2">
-				<textarea ref="mission" class="textarea-mission" :value="person.personalMission" />
-				<button
+				<textarea ref="mission"
+					class="textarea-mission"
+					:value="person.personalMission"
+					:readonly="!canEdit"
+				/>
+				<button v-if="canEdit"
 					@click="updateMission"
 				>
 					{{ t('health', 'Save ') }}
@@ -52,7 +56,7 @@ export default {
 	},
 	computed: {
 		...mapState([]),
-		...mapGetters(['person']),
+		...mapGetters(['person', 'canEdit']),
 	},
 	methods: {
 		updateMission() {
