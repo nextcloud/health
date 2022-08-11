@@ -17,6 +17,7 @@ OC.L10N.register(
     "Date" : "Датум",
     "Running" : "Трчање",
     "Biking" : "Велосипедизам",
+    "Driving" : "Возење",
     "Other" : "Останато",
     "Good" : "Добро",
     "Bad" : "Лошо",
