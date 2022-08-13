@@ -1,5 +1,6 @@
 { "translations": {
     "Health" : "Helse",
+    "Weight" : "Vekt",
     "Activities" : "Aktiviteter",
     "Last week" : "Forrige uke",
     "Last month" : "Forrige måned",
@@ -32,6 +33,8 @@
     "Delete" : "Slett",
     "Information" : "Informasjo",
     "Donations" : "Donasjoner",
+    "Age" : "Alder",
+    "Height" : "Høyde",
     "Strong" : "Sterk",
     "Target" : "Mål"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
