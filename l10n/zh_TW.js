@@ -39,6 +39,7 @@ OC.L10N.register(
     "Information" : "資訊",
     "Age" : "年齡",
     "Height" : "高度",
+    "Quality" : "品質",
     "Underweight" : "過輕"
 },
 "nplurals=1; plural=0;");
