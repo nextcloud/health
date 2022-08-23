@@ -2,6 +2,7 @@
  * @copyright Copyright (c) 2020 Florian Steffens
  *
  * @author Florian Steffens <flost-online@mailbox.org>
+ * @author Marcus Nitzschke <mail@kendix.org>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -61,10 +62,17 @@ export default new Vuex.Store({
 		medicationDatasets: [],
 		medicationPlanDatasets: [],
 		selectedMedicationPlan: null,
+		sharees: [],
 	},
 	getters: {
 		person: state => (state.persons && state.persons[state.activePersonId]) ? state.persons[state.activePersonId] : null,
 		personsLength: state => state.persons ? state.persons.length : 0,
+		canEdit: state => {
+			return state.activePersonId !== null && state.persons[state.activePersonId] ? state.persons[state.activePersonId].permissions.PERMISSION_EDIT : false
+		},
+		canManage: state => {
+			return state.activePersonId !== null && state.persons[state.activePersonId] ? state.persons[state.activePersonId].permissions.PERMISSION_MANAGE : false
+		},
 	},
 	mutations: {
 		persons(state, persons) {
@@ -98,6 +106,22 @@ export default new Vuex.Store({
 			state.personData = data
 		},
 		// directly called (without actions)
+		addAclToCurrentPerson(state, createdAcl) {
+			state.persons[state.activePersonId].acl.push(createdAcl)
+		},
+		updateAclFromCurrentPerson(state, acl) {
+			const currentPerson = this.state.persons[this.state.activePersonId]
+			const aclIndex = currentPerson.acl.findIndex((entry) => acl.id === entry.id)
+			Vue.set(this.state.persons[this.state.activePersonId].acl, aclIndex, acl)
+		},
+		deleteAclFromCurrentPerson(state, acl) {
+			const currentPerson = this.state.persons[this.state.activePersonId]
+			const removeIndex = currentPerson.acl.findIndex((entry) => acl.id === entry.id)
+
+			if (removeIndex > -1) {
+				Vue.delete(currentPerson.acl, removeIndex)
+			}
+		},
 		showSidebar(state, bool) {
 			state.showSidebar = bool
 		},
@@ -286,6 +310,13 @@ export default new Vuex.Store({
 		medicationPlanSelected(state, planId) {
 			state.selectedMedicationPlan = planId
 		},
+		// ----------------
+		setSharees(state, shareesUsersAndGroups) {
+			Vue.set(state, 'sharees', shareesUsersAndGroups.exact.users)
+			state.sharees.push(...shareesUsersAndGroups.exact.groups)
+			state.sharees.push(...shareesUsersAndGroups.users)
+			state.sharees.push(...shareesUsersAndGroups.groups)
+		},
 	},
 	actions: {
 		async loadPersons({ dispatch, state, commit }) {
@@ -299,6 +330,35 @@ export default new Vuex.Store({
 				dispatch('loadModuleContentForPerson')
 			}
 			commit('initialLoading', false)
+		},
+		async loadSharees({ commit }, query) {
+			const params = new URLSearchParams()
+			if (typeof query === 'undefined') {
+				return
+			}
+			params.append('search', query)
+			params.append('format', 'json')
+			params.append('perPage', 20)
+			params.append('itemType', [0, 1])
+			params.append('lookup', false)
+
+			const response = await personApiClient.searchSharees(params)
+			commit('setSharees', response.data.ocs.data)
+		},
+		async addAclToCurrentPerson({ dispatch, commit }, newAcl) {
+			newAcl.personId = this.state.persons[this.state.activePersonId].id
+			const result = await personApiClient.addAcl(newAcl)
+			commit('addAclToCurrentPerson', result)
+		},
+		async updateAclFromCurrentPerson({ commit }, acl) {
+			acl.personId = this.state.persons[this.state.activePersonId].id
+			const result = await personApiClient.updateAcl(acl)
+			commit('updateAclFromCurrentPerson', result)
+		},
+		async deleteAclFromCurrentPerson({ dispatch, commit }, acl) {
+			acl.personId = this.state.persons[this.state.activePersonId].id
+			const result = await personApiClient.deleteAcl(acl)
+			commit('deleteAclFromCurrentPerson', result)
 		},
 		setActivePerson({ dispatch, commit }, id) {
 			commit('activePersonId', id)

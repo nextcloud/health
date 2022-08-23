@@ -41,6 +41,8 @@ class Person extends Entity implements JsonSerializable {
 	protected $shared;
 	protected $sharedReadonly;
 	protected $currency;
+	protected $acl;
+	protected $permissions;
 
     // modules
     protected $enabledModuleWeight;
@@ -200,6 +202,9 @@ class Person extends Entity implements JsonSerializable {
 			'shared' => $this->shared,
 			'sharedReadonly' => $this->sharedReadonly,
 			'currency' => $this->currency,
+			/** @var Acl[]|null */
+			'acl' => $this->acl ?? [],
+			'permissions' => $this->permissions ?? [],
 
 			// modules
             'enabledModuleWeight' => $this->enabledModuleWeight,

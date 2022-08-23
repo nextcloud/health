@@ -4,6 +4,7 @@ declare(strict_types=1);
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
  *
  * @author Florian Steffens <flost-dev@mailbox.org>
+ * @author Marcus Nitzschke <mail@kendix.org>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -24,6 +25,8 @@ declare(strict_types=1);
 
 namespace OCA\Health\Services;
 
+use OCA\Health\Db\Acl;
+use OCA\Health\Db\AclMapper;
 use OCA\Health\Db\PersonMapper;
 use OCA\Health\Db\Person;
 use Exception;
@@ -32,6 +35,7 @@ use OCP\IUserManager;
 
 class PersonsService {
 
+	protected $aclMapper;
 	protected $personMapper;
 	protected $weightdataService;
 	protected $sleepdataService;
@@ -40,13 +44,16 @@ class PersonsService {
 	protected $activitiesdataService;
 	protected $userId;
 	protected $formatHelperService;
+	protected $permissionHelper;
 	protected $permissionService;
 	protected $userManager;
 
-	public function __construct(PersonMapper $personMapper,
+	public function __construct(AclMapper $aclMapper,
+								PersonMapper $personMapper,
 								$userId,
 								WeightdataService $weightdataService,
 								FormatHelperService $formatHelperService,
+								PermissionHelperService $permissionHelper,
 								PermissionService $permissionService,
 								IUserManager $userManager,
 								FeelingdataService $feelingdataService,
@@ -54,10 +61,12 @@ class PersonsService {
 								MeasurementdataService $measurementdataService,
 								ActivitiesdataService $activitiesdataService
 	) {
+		$this->aclMapper = $aclMapper;
 		$this->personMapper = $personMapper;
 		$this->userId = $userId;
 		$this->weightdataService = $weightdataService;
 		$this->formatHelperService = $formatHelperService;
+		$this->permissionHelper = $permissionHelper;
 		$this->permissionService = $permissionService;
 		$this->userManager = $userManager;
 		$this->sleepdataService = $sleepdataService;
@@ -73,6 +82,15 @@ class PersonsService {
 			$user = $this->userManager->get($this->userId);
 			$this->createPerson( $user->getDisplayName() );
 			$persons = $this->personMapper->findAll($this->userId);
+		}
+		foreach ($persons as $person) {
+			$person->setAcl($this->aclMapper->findAllByPerson($person->getId()));
+			$permissions = $this->permissionHelper->matchPermissions($person);
+			$person->setPermissions([
+				'PERMISSION_READ' => $permissions[Acl::PERMISSION_READ] ?? false,
+				'PERMISSION_EDIT' => $permissions[Acl::PERMISSION_EDIT] ?? false,
+				'PERMISSION_MANAGE' => $permissions[Acl::PERMISSION_MANAGE] ?? false,
+			]);
 		}
 		return $persons;
 	}
@@ -111,7 +129,16 @@ class PersonsService {
 		$p->setActivitiesColumnDuration(true);
 		$p->setActivitiesColumnCategory(true);
 		$p->setActivitiesDistanceUnit('m');
-		return $this->personMapper->insert($p);
+
+		$person = $this->personMapper->insert($p);
+		$permissions = $this->permissionHelper->matchPermissions($person);
+		$person->setPermissions([
+			'PERMISSION_READ' => $permissions[Acl::PERMISSION_READ] ?? false,
+			'PERMISSION_EDIT' => $permissions[Acl::PERMISSION_EDIT] ?? false,
+			'PERMISSION_MANAGE' => $permissions[Acl::PERMISSION_MANAGE] ?? false,
+		]);
+
+		return $person;
 	}
 
 	public function deletePerson($id) {
@@ -168,6 +195,14 @@ class PersonsService {
 		$person->{$method}($this->formatHelperService->typeCastByEntity($key, $value, $person));
 		$this->personMapper->update($person);
 
+		$person->setAcl($this->aclMapper->findAllByPerson($person->getId()));
+		$permissions = $this->permissionHelper->matchPermissions($person);
+		$person->setPermissions([
+			'PERMISSION_READ' => $permissions[Acl::PERMISSION_READ] ?? false,
+			'PERMISSION_EDIT' => $permissions[Acl::PERMISSION_EDIT] ?? false,
+			'PERMISSION_MANAGE' => $permissions[Acl::PERMISSION_MANAGE] ?? false,
+		]);
+
 		return $person;
 	}
 
@@ -179,6 +214,68 @@ class PersonsService {
 		return [
 			'lastWeight' => $this->weightdataService->getLastWeight($personId)
 		];
+	}
+
+	/**
+	 * @param $personId
+	 * @param $type
+	 * @param $participant
+	 * @param $edit
+	 * @param $manage
+	 * @return \OCP\AppFramework\Db\Entity
+	 */
+	public function addAcl(int $personId, int $type, string $participant, bool $edit, bool $manage) {
+		if( !$this->permissionService->personData($personId, $this->userId)) {
+			return null;
+		}
+
+		$acl = new Acl();
+		$acl->setPersonId($personId);
+		$acl->setType($type);
+		$acl->setParticipant($participant);
+		$acl->setPermissionEdit($edit);
+		$acl->setPermissionManage($manage);
+
+		return $this->aclMapper->mapParticipant($this->aclMapper->insert($acl));
+	}
+
+	/**
+	 * @param $personId
+	 * @param $aclId
+	 * @param $edit
+	 * @param $manage
+	 * @return \OCP\AppFramework\Db\Entity
+	 * @throws DoesNotExistException
+	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
+	 */
+	public function updateAcl(int $personId, int $aclId, bool $edit, bool $manage) {
+		if( !$this->permissionService->personData($personId, $this->userId)) {
+			return null;
+		}
+
+		$acl = $this->aclMapper->find($aclId);
+		$acl->setPermissionEdit($edit);
+		$acl->setPermissionManage($manage);
+
+		return $this->aclMapper->mapParticipant($this->aclMapper->update($acl));
+	}
+
+	/**
+	 * @param $personId
+	 * @param $aclId
+	 * @return \OCP\AppFramework\Db\Entity
+	 * @throws DoesNotExistException
+	 * @throws \OCA\Deck\NoPermissionException
+	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
+	 * @throws BadRequestException
+	 */
+	public function deleteAcl(int $personId, int $aclId) {
+		if( !$this->permissionService->personData($personId, $this->userId)) {
+			return null;
+		}
+		$acl = $this->aclMapper->find($aclId);
+
+		return $this->aclMapper->delete($acl);
 	}
 
 }

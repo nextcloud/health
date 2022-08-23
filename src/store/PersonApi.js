@@ -2,6 +2,7 @@
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
  *
  * @author Florian Steffens <flost-dev@mailbox.org>
+ * @author Marcus Nitzschke <mail@kendix.org>
  *
  * @license AGPL-3.0-or-later
  *
@@ -21,7 +22,7 @@
  */
 
 import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
+import { generateUrl, generateOcsUrl } from '@nextcloud/router'
 
 export class PersonApi {
 
@@ -88,6 +89,55 @@ export class PersonApi {
 			.catch((err) => {
 				return Promise.reject(err)
 			})
+	}
+
+	addAcl(acl) {
+		return axios.post(this.url(`/${acl.personId}/acl`), acl)
+			.then(
+				(response) => {
+					return Promise.resolve(response.data)
+				},
+				(err) => {
+					return Promise.reject(err)
+				}
+			)
+			.catch((err) => {
+				return Promise.reject(err)
+			})
+	}
+
+	updateAcl(acl) {
+		return axios.put(this.url(`/${acl.personId}/acl/${acl.id}`), acl)
+			.then(
+				(response) => {
+					return Promise.resolve(response.data)
+				},
+				(err) => {
+					return Promise.reject(err)
+				}
+			)
+			.catch((err) => {
+				return Promise.reject(err)
+			})
+	}
+
+	deleteAcl(acl) {
+		return axios.delete(this.url(`/${acl.personId}/acl/${acl.id}`), acl)
+			.then(
+				(response) => {
+					return Promise.resolve(response.data)
+				},
+				(err) => {
+					return Promise.reject(err)
+				}
+			)
+			.catch((err) => {
+				return Promise.reject(err)
+			})
+	}
+
+	searchSharees(params) {
+		return axios.get(generateOcsUrl('apps/files_sharing/api/v1/sharees'), { params })
 	}
 
 }
