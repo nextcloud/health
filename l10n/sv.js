@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "Hälsa",
+    "Share" : "Dela",
     "Weight" : "Vikt",
     "Activities" : "Aktiviteter",
     "Last week" : "Förra veckan",
@@ -42,6 +43,11 @@ OC.L10N.register(
     "Information" : "Information",
     "Age" : "Ålder",
     "Height" : "Höjd",
+    "No participants found" : "Inga deltagare hittades",
+    "Group" : "Grupp",
+    "Can edit" : "Kan ändra",
+    "Can manage" : "Kan hanter",
+    "Failed to create share with {displayName}" : "Kunde inte skapa delning med {displayName}",
     "Strong" : "Starkt",
     "Target" : "Mål",
     "Underweight" : "Undervikt"

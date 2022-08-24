@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Share" : "Түгээх",
     "Activities" : "Үйлдлүүд",
     "Last 24 hours" : "Сүүлийн 24 цаг",
     "Actions" : "Үйл ажиллагаа",
@@ -17,6 +18,8 @@ OC.L10N.register(
     "Normal" : "Хэвийн",
     "Name" : "Нэр",
     "Delete" : "Устгах",
-    "Information" : "Мэдээлэл"
+    "Information" : "Мэдээлэл",
+    "Group" : "Бүлэг",
+    "Can edit" : "Can edit"
 },
 "nplurals=2; plural=(n != 1);");

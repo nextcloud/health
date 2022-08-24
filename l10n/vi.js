@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "Sức khỏe",
+    "Share" : "Chia sẻ",
     "Activities" : "Hoạt động",
     "Last week" : "Tuần trước",
     "Last month" : "Tháng trước",
@@ -28,6 +29,8 @@ OC.L10N.register(
     "General settings" : "Cài đặt chung",
     "Name" : "Tên",
     "Edit name" : "Sửa đổi tên",
-    "Delete" : "Xóa"
+    "Delete" : "Xóa",
+    "Group" : "Nhóm",
+    "Can edit" : "Có thể chỉnh sửa"
 },
 "nplurals=1; plural=0;");

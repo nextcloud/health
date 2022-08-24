@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "Saúde",
+    "Share" : "Compartir",
     "Weight" : "Peso",
     "Activities" : "Actividades",
     "Last week" : "A semana pasada",
@@ -39,6 +40,11 @@ OC.L10N.register(
     "Information" : "Información",
     "Age" : "Idade",
     "Height" : "Altura",
+    "No participants found" : "Non se atoparon participantes",
+    "Group" : "Grupo",
+    "Can edit" : "Pode editar",
+    "Can manage" : "Pode xestionar",
+    "Failed to create share with {displayName}" : "Produciuse un fallo ao crear o uso compartido con {displayName}",
     "Quality" : "Calidade",
     "Strong" : "Forte",
     "Underweight" : "Peso baixo"

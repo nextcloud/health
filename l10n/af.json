@@ -1,4 +1,5 @@
 { "translations": {
+    "Share" : "Deel",
     "Activities" : "Aktiwiteite",
     "Last 24 hours" : "Afgelope 24 uur",
     "Actions" : "Aksies",
@@ -18,6 +19,9 @@
     "Name" : "Naam",
     "Delete" : "Skrap",
     "Information" : "Inligting",
+    "No participants found" : "Geen deelnemers gevind",
+    "Group" : "Groep",
+    "Can edit" : "Kan redigeer",
     "Quality" : "Kwaliteit"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

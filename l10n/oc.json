@@ -1,5 +1,6 @@
 { "translations": {
     "Health" : "Santat",
+    "Share" : "Partejar",
     "Activities" : "Activitats",
     "Last week" : "La setmana passada",
     "Last month" : "Lo mes passat",
@@ -26,6 +27,8 @@
     "Edit name" : "Modificar lo nom",
     "Show details" : "Mostrar detalhs",
     "Delete" : "Suprimir",
-    "Information" : "Informacions"
+    "Information" : "Informacions",
+    "Group" : "Grop",
+    "Can edit" : "Pòt modificar"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Share" : "Shpërndaje",
     "Activities" : "Aktivitetet",
     "Last 24 hours" : "24 orët e fundit",
     "Actions" : "Veprimet",
@@ -21,6 +22,8 @@ OC.L10N.register(
     "Name" : "Emri",
     "Delete" : "Fshij",
     "Information" : "Informacion",
+    "Group" : "Grup",
+    "Can edit" : "Can edit",
     "Strong" : "I fortë"
 },
 "nplurals=2; plural=(n != 1);");

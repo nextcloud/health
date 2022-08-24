@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Health" : "Sveikata",
     "Track your health. Use the advantages of a trusted platform." : "Stebėkite savo sveikatą. Naudokitės patikimos platformos privalumais.",
+    "Share" : "Bendrinti",
     "Activities" : "Veiklos",
     "Last week" : "Praeitą savaitę",
     "Last month" : "Praeitą mėnesį",
@@ -41,6 +42,11 @@ OC.L10N.register(
     "Sex" : "Lytis",
     "female" : "moteris",
     "male" : "vyras",
+    "No participants found" : "Nerasta jokių dalyvių",
+    "Group" : "Grupė",
+    "Can edit" : "Galima redaguoti",
+    "Can manage" : "Gali tvarkyti",
+    "Failed to create share with {displayName}" : "Nepavyko sukurti viešinio su {displayName}",
     "Quality" : "Kokybė",
     "Strong" : "Stiprus",
     "Value successfully saved" : "Reikšmė sėkmingai įrašyta"

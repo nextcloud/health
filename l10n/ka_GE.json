@@ -1,4 +1,5 @@
 { "translations": {
+    "Share" : "გაზიარება",
     "Activities" : "აქტივობები",
     "Last 24 hours" : "ბოლო 24 საათი",
     "Actions" : "მოქმედებები",
@@ -18,6 +19,8 @@
     "Name" : "სახელი",
     "Delete" : "წაშლა",
     "Information" : "ინფორმაცია",
+    "Group" : "ჯგუფი",
+    "Can edit" : "შეუძლია შეცვალოს",
     "Strong" : "ძლიერია"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

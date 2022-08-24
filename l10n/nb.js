@@ -37,6 +37,7 @@ OC.L10N.register(
     "Donations" : "Donasjoner",
     "Age" : "Alder",
     "Height" : "Høyde",
+    "Can edit" : "Kan endre",
     "Strong" : "Sterk",
     "Target" : "Mål"
 },

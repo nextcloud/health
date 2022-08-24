@@ -30,6 +30,9 @@ OC.L10N.register(
     "Edit name" : "ویرایش نام",
     "Delete" : "حذف",
     "Information" : "اطلاعات",
+    "No participants found" : "هیچ شرکتی پیدا نشد",
+    "Can manage" : "می‌تواند مدیریت کند",
+    "Failed to create share with {displayName}" : "اشتراک‌گذاری با {displayName} ایجاد نشد",
     "Strong" : "قوی"
 },
 "nplurals=2; plural=(n > 1);");

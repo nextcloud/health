@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Share" : "Partajează",
     "Activities" : "Activități",
     "Last week" : "Săptămâna trecută ",
     "Last month" : "Luna trecută ",
@@ -24,6 +25,8 @@ OC.L10N.register(
     "Edit name" : "Modifică numele",
     "Show details" : "Arată detaliile",
     "Delete" : "Șterge",
-    "Information" : "Informații"
+    "Information" : "Informații",
+    "Group" : "Grup",
+    "Can edit" : "Poate edita"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

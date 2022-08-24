@@ -1,5 +1,6 @@
 { "translations": {
     "Health" : "Tervis",
+    "Share" : "Jaga",
     "Activities" : "Tegevused",
     "Last 24 hours" : "Viimased 24 tundi",
     "Actions" : "Tegevused",
@@ -19,6 +20,8 @@
     "Name" : "Nimi",
     "Edit name" : "Muuda nime",
     "Delete" : "Kustuta",
-    "Information" : "Informatsioon"
+    "Information" : "Informatsioon",
+    "Group" : "Grupp",
+    "Can edit" : "Võib redigeerida"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

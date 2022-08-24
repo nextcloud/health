@@ -29,6 +29,7 @@ OC.L10N.register(
     "Edit name" : "Уреди име",
     "Show details" : "Прикажи детали",
     "Delete" : "Избриши",
+    "No participants found" : "Не се пронајдени учесници",
     "Quality" : "Квалитет"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

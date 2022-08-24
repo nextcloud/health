@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Share" : "Kunhavigi",
     "Activities" : "Aktivaĵoj",
     "Last 24 hours" : "Lastaj 24 horoj",
     "Actions" : "Agoj",
@@ -18,6 +19,8 @@ OC.L10N.register(
     "Name" : "Nomo",
     "Show details" : "Montri la detalojn",
     "Delete" : "Forigi",
+    "Group" : "Grupo",
+    "Can edit" : "Povas redakti",
     "Strong" : "Forta"
 },
 "nplurals=2; plural=(n != 1);");

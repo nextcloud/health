@@ -1,5 +1,6 @@
 { "translations": {
     "Health" : "Sức khỏe",
+    "Share" : "Chia sẻ",
     "Activities" : "Hoạt động",
     "Last week" : "Tuần trước",
     "Last month" : "Tháng trước",
@@ -26,6 +27,8 @@
     "General settings" : "Cài đặt chung",
     "Name" : "Tên",
     "Edit name" : "Sửa đổi tên",
-    "Delete" : "Xóa"
+    "Delete" : "Xóa",
+    "Group" : "Nhóm",
+    "Can edit" : "Có thể chỉnh sửa"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

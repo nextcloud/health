@@ -1,5 +1,6 @@
 { "translations": {
     "Health" : "건강",
+    "Share" : "공유",
     "Weight" : "몸무게",
     "Activities" : "활동",
     "Last week" : "저번 주",
@@ -38,6 +39,9 @@
     "Information" : "정보",
     "Age" : "나이",
     "Height" : "신장",
+    "No participants found" : "참여자를 찾을 수 없음",
+    "Group" : "그룹",
+    "Can edit" : "편집할 수 있음",
     "Quality" : "품질",
     "Strong" : "강함",
     "Underweight" : "저체중"

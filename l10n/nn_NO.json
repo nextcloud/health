@@ -1,4 +1,5 @@
 { "translations": {
+    "Share" : "Del",
     "Activities" : "Aktivitetar",
     "Last 24 hours" : "Siste 24 timer",
     "Actions" : "Handlingar",
@@ -15,6 +16,8 @@
     "None" : "Ingen",
     "Name" : "Namn",
     "Delete" : "Slett",
-    "Information" : "Informasjon"
+    "Information" : "Informasjon",
+    "Group" : "Gruppe",
+    "Can edit" : "Can edit"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

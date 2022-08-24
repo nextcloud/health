@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "Heilsa",
+    "Share" : "Deila",
     "Activities" : "Aðgerðir",
     "Show all" : "Birta allt",
     "Last 24 hours" : "Síðustu 24 klst",
@@ -34,6 +35,10 @@ OC.L10N.register(
     "Show details" : "Birta nánari upplýsingar",
     "Delete" : "Eyða",
     "Information" : "Upplýsingar",
+    "No participants found" : "No participants found",
+    "Group" : "Hópur",
+    "Can edit" : "Getur breytt",
+    "Can manage" : "Gerur sýslað með",
     "Quality" : "Quality",
     "Strong" : "Sterkt"
 },

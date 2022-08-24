@@ -27,6 +27,7 @@
     "Edit name" : "Уреди име",
     "Show details" : "Прикажи детали",
     "Delete" : "Избриши",
+    "No participants found" : "Не се пронајдени учесници",
     "Quality" : "Квалитет"
 },"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
 }

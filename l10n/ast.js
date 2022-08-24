@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Share" : "Share",
     "Activities" : "Actividaes",
     "Last 24 hours" : "Les 24 hores pasaes",
     "Actions" : "Aiciones",
@@ -17,6 +18,8 @@ OC.L10N.register(
     "General settings" : "Axustes xenerales",
     "Name" : "Nome",
     "Delete" : "Desaniciar",
-    "Information" : "Información"
+    "Information" : "Información",
+    "Group" : "Group",
+    "Can edit" : "Can edit"
 },
 "nplurals=2; plural=(n != 1);");

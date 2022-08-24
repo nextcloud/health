@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Share" : "გაზიარება",
     "Activities" : "აქტივობები",
     "Last 24 hours" : "ბოლო 24 საათი",
     "Actions" : "მოქმედებები",
@@ -20,6 +21,8 @@ OC.L10N.register(
     "Name" : "სახელი",
     "Delete" : "წაშლა",
     "Information" : "ინფორმაცია",
+    "Group" : "ჯგუფი",
+    "Can edit" : "შეუძლია შეცვალოს",
     "Strong" : "ძლიერია"
 },
 "nplurals=2; plural=(n!=1);");

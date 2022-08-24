@@ -1,4 +1,5 @@
 { "translations": {
+    "Share" : "Podeli",
     "Activities" : "Aktivnosti",
     "Last week" : "Prošle nedelje",
     "Last month" : "Prošlog meseca",
@@ -13,6 +14,8 @@
     "None" : "Ništa",
     "Normal" : "Normalna",
     "Name" : "Ime",
-    "Delete" : "Obriši"
+    "Delete" : "Obriši",
+    "Group" : "Group",
+    "Can edit" : "Can edit"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
 }

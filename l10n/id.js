@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Share" : "Bagikan",
     "Activities" : "Aktivitas",
     "Last 12 hours" : "12 jam lalu",
     "Last 24 hours" : "24 Jam lalu",
@@ -21,6 +22,9 @@ OC.L10N.register(
     "Edit name" : "Edit nama",
     "Show details" : "Tampilkan detail",
     "Delete" : "Hapus",
-    "Information" : "Informasi"
+    "Information" : "Informasi",
+    "Group" : "Grup",
+    "Can edit" : "Can edit",
+    "Can manage" : "Dapat mengelola"
 },
 "nplurals=1; plural=0;");

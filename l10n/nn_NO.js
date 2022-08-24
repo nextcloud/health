@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Share" : "Del",
     "Activities" : "Aktivitetar",
     "Last 24 hours" : "Siste 24 timer",
     "Actions" : "Handlingar",
@@ -17,6 +18,8 @@ OC.L10N.register(
     "None" : "Ingen",
     "Name" : "Namn",
     "Delete" : "Slett",
-    "Information" : "Informasjon"
+    "Information" : "Informasjon",
+    "Group" : "Gruppe",
+    "Can edit" : "Can edit"
 },
 "nplurals=2; plural=(n != 1);");

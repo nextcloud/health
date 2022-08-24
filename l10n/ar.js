@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "صحة",
+    "Share" : "مشاركة",
     "Activities" : "النشاطات",
     "Last week" : "الأسبوع الماضي",
     "Last month" : "الشهر الماضي",
@@ -32,6 +33,11 @@ OC.L10N.register(
     "Show details" : "عرض التفاصيل",
     "Delete" : "إزالة",
     "Information" : "معلومات",
+    "No participants found" : "لم يتم العثور على مشاركين",
+    "Group" : "المجموعة",
+    "Can edit" : "يمكن تعديله",
+    "Can manage" : "يمكن إدارته",
+    "Failed to create share with {displayName}" : "فشل في إنشاء المشاركة مع {displayName}",
     "Quality" : "الجودة",
     "Strong" : "قوية"
 },

@@ -5,6 +5,7 @@ OC.L10N.register(
     "Track your health. Use the advantages of a trusted platform." : "Track your health. Use the advantages of a trusted platform.",
     "Created at {creationTime}" : "Created at {creationTime}",
     "Person" : "Person",
+    "Share" : "Share",
     "Weight" : "Weight",
     "Feeling" : "Feeling",
     "Measurement" : "Measurement",
@@ -30,6 +31,8 @@ OC.L10N.register(
     "Identifier" : "Identifier",
     "Delete" : "Delete",
     "Information" : "Information",
+    "Group" : "Group",
+    "Can edit" : "Can edit",
     "Strong" : "Strong"
 },
 "nplurals=2; plural=(n != 1);");

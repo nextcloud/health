@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "Santat",
+    "Share" : "Partejar",
     "Activities" : "Activitats",
     "Last week" : "La setmana passada",
     "Last month" : "Lo mes passat",
@@ -28,6 +29,8 @@ OC.L10N.register(
     "Edit name" : "Modificar lo nom",
     "Show details" : "Mostrar detalhs",
     "Delete" : "Suprimir",
-    "Information" : "Informacions"
+    "Information" : "Informacions",
+    "Group" : "Grop",
+    "Can edit" : "Pòt modificar"
 },
 "nplurals=2; plural=(n > 1);");

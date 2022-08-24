@@ -30,6 +30,10 @@ OC.L10N.register(
     "Show details" : "Прикажи детаље",
     "Delete" : "Избриши",
     "Information" : "Информације",
+    "No participants found" : "Нема нађених учесника",
+    "Can edit" : "Може да уређује",
+    "Can manage" : "Може да управља",
+    "Failed to create share with {displayName}" : "Грешка у прављењу дељења са {displayName}",
     "Strong" : "Јака",
     "If you want, you can set your initial weight and a target for your weight. Do this in the settings in the sidebar. You will see right here how much you added or lost and what is left. Maybe you can be motivated this way." : "Ако желите, можете поставити своју почетну тежину и циљ за своју тежину. Урадите то у подешавањима на бочној траци. Овде ћете видети колико сте додали или изгубили и шта је остало. Можда можете бити мотивисани на овај начин."
 },

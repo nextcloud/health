@@ -1,4 +1,5 @@
 { "translations": {
+    "Share" : "බෙදාගන්න",
     "Last week" : "පසුගිය සතිය",
     "Last month" : "පසුගිය මාසය",
     "Actions" : "ක්‍රියාමාර්ග",
@@ -15,6 +16,7 @@
     "Comment" : "අදහස",
     "Name" : "නම",
     "Edit name" : "නම සංස්කරණය",
-    "Information" : "තොරතුරු"
+    "Information" : "තොරතුරු",
+    "Group" : "සමූහය"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

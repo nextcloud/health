@@ -19,6 +19,7 @@ OC.L10N.register(
     "Normal" : "ปกติ",
     "Name" : "ชื่อ",
     "Show details" : "แสดงข้อมูล",
-    "Delete" : "ลบ"
+    "Delete" : "ลบ",
+    "Can edit" : "Can edit"
 },
 "nplurals=1; plural=0;");

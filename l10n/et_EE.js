@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "Tervis",
+    "Share" : "Jaga",
     "Activities" : "Tegevused",
     "Last 24 hours" : "Viimased 24 tundi",
     "Actions" : "Tegevused",
@@ -21,6 +22,8 @@ OC.L10N.register(
     "Name" : "Nimi",
     "Edit name" : "Muuda nime",
     "Delete" : "Kustuta",
-    "Information" : "Informatsioon"
+    "Information" : "Informatsioon",
+    "Group" : "Grupp",
+    "Can edit" : "Võib redigeerida"
 },
 "nplurals=2; plural=(n != 1);");

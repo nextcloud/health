@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Share" : "Del",
     "Activities" : "Aktiviteter",
     "Last week" : "Seneste uge",
     "Last month" : "Seneste måned",
@@ -29,6 +30,11 @@ OC.L10N.register(
     "Show details" : "Vis detaljer",
     "Delete" : "Slet",
     "Information" : "Information",
+    "No participants found" : "Ingen deltagere fundet",
+    "Group" : "Gruppe",
+    "Can edit" : "Kan redigere",
+    "Can manage" : "Kan administrere",
+    "Failed to create share with {displayName}" : "Oprettelse af delt drev med {displayName} fejlede",
     "Strong" : "Stærkt"
 },
 "nplurals=2; plural=(n != 1);");

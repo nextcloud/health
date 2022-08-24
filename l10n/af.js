@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Share" : "Deel",
     "Activities" : "Aktiwiteite",
     "Last 24 hours" : "Afgelope 24 uur",
     "Actions" : "Aksies",
@@ -20,6 +21,9 @@ OC.L10N.register(
     "Name" : "Naam",
     "Delete" : "Skrap",
     "Information" : "Inligting",
+    "No participants found" : "Geen deelnemers gevind",
+    "Group" : "Groep",
+    "Can edit" : "Kan redigeer",
     "Quality" : "Kwaliteit"
 },
 "nplurals=2; plural=(n != 1);");
