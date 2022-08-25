@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Share" : "แชร์",
     "Activities" : "กิจกรรม",
     "Last week" : "สัปดาห์ที่แล้ว",
     "Last month" : "เดือนที่แล้ว",
@@ -20,6 +21,7 @@ OC.L10N.register(
     "Name" : "ชื่อ",
     "Show details" : "แสดงข้อมูล",
     "Delete" : "ลบ",
+    "Group" : "กลุ่ม",
     "Can edit" : "Can edit"
 },
 "nplurals=1; plural=0;");

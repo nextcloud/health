@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "Здравје",
+    "Share" : "Сподели",
     "Activities" : "Активности",
     "Last week" : "Минатата недела",
     "Last month" : "Минатиот месец",
@@ -30,6 +31,10 @@ OC.L10N.register(
     "Show details" : "Прикажи детали",
     "Delete" : "Избриши",
     "No participants found" : "Не се пронајдени учесници",
+    "Group" : "Група",
+    "Can edit" : "Може да се уредува",
+    "Can manage" : "Може да ја менаџира",
+    "Failed to create share with {displayName}" : "Неможе да се сподели со {displayName}",
     "Quality" : "Квалитет"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

@@ -1,5 +1,6 @@
 { "translations": {
     "Health" : "سلامتی",
+    "Share" : "هم‌رسانی",
     "Activities" : "فعالیت‌ها",
     "Last week" : "هفته گذشته",
     "Last month" : "ماه گذشته",
@@ -29,6 +30,8 @@
     "Delete" : "حذف",
     "Information" : "اطلاعات",
     "No participants found" : "هیچ شرکتی پیدا نشد",
+    "Group" : "گروه",
+    "Can edit" : "می‌تواند ویرایش کند",
     "Can manage" : "می‌تواند مدیریت کند",
     "Failed to create share with {displayName}" : "اشتراک‌گذاری با {displayName} ایجاد نشد",
     "Strong" : "قوی"

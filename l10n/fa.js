@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "سلامتی",
+    "Share" : "هم‌رسانی",
     "Activities" : "فعالیت‌ها",
     "Last week" : "هفته گذشته",
     "Last month" : "ماه گذشته",
@@ -31,6 +32,8 @@ OC.L10N.register(
     "Delete" : "حذف",
     "Information" : "اطلاعات",
     "No participants found" : "هیچ شرکتی پیدا نشد",
+    "Group" : "گروه",
+    "Can edit" : "می‌تواند ویرایش کند",
     "Can manage" : "می‌تواند مدیریت کند",
     "Failed to create share with {displayName}" : "اشتراک‌گذاری با {displayName} ایجاد نشد",
     "Strong" : "قوی"

@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "Helse",
+    "Share" : "Del",
     "Weight" : "Vekt",
     "Activities" : "Aktiviteter",
     "Last week" : "Forrige uke",
@@ -37,6 +38,7 @@ OC.L10N.register(
     "Donations" : "Donasjoner",
     "Age" : "Alder",
     "Height" : "Høyde",
+    "Group" : "Gruppe",
     "Can edit" : "Kan endre",
     "Strong" : "Sterk",
     "Target" : "Mål"

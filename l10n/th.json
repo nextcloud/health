@@ -1,4 +1,5 @@
 { "translations": {
+    "Share" : "แชร์",
     "Activities" : "กิจกรรม",
     "Last week" : "สัปดาห์ที่แล้ว",
     "Last month" : "เดือนที่แล้ว",
@@ -18,6 +19,7 @@
     "Name" : "ชื่อ",
     "Show details" : "แสดงข้อมูล",
     "Delete" : "ลบ",
+    "Group" : "กลุ่ม",
     "Can edit" : "Can edit"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

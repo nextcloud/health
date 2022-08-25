@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Share" : "Koplietot",
     "Activities" : "Darbības",
     "Last 24 hours" : "Pēdējās 24 stundas",
     "Actions" : "Darbības",
@@ -20,6 +21,8 @@ OC.L10N.register(
     "Show details" : "Rādīt detaļas",
     "Delete" : "Dzēst",
     "Information" : "Informācija",
+    "Group" : "Grupa",
+    "Can edit" : "Var rediģēt",
     "Strong" : "Stipra"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

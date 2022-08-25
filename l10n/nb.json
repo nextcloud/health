@@ -1,5 +1,6 @@
 { "translations": {
     "Health" : "Helse",
+    "Share" : "Del",
     "Weight" : "Vekt",
     "Activities" : "Aktiviteter",
     "Last week" : "Forrige uke",
@@ -35,6 +36,7 @@
     "Donations" : "Donasjoner",
     "Age" : "Alder",
     "Height" : "Høyde",
+    "Group" : "Gruppe",
     "Can edit" : "Kan endre",
     "Strong" : "Sterk",
     "Target" : "Mål"

@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "健康",
+    "Share" : "分享",
     "Weight" : "重量",
     "Activities" : "活動",
     "Last week" : "上週",
@@ -39,6 +40,11 @@ OC.L10N.register(
     "Information" : "資訊",
     "Age" : "年齡",
     "Height" : "高度",
+    "No participants found" : "找不到參與者",
+    "Group" : "群組",
+    "Can edit" : "可以編輯",
+    "Can manage" : "可以管理",
+    "Failed to create share with {displayName}" : "無法建立與 {displayName} 的分享",
     "Quality" : "品質",
     "Underweight" : "過輕"
 },

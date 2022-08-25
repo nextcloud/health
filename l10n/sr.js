@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Share" : "Подели",
     "Activities" : "Активности",
     "Last week" : "Прошле недеље",
     "Last month" : "Прошлог месеца",
@@ -31,6 +32,7 @@ OC.L10N.register(
     "Delete" : "Избриши",
     "Information" : "Информације",
     "No participants found" : "Нема нађених учесника",
+    "Group" : "Група",
     "Can edit" : "Може да уређује",
     "Can manage" : "Може да управља",
     "Failed to create share with {displayName}" : "Грешка у прављењу дељења са {displayName}",

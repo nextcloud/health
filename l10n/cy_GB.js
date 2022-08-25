@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "Iechyd",
+    "Share" : "Rhannu",
     "Activities" : "Gweithgareddau",
     "Actions" : "Gweithredoedd",
     "Today" : "Heddiw",
@@ -18,6 +19,8 @@ OC.L10N.register(
     "Normal" : "Arferol",
     "Name" : "Enw",
     "Edit name" : "Golygu enw",
-    "Delete" : "Dileu"
+    "Delete" : "Dileu",
+    "Group" : "Grŵp",
+    "Can edit" : "Can edit"
 },
 "nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;");

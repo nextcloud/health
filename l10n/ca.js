@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "Salut",
+    "Share" : "Compartir",
     "Weight" : "Pes",
     "Activities" : "Activitat",
     "Last week" : "La setmana passada",
@@ -42,6 +43,7 @@ OC.L10N.register(
     "Age" : "Edat",
     "Height" : "Alçada",
     "No participants found" : "No s'han trobat participants",
+    "Group" : "Grup",
     "Can edit" : "Pot editar",
     "Can manage" : "Pot gestionar",
     "Failed to create share with {displayName}" : "Ha fallat la creació de la compartició amb {displayName}",

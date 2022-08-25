@@ -1,5 +1,6 @@
 { "translations": {
     "Health" : "Iechyd",
+    "Share" : "Rhannu",
     "Activities" : "Gweithgareddau",
     "Actions" : "Gweithredoedd",
     "Today" : "Heddiw",
@@ -16,6 +17,8 @@
     "Normal" : "Arferol",
     "Name" : "Enw",
     "Edit name" : "Golygu enw",
-    "Delete" : "Dileu"
+    "Delete" : "Dileu",
+    "Group" : "Grŵp",
+    "Can edit" : "Can edit"
 },"pluralForm" :"nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;"
 }
