@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Health" : "Sundhed",
     "Share" : "Del",
     "Activities" : "Aktiviteter",
     "Last week" : "Seneste uge",
@@ -14,7 +15,10 @@ OC.L10N.register(
     "Category" : "Kategori",
     "Activity" : "Aktivitet",
     "Date" : "Dato",
+    "Running" : "Løber",
     "Job" : "Job",
+    "Biking" : "Cykling",
+    "Driving" : "Kørsel",
     "Other" : "Andet",
     "Good" : "Godt",
     "Bad" : "Skidt",
