@@ -196,7 +196,7 @@ OC.L10N.register(
     "Originator" : "Urheber(in)",
     "Group" : "Gruppe",
     "Can edit" : "Kann bearbeiten",
-    "Can manage" : "kann verwalten",
+    "Can manage" : "Kann verwalten",
     "Failed to create share with {displayName}" : "Fehler beim Erstellen der Freigabe mit dem Namen {displayName}",
     "Quality" : "Qualität",
     "Counted wakeups" : "Gezählte Schlafunterbrechungen",

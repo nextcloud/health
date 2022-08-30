@@ -248,7 +248,7 @@
     "Custom measurement" : "Pomiar niestandardowy",
     "Unit for weight" : "Jednostka wagi",
     "Custom column name" : "Nazwa własnej kolumny",
-    "What else do you want to track? Set here a name and you can add data in the data-table. The values have to be numbers. Please do not forget to activate the column in the column selections." : "Co jeszcze chcesz monitorować? Ustaw tutaj nazwę, a będziesz mógł dodawać dane do tabeli danych. Wartości muszą być liczbami. Nie zapomnij aktywować kolumny w wyborach kolumn.",
+    "What else do you want to track? Set here a name and you can add data in the data-table. The values have to be numbers. Please do not forget to activate the column in the column selections." : "Co jeszcze chcesz monitorować? Ustaw tutaj nazwę, a będziesz mógł dodawać dane do tabeli danych. Wartości muszą być liczbami. Nie zapomnij aktywować kolumny w wybranych kolumnach.",
     "Weight target" : "Docelowa waga",
     "in {unit}" : "w {unit}",
     "Leave blank for none." : "Zostaw puste dla żadnej.",
