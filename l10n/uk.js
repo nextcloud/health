@@ -10,6 +10,7 @@ OC.L10N.register(
     "Actions" : "Дії",
     "Today" : "Сьогодні",
     "Cancel" : "Скасувати",
+    "Chart" : "Діаграма",
     "Data" : "Дані",
     "Category" : "Категорія",
     "Activity" : "Події",
