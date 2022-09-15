@@ -191,7 +191,7 @@ OC.L10N.register(
     "Breaks" : "Přestávky",
     "Nutrition" : "Výživa",
     "Share person with a user or group …" : "Nasdílet osobu uživateli či skupině…",
-    "Searching for users and groups …" : "Hledat uživatele a skupiny",
+    "Searching for users and groups …" : "Hledat uživatele a skupiny…",
     "No participants found" : "Nenalezeni žádní účastníci",
     "Originator" : "Původce",
     "Group" : "Skupina",

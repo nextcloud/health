@@ -162,6 +162,7 @@ OC.L10N.register(
     "Delete" : "Poista",
     "New person" : "Uusi henkilö",
     "Information" : "Tiedot",
+    "Donations" : "Lahjoitukset",
     "Age" : "Ikä",
     "Height" : "Pituus",
     "in cm" : "senttimetreinä",
