@@ -190,6 +190,8 @@ OC.L10N.register(
     "Manage modules" : "Gerência de módulos",
     "Breaks" : "Paradas",
     "Nutrition" : "Nutrição",
+    "Share person with a user or group …" : "Compartilhar pessoa com um usuário ou grupo…",
+    "Searching for users and groups …" : "Procurando usuários e grupos…",
     "No participants found" : "Nenhum participante encontrado",
     "Group" : "Grupo",
     "Can edit" : "Pode editar",
