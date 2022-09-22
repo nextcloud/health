@@ -193,6 +193,7 @@ OC.L10N.register(
     "Share person with a user or group …" : "Compartilhar pessoa com um usuário ou grupo…",
     "Searching for users and groups …" : "Procurando usuários e grupos…",
     "No participants found" : "Nenhum participante encontrado",
+    "Originator" : "Originador",
     "Group" : "Grupo",
     "Can edit" : "Pode editar",
     "Can manage" : "Pode gerenciar",
