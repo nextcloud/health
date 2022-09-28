@@ -40,6 +40,7 @@ OC.L10N.register(
     "Height" : "Høyde",
     "Group" : "Gruppe",
     "Can edit" : "Kan endre",
+    "Quality" : "Kvalitet",
     "Strong" : "Sterk",
     "Target" : "Mål"
 },
