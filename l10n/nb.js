@@ -38,8 +38,11 @@ OC.L10N.register(
     "Donations" : "Donasjoner",
     "Age" : "Alder",
     "Height" : "Høyde",
+    "No participants found" : "Ingen deltakere funnet",
     "Group" : "Gruppe",
     "Can edit" : "Kan endre",
+    "Can manage" : "Kan behandle",
+    "Failed to create share with {displayName}" : "Klarte ikke å opprette deling med {displayName}",
     "Quality" : "Kvalitet",
     "Strong" : "Sterk",
     "Target" : "Mål"

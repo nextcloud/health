@@ -18,6 +18,7 @@ OC.L10N.register(
     "Date" : "Дата",
     "Running" : "Бігаю",
     "Biking" : "Їхати мотоциклом",
+    "Driving" : "Водіння",
     "Other" : "Інші",
     "Good" : "Добре",
     "Bad" : "Поганий",
