@@ -38,6 +38,7 @@ OC.L10N.register(
     "Show details" : "顯示細節",
     "Delete" : "刪除",
     "Information" : "資訊",
+    "Donations" : "捐款",
     "Age" : "年齡",
     "Height" : "高度",
     "No participants found" : "找不到參與者",
