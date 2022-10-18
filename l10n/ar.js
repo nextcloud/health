@@ -12,6 +12,7 @@ OC.L10N.register(
     "Cancel" : "إلغاء",
     "Duration" : "المدة الزمنية",
     "Distance" : "المسافة",
+    "Data" : "البيانات",
     "Category" : "الفئة",
     "Activity" : "نشاط",
     "Date" : "التاريخ ",
