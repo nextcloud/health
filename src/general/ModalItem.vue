@@ -44,7 +44,7 @@
 		>
 			{{ icon === null ? t('health', 'Add new {eName}', {eName: entityName}) : '' }}
 		</button>
-		<Modal v-if="showModal" title="add item" @close="showModal = false">
+		<NcModal v-if="showModal" title="add item" @close="showModal = false">
 			<div class="modal__content">
 				<h1 v-if="inputMode === 'add'">
 					{{ t('health', 'Add new {entityName}', { entityName: entityName }) }}
@@ -80,7 +80,7 @@
 							>
 						</div>
 						<div v-else-if="h.type === 'select'" class="wrapper">
-							<Multiselect
+							<NcMultiselect
 								v-model="values[h.columnId]"
 								:options="h.options"
 								track-by="id"
@@ -88,7 +88,7 @@
 							/>
 						</div>
 						<div v-else-if="h.type === 'multiselect'" class="wrapper">
-							<Multiselect
+							<NcMultiselect
 								v-model="values[h.columnId]"
 								:options="h.options"
 								:multiple="true"
@@ -142,20 +142,20 @@
 					{{ t('health', 'Cancel', {}) }}
 				</button>
 			</div>
-		</Modal>
+		</NcModal>
 	</div>
 </template>
 
 <script>
-import Modal from '@nextcloud/vue/dist/Components/Modal'
-import Multiselect from '@nextcloud/vue/dist/Components/Multiselect'
+import NcModal from '@nextcloud/vue/dist/Components/NcModal'
+import NcMultiselect from '@nextcloud/vue/dist/Components/NcMultiselect'
 import moment from '@nextcloud/moment'
 
 export default {
 	name: 'ModalItem',
 	components: {
-		Modal,
-		Multiselect,
+		NcModal,
+		NcMultiselect,
 	},
 	props: {
 		header: {

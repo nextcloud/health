@@ -23,52 +23,52 @@
 <template>
 	<ul>
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
-		<ActionCheckbox
+		<NcActionCheckbox
 			:checked="person.weightColumnWeight"
 			@change="$store.dispatch('setValue', { key: 'weightColumnWeight', value: $event.target.checked })"
 		>
 			{{ t('health', 'Weight', {}) }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.weightColumnBmi"
 			@change="$store.dispatch('setValue', { key: 'weightColumnBmi', value: $event.target.checked })"
 		>
 			{{ t('health', 'Body mass index (BMI)', {}) }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.weightColumnBodyfat"
 			@change="$store.dispatch('setValue', { key: 'weightColumnBodyfat', value: $event.target.checked })"
 		>
 			{{ t('health', 'Bodyfat', {}) }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.weightColumnMeasurement"
 			@change="$store.dispatch('setValue', { key: 'weightColumnMeasurement', value: $event.target.checked })"
 		>
 			{{ person.weightMeasurementName ? person.weightMeasurementName : t('health', 'Custom measurement') }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.weightColumnWaistSize"
 			@change="$store.dispatch('setValue', { key: 'weightColumnWaistSize', value: $event.target.checked })"
 		>
 			{{ t('health', 'Waist size', {}) }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.weightColumnHipSize"
 			@change="$store.dispatch('setValue', { key: 'weightColumnHipSize', value: $event.target.checked })"
 		>
 			{{ t('health', 'Hip size', {}) }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.weightColumnMusclePart"
 			@change="$store.dispatch('setValue', { key: 'weightColumnMusclePart', value: $event.target.checked })"
 		>
 			{{ t('health', 'Muscle part', {}) }}
-		</ActionCheckbox>
+		</NcActionCheckbox>
 
 		<li><h3>{{ t('health', 'General settings', {}) }}</h3></li>
 		<li><h4>{{ t('health', 'Unit for weight', {}) }}</h4></li>
-		<ActionInput
+		<NcActionInput
 			type="text"
 			:value="person.weightUnit"
 			icon="icon-category-customization"
@@ -79,7 +79,7 @@
 				{{ t('health', 'Custom column name', {}) }}<span><br>{{ t('health', 'What else do you want to track? Set here a name and you can add data in the data-table. The values have to be numbers. Please do not forget to activate the column in the column selections.', {}) }}</span>
 			</h4>
 		</li>
-		<ActionInput
+		<NcActionInput
 			type="text"
 			:value="person.weightMeasurementName"
 			icon="icon-rename"
@@ -102,7 +102,7 @@
 				</span>
 			</h4>
 		</li>
-		<ActionInput
+		<NcActionInput
 			type="number"
 			:value="person.weightTarget"
 			icon="icon-category-monitoring"
@@ -118,7 +118,7 @@
 				</span>
 			</h4>
 		</li>
-		<ActionInput
+		<NcActionInput
 			type="number"
 			:value="(person.weightTargetInitialWeight !== null )? person.weightTargetInitialWeight: ''"
 			icon="icon-quota"
@@ -141,15 +141,15 @@
 </template>
 
 <script>
-import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
+import NcActionInput from '@nextcloud/vue/dist/Components/NcActionInput'
 import { mapState, mapGetters } from 'vuex'
-import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
+import NcActionCheckbox from '@nextcloud/vue/dist/Components/NcActionCheckbox'
 
 export default {
 	name: 'WeightSidebar',
 	components: {
-		ActionInput,
-		ActionCheckbox,
+		NcActionInput,
+		NcActionCheckbox,
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar']),

@@ -23,59 +23,59 @@
 <template>
 	<ul>
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
-		<ActionCheckbox
+		<NcActionCheckbox
 			:checked="person.feelingColumnMood"
 			@change="$store.dispatch('setValue', { key: 'feelingColumnMood', value: $event.target.checked })"
 		>
 			{{ t('health', 'Mood', {}) }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.feelingColumnSadnessLevel"
 			@change="$store.dispatch('setValue', { key: 'feelingColumnSadnessLevel', value: $event.target.checked })"
 		>
 			{{ t('health', 'Sadness level', {}) }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.feelingColumnSymptoms"
 			@change="$store.dispatch('setValue', { key: 'feelingColumnSymptoms', value: $event.target.checked })"
 		>
 			{{ t('health', 'Symptoms') }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.feelingColumnAttacks"
 			@change="$store.dispatch('setValue', { key: 'feelingColumnAttacks', value: $event.target.checked })"
 		>
 			{{ t('health', 'Attacks') }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.feelingColumnMedication"
 			@change="$store.dispatch('setValue', { key: 'feelingColumnMedication', value: $event.target.checked })"
 		>
 			{{ t('health', 'Medication') }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.feelingColumnPain"
 			@change="$store.dispatch('setValue', { key: 'feelingColumnPain', value: $event.target.checked })"
 		>
 			{{ t('health', 'Pain') }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.feelingColumnEnergy"
 			@change="$store.dispatch('setValue', { key: 'feelingColumnEnergy', value: $event.target.checked })"
 		>
 			{{ t('health', 'Energy') }}
-		</ActionCheckbox>
+		</NcActionCheckbox>
 	</ul>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
+import NcActionCheckbox from '@nextcloud/vue/dist/Components/NcActionCheckbox'
 
 export default {
 	name: 'FeelingSidebar',
 	components: {
-		ActionCheckbox,
+		NcActionCheckbox,
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar']),

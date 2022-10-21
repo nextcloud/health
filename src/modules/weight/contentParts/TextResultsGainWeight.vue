@@ -36,7 +36,7 @@
 			<br>
 			<br>
 			{{ t('health', 'Go on and eliminate the blue bar:', {}) }}
-			<ProgressBar
+			<NcProgressBar
 				:value="getProgressbarValue"
 				:class="{'small':true}"
 			/>
@@ -54,13 +54,13 @@
 </template>
 
 <script>
-import ProgressBar from '@nextcloud/vue/dist/Components/ProgressBar'
+import NcProgressBar from '@nextcloud/vue/dist/Components/NcProgressBar'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
 	name: 'TextResultsGainWeight',
 	components: {
-		ProgressBar,
+		NcProgressBar,
 	},
 	props: {
 		weight: {

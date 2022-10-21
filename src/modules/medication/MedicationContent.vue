@@ -40,49 +40,60 @@
 			:person="person"
 		/>
 
-		<EmptyContent
+		<NcEmptyContent
 			v-if="selectedMedicationPlan === null"
-			icon="icon-category-monitoring"
+			:title="t('health', 'Select a medication plan')"
 		>
-			{{ t('health', 'Select a medication plan') }}
-		</EmptyContent>
+			<template #icon>
+				<clipboard-outline />
+			</template>
+		</NcEmptyContent>
 
 		<div v-if="loading" class="icon-loading" />
 	</div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
-import MedicationPlanTable from './MedicationPlanTable'
-import MedicationTable from './MedicationTable'
-import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
+	import { mapState, mapGetters } from 'vuex'
+	import MedicationPlanTable from './MedicationPlanTable'
+	import MedicationTable from './MedicationTable'
+	import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent'
+	import ClipboardOutline from 'vue-material-design-icons/ClipboardOutline.vue';
 
-export default {
-	name: 'MedicationContent',
-	components: {
-		EmptyContent,
-		MedicationPlanTable,
-		MedicationTable,
-	},
-	computed: {
-		...mapState(['activeModule', 'showSidebar', 'medicationPlanDatasets', 'medicationDatasets', 'selectedMedicationPlan', 'loading']),
-		...mapGetters(['person']),
-		medicationData() {
-			return !this.medicationDatasets
-				? null
-				// eslint-disable-next-line vue/no-side-effects-in-computed-properties
-				: this.medicationDatasets.sort(function(a, b) {
-					return a.name.localeCompare(b.name)
-				})
+	export default {
+		name: 'MedicationContent',
+		components: {
+			ClipboardOutline,
+			NcEmptyContent,
+			MedicationPlanTable,
+			MedicationTable,
 		},
-		medicationPlans() {
-			return !this.medicationPlanDatasets
-				? null
+		computed: {
+			...mapState(['activeModule', 'showSidebar', 'medicationPlanDatasets', 'medicationDatasets', 'selectedMedicationPlan', 'loading']),
+			...mapGetters(['person']),
+			medicationData() {
+				return !this.medicationDatasets
+					 ? null
 				// eslint-disable-next-line vue/no-side-effects-in-computed-properties
-				: this.medicationPlanDatasets.sort(function(a, b) {
-					return new Date(b.date) - new Date(a.date)
-				})
+					 : this.medicationDatasets.sort(function(a, b) {
+						 return a.name.localeCompare(b.name)
+					 })
+			},
+			medicationPlans() {
+				return !this.medicationPlanDatasets
+					 ? null
+				// eslint-disable-next-line vue/no-side-effects-in-computed-properties
+					 : this.medicationPlanDatasets.sort(function(a, b) {
+						 return new Date(b.date) - new Date(a.date)
+					 })
+			},
 		},
-	},
-}
+	}
 </script>
+
+<style lang="scss" scoped>
+	.empty-content {
+	margin-top: 0 !important;
+	margin-bottom: 20px;
+	}
+</style>

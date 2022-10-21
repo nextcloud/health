@@ -21,9 +21,9 @@
 	-->
 
 <template>
-	<AppNavigation>
+	<NcAppNavigation>
 		<template #list>
-			<AppNavigationItem v-for="(p, index) in getPersons"
+			<NcAppNavigationItem v-for="(p, index) in getPersons"
 				:key="index"
 				:title="p.name"
 				:allow-collapse="true"
@@ -37,73 +37,73 @@
 				@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'person')"
 			>
 				<template v-if="p.permissions['PERMISSION_MANAGE']" slot="actions">
-					<ActionButton
+					<NcActionButton
 						:close-after-click="true"
 						icon="icon-details"
 						@click="$store.commit('showSidebar', true); $store.dispatch('setActivePerson', index)"
 					>
 						{{ t('health', 'Show details') }}
-					</ActionButton>
-					<ActionButton
+					</NcActionButton>
+					<NcActionButton
 						v-show="personsLength != 1"
 						:close-after-click="true"
 						icon="icon-delete"
 						@click="$store.dispatch('deletePerson', persons[menuOpenPersonId])"
 					>
 						{{ t('health', 'Delete') }}
-					</ActionButton>
+					</NcActionButton>
 				</template>
-				<AppNavigationItem
+				<NcAppNavigationItem
 					v-if="p.enabledModuleWeight"
 					:title="t('health', 'Weight')"
 					icon="icon-quota"
 					:class="(activeModule === 'weight' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'weight')"
 				/>
-				<AppNavigationItem
+				<NcAppNavigationItem
 					v-if="p.enabledModuleFeeling"
 					:title="t('health', 'Feeling')"
 					icon="icon-category-monitoring"
 					:class="(activeModule === 'feeling' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'feeling')"
 				/>
-				<AppNavigationItem
+				<NcAppNavigationItem
 					v-if="p.enabledModuleMeasurement"
 					:title="t('health', 'Measurement')"
 					icon="icon-home"
 					:class="(activeModule === 'measurement' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'measurement')"
 				/>
-				<AppNavigationItem
+				<NcAppNavigationItem
 					v-if="p.enabledModuleSleep"
 					:title="t('health', 'Sleep')"
 					icon="icon-download"
 					:class="(activeModule === 'sleep' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'sleep')"
 				/>
-				<AppNavigationItem
+				<NcAppNavigationItem
 					v-if="p.enabledModuleSmoking"
 					:title="t('health', 'Smoking')"
 					icon="icon-address"
 					:class="(activeModule === 'smoking' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'smoking')"
 				/>
-				<AppNavigationItem
+				<NcAppNavigationItem
 					v-if="p.enabledModuleActivities"
 					:title="t('health', 'Activities')"
 					icon="icon-upload"
 					:class="(activeModule === 'activities' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'activities')"
 				/>
-				<AppNavigationItem
+				<NcAppNavigationItem
 					v-if="p.enabledModuleMedicine"
 					:title="t('health', 'Medication')"
 					icon="icon-public"
 					:class="(activeModule === 'medicine' && index === activePersonId)?'active-module':''"
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'medicine')"
 				/>
-			</AppNavigationItem>
-			<AppNavigationItem
+			</NcAppNavigationItem>
+			<NcAppNavigationItem
 				:title="t('health', 'New person')"
 				icon="icon-add"
 				:pinned="false"
@@ -120,39 +120,39 @@
 							required
 						>
 						<input type="submit" value="" class="icon-confirm">
-						<Actions>
-							<ActionButton class="ab-integrated" icon="icon-close" @click.stop.prevent="closeNewPersonForm" />
-						</Actions>
+						<NcActions>
+							<NcActionButton class="ab-integrated" icon="icon-close" @click.stop.prevent="closeNewPersonForm" />
+						</NcActions>
 					</form>
 				</div>
-			</AppNavigationItem>
+			</NcAppNavigationItem>
 		</template>
 		<template #footer>
 			<AppNavigationSettings :title="t('health', 'Information')">
-				<AppNavigationItem
+				<NcAppNavigationItem
 					:title="t('tables', 'Donations')"
 					icon="icon-category-workflow"
 					@click="openLink('https://github.com/datenangebot/health/wiki/Donations')"
 				/>
 			</AppNavigationSettings>
 		</template>
-	</AppNavigation>
+	</NcAppNavigation>
 </template>
 
 <script>
-import AppNavigation from '@nextcloud/vue/dist/Components/AppNavigation'
-import AppNavigationItem from '@nextcloud/vue/dist/Components/AppNavigationItem'
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
-import Actions from '@nextcloud/vue/dist/Components/Actions'
+import NcAppNavigation from '@nextcloud/vue/dist/Components/NcAppNavigation'
+import NcAppNavigationItem from '@nextcloud/vue/dist/Components/NcAppNavigationItem'
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton'
+import NcActions from '@nextcloud/vue/dist/Components/NcActions'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
 	name: 'PersonsNavigation',
 	components: {
-		AppNavigation,
-		AppNavigationItem,
-		ActionButton,
-		Actions,
+		NcAppNavigation,
+		NcAppNavigationItem,
+		NcActionButton,
+		NcActions,
 	},
 	data() {
 		return {
@@ -215,22 +215,6 @@ export default {
 
 	.app-navigation__list {
 		display: none;
-	}
-
-	.active-person {
-		background-color: var(--color-background-dark);
-	}
-
-	.active-person:hover {
-		background-color: var(--color-background-darker);
-	}
-
-	.active-module {
-		background-color: var(--color-background-darker);
-	}
-
-	.active-module:hover {
-		background-color: var(--color-background-darker);
 	}
 
 	.app-navigation-entry:hover {

@@ -155,12 +155,14 @@
 				{{ t('health', 'Download (CSV)', {}) }}
 			</button>
 		</JsonCSV>
-		<EmptyContent
+		<NcEmptyContent
 			v-if="!datasets || data.length === 0 && !loading"
-			icon="icon-category-monitoring"
+			:title="t('health', 'No data yet')"
 		>
-			{{ t('health', 'No data yet') }}
-			<template v-if="canEdit" #desc>
+			<template #icon>
+				<table-large />
+			</template>
+			<template v-if="canEdit" #action>
 				{{ t('health', 'Click at the + to add the first data.') }}
 				<ModalItem
 					:header="header"
@@ -170,16 +172,17 @@
 					@addItem="addItem"
 				/>
 			</template>
-		</EmptyContent>
+		</NcEmptyContent>
 	</div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import ModalItem from './ModalItem'
-import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
+import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent'
 import moment from '@nextcloud/moment'
 import JsonCSV from 'vue-json-csv'
+import TableLarge from 'vue-material-design-icons/TableLarge.vue';
 
 export default {
 	name: 'DataTable',
@@ -193,8 +196,9 @@ export default {
 	},
 	components: {
 		ModalItem,
-		EmptyContent,
+		NcEmptyContent,
 		JsonCSV,
+		TableLarge,
 	},
 	props: {
 		header: {
