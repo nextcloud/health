@@ -78,7 +78,7 @@ export default {
 					default: () => true,
 					show: false,
 					inputMode: 'add',
-				}
+				},
 			]
 		},
 	},
