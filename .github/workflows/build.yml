@@ -1,0 +1,17 @@
+name: Build app on code push
+
+on: [push]
+
+env:
+  APP_NAME: health
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: ${{ env.APP_NAME }}
+      - name: Run build
+        run: cd ${{ env.APP_NAME }} && make
