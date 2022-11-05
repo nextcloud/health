@@ -2,7 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "Здоров'я",
-    "Share" : "Поділитися",
+    "Share" : "Спільний доступ",
     "Activities" : "Події",
     "Last week" : "Минулого тижня",
     "Last month" : "Минулого місяця",
