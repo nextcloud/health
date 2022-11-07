@@ -14,4 +14,9 @@ jobs:
         with:
           path: ${{ env.APP_NAME }}
       - name: Run build
-        run: cd ${{ env.APP_NAME }} && make
+        run: cd ${{ env.APP_NAME }} && make appstore
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-bundle
+          path: ${{ env.APP_NAME }}/build/artifacts/appstore/health.tar.gz
