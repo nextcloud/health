@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+##  [1.6.1] - 2022-11-07
+### Updated
+- Translations
+- Things to make this app compatible with Nextcloud 25
+
 ##  [1.6.0] - 2022-07-10
 ### Added
 - Medication module (many thanks to kenda)
