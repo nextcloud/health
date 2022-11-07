@@ -68,12 +68,12 @@
 				</option>
 			</select>
 			<ul>
-				<ActionCheckbox
+				<NcActionCheckbox
 					:checked="axisScaleRelative"
 					@change="axisScaleRelative = $event.target.checked"
 				>
 					{{ t('health', 'Only show relative values on y-axis.') }}
-				</ActionCheckbox>
+				</NcActionCheckbox>
 			</ul>
 		</div>
 		<LineChart
@@ -82,31 +82,35 @@
 			:style="chartStyle"
 			:options="getOptions"
 		/>
-		<EmptyContent
+		<NcEmptyContent
 			v-if="!data || data.length === 0 || !definition"
-			icon="icon-category-monitoring"
+			:title="t('health', 'No data for a chart')"
 		>
-			{{ t('health', 'No data for a chart') }}
-			<template #desc>
+			<template #icon>
+				<chart-line />
+			</template>
+			<template #action>
 				{{ t('health', 'More than one dataset is required.') }}<br>
 				<span v-if="data.length > 1">{{ t('health', 'You selected to show only data from: {range}.', {range: range}) }}</span>
 			</template>
-		</EmptyContent>
+		</NcEmptyContent>
 	</div>
 </template>
 
 <script>
 import LineChart from './charts/LineChart'
-import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
+import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent'
 import moment from '@nextcloud/moment'
-import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
+import NcActionCheckbox from '@nextcloud/vue/dist/Components/NcActionCheckbox'
+import ChartLine from 'vue-material-design-icons/ChartLine.vue';
 
 export default {
 	name: 'Chart',
 	components: {
+		ChartLine,
 		LineChart,
-		EmptyContent,
-		ActionCheckbox,
+		NcEmptyContent,
+		NcActionCheckbox,
 	},
 	props: {
 		chartType: {

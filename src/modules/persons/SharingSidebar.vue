@@ -22,7 +22,7 @@
 
 <template>
 	<div>
-		<Multiselect
+		<NcMultiselect
 			v-if="isCurrentUser(person.userId)"
 			v-model="addAcl"
 			class="user-group-multiselect"
@@ -43,14 +43,14 @@
 			<template #noResult>
 				{{ isSearching ? t('health', 'Searching for users and groups …') : t('health', 'No participants found') }}
 			</template>
-		</Multiselect>
+		</NcMultiselect>
 
 		<ul
 			id="shareWithList"
 			class="shareWithList"
 		>
 			<li>
-				<Avatar :user="person.userId" />
+				<NcAvatar :user="person.userId" />
 				<span class="has-tooltip username">
 					{{ person.userId }}
 					<span v-if="!isCurrentUser(person.userId)" class="person-originator-label">
@@ -59,31 +59,31 @@
 				</span>
 			</li>
 			<li v-for="acl in person.acl" :key="acl.id">
-				<Avatar v-if="acl.type===0" :user="acl.participant.uid" />
+				<NcAvatar v-if="acl.type===0" :user="acl.participant.uid" />
 				<div v-if="acl.type===1" class="avatardiv icon icon-group" />
 				<span class="has-tooltip username">
 					{{ acl.participant.displayname }}
 					<span v-if="acl.type===1">({{ t('health', 'Group') }})</span>
 				</span>
 
-				<ActionCheckbox v-if="isCurrentUser(acl.participant.uid) || canManage" :checked="acl.permissionEdit" @change="clickEditAcl(acl)">
+				<NcActionCheckbox v-if="isCurrentUser(acl.participant.uid) || canManage" :checked="acl.permissionEdit" @change="clickEditAcl(acl)">
 					{{ t('health', 'Can edit') }}
-				</ActionCheckbox>
-				<Actions v-if="isCurrentUser(acl.participant.uid) || canManage" :force-menu="true">
-					<ActionCheckbox :checked="acl.permissionManage" @change="clickManageAcl(acl)">
+				</NcActionCheckbox>
+				<NcActions v-if="isCurrentUser(acl.participant.uid) || canManage" :force-menu="true">
+					<NcActionCheckbox :checked="acl.permissionManage" @change="clickManageAcl(acl)">
 						{{ t('health', 'Can manage') }}
-					</ActionCheckbox>
-					<ActionButton icon="icon-delete" @click="clickDeleteAcl(acl)">
+					</NcActionCheckbox>
+					<NcActionButton icon="icon-delete" @click="clickDeleteAcl(acl)">
 						{{ t('health', 'Delete') }}
-					</ActionButton>
-				</Actions>
+					</NcActionButton>
+				</NcActions>
 			</li>
 		</ul>
 	</div>
 </template>
 
 <script>
-import { Avatar, Multiselect, Actions, ActionButton, ActionCheckbox } from '@nextcloud/vue'
+import { NcAvatar, NcMultiselect, NcActions, NcActionButton, NcActionCheckbox } from '@nextcloud/vue'
 import { mapGetters, mapState } from 'vuex'
 import { getCurrentUser } from '@nextcloud/auth'
 import { showError } from '@nextcloud/dialogs'
@@ -92,11 +92,11 @@ import debounce from 'lodash.debounce'
 export default {
 	name: 'SharingSidebar',
 	components: {
-		Avatar,
-		Actions,
-		ActionButton,
-		ActionCheckbox,
-		Multiselect,
+		NcAvatar,
+		NcActions,
+		NcActionButton,
+		NcActionCheckbox,
+		NcMultiselect,
 	},
 	data() {
 		return {

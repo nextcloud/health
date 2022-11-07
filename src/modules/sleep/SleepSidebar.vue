@@ -23,29 +23,29 @@
 <template>
 	<ul>
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
-		<ActionCheckbox
+		<NcActionCheckbox
 			:checked="person.sleepColumnQuality"
 			@change="$store.dispatch('setValue', { key: 'sleepColumnQuality', value: $event.target.checked })"
 		>
 			{{ t('health', 'Quality', {}) }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.sleepColumnWakeups"
 			@change="$store.dispatch('setValue', { key: 'sleepColumnWakeups', value: $event.target.checked })"
 		>
 			{{ t('health', 'Wakeups', {}) }}
-		</ActionCheckbox>
+		</NcActionCheckbox>
 	</ul>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
+import NcActionCheckbox from '@nextcloud/vue/dist/Components/NcActionCheckbox'
 
 export default {
 	name: 'SleepSidebar',
 	components: {
-		ActionCheckbox,
+		NcActionCheckbox,
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar']),

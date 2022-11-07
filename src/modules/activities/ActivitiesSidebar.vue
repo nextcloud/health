@@ -23,44 +23,44 @@
 <template>
 	<ul>
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
-		<ActionCheckbox
+		<NcActionCheckbox
 			:checked="person.activitiesColumnCalories"
 			@change="$store.dispatch('setValue', { key: 'activitiesColumnCalories', value: $event.target.checked })"
 		>
 			{{ t('health', 'Burned calories', {}) }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.activitiesColumnDuration"
 			@change="$store.dispatch('setValue', { key: 'activitiesColumnDuration', value: $event.target.checked })"
 		>
 			{{ t('health', 'Activity duration [minutes]', {}) }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.activitiesColumnCategory"
 			@change="$store.dispatch('setValue', { key: 'activitiesColumnCategory', value: $event.target.checked })"
 		>
 			{{ t('health', 'Category', {}) }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.activitiesColumnFeeling"
 			@change="$store.dispatch('setValue', { key: 'activitiesColumnFeeling', value: $event.target.checked })"
 		>
 			{{ t('health', 'Feeling after the activity', {}) }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.activitiesColumnIntensity"
 			@change="$store.dispatch('setValue', { key: 'activitiesColumnIntensity', value: $event.target.checked })"
 		>
 			{{ t('health', 'Activity intensity', {}) }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.activitiesColumnDistance"
 			@change="$store.dispatch('setValue', { key: 'activitiesColumnDistance', value: $event.target.checked })"
 		>
 			{{ t('health', 'Distance', {}) }}
-		</ActionCheckbox>
+		</NcActionCheckbox>
 		<li><h4>{{ t('health', 'Unit for distance', {}) }}</h4></li>
-		<ActionInput
+		<NcActionInput
 			type="text"
 			:value="person.activitiesDistanceUnit"
 			icon="icon-category-customization"
@@ -71,14 +71,14 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
-import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
+import NcActionCheckbox from '@nextcloud/vue/dist/Components/NcActionCheckbox'
+import NcActionInput from '@nextcloud/vue/dist/Components/NcActionInput'
 
 export default {
 	name: 'ActivitiesSidebar',
 	components: {
-		ActionCheckbox,
-		ActionInput,
+		NcActionCheckbox,
+		NcActionInput,
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar']),

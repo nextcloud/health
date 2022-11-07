@@ -24,7 +24,7 @@
 	<ul>
 		<li><h3>{{ t('health', 'General settings', {}) }}</h3></li>
 		<li><h4>{{ t('health', 'Price for a cigarette') }}{{ person.currency ? ' [' + person.currency + ']' : '' }}</h4></li>
-		<ActionInput
+		<NcActionInput
 			type="number"
 			step="0.1"
 			:value="person.smokingPrice"
@@ -32,14 +32,14 @@
 			@submit="$store.dispatch('setValue', { key: 'smokingPrice', value: $event.target[1].value })"
 		/>
 		<li><h4>{{ t('health', 'Starting with how many cigarettes a day') }}</h4></li>
-		<ActionInput
+		<NcActionInput
 			type="number"
 			:value="person.smokingStartValue"
 			icon="icon-category-customization"
 			@submit="$store.dispatch('setValue', { key: 'smokingStartValue', value: $event.target[1].value })"
 		/>
 		<li><h4>{{ t('health', 'Goal cigarettes per day') }}</h4></li>
-		<ActionInput
+		<NcActionInput
 			type="number"
 			:value="person.smokingGoal"
 			icon="icon-category-customization"
@@ -47,24 +47,24 @@
 		/>
 
 		<li><h3>{{ t('health', 'Column selection', {}) }}</h3></li>
-		<ActionCheckbox
+		<NcActionCheckbox
 			:checked="person.smokingColumnCigarettes"
 			@change="$store.dispatch('setValue', { key: 'smokingColumnCigarettes', value: $event.target.checked })"
 		>
 			{{ t('health', 'Cigarettes', {}) }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.smokingColumnDesireLevel"
 			@change="$store.dispatch('setValue', { key: 'smokingColumnDesireLevel', value: $event.target.checked })"
 		>
 			{{ t('health', 'Desire level', {}) }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			:checked="person.smokingColumnSavedMoney"
 			@change="$store.dispatch('setValue', { key: 'smokingColumnSavedMoney', value: $event.target.checked })"
 		>
 			{{ t('health', 'Saved money', {}) }}
-		</ActionCheckbox>
+		</NcActionCheckbox>
 		<div v-if="!person.smokingPrice" class="input-hint">
 			{{ t('health', 'Please set a price to calculate saved money.', {}) }}
 		</div>
@@ -76,14 +76,14 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
-import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
+import NcActionCheckbox from '@nextcloud/vue/dist/Components/NcActionCheckbox'
+import NcActionInput from '@nextcloud/vue/dist/Components/NcActionInput'
 
 export default {
 	name: 'SmokingSidebar',
 	components: {
-		ActionCheckbox,
-		ActionInput,
+		NcActionCheckbox,
+		NcActionInput,
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar']),

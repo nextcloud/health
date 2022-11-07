@@ -24,138 +24,138 @@
 	<ul>
 		<li><h3>{{ t('health', 'General settings') }}</h3></li>
 		<li><h4>{{ t('health', 'Age') }}</h4></li>
-		<ActionInput
+		<NcActionInput
 			type="number"
 			:value="person.age"
 			icon="icon-user"
 			@submit="updateAge"
 		/>
 		<li><h4>{{ t('health', 'Height') }}<span>{{ t('health', 'in cm') }}</span></h4></li>
-		<ActionInput
+		<NcActionInput
 			type="number"
 			:value="person.size"
 			icon="icon-fullscreen"
 			@submit="updateSize"
 		/>
 		<li><h4>{{ t('health', 'Sex') }}</h4></li>
-		<ActionRadio
+		<NcActionRadio
 			name="sex"
 			value="female"
 			:checked="person.sex === 'female'"
 			@change="updateSex('female')"
 		>
 			{{ t('health', 'female') }}
-		</ActionRadio>
-		<ActionRadio
+		</NcActionRadio>
+		<NcActionRadio
 			name="sex"
 			value="male"
 			:checked="person.sex === 'male'"
 			@change="updateSex('male')"
 		>
 			{{ t('health', 'male') }}
-		</ActionRadio>
+		</NcActionRadio>
 		<li><h4>{{ t('health', 'Currency') }}</h4></li>
-		<ActionInput
+		<NcActionInput
 			:value="person.currency"
 			icon="icon-rename"
 			@submit="$store.dispatch('setValue', { key: 'currency', value: $event.target[1].value })"
 		/>
 		<li><h3>{{ t('health', 'Manage modules') }}</h3></li>
-		<ActionCheckbox
+		<NcActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleWeight"
 			value="weight"
 			@change="$store.dispatch('setValue', { key: 'enabledModuleWeight', value: $event.target.checked })"
 		>
 			{{ t('health', 'Weight') }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleFeeling"
 			value="feeling"
 			@change="$store.dispatch('setValue', { key: 'enabledModuleFeeling', value: $event.target.checked })"
 		>
 			{{ t('health', 'Feeling') }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleMeasurement"
 			value="measurement"
 			@change="$store.dispatch('setValue', { key: 'enabledModuleMeasurement', value: $event.target.checked })"
 		>
 			{{ t('health', 'Measurement') }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleActivities"
 			value="activities"
 			@change="$store.dispatch('setValue', { key: 'enabledModuleActivities', value: $event.target.checked })"
 		>
 			{{ t('health', 'Activities') }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			v-if="person && false"
 			:checked="person.enabledModuleBreaks"
 			value="breaks"
 			@change="$store.dispatch('setValue', { key: 'enabledModuleBreaks', value: $event.target.checked })"
 		>
 			{{ t('health', 'Breaks') }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleMedicine"
 			value="medicine"
 			@change="$store.dispatch('setValue', { key: 'enabledModuleMedicine', value: $event.target.checked })"
 		>
 			{{ t('health', 'Medication') }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			v-if="person && false"
 			:checked="person.enabledModuleActivities"
 			value="activities"
 			@change="$store.dispatch('setValue', { key: 'enabledModuleActivities', value: $event.target.checked })"
 		>
 			{{ t('health', 'Activities') }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleSleep"
 			value="sleep"
 			@change="$store.dispatch('setValue', { key: 'enabledModuleSleep', value: $event.target.checked })"
 		>
 			{{ t('health', 'Sleep') }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			v-if="person && false"
 			:checked="person.enabledModuleNutrition"
 			value="nutrition"
 			@change="$store.dispatch('setValue', { key: 'enabledModuleNutrition', value: $event.target.checked })"
 		>
 			{{ t('health', 'Nutrition') }}
-		</ActionCheckbox>
-		<ActionCheckbox
+		</NcActionCheckbox>
+		<NcActionCheckbox
 			v-if="person"
 			:checked="person.enabledModuleSmoking"
 			value="smoking"
 			@change="$store.dispatch('setValue', { key: 'enabledModuleSmoking', value: $event.target.checked })"
 		>
 			{{ t('health', 'Smoking') }}
-		</ActionCheckbox>
+		</NcActionCheckbox>
 	</ul>
 </template>
 
 <script>
-import ActionRadio from '@nextcloud/vue/dist/Components/ActionRadio'
-import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
-import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
+import NcActionRadio from '@nextcloud/vue/dist/Components/NcActionRadio'
+import NcActionCheckbox from '@nextcloud/vue/dist/Components/NcActionCheckbox'
+import NcActionInput from '@nextcloud/vue/dist/Components/NcActionInput'
 import { mapState, mapGetters } from 'vuex'
 
 export default {
 	name: 'PersonsSidebar',
 	components: {
-		ActionCheckbox,
-		ActionRadio,
-		ActionInput,
+		NcActionCheckbox,
+		NcActionRadio,
+		NcActionInput,
 	},
 	computed: {
 		...mapState(['activeModule', 'showSidebar', 'persons']),

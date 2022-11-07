@@ -1,12 +1,11 @@
 <template>
-	<Content :class="{'icon-loading': initialLoading}" app-name="health">
+	<NcContent :class="{'icon-loading': initialLoading}" app-name="health">
 		<PersonsNavigation />
-		<AppContent>
-			<div class="top-bar" />
+		<NcAppContent>
 			<div class="content-menu-topright">
-				<Actions v-if="canManage" :title="'Details'">
-					<ActionButton icon="icon-menu-sidebar" @click="$store.commit('showSidebar', !showSidebar)" />
-				</Actions>
+				<NcActions v-if="canManage" :title="'Details'">
+					<NcActionButton icon="icon-menu-sidebar" @click="$store.commit('showSidebar', !showSidebar)" />
+				</NcActions>
 			</div>
 			<h3 v-if="person && person.name" class="icon-user h3-icon">
 				{{ person.name }}
@@ -19,31 +18,31 @@
 			<SmokingContent v-if="person && activeModule === 'smoking' && person.enabledModuleSmoking" />
 			<ActivitiesContent v-if="person && activeModule === 'activities' && person.enabledModuleActivities" />
 			<MedicationContent v-if="person && activeModule === 'medicine' && person.enabledModuleMedicine" />
-		</AppContent>
-		<AppSidebar
+		</NcAppContent>
+		<NcAppSidebar
 			v-show="showSidebar"
 			v-if="person && !loading && canManage"
 			:title="person.name"
 			:subtitle="t('health', 'Created at {creationTime}', { creationTime: formatMyDate(person.insertTime) })"
 			@close="$store.commit('showSidebar', false)"
 		>
-			<AppSidebarTab
+			<NcAppSidebarTab
 				id="person"
 				:name="t('health', 'Person')"
 				icon="icon-user"
 				:order="0"
 			>
 				<PersonsSidebar />
-			</AppSidebarTab>
-			<AppSidebarTab
+			</NcAppSidebarTab>
+			<NcAppSidebarTab
 				id="sharing"
 				:name="t('health', 'Share')"
 				icon="icon-share"
 				:order="0.5"
 			>
 				<SharingSidebar />
-			</AppSidebarTab>
-			<AppSidebarTab
+			</NcAppSidebarTab>
+			<NcAppSidebarTab
 				v-if="person.enabledModuleWeight"
 				id="weight"
 				:name="t('health', 'Weight')"
@@ -51,8 +50,8 @@
 				:order="1"
 			>
 				<WeightSidebar />
-			</AppSidebarTab>
-			<AppSidebarTab
+			</NcAppSidebarTab>
+			<NcAppSidebarTab
 				v-if="person.enabledModuleFeeling"
 				id="feeling"
 				:name="t('health', 'Feeling')"
@@ -60,8 +59,8 @@
 				:order="2"
 			>
 				<FeelingSidebar />
-			</AppSidebarTab>
-			<AppSidebarTab
+			</NcAppSidebarTab>
+			<NcAppSidebarTab
 				v-if="person.enabledModuleMeasurement"
 				id="measurement"
 				:name="t('health', 'Measurement')"
@@ -69,8 +68,8 @@
 				:order="3"
 			>
 				<MeasurementSidebar />
-			</AppSidebarTab>
-			<AppSidebarTab
+			</NcAppSidebarTab>
+			<NcAppSidebarTab
 				v-if="person.enabledModuleSleep"
 				id="sleep"
 				:name="t('health', 'Sleep')"
@@ -78,8 +77,8 @@
 				:order="4"
 			>
 				<SleepSidebar />
-			</AppSidebarTab>
-			<AppSidebarTab
+			</NcAppSidebarTab>
+			<NcAppSidebarTab
 				v-if="person.enabledModuleSmoking"
 				id="smoking"
 				:name="t('health', 'Smoking')"
@@ -87,8 +86,8 @@
 				:order="5"
 			>
 				<SmokingSidebar />
-			</AppSidebarTab>
-			<AppSidebarTab
+			</NcAppSidebarTab>
+			<NcAppSidebarTab
 				v-if="person.enabledModuleActivities"
 				id="activities"
 				:name="t('health', 'Activities')"
@@ -96,23 +95,23 @@
 				:order="6"
 			>
 				<ActivitiesSidebar />
-			</AppSidebarTab>
-		</AppSidebar>
-	</Content>
+			</NcAppSidebarTab>
+		</NcAppSidebar>
+	</NcContent>
 </template>
 
 <script>
-import Content from '@nextcloud/vue/dist/Components/Content'
-import AppContent from '@nextcloud/vue/dist/Components/AppContent'
-import AppSidebar from '@nextcloud/vue/dist/Components/AppSidebar'
-import AppSidebarTab from '@nextcloud/vue/dist/Components/AppSidebarTab'
+import NcContent from '@nextcloud/vue/dist/Components/NcContent'
+import NcAppContent from '@nextcloud/vue/dist/Components/NcAppContent'
+import NcAppSidebar from '@nextcloud/vue/dist/Components/NcAppSidebar'
+import NcAppSidebarTab from '@nextcloud/vue/dist/Components/NcAppSidebarTab'
 import PersonsNavigation from './modules/persons/PersonsNavigation'
 import PersonsSidebar from './modules/persons/PersonsSidebar'
 import SharingSidebar from './modules/persons/SharingSidebar'
 import WeightSidebar from './modules/weight/WeightSidebar'
 import FeelingSidebar from './modules/feeling/FeelingSidebar'
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
-import Actions from '@nextcloud/vue/dist/Components/Actions'
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton'
+import NcActions from '@nextcloud/vue/dist/Components/NcActions'
 import WeightContent from './modules/weight/WeightContent'
 import FeelingContent from './modules/feeling/FeelingContent'
 import { mapState, mapGetters } from 'vuex'
@@ -136,12 +135,12 @@ export default {
 		SleepContent,
 		MeasurementSidebar,
 		SleepSidebar,
-		Content,
-		AppContent,
-		AppSidebar,
-		AppSidebarTab,
-		ActionButton,
-		Actions,
+		NcContent,
+		NcAppContent,
+		NcAppSidebar,
+		NcAppSidebarTab,
+		NcActionButton,
+		NcActions,
 		PersonsNavigation,
 		WeightSidebar,
 		FeelingSidebar,
@@ -244,21 +243,13 @@ export default {
 		padding: 35px 10px 10px 10px;
 	}
 
-	.top-bar {
-		width: 100%;
-		height: 35px;
-		position: fixed;
-		z-index: inherit;
-		background: var(--color-main-background);
-	}
-
 	.detailsMainInfo {
 		padding: 10px;
 	}
 
 	.content-menu-topright {
 		position: fixed;
-		right: 0;
+		right: 20px;
 		z-index: 1001;
 	}
 
