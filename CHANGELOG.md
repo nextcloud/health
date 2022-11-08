@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-##  [1.6.1] - 2022-11-07
+##  [1.6.1] - 2022-11-08
 ### Updated
 - Translations
 - Things to make this app compatible with Nextcloud 25
