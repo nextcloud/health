@@ -8,6 +8,7 @@ OC.L10N.register(
     "Actions" : "Tindakan",
     "Today" : "Hari ini",
     "Cancel" : "Membatalkan",
+    "Data" : "Data",
     "Category" : "Kategori",
     "Activity" : "Aktivitas",
     "Date" : "Date",
