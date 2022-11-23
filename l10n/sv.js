@@ -37,6 +37,7 @@ OC.L10N.register(
     "Blood pressure" : "Blodtryck",
     "General settings" : "Allmänna inställningar",
     "Name" : "Namn",
+    "Identifier" : "Identifierare",
     "Edit name" : "Ändra namn",
     "Show details" : "Visa detaljer",
     "Delete" : "Radera",
