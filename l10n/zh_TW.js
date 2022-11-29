@@ -47,6 +47,7 @@ OC.L10N.register(
     "Can manage" : "可以管理",
     "Failed to create share with {displayName}" : "無法建立與 {displayName} 的分享",
     "Quality" : "品質",
+    "BMI" : "BMI",
     "Underweight" : "過輕"
 },
 "nplurals=1; plural=0;");
