@@ -49,6 +49,7 @@ OC.L10N.register(
     "Failed to create share with {displayName}" : "Ha fallat la creació de la compartició amb {displayName}",
     "Quality" : "Qualitat",
     "Strong" : "Forta",
+    "BMI" : "IMC",
     "Target" : "Objectiu",
     "Body fat" : "Greix corporal",
     "Underweight" : "Baix pes"
