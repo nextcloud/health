@@ -77,6 +77,7 @@ OC.L10N.register(
     "General settings" : "Γενικές ρυθμίσεις",
     "Name" : "Όνομα",
     "Identifier" : "Αναγνωριστικό",
+    "Morning" : "Πρωί",
     "Save " : "Αποθήκευση ",
     "Edit name" : "Επεξεργασία ονόματος",
     "Show details" : "Εμφάνιση λεπτομερειών",
