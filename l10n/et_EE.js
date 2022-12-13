@@ -4,6 +4,8 @@ OC.L10N.register(
     "Health" : "Tervis",
     "Share" : "Jaga",
     "Activities" : "Tegevused",
+    "Last week" : "Eelmine nädal",
+    "Last month" : "Eelmine kuu",
     "Last 24 hours" : "Viimased 24 tundi",
     "Actions" : "Tegevused",
     "Today" : "Täna",
