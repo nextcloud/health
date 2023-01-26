@@ -22,6 +22,6 @@ OC.L10N.register(
     "Show details" : "แสดงข้อมูล",
     "Delete" : "ลบ",
     "Group" : "กลุ่ม",
-    "Can edit" : "Can edit"
+    "Can edit" : "สามารถแก้ไข"
 },
 "nplurals=1; plural=0;");
