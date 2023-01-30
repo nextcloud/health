@@ -44,6 +44,7 @@ OC.L10N.register(
     "Job" : "Εργασία",
     "Biking" : "Ποδηλασία",
     "Driving" : "Οδήγηση",
+    "eSports" : "eSports",
     "Other" : "Άλλο",
     "Good" : "Καλό",
     "Okay" : "Εντάξει",
