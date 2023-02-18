@@ -12,6 +12,7 @@ OC.L10N.register(
     "Cancel" : "Поништи",
     "Duration" : "Трајање",
     "Distance" : "Удаљеност",
+    "Data" : "Подаци",
     "Category" : "Категорија",
     "Activity" : "Активност",
     "Date" : "Датум",
