@@ -20,6 +20,7 @@ OC.L10N.register(
     "Date" : "Dato",
     "Running" : "Løpe",
     "Biking" : "Sykling",
+    "Driving" : "Kjøring",
     "Other" : "Annet",
     "Good" : "God",
     "Bad" : "Dårlig",
