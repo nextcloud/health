@@ -28,6 +28,7 @@ OC.L10N.register(
     "Bad" : "Dålig",
     "Medium" : "Medium",
     "Comment" : "Kommentar",
+    "Energy" : "Energi",
     "None" : "Ingen",
     "Normal" : "Normal",
     "Temperature" : "Temperatur",
