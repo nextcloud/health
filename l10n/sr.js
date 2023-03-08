@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Health" : "Здравље",
     "Share" : "Подели",
     "Activities" : "Активности",
     "Last week" : "Прошле недеље",
@@ -17,6 +18,9 @@ OC.L10N.register(
     "Category" : "Категорија",
     "Activity" : "Активност",
     "Date" : "Датум",
+    "Running" : "Трчање",
+    "Biking" : "Бициклизам",
+    "Driving" : "Вожење",
     "Other" : "Остало",
     "Good" : "Добра",
     "Bad" : "Лоша",
