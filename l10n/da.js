@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Health" : "Sundhed",
     "Share" : "Del",
+    "Weight" : "Vægt",
     "Activities" : "Aktiviteter",
     "Last week" : "Seneste uge",
     "Last month" : "Seneste måned",
