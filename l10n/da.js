@@ -40,6 +40,8 @@ OC.L10N.register(
     "Can edit" : "Kan redigere",
     "Can manage" : "Kan administrere",
     "Failed to create share with {displayName}" : "Oprettelse af delt drev med {displayName} fejlede",
-    "Strong" : "Stærkt"
+    "Strong" : "Stærkt",
+    "Target" : "Mål",
+    "Body fat" : "fedtprocent"
 },
 "nplurals=2; plural=(n != 1);");
