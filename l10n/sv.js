@@ -45,6 +45,7 @@ OC.L10N.register(
     "Information" : "Information",
     "Age" : "Ålder",
     "Height" : "Höjd",
+    "Searching for users and groups …" : "Sök efter användare och grupper ...",
     "No participants found" : "Inga deltagare hittades",
     "Group" : "Grupp",
     "Can edit" : "Kan ändra",
