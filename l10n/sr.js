@@ -31,6 +31,7 @@ OC.L10N.register(
     "Temperature" : "Температура",
     "General settings" : "Опште поставке",
     "Name" : "Име",
+    "Identifier" : "Идентификатор",
     "Morning" : "Јутро",
     "Night" : "Ноћ",
     "Edit name" : "Измени име",
