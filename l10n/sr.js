@@ -26,6 +26,7 @@ OC.L10N.register(
     "Bad" : "Лоша",
     "Medium" : "Средњи",
     "Comment" : "Коментар",
+    "Energy" : "Енергија",
     "None" : "Ништа",
     "Normal" : "Нормална",
     "Temperature" : "Температура",
