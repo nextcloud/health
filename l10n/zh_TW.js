@@ -48,6 +48,8 @@ OC.L10N.register(
     "Failed to create share with {displayName}" : "無法建立與 {displayName} 的分享",
     "Quality" : "品質",
     "BMI" : "BMI",
+    "Target" : "目標",
+    "Body fat" : "體脂",
     "Underweight" : "過輕"
 },
 "nplurals=1; plural=0;");
