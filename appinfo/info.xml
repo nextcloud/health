@@ -22,8 +22,8 @@ Health is everything.]]></description>
     <namespace>Health</namespace>
 	<category>tools</category>
 	<category>organization</category>
-    <bugs>https://github.com/datenangebot/health/issues</bugs>
 	<website>https://github.com/datenangebot/health</website>
+    <bugs>https://github.com/datenangebot/health/issues</bugs>
 	<screenshot small-thumbnail="https://dl.datenangebot.de/nc%20health/screenshots/v1.2.x/preview.png">https://dl.datenangebot.de/nc%20health/screenshots/v1.2.x/person%20startpage.png</screenshot>
 	<screenshot>https://dl.datenangebot.de/nc%20health/screenshots/v1.2.x/weight%20chart%20and%20data.png</screenshot>
 	<screenshot>https://dl.datenangebot.de/nc%20health/screenshots/v1.2.x/weight%20overview.png</screenshot>
