@@ -22,6 +22,7 @@ OC.L10N.register(
     "Running" : "Correndo",
     "Job" : "Traballo",
     "Biking" : "Ciclismo",
+    "Driving" : "Condución",
     "Other" : "Outro",
     "Good" : "Boa",
     "Bad" : "Malo",
