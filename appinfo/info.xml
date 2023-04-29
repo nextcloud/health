@@ -16,7 +16,7 @@ Following modules are served:
 - Medication
 
 Health is everything.]]></description>
-    <version>1.6.1</version>
+    <version>1.6.2</version>
     <licence>agpl</licence>
     <author mail="flost-dev@mailbox.org" >Florian Steffens</author>
     <namespace>Health</namespace>
@@ -28,7 +28,7 @@ Health is everything.]]></description>
 	<screenshot>https://dl.datenangebot.de/nc%20health/screenshots/v1.2.x/weight%20chart%20and%20data.png</screenshot>
 	<screenshot>https://dl.datenangebot.de/nc%20health/screenshots/v1.2.x/weight%20overview.png</screenshot>
 	<dependencies>
-        <nextcloud min-version="22" max-version="26"/>
+        <nextcloud min-version="24" max-version="27"/>
     </dependencies>
     <navigations>
         <navigation>
