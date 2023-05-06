@@ -51,6 +51,7 @@ OC.L10N.register(
     "Can edit" : "Kan ändra",
     "Can manage" : "Kan hanter",
     "Failed to create share with {displayName}" : "Kunde inte skapa delning med {displayName}",
+    "Quality" : "Kvalitet",
     "Strong" : "Starkt",
     "Target" : "Mål",
     "Underweight" : "Undervikt"
