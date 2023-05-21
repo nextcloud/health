@@ -13,7 +13,7 @@ OC.L10N.register(
     "Duration" : "المدة الزمنية",
     "Distance" : "المسافة",
     "Data" : "البيانات",
-    "Category" : "الفئة",
+    "Category" : "التصنيف",
     "Activity" : "نشاط",
     "Date" : "التاريخ ",
     "Running" : "ركض",
