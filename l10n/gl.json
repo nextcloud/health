@@ -48,6 +48,7 @@
     "Failed to create share with {displayName}" : "Produciuse un fallo ao crear o uso compartido con {displayName}",
     "Quality" : "Calidade",
     "Strong" : "Forte",
+    "Target" : "Destino",
     "Underweight" : "Peso baixo"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

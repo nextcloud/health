@@ -50,6 +50,7 @@ OC.L10N.register(
     "Failed to create share with {displayName}" : "Produciuse un fallo ao crear o uso compartido con {displayName}",
     "Quality" : "Calidade",
     "Strong" : "Forte",
+    "Target" : "Destino",
     "Underweight" : "Peso baixo"
 },
 "nplurals=2; plural=(n != 1);");
