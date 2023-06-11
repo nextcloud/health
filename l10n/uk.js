@@ -30,7 +30,7 @@ OC.L10N.register(
     "None" : "Відсутній",
     "Normal" : "Звичайно",
     "Temperature" : "Температура",
-    "General settings" : "Загальні налаштування",
+    "General settings" : "Загальні",
     "Name" : "Ім'я",
     "Edit name" : "Редагувати назву",
     "Show details" : "Показати деталі",
