@@ -23,6 +23,7 @@ OC.L10N.register(
     "Temperature" : "Temperatuur",
     "Name" : "Nimi",
     "Edit name" : "Muuda nime",
+    "Show details" : "Näita detaile",
     "Delete" : "Kustuta",
     "Information" : "Informatsioon",
     "Group" : "Grupp",
