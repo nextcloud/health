@@ -21,6 +21,7 @@ OC.L10N.register(
     "Biking" : "ركوب الدراجة",
     "Other" : "آخر",
     "Good" : "جيّدة",
+    "Bad" : "سيء",
     "Low" : "منخفض",
     "Medium" : "متوسط",
     "High" : "عالي",
