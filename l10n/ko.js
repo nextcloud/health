@@ -45,6 +45,7 @@ OC.L10N.register(
     "Group" : "그룹",
     "Can edit" : "편집할 수 있음",
     "Quality" : "품질",
+    "Moderate" : "중재",
     "Strong" : "강함",
     "Underweight" : "저체중"
 },
