@@ -19,6 +19,7 @@ OC.L10N.register(
     "Running" : "ركض",
     "Job" : "عمل",
     "Biking" : "ركوب الدراجة",
+    "Driving" : "سياقة",
     "Other" : "آخر",
     "Good" : "جيّدة",
     "Bad" : "سيء",
