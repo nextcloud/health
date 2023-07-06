@@ -32,6 +32,7 @@ OC.L10N.register(
     "Temperature" : "درجة الحرارة",
     "General settings" : "الإعدادات العامة",
     "Name" : "الاسم",
+    "Identifier" : "المعرف",
     "Edit name" : "تعديل الاسم",
     "Show details" : "عرض التفاصيل",
     "Delete" : "إزالة",
