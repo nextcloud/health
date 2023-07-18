@@ -13,6 +13,7 @@ OC.L10N.register(
     "Cancel" : "لغو",
     "Duration" : "مدت زمان",
     "Distance" : "فاصله",
+    "Data" : "داده",
     "Category" : "دسته‌بندی",
     "Activity" : "فعالیت",
     "Date" : "تاریخ",
