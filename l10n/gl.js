@@ -24,7 +24,7 @@ OC.L10N.register(
     "Last 48 hours" : "Últimas 48 horas",
     "Only show relative values on y-axis." : "Amosar só os valores relativos no eixe Y.",
     "No data for a chart" : "Non hai datos para un gráfico",
-    "More than one dataset is required." : "É necesario máis dun conxunto de datos.",
+    "More than one dataset is required." : "Precisase máis dun conxunto de datos.",
     "You selected to show only data from: {range}." : "Seleccionou amosar só os datos de: {range}.",
     "Actions" : "Accións",
     "True" : "Verdadeiro",
