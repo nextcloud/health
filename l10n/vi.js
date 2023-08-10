@@ -29,6 +29,7 @@ OC.L10N.register(
     "General settings" : "Cài đặt chung",
     "Name" : "Tên",
     "Edit name" : "Sửa đổi tên",
+    "Show details" : "Hiển thị chi tiết",
     "Delete" : "Xóa",
     "Group" : "Nhóm",
     "Can edit" : "Có thể chỉnh sửa"
