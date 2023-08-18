@@ -14,6 +14,7 @@ OC.L10N.register(
     "Cancel" : "Avbryt",
     "Duration" : "Varighet",
     "Distance" : "Distanse",
+    "Chart" : "Sjøkart",
     "Data" : "Data",
     "Category" : "Kategori",
     "Activity" : "Aktivitet",
