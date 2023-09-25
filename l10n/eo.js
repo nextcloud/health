@@ -10,6 +10,7 @@ OC.L10N.register(
     "Category" : "Kategorio",
     "Activity" : "Aktivaĵoj",
     "Date" : "Date",
+    "Running" : "Kuras",
     "Other" : "Alia",
     "Good" : "Bona",
     "Bad" : "Malbona",
