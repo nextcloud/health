@@ -9,6 +9,7 @@ OC.L10N.register(
     "Actions" : "Acciones",
     "Today" : "Hoy",
     "Cancel" : "Cancelar",
+    "Data" : "Dato",
     "Category" : "Categoría",
     "Activity" : "Actividad",
     "Date" : "Fecha",

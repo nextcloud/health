@@ -153,7 +153,7 @@ OC.L10N.register(
     "Blood pressure" : "Ciśnienie krwi",
     "Charts" : "Wykresy",
     "Overall view" : "Widok ogólny",
-    "Detail view" : "Widok szczegółowy",
+    "Detail view" : "Widok szczegółów",
     "Appetite" : "Apetyt",
     "Allergies" : "Alergie",
     "General settings" : "Ustawienia główne",
