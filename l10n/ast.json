@@ -1,0 +1,17 @@
+{ "translations": {
+    "Weight" : "Pesu",
+    "Activities" : "Actividaes",
+    "Actions" : "Aiciones",
+    "Today" : "Güei",
+    "Duration" : "Duración",
+    "Distance" : "Distancia",
+    "Category" : "Categoría",
+    "Activity" : "Actividá",
+    "Date" : "Data",
+    "General settings" : "Configuración xeneral",
+    "Name" : "Nome",
+    "Delete" : "Desaniciar",
+    "Age" : "Edá",
+    "Height" : "Altor"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
