@@ -201,7 +201,7 @@ OC.L10N.register(
     "Quality" : "Kakovost",
     "Counted wakeups" : "Prešteta prebujanja",
     "Duration [hours]" : "Trajanje [ure]",
-    "Wakeups" : "Prebujenja",
+    "Wakeups" : "Prebujanje",
     "sleep dataset" : "podatek spanja",
     "Asleep" : "Odhod na spanje",
     "Wakeup" : "Bujenje",
