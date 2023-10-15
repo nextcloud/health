@@ -14,6 +14,7 @@ OC.L10N.register(
     "Name" : "Nome",
     "Delete" : "Desaniciar",
     "Age" : "Edá",
-    "Height" : "Altor"
+    "Height" : "Altor",
+    "Quality" : "Calidá"
 },
 "nplurals=2; plural=(n != 1);");

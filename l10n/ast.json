@@ -12,6 +12,7 @@
     "Name" : "Nome",
     "Delete" : "Desaniciar",
     "Age" : "Edá",
-    "Height" : "Altor"
+    "Height" : "Altor",
+    "Quality" : "Calidá"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
