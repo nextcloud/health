@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Health" : "Здоров'я",
     "Share" : "Спільний доступ",
+    "Weight" : "Вага",
     "Activities" : "Події",
     "Last week" : "Минулого тижня",
     "Last month" : "Минулого місяця",
