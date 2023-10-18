@@ -7,6 +7,7 @@ OC.L10N.register(
     "Today" : "Güei",
     "Duration" : "Duración",
     "Distance" : "Distancia",
+    "Data" : "Datos",
     "Category" : "Categoría",
     "Activity" : "Actividá",
     "Date" : "Data",
