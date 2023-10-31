@@ -11,6 +11,7 @@ OC.L10N.register(
     "Last 24 hours" : "24小時前",
     "Actions" : "動作",
     "Today" : "今天",
+    "Item" : "項目",
     "Cancel" : "取消",
     "Duration" : "持續時間",
     "Distance" : "距離",
