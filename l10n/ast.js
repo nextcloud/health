@@ -5,6 +5,7 @@ OC.L10N.register(
     "Activities" : "Actividaes",
     "Actions" : "Aiciones",
     "Today" : "Güei",
+    "Cancel" : "Encaboxar",
     "Duration" : "Duración",
     "Distance" : "Distancia",
     "Data" : "Datos",
