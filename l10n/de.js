@@ -114,7 +114,7 @@ OC.L10N.register(
     "Lack of Concentration" : "Konzentrationsschwäche",
     "Anxiety" : "Ängste",
     "Isolation self from others" : "Selbstisolation",
-    "Thoughts of death/suicide" : "Todes- / Selbstmordgedanken",
+    "Thoughts of death/suicide" : "Todes-/Selbstmordgedanken",
     "Feeling hopeless" : "Hoffnungslosigkeit",
     "Feeling worthless" : "Selbstgeringschätzung",
     "Indecisive" : "Unentschlossenheit",
