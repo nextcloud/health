@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activities" : "Aktiviteter",
     "Last week" : "Förra veckan",
     "Last month" : "Förra månaden",
+    "Last year" : "Förra året",
     "Show all" : "Visa alla",
     "Last 24 hours" : "Senaste 24 timmarna",
     "Actions" : "Åtgärder",
