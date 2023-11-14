@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activities" : "活動",
     "Last week" : "上週",
     "Last month" : "上月",
+    "Last year" : "去年",
     "Show all" : "全部顯示",
     "Last 24 hours" : "24小時前",
     "Actions" : "動作",
