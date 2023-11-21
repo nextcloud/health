@@ -5,6 +5,7 @@ OC.L10N.register(
     "Activities" : "Activități",
     "Last week" : "Săptămâna trecută ",
     "Last month" : "Luna trecută ",
+    "Last year" : "Anul trecut",
     "Actions" : "Acțiuni",
     "Today" : "Astăzi",
     "Cancel" : "Anulare",
