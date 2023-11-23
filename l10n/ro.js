@@ -27,7 +27,10 @@ OC.L10N.register(
     "Show details" : "Arată detaliile",
     "Delete" : "Șterge",
     "Information" : "Informații",
+    "No participants found" : "Nu s-au găsit participanți",
     "Group" : "Grup",
-    "Can edit" : "Poate edita"
+    "Can edit" : "Poate edita",
+    "Can manage" : "Poate administra",
+    "Failed to create share with {displayName}" : "Nu s-a creat partajarea cu  {displayName}"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");
