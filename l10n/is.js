@@ -4,6 +4,7 @@ OC.L10N.register(
     "Health" : "Heilsa",
     "Share" : "Deila",
     "Activities" : "Aðgerðir",
+    "Last year" : "Á síðasta ári",
     "Show all" : "Birta allt",
     "Last 24 hours" : "Síðustu 24 klst",
     "Actions" : "Aðgerðir",
