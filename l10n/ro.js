@@ -31,6 +31,7 @@ OC.L10N.register(
     "Group" : "Grup",
     "Can edit" : "Poate edita",
     "Can manage" : "Poate administra",
-    "Failed to create share with {displayName}" : "Nu s-a creat partajarea cu  {displayName}"
+    "Failed to create share with {displayName}" : "Nu s-a creat partajarea cu  {displayName}",
+    "Quality" : "Calitatea"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");
