@@ -1,4 +1,5 @@
 { "translations": {
+    "Health" : "Sănătate",
     "Share" : "Partajează",
     "Activities" : "Activități",
     "Last week" : "Săptămâna trecută ",
@@ -13,6 +14,8 @@
     "Date" : "Date",
     "Running" : "Alergat",
     "Job" : "Job",
+    "Biking" : "Ciclism",
+    "Driving" : "Conducere",
     "Other" : "Altele",
     "Good" : "Bun",
     "Bad" : "Greșit",

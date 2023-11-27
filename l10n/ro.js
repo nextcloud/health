@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Health" : "Sănătate",
     "Share" : "Partajează",
     "Activities" : "Activități",
     "Last week" : "Săptămâna trecută ",
@@ -15,6 +16,8 @@ OC.L10N.register(
     "Date" : "Date",
     "Running" : "Alergat",
     "Job" : "Job",
+    "Biking" : "Ciclism",
+    "Driving" : "Conducere",
     "Other" : "Altele",
     "Good" : "Bun",
     "Bad" : "Greșit",
