@@ -159,7 +159,7 @@ OC.L10N.register(
     "General settings" : "Axustes xerais",
     "Show time detail chart" : "Amosar o gráfico detallado do tempo",
     "measurement dataset" : "conxunto de datos de medición",
-    "Give some comment, if you want..." : "Deixe algún comentario, se quere….",
+    "Give some comment, if you want..." : "Deixe algún comentario, se quere...",
     "Medication plans" : "Plans de medicación",
     "Select a medication plan" : "Seleccionar un plan de medicación",
     "Medication plan" : "Plan de medicación",
