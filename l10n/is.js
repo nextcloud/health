@@ -45,6 +45,7 @@ OC.L10N.register(
     "Group" : "Hópur",
     "Can edit" : "Getur breytt",
     "Can manage" : "Gerur sýslað með",
+    "Failed to create share with {displayName}" : "Gat ekki búið til sameign með {displayName}",
     "Quality" : "Quality",
     "Goal" : "Markmið",
     "Strong" : "Sterkt"
