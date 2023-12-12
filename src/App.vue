@@ -7,9 +7,6 @@
 					<NcActionButton :aria-label="t('health', 'Show sidebar')" icon="icon-menu-sidebar" @click="$store.commit('showSidebar', !showSidebar)" />
 				</NcActions>
 			</div>
-			<h3 v-if="person && person.name" class="icon-user h3-icon">
-				{{ person.name }}
-			</h3>
 			<PersonsContent v-if="person && activeModule === 'person'" />
 			<WeightContent v-if="person && activeModule === 'weight' && person.enabledModuleWeight" />
 			<FeelingContent v-if="person && activeModule === 'feeling' && person.enabledModuleFeeling" />
@@ -18,6 +15,7 @@
 			<SmokingContent v-if="person && activeModule === 'smoking' && person.enabledModuleSmoking" />
 			<ActivitiesContent v-if="person && activeModule === 'activities' && person.enabledModuleActivities" />
 			<MedicationContent v-if="person && activeModule === 'medicine' && person.enabledModuleMedicine" />
+			<Startpage v-else />
 		</NcAppContent>
 		<Sidebar :loading="loading" />
 	</NcContent>
@@ -36,10 +34,12 @@ import SmokingContent from './modules/smoking/SmokingContent'
 import ActivitiesContent from './modules/activities/ActivitiesContent'
 import MedicationContent from './modules/medication/MedicationContent'
 import Sidebar from './Sidebar.vue'
+import Startpage from './Startpage.vue'
 
 export default {
 	name: 'App',
 	components: {
+		Startpage,
 		Sidebar,
 		MeasurementContent,
 		SleepContent,

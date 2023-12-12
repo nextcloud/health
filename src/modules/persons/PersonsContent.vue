@@ -22,8 +22,10 @@
 
 <template>
 	<div>
-		<h2>{{ t('health', 'Welcome to your health center') }}</h2>
-		<div class="row">
+		<div class="row first-row">
+			<div class="col-4">
+				<h2>{{ t('health', 'Welcome {name} to your health center', {name: person.name}) }}</h2>
+			</div>
 			<div class="col-2">
 				<textarea ref="mission"
 					class="textarea-mission"
