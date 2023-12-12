@@ -23,16 +23,16 @@
 
 return [
 	'resources' => [
-        'persons' => ['url' => '/persons'],
-    ],
-    'routes' => [
+		'persons' => ['url' => '/persons'],
+	],
+	'routes' => [
 
 		// enable CORS for api calls (API version 1)
 		['name' => 'weightdata_api#preflighted_cors', 'url' => '/api/1/{path}',
 			'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 
-    	// main
-	   	['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
+		// main
+		['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
 		['name' => 'persons#data', 'url' => '/person/{personId}/data', 'verb' => 'GET'],
 		['name' => 'persons_api#data', 'url' => '/api/1/person/{personId}/data', 'verb' => 'GET'],
 
@@ -127,5 +127,5 @@ return [
 		['name' => 'medicationdata_api#createMedication',	'url' => 'api/1/medication/medication/plan/{planId}',	'verb' => 'POST'],
 		['name' => 'medicationdata_api#deleteMedication',	'url' => 'api/1/medication/medication/{id}',	'verb' => 'DELETE'],
 		['name' => 'medicationdata_api#updateMedication',	'url' => 'api/1/medication/medication/{id}',	'verb' => 'PUT'],
-    ]
+	]
 ];

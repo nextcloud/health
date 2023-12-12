@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -45,9 +46,8 @@ class ActivitiesdataService {
 		$this->permissionService = $permissionService;
 	}
 
-	public function getAllByPersonId($personId): ?array
-	{
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+	public function getAllByPersonId($personId): ?array {
+		if(!$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		return $this->activitiesdataMapper->findAll($personId);
@@ -66,9 +66,8 @@ class ActivitiesdataService {
 	 * @param $comment
 	 * @return Entity|null
 	 */
-	public function create($personId, $datetime, $calories, $duration, $category, $feeling, $intensity, $distance, $comment): ?Entity
-	{
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+	public function create($personId, $datetime, $calories, $duration, $category, $feeling, $intensity, $distance, $comment): ?Entity {
+		if(!$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		try {
@@ -90,14 +89,14 @@ class ActivitiesdataService {
 	}
 
 	public function delete($id) {
-		if( !$this->permissionService->smokingData($id, $this->userId)) {
+		if(!$this->permissionService->smokingData($id, $this->userId)) {
 			return null;
 		}
 		try {
 			$md = $this->activitiesdataMapper->find($id);
 			return $this->activitiesdataMapper->delete($md);
-        } catch(Exception $e) {
-             return Http::STATUS_NOT_FOUND;
+		} catch(Exception $e) {
+			return Http::STATUS_NOT_FOUND;
 		}
 	}
 
@@ -114,9 +113,8 @@ class ActivitiesdataService {
 	 * @param $comment
 	 * @return int|Entity|null
 	 */
-	public function update($id, $datetime, $calories, $duration, $category, $feeling, $intensity, $distance, $comment): ?Entity
-	{
-		if( !$this->permissionService->smokingData($id, $this->userId)) {
+	public function update($id, $datetime, $calories, $duration, $category, $feeling, $intensity, $distance, $comment): ?Entity {
+		if(!$this->permissionService->smokingData($id, $this->userId)) {
 			return null;
 		}
 		try {
@@ -135,7 +133,7 @@ class ActivitiesdataService {
 			$d->setDistance($distance);
 			$d->setComment($comment);
 		} catch(Exception $e) {
-             return Http::STATUS_NOT_FOUND;
+			return Http::STATUS_NOT_FOUND;
 		}
 		return $this->activitiesdataMapper->update($d);
 	}

@@ -20,35 +20,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-  namespace OCA\Health\Migration;
+namespace OCA\Health\Migration;
 
-  use Closure;
-  use Doctrine\DBAL\Schema\SchemaException;
-  use Doctrine\DBAL\Types\Type;
-  use OCP\DB\ISchemaWrapper;
-  use OCP\DB\Types;
-  use OCP\IDBConnection;
-  use OCP\Migration\SimpleMigrationStep;
-  use OCP\Migration\IOutput;
+use Closure;
+use Doctrine\DBAL\Schema\SchemaException;
+use OCP\DB\ISchemaWrapper;
+use OCP\IDBConnection;
+use OCP\Migration\IOutput;
+use OCP\Migration\SimpleMigrationStep;
 
-  class Version0230Date20210107000000 extends SimpleMigrationStep {
+class Version0230Date20210107000000 extends SimpleMigrationStep {
 
-	  /** @var IDBConnection */
-	  protected $connection;
+	/** @var IDBConnection */
+	protected $connection;
 
-	  public function __construct(IDBConnection $connection) {
-		  $this->connection = $connection;
-	  }
-	  /**
-	   * @param IOutput $output
-	   * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
-	   * @param array $options
-	   * @return null|ISchemaWrapper
-	   * @throws SchemaException
-	   */
-    public function changeSchema(IOutput $output, Closure $schemaClosure, array $options) {
-        /** @var ISchemaWrapper $schema */
-        $schema = $schemaClosure();
+	public function __construct(IDBConnection $connection) {
+		$this->connection = $connection;
+	}
+	/**
+	 * @param IOutput $output
+	 * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
+	 * @param array $options
+	 * @return null|ISchemaWrapper
+	 * @throws SchemaException
+	 */
+	public function changeSchema(IOutput $output, Closure $schemaClosure, array $options) {
+		/** @var ISchemaWrapper $schema */
+		$schema = $schemaClosure();
 		$table = $schema->getTable('health_weightdata');
 
 		// create tmp column
@@ -58,14 +56,14 @@
 				'default' => null,
 			]);
 		}
-        return $schema;
-    }
+		return $schema;
+	}
 
-	  public function postSchemaChange(IOutput $output, Closure $schemaClosure, array $options) {
-    	// copy data into tmp column
-		  $query = $this->connection->getQueryBuilder();
-		  $query->update('health_weightdata')
+	public function postSchemaChange(IOutput $output, Closure $schemaClosure, array $options) {
+		// copy data into tmp column
+		$query = $this->connection->getQueryBuilder();
+		$query->update('health_weightdata')
 			  ->set('bodyfat2', 'bodyfat');
-		  $query->execute();
-	  }
+		$query->execute();
+	}
 }

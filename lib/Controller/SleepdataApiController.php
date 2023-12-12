@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -25,9 +26,9 @@ declare(strict_types=1);
 namespace OCA\Health\Controller;
 
 use OCA\Health\Services\SleepdataService;
-use OCP\IRequest;
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\IRequest;
 
 class SleepdataApiController extends ApiController {
 
@@ -48,9 +49,8 @@ class SleepdataApiController extends ApiController {
 	 * @param int $personId
 	 * @return DataResponse
 	 */
-	public function findByPerson(int $personId): DataResponse
-	{
-        return new DataResponse($this->sleepdataService->getAllByPersonId($personId));
+	public function findByPerson(int $personId): DataResponse {
+		return new DataResponse($this->sleepdataService->getAllByPersonId($personId));
 	}
 
 	/**
@@ -67,8 +67,7 @@ class SleepdataApiController extends ApiController {
 	 * @param string $comment
 	 * @return DataResponse
 	 */
-	public function create(int $personId, string $asleep = null, string $wakeup = null, int $quality = null, int $countedWakeups = null, float $durationWakeups = null, string $comment = ''): DataResponse
-	{
+	public function create(int $personId, string $asleep = null, string $wakeup = null, int $quality = null, int $countedWakeups = null, float $durationWakeups = null, string $comment = ''): DataResponse {
 		return new DataResponse($this->sleepdataService->create($personId, $asleep, $wakeup, $quality, $countedWakeups, $durationWakeups, $comment));
 	}
 
@@ -80,8 +79,7 @@ class SleepdataApiController extends ApiController {
 	 * @param int $id
 	 * @return DataResponse
 	 */
-	public function delete(int $id): DataResponse
-	{
+	public function delete(int $id): DataResponse {
 		return new DataResponse($this->sleepdataService->delete($id));
 	}
 
@@ -99,8 +97,7 @@ class SleepdataApiController extends ApiController {
 	 * @param string $comment
 	 * @return DataResponse
 	 */
-	public function update(int $id, string $asleep = null, string $wakeup = null, int $quality = null, int $countedWakeups = null, float $durationWakeups = null, string $comment = ''): DataResponse
-	{
+	public function update(int $id, string $asleep = null, string $wakeup = null, int $quality = null, int $countedWakeups = null, float $durationWakeups = null, string $comment = ''): DataResponse {
 		return new DataResponse($this->sleepdataService->update($id, $asleep, $wakeup, $quality, $countedWakeups, $durationWakeups, $comment));
 	}
 }

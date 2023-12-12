@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -45,9 +46,8 @@ class MeasurementdataService {
 		$this->permissionService = $permissionService;
 	}
 
-	public function getAllByPersonId($personId): ?array
-	{
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+	public function getAllByPersonId($personId): ?array {
+		if(!$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		return $this->measurementdataMapper->findAll($personId);
@@ -71,9 +71,8 @@ class MeasurementdataService {
 	 * @param $comment
 	 * @return Entity|null
 	 */
-	public function create($personId, $datetime, $temperature, $heartRate, $bloodPressureSystolic, $bloodPressureDiastolic, $bloodSugar, $oxygenSaturation, $defecation, $appetite, $allergies, $cigarettes, $alcohol, $comment): ?Entity
-	{
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+	public function create($personId, $datetime, $temperature, $heartRate, $bloodPressureSystolic, $bloodPressureDiastolic, $bloodSugar, $oxygenSaturation, $defecation, $appetite, $allergies, $cigarettes, $alcohol, $comment): ?Entity {
+		if(!$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		try {
@@ -101,14 +100,14 @@ class MeasurementdataService {
 	}
 
 	public function delete($id) {
-		if( !$this->permissionService->measurementData($id, $this->userId)) {
+		if(!$this->permissionService->measurementData($id, $this->userId)) {
 			return null;
 		}
 		try {
 			$md = $this->measurementdataMapper->find($id);
 			return $this->measurementdataMapper->delete($md);
-        } catch(Exception $e) {
-             return Http::STATUS_NOT_FOUND;
+		} catch(Exception $e) {
+			return Http::STATUS_NOT_FOUND;
 		}
 	}
 
@@ -130,9 +129,8 @@ class MeasurementdataService {
 	 * @param $comment
 	 * @return int|Entity|null
 	 */
-	public function update($id, $datetime, $temperature, $heartRate, $bloodPressureSystolic, $bloodPressureDiastolic, $bloodSugar, $oxygenSaturation, $defecation, $appetite, $allergies, $cigarettes, $alcohol, $comment): ?Entity
-	{
-		if( !$this->permissionService->measurementData($id, $this->userId)) {
+	public function update($id, $datetime, $temperature, $heartRate, $bloodPressureSystolic, $bloodPressureDiastolic, $bloodSugar, $oxygenSaturation, $defecation, $appetite, $allergies, $cigarettes, $alcohol, $comment): ?Entity {
+		if(!$this->permissionService->measurementData($id, $this->userId)) {
 			return null;
 		}
 		try {
@@ -155,8 +153,8 @@ class MeasurementdataService {
 			$d->setCigarettes($cigarettes);
 			$d->setAlcohol($alcohol);
 			$d->setComment($comment);
-        } catch(Exception $e) {
-             return Http::STATUS_NOT_FOUND;
+		} catch(Exception $e) {
+			return Http::STATUS_NOT_FOUND;
 		}
 		return $this->measurementdataMapper->update($d);
 	}

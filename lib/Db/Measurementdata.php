@@ -44,22 +44,21 @@ class Measurementdata extends Entity implements JsonSerializable {
 	protected $alcohol;
 	protected $comment;
 
-    public function __construct() {
-		$this->addType('id','integer');
-		$this->addType('temperature','float');
-		$this->addType('heartRate','integer');
-		$this->addType('bloodPressureS','integer');
-		$this->addType('bloodPressureD','integer');
-		$this->addType('bloodSugar','float');
-		$this->addType('oxygenSat','float');
-		$this->addType('defecation','integer');
-		$this->addType('cigarettes','integer');
-		$this->addType('alcohol','integer');
+	public function __construct() {
+		$this->addType('id', 'integer');
+		$this->addType('temperature', 'float');
+		$this->addType('heartRate', 'integer');
+		$this->addType('bloodPressureS', 'integer');
+		$this->addType('bloodPressureD', 'integer');
+		$this->addType('bloodSugar', 'float');
+		$this->addType('oxygenSat', 'float');
+		$this->addType('defecation', 'integer');
+		$this->addType('cigarettes', 'integer');
+		$this->addType('alcohol', 'integer');
 	}
 
-    public function jsonSerialize(): array
-	{
-        return [
+	public function jsonSerialize(): array {
+		return [
 			'id' => $this->id,
 			'personId' => $this->personId,
 			'datetime' => $this->datetime,
@@ -75,6 +74,6 @@ class Measurementdata extends Entity implements JsonSerializable {
 			'cigarettes' => $this->cigarettes,
 			'alcohol' => $this->alcohol,
 			'comment' => $this->comment,
-        ];
-    }
+		];
+	}
 }

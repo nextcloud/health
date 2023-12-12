@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -45,9 +46,8 @@ class SmokingdataService {
 		$this->permissionService = $permissionService;
 	}
 
-	public function getAllByPersonId($personId): ?array
-	{
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+	public function getAllByPersonId($personId): ?array {
+		if(!$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		return $this->smokingdataMapper->findAll($personId);
@@ -62,9 +62,8 @@ class SmokingdataService {
 	 * @param $comment
 	 * @return Entity|null
 	 */
-	public function create($personId, $date, $cigarettes, $desireLevel, $comment): ?Entity
-	{
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+	public function create($personId, $date, $cigarettes, $desireLevel, $comment): ?Entity {
+		if(!$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		try {
@@ -82,14 +81,14 @@ class SmokingdataService {
 	}
 
 	public function delete($id) {
-		if( !$this->permissionService->smokingData($id, $this->userId)) {
+		if(!$this->permissionService->smokingData($id, $this->userId)) {
 			return null;
 		}
 		try {
 			$md = $this->smokingdataMapper->find($id);
 			return $this->smokingdataMapper->delete($md);
-        } catch(Exception $e) {
-             return Http::STATUS_NOT_FOUND;
+		} catch(Exception $e) {
+			return Http::STATUS_NOT_FOUND;
 		}
 	}
 
@@ -102,9 +101,8 @@ class SmokingdataService {
 	 * @param $comment
 	 * @return int|Entity|null
 	 */
-	public function update($id, $date, $cigarettes, $desireLevel, $comment): ?Entity
-	{
-		if( !$this->permissionService->smokingData($id, $this->userId)) {
+	public function update($id, $date, $cigarettes, $desireLevel, $comment): ?Entity {
+		if(!$this->permissionService->smokingData($id, $this->userId)) {
 			return null;
 		}
 		try {
@@ -119,7 +117,7 @@ class SmokingdataService {
 			$d->setDesireLevel($desireLevel);
 			$d->setComment($comment);
 		} catch(Exception $e) {
-             return Http::STATUS_NOT_FOUND;
+			return Http::STATUS_NOT_FOUND;
 		}
 		return $this->smokingdataMapper->update($d);
 	}

@@ -35,22 +35,21 @@ class Smokingdata extends Entity implements JsonSerializable {
 	protected $desireLevel;
 	protected $comment;
 
-    public function __construct() {
-		$this->addType('id','integer');
-		$this->addType('personId','integer');
-		$this->addType('cigarettes','integer');
-		$this->addType('desireLevel','integer');
+	public function __construct() {
+		$this->addType('id', 'integer');
+		$this->addType('personId', 'integer');
+		$this->addType('cigarettes', 'integer');
+		$this->addType('desireLevel', 'integer');
 	}
 
-    public function jsonSerialize(): array
-	{
-        return [
+	public function jsonSerialize(): array {
+		return [
 			'id' => $this->id,
 			'personId' => $this->personId,
 			'date' => $this->date,
 			'cigarettes' => $this->cigarettes,
 			'desireLevel' => $this->desireLevel,
 			'comment' => $this->comment,
-        ];
-    }
+		];
+	}
 }

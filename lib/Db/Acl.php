@@ -61,15 +61,14 @@ class Acl extends Entity implements JsonSerializable {
 		return false;
 	}
 
-	public function jsonSerialize(): array
-	{
-        return [
+	public function jsonSerialize(): array {
+		return [
 			'id' => $this->id,
 			'personId' => $this->personId,
 			'permissionEdit' => $this->permissionEdit,
 			'permissionManage' => $this->permissionManage,
 			'type' => $this->type,
 			'participant' => $this->participant
-        ];
-    }
+		];
+	}
 }

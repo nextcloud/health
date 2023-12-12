@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -27,7 +28,6 @@ namespace OCA\Health\Services;
 use Exception;
 use OCA\Health\Db\Weightdata;
 use OCA\Health\Db\WeightdataMapper;
-use OCA\Health\Services\FormatHelperService;
 use OCP\AppFramework\Http;
 
 class WeightdataService {
@@ -45,21 +45,21 @@ class WeightdataService {
 	}
 
 	public function getAllByPersonId($personId) {
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+		if(!$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		return $this->weightdataMapper->findAll($personId);
 	}
 
 	public function getLastWeight($personId) {
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+		if(!$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		return $this->weightdataMapper->findLast($personId);
 	}
 
 	public function create($personId, $weight, $measurement, $bodyfat, $date, $waistSize, $hipSize, $musclePart, $comment) {
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+		if(!$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		$time = new \DateTime();
@@ -95,19 +95,19 @@ class WeightdataService {
 	}
 
 	public function delete($id) {
-		if( !$this->permissionService->weightData($id, $this->userId)) {
+		if(!$this->permissionService->weightData($id, $this->userId)) {
 			return null;
 		}
 		try {
 			$wd = $this->weightdataMapper->find($id);
-        } catch(Exception $e) {
-             return Http::STATUS_NOT_FOUND;
+		} catch(Exception $e) {
+			return Http::STATUS_NOT_FOUND;
 		}
 		return $this->weightdataMapper->delete($wd);
 	}
 
 	public function update($id, $date, $weight, $measurement, $bodyfat, $waistSize, $hipSize, $musclePart, $comment) {
-		if( !$this->permissionService->weightData($id, $this->userId)) {
+		if(!$this->permissionService->weightData($id, $this->userId)) {
 			return null;
 		}
 		try {
@@ -128,8 +128,8 @@ class WeightdataService {
 			$wd->setMusclePart($this->formatHelperService->typeCastByEntity('musclePart', $musclePart, $wd));
 			/** @noinspection PhpUndefinedMethodInspection */
 			$wd->setComment($comment);
-        } catch(Exception $e) {
-             return Http::STATUS_NOT_FOUND;
+		} catch(Exception $e) {
+			return Http::STATUS_NOT_FOUND;
 		}
 		return $this->weightdataMapper->update($wd);
 	}

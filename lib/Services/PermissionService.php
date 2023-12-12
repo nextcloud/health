@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -52,8 +53,7 @@ class PermissionService {
 		$this->permissionHelper = $permissionHelper;
 	}
 
-	public function personData($destinationPersonId, $sourceUserId): bool
-	{
+	public function personData($destinationPersonId, $sourceUserId): bool {
 		try {
 			// check for ownership
 			if($this->personMapper->find($destinationPersonId, $sourceUserId) !== null) {
@@ -74,44 +74,37 @@ class PermissionService {
 		return false;
 	}
 
-	public function weightData($id, $userId): bool
-	{
+	public function weightData($id, $userId): bool {
 		// TODO
 		return true;
 	}
 
-	public function measurementData($id, $userId): bool
-	{
+	public function measurementData($id, $userId): bool {
 		// TODO
 		return true;
 	}
 
-	public function feelingData($id, $userId): bool
-	{
+	public function feelingData($id, $userId): bool {
 		// TODO
 		return true;
 	}
 
-	public function sleepData($id, $userId): bool
-	{
+	public function sleepData($id, $userId): bool {
 		// TODO
 		return true;
 	}
 
-	public function smokingData($id, $userId): bool
-	{
+	public function smokingData($id, $userId): bool {
 		// TODO
 		return true;
 	}
 
-	public function activitiesData($id, $userId): bool
-	{
+	public function activitiesData($id, $userId): bool {
 		// TODO
 		return true;
 	}
 
-	public function medicationData($id, $userId): bool
-	{
+	public function medicationData($id, $userId): bool {
 		// TODO
 		return true;
 	}

@@ -20,24 +20,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-  namespace OCA\Health\Migration;
+namespace OCA\Health\Migration;
 
-  use Closure;
-  use Doctrine\DBAL\Schema\SchemaException;
-  use OCP\DB\ISchemaWrapper;
-  use OCP\Migration\SimpleMigrationStep;
-  use OCP\Migration\IOutput;
+use Closure;
+use Doctrine\DBAL\Schema\SchemaException;
+use OCP\DB\ISchemaWrapper;
+use OCP\Migration\IOutput;
+use OCP\Migration\SimpleMigrationStep;
 
-  class Version0123Date20201028200000 extends SimpleMigrationStep {
+class Version0123Date20201028200000 extends SimpleMigrationStep {
 
-    /**
-    * @param IOutput $output
-    * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
-    * @param array $options
-    * @return null|ISchemaWrapper
-    */
-    public function changeSchema(IOutput $output, Closure $schemaClosure, array $options): ?ISchemaWrapper
-	{
+	/**
+	 * @param IOutput $output
+	 * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
+	 * @param array $options
+	 * @return null|ISchemaWrapper
+	 */
+	public function changeSchema(IOutput $output, Closure $schemaClosure, array $options): ?ISchemaWrapper {
 		/** @var ISchemaWrapper $schema */
 		$schema = $schemaClosure();
 
@@ -46,8 +45,7 @@
 		return $schema;
 	}
 
-    private function extendPersons(ISchemaWrapper $schema)
-	{
+	private function extendPersons(ISchemaWrapper $schema) {
 		try {
 			$table = $schema->getTable('health_persons');
 			$newColumns = [
@@ -67,27 +65,27 @@
 			$c = 'feeling_special_symptom_name';
 			if(!$table->hasColumn($c)) {
 				$table->addColumn($c, 'string', [
-					'default' 	=> '',
-					'notnull' 	=> false,
-					'length'	=> 200
+					'default' => '',
+					'notnull' => false,
+					'length' => 200
 				]);
 			}
 
 			$c = 'feeling_special_attack_name';
 			if(!$table->hasColumn($c)) {
 				$table->addColumn($c, 'string', [
-					'default' 	=> '',
-					'notnull' 	=> false,
-					'length'	=> 200
+					'default' => '',
+					'notnull' => false,
+					'length' => 200
 				]);
 			}
 
 			$c = 'feeling_default_medication';
 			if(!$table->hasColumn($c)) {
 				$table->addColumn($c, 'string', [
-					'default' 	=> '',
-					'notnull' 	=> false,
-					'length'	=> 600
+					'default' => '',
+					'notnull' => false,
+					'length' => 600
 				]);
 			}
 		} catch (SchemaException $e) {

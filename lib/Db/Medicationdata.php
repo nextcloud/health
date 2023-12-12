@@ -38,18 +38,17 @@ class Medicationdata extends Entity implements JsonSerializable {
 	protected $night;
 	protected $comment;
 
-    public function __construct() {
-		$this->addType('id','integer');
-		$this->addType('planId','integer');
-		$this->addType('morning','integer');
-		$this->addType('noon','integer');
-		$this->addType('evening','integer');
-		$this->addType('night','integer');
+	public function __construct() {
+		$this->addType('id', 'integer');
+		$this->addType('planId', 'integer');
+		$this->addType('morning', 'integer');
+		$this->addType('noon', 'integer');
+		$this->addType('evening', 'integer');
+		$this->addType('night', 'integer');
 	}
 
-    public function jsonSerialize(): array
-	{
-        return [
+	public function jsonSerialize(): array {
+		return [
 			'id' => $this->id,
 			'planId' => $this->planId,
 			'name' => $this->name,
@@ -59,6 +58,6 @@ class Medicationdata extends Entity implements JsonSerializable {
 			'evening' => $this->evening,
 			'night' => $this->night,
 			'comment' => $this->comment,
-        ];
-    }
+		];
+	}
 }

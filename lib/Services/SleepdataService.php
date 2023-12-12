@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -45,9 +46,8 @@ class SleepdataService {
 		$this->permissionService = $permissionService;
 	}
 
-	public function getAllByPersonId($personId): ?array
-	{
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+	public function getAllByPersonId($personId): ?array {
+		if(!$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		return $this->sleepdataMapper->findAll($personId);
@@ -64,9 +64,8 @@ class SleepdataService {
 	 * @param $comment
 	 * @return Entity|null
 	 */
-	public function create($personId, $asleep, $wakeup, $quality, $countedWakeups, $durationWakeups, $comment): ?Entity
-	{
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+	public function create($personId, $asleep, $wakeup, $quality, $countedWakeups, $durationWakeups, $comment): ?Entity {
+		if(!$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		try {
@@ -91,14 +90,14 @@ class SleepdataService {
 	}
 
 	public function delete($id) {
-		if( !$this->permissionService->sleepData($id, $this->userId)) {
+		if(!$this->permissionService->sleepData($id, $this->userId)) {
 			return null;
 		}
 		try {
 			$md = $this->sleepdataMapper->find($id);
 			return $this->sleepdataMapper->delete($md);
-        } catch(Exception $e) {
-             return Http::STATUS_NOT_FOUND;
+		} catch(Exception $e) {
+			return Http::STATUS_NOT_FOUND;
 		}
 	}
 
@@ -113,9 +112,8 @@ class SleepdataService {
 	 * @param $comment
 	 * @return int|Entity|null
 	 */
-	public function update($id, $asleep, $wakeup, $quality, $countedWakeups, $durationWakeups, $comment): ?Entity
-	{
-		if( !$this->permissionService->sleepData($id, $this->userId)) {
+	public function update($id, $asleep, $wakeup, $quality, $countedWakeups, $durationWakeups, $comment): ?Entity {
+		if(!$this->permissionService->sleepData($id, $this->userId)) {
 			return null;
 		}
 		try {
@@ -137,7 +135,7 @@ class SleepdataService {
 			$d->setDurationWakeups($durationWakeups);
 			$d->setComment($comment);
 		} catch(Exception $e) {
-             return Http::STATUS_NOT_FOUND;
+			return Http::STATUS_NOT_FOUND;
 		}
 		return $this->sleepdataMapper->update($d);
 	}

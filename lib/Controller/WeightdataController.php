@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -24,10 +25,10 @@ declare(strict_types=1);
 
 namespace OCA\Health\Controller;
 
-use OCP\IRequest;
+use OCA\Health\Services\WeightdataService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
-use OCA\Health\Services\WeightdataService;
+use OCP\IRequest;
 
 class WeightdataController extends Controller {
 
@@ -47,9 +48,8 @@ class WeightdataController extends Controller {
 	 * @param int $personId
 	 * @return DataResponse
 	 */
-	public function findByPerson(int $personId): DataResponse
-	{
-        return new DataResponse($this->weightdataService->getAllByPersonId($personId));
+	public function findByPerson(int $personId): DataResponse {
+		return new DataResponse($this->weightdataService->getAllByPersonId($personId));
 	}
 
 	/**
@@ -66,8 +66,7 @@ class WeightdataController extends Controller {
 	 * @param string $comment
 	 * @return DataResponse
 	 */
-	public function create(int $personId, string $date, $weight = null, $measurement = null, $bodyfat = null, $waistSize = null, $hipSize = null, $musclePart = null, string $comment = ''): DataResponse
-	{
+	public function create(int $personId, string $date, $weight = null, $measurement = null, $bodyfat = null, $waistSize = null, $hipSize = null, $musclePart = null, string $comment = ''): DataResponse {
 		return new DataResponse($this->weightdataService->create($personId, $weight, $measurement, $bodyfat, $date, $waistSize, $hipSize, $musclePart, $comment));
 	}
 
@@ -77,8 +76,7 @@ class WeightdataController extends Controller {
 	 * @param int $id
 	 * @return DataResponse
 	 */
-	public function delete(int $id): DataResponse
-	{
+	public function delete(int $id): DataResponse {
 		return new DataResponse($this->weightdataService->delete($id));
 	}
 
@@ -96,8 +94,7 @@ class WeightdataController extends Controller {
 	 * @param string $comment
 	 * @return DataResponse
 	 */
-	public function update(int $id, string $date, $weight = null, $measurement = null, $bodyfat = null, $waistSize = null, $hipSize = null, $musclePart = null, string $comment = ''): DataResponse
-	{
+	public function update(int $id, string $date, $weight = null, $measurement = null, $bodyfat = null, $waistSize = null, $hipSize = null, $musclePart = null, string $comment = ''): DataResponse {
 		return new DataResponse($this->weightdataService->update($id, $date, $weight, $measurement, $bodyfat, $waistSize, $hipSize, $musclePart, $comment));
 	}
 }

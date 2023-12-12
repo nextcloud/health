@@ -30,13 +30,13 @@ use OCP\AppFramework\Db\Entity;
 class Person extends Entity implements JsonSerializable {
 
 	// general
-    protected $name;
-    protected $insertTime;
-    protected $lastupdateTime;
-    protected $userId;
-    protected $age;
-    protected $size;
-    protected $sex;
+	protected $name;
+	protected $insertTime;
+	protected $lastupdateTime;
+	protected $userId;
+	protected $age;
+	protected $size;
+	protected $sex;
 	protected $personalMission;
 	protected $shared;
 	protected $sharedReadonly;
@@ -44,24 +44,24 @@ class Person extends Entity implements JsonSerializable {
 	protected $acl;
 	protected $permissions;
 
-    // modules
-    protected $enabledModuleWeight;
-    protected $enabledModuleBreaks;
-    protected $enabledModuleFeeling;
-    protected $enabledModuleMedicine;
-    protected $enabledModuleActivities;
-    protected $enabledModuleMeasurement;
-    protected $enabledModuleNutrition;
-    protected $enabledModuleSleep;
-    protected $enabledModuleSmoking;
+	// modules
+	protected $enabledModuleWeight;
+	protected $enabledModuleBreaks;
+	protected $enabledModuleFeeling;
+	protected $enabledModuleMedicine;
+	protected $enabledModuleActivities;
+	protected $enabledModuleMeasurement;
+	protected $enabledModuleNutrition;
+	protected $enabledModuleSleep;
+	protected $enabledModuleSmoking;
 
-    // module weight
-    protected $weightMeasurementName;
-    protected $weightUnit;
-    protected $weightTarget;
-    protected $weightTargetInitialWeight;
-    protected $weightTargetStartDate;
-    protected $weightTargetBounty;
+	// module weight
+	protected $weightMeasurementName;
+	protected $weightUnit;
+	protected $weightTarget;
+	protected $weightTargetInitialWeight;
+	protected $weightTargetStartDate;
+	protected $weightTargetBounty;
 	protected $weightColumnWeight;
 	protected $weightColumnBodyfat;
 	protected $weightColumnMeasurement;
@@ -70,7 +70,7 @@ class Person extends Entity implements JsonSerializable {
 	protected $weightColumnMusclePart;
 	protected $weightColumnBmi;
 
-    // module feeling
+	// module feeling
 	protected $feelingColumnMood;
 	protected $feelingColumnSadnessLevel;
 	protected $feelingColumnSymptoms;
@@ -115,11 +115,11 @@ class Person extends Entity implements JsonSerializable {
 	protected $activitiesColumnDistance;
 	protected $activitiesDistanceUnit;
 
-    public function __construct() {
-    	// general
-        $this->addType('id','integer');
-        $this->addType('age','integer');
-		$this->addType('size','integer');
+	public function __construct() {
+		// general
+		$this->addType('id', 'integer');
+		$this->addType('age', 'integer');
+		$this->addType('size', 'integer');
 
 		// modules
 		$this->addType('enabledModuleWeight', 'boolean');
@@ -151,7 +151,7 @@ class Person extends Entity implements JsonSerializable {
 		$this->addType('weightColumnMusclePart', 'boolean');
 		$this->addType('weightColumnBmi', 'boolean');
 
-        // module feeling
+		// module feeling
 		$this->addType('feelingColumnMood', 'boolean');
 		$this->addType('feelingColumnSadnessLevel', 'boolean');
 		$this->addType('feelingColumnSymptoms', 'boolean');
@@ -184,20 +184,19 @@ class Person extends Entity implements JsonSerializable {
 		$this->addType('smokingColumnSavedMoney', 'boolean');
 		$this->addType('smokingPrice', 'float');
 		$this->addType('smokingStartValue', 'integer');
-    }
+	}
 
-    public function jsonSerialize(): array
-	{
-        return [
-        	// general
-            'id' => $this->id,
-            'insertTime' => $this->insertTime,
-            'lastupdateTime' => $this->lastupdateTime,
-            'name' => $this->name,
-            'userId' => $this->userId,
-            'age' => $this->age,
-            'size' => $this->size,
-            'sex' => $this->sex,
+	public function jsonSerialize(): array {
+		return [
+			// general
+			'id' => $this->id,
+			'insertTime' => $this->insertTime,
+			'lastupdateTime' => $this->lastupdateTime,
+			'name' => $this->name,
+			'userId' => $this->userId,
+			'age' => $this->age,
+			'size' => $this->size,
+			'sex' => $this->sex,
 			'personalMission' => $this->personalMission,
 			'shared' => $this->shared,
 			'sharedReadonly' => $this->sharedReadonly,
@@ -207,11 +206,11 @@ class Person extends Entity implements JsonSerializable {
 			'permissions' => $this->permissions ?? [],
 
 			// modules
-            'enabledModuleWeight' => $this->enabledModuleWeight,
-            'enabledModuleBreaks' => $this->enabledModuleBreaks,
-            'enabledModuleFeeling' => $this->enabledModuleFeeling,
-            'enabledModuleMedicine' => $this->enabledModuleMedicine,
-            'enabledModuleActivities' => $this->enabledModuleActivities,
+			'enabledModuleWeight' => $this->enabledModuleWeight,
+			'enabledModuleBreaks' => $this->enabledModuleBreaks,
+			'enabledModuleFeeling' => $this->enabledModuleFeeling,
+			'enabledModuleMedicine' => $this->enabledModuleMedicine,
+			'enabledModuleActivities' => $this->enabledModuleActivities,
 			'enabledModuleMeasurement' => $this->enabledModuleMeasurement,
 			'enabledModuleSleep' => $this->enabledModuleSleep,
 			'enabledModuleNutrition' => $this->enabledModuleNutrition,
@@ -227,12 +226,12 @@ class Person extends Entity implements JsonSerializable {
 			'activitiesDistanceUnit' => $this->activitiesDistanceUnit,
 
 			// module weight
-            'weightMeasurementName' => $this->weightMeasurementName,
-            'weightUnit' => $this->weightUnit,
-            'weightTarget' => $this->weightTarget,
-            'weightTargetInitialWeight' => $this->weightTargetInitialWeight,
-            'weightTargetStartDate' => $this->weightTargetStartDate,
-            'weightTargetBounty' => $this->weightTargetBounty,
+			'weightMeasurementName' => $this->weightMeasurementName,
+			'weightUnit' => $this->weightUnit,
+			'weightTarget' => $this->weightTarget,
+			'weightTargetInitialWeight' => $this->weightTargetInitialWeight,
+			'weightTargetStartDate' => $this->weightTargetStartDate,
+			'weightTargetBounty' => $this->weightTargetBounty,
 			'weightColumnWeight' => $this->weightColumnWeight,
 			'weightColumnBodyfat' => $this->weightColumnBodyfat,
 			'weightColumnMeasurement' => $this->weightColumnMeasurement,
@@ -275,6 +274,6 @@ class Person extends Entity implements JsonSerializable {
 			'smokingGoal' => $this->smokingGoal,
 			'smokingStartValue' => $this->smokingStartValue,
 			'smokingColumnSavedMoney' => $this->smokingColumnSavedMoney,
-        ];
-    }
+		];
+	}
 }

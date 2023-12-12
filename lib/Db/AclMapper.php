@@ -23,13 +23,10 @@
 
 namespace OCA\Health\Db;
 
-use OCP\AppFramework\Db\DoesNotExistException;
-use OCP\AppFramework\Db\MultipleObjectsReturnedException;
-use OCP\DB\QueryBuilder\IQueryBuilder;
-use OCP\IDBConnection;
-use OCP\IUserManager;
-use OCP\IGroupManager;
 use OCP\AppFramework\Db\QBMapper;
+use OCP\IDBConnection;
+use OCP\IGroupManager;
+use OCP\IUserManager;
 
 class AclMapper extends QBMapper {
 
@@ -65,7 +62,7 @@ class AclMapper extends QBMapper {
 	public function findAll() {
 		$qb = $this->db->getQueryBuilder();
 
-        $qb->select('*')
+		$qb->select('*')
 			->from($this->getTableName());
 
 		$entities = $this->findEntities($qb);
@@ -76,7 +73,7 @@ class AclMapper extends QBMapper {
 	}
 
 	public function find(int $id) {
-        $qb = $this->db->getQueryBuilder();
+		$qb = $this->db->getQueryBuilder();
 
 		$qb->select('*')
 			->from($this->getTableName())
@@ -84,8 +81,8 @@ class AclMapper extends QBMapper {
 				$qb->expr()->eq('id', $qb->createNamedParameter($id))
 			);
 
-        return $this->findEntity($qb);
-    }
+		return $this->findEntity($qb);
+	}
 
 	public function mapParticipant(Acl $acl) {
 		if ($acl->getType() === Acl::PERMISSION_TYPE_USER) {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -26,8 +27,7 @@ namespace OCA\Health\Services;
 
 class FormatHelperService {
 
-	public function typeCastByEntity($key, $value, \OCP\AppFramework\Db\Entity $entity)
-	{
+	public function typeCastByEntity($key, $value, \OCP\AppFramework\Db\Entity $entity) {
 		$fieldTypes = $entity->getFieldTypes();
 		if(isset($fieldTypes[$key])) {
 			if(in_array($fieldTypes[$key], ['bool', 'boolean'])) {
@@ -45,53 +45,52 @@ class FormatHelperService {
 		return $value;
 	}
 
-	public function convertDate($value): string
-	{
+	public function convertDate($value): string {
 		$dt = new \DateTime($value);
 		return $dt->format('Y-m-d H:i:s');
 	}
 
 	public function typeCast($key, $value) {
-		 $intData = ['age', 'size'];
-         if(in_array($key, $intData)) {
-         	$value = intval($value);
-         }
+		$intData = ['age', 'size'];
+		if(in_array($key, $intData)) {
+			$value = intval($value);
+		}
 
-         $doubleData = ['weightTarget', 'weightTargetInitialWeight', 'weight', 'measurement', 'bodyfat'];
-         if(in_array($key, $doubleData)) {
-         	$value = floatval($value);
-         }
+		$doubleData = ['weightTarget', 'weightTargetInitialWeight', 'weight', 'measurement', 'bodyfat'];
+		if(in_array($key, $doubleData)) {
+			$value = floatval($value);
+		}
 
-         $booleanData = [
-         	'enabledModuleWeight',
-			 'enabledModuleBreaks',
-			 'enabledModuleFeeling',
-			 'enabledModuleMedicine',
-			 'enabledModuleActivities',
-			 'enabledModuleMeasurement',
-			 'enabledModuleSleep',
-			 'enabledModuleNutrition',
-			 'feelingColumnMood',
-			 'feelingColumnSadness',
-			 'feelingColumnPain',
-			 'feelingColumnSymptoms',
-			 'feelingColumnAttacks',
-			 'feelingColumnMedication',
-		 ];
-         if(in_array($key, $booleanData)) {
-         	if( $value === true || $value === 'true' || $value === 1 || $value === '1') {
-         		$value = true;
-         	} else {
-         		$value = false;
-         	}
-         }
+		$booleanData = [
+			'enabledModuleWeight',
+			'enabledModuleBreaks',
+			'enabledModuleFeeling',
+			'enabledModuleMedicine',
+			'enabledModuleActivities',
+			'enabledModuleMeasurement',
+			'enabledModuleSleep',
+			'enabledModuleNutrition',
+			'feelingColumnMood',
+			'feelingColumnSadness',
+			'feelingColumnPain',
+			'feelingColumnSymptoms',
+			'feelingColumnAttacks',
+			'feelingColumnMedication',
+		];
+		if(in_array($key, $booleanData)) {
+			if($value === true || $value === 'true' || $value === 1 || $value === '1') {
+				$value = true;
+			} else {
+				$value = false;
+			}
+		}
 
-         $datetimeData = ['weightTargetStartDate'];
-         if(in_array($key, $datetimeData)) {
-         	$dt = new \DateTime($value);
-         	$value = $dt->format('Y-m-d H:i:s');
-         }
+		$datetimeData = ['weightTargetStartDate'];
+		if(in_array($key, $datetimeData)) {
+			$dt = new \DateTime($value);
+			$value = $dt->format('Y-m-d H:i:s');
+		}
 
-         return $value;
+		return $value;
 	}
 }

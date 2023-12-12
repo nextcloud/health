@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -26,8 +27,8 @@ namespace OCA\Health\Controller;
 
 use OCA\Health\Services\SmokingdataService;
 use OCP\AppFramework\ApiController;
-use OCP\IRequest;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\IRequest;
 
 class SmokingdataApiController extends ApiController {
 
@@ -48,9 +49,8 @@ class SmokingdataApiController extends ApiController {
 	 * @param int $personId
 	 * @return DataResponse
 	 */
-	public function findByPerson(int $personId): DataResponse
-	{
-        return new DataResponse($this->smokingdataService->getAllByPersonId($personId));
+	public function findByPerson(int $personId): DataResponse {
+		return new DataResponse($this->smokingdataService->getAllByPersonId($personId));
 	}
 
 	/**
@@ -65,8 +65,7 @@ class SmokingdataApiController extends ApiController {
 	 * @param string $comment
 	 * @return DataResponse
 	 */
-	public function create(int $personId, string $date, int $cigarettes = null, int $desireLevel = null, string $comment = ''): DataResponse
-	{
+	public function create(int $personId, string $date, int $cigarettes = null, int $desireLevel = null, string $comment = ''): DataResponse {
 		return new DataResponse($this->smokingdataService->create($personId, $date, $cigarettes, $desireLevel, $comment));
 	}
 
@@ -78,8 +77,7 @@ class SmokingdataApiController extends ApiController {
 	 * @param int $id
 	 * @return DataResponse
 	 */
-	public function delete(int $id): DataResponse
-	{
+	public function delete(int $id): DataResponse {
 		return new DataResponse($this->smokingdataService->delete($id));
 	}
 
@@ -95,8 +93,7 @@ class SmokingdataApiController extends ApiController {
 	 * @param string $comment
 	 * @return DataResponse
 	 */
-	public function update(int $id, string $date, int $cigarettes = null, int $desireLevel = null, string $comment = ''): DataResponse
-	{
+	public function update(int $id, string $date, int $cigarettes = null, int $desireLevel = null, string $comment = ''): DataResponse {
 		return new DataResponse($this->smokingdataService->update($id, $date, $cigarettes, $desireLevel, $comment));
 	}
 }

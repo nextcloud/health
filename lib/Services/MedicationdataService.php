@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -24,11 +25,10 @@ declare(strict_types=1);
 
 namespace OCA\Health\Services;
 
-use DateTime;
 use Exception;
-use OCA\Health\Db\MedicationPlan;
 use OCA\Health\Db\Medicationdata;
 use OCA\Health\Db\MedicationdataMapper;
+use OCA\Health\Db\MedicationPlan;
 use OCA\Health\Db\MedicationPlanMapper;
 use OCP\AppFramework\Db\Entity;
 use OCP\AppFramework\Http;
@@ -49,25 +49,22 @@ class MedicationdataService {
 		$this->permissionService = $permissionService;
 	}
 
-	public function getAllPlansByPersonId($personId): ?array
-	{
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+	public function getAllPlansByPersonId($personId): ?array {
+		if(!$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		return $this->medicationPlanMapper->findAll($personId);
 	}
 
-	public function getAllMedicationByPlan($planId): ?array
-	{
-		if( !$this->permissionService->medicationData($planId, $this->userId)) {
+	public function getAllMedicationByPlan($planId): ?array {
+		if(!$this->permissionService->medicationData($planId, $this->userId)) {
 			return null;
 		}
 		return $this->medicationdataMapper->findAll($planId);
 	}
 
-	public function createPlan($personId, $date, $comment, $takeOver): ?Entity
-	{
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+	public function createPlan($personId, $date, $comment, $takeOver): ?Entity {
+		if(!$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 
@@ -83,7 +80,7 @@ class MedicationdataService {
 
 		if ($lastPlan != null && $takeOver == true) {
 			$medication = $this->medicationdataMapper->findAll($lastPlan->id);
-			foreach( $medication as $med ) {
+			foreach($medication as $med) {
 				$d = new Medicationdata();
 				$d->setPlanId($newPlan->id);
 				$d->setName($med->getName());
@@ -100,9 +97,8 @@ class MedicationdataService {
 		return $newPlan;
 	}
 
-	public function createMedication($planId, $name, $identifier, $morning, $noon, $evening, $night, $comment): ?Entity
-	{
-		if( !$this->permissionService->medicationData($planId, $this->userId)) {
+	public function createMedication($planId, $name, $identifier, $morning, $noon, $evening, $night, $comment): ?Entity {
+		if(!$this->permissionService->medicationData($planId, $this->userId)) {
 			return null;
 		}
 		$d = new Medicationdata();
@@ -118,20 +114,19 @@ class MedicationdataService {
 	}
 
 	public function deleteMedication($id) {
-		if( !$this->permissionService->medicationData($id, $this->userId)) {
+		if(!$this->permissionService->medicationData($id, $this->userId)) {
 			return null;
 		}
 		try {
 			$md = $this->medicationdataMapper->find($id);
 			return $this->medicationdataMapper->delete($md);
-        } catch(Exception $e) {
-             return Http::STATUS_NOT_FOUND;
+		} catch(Exception $e) {
+			return Http::STATUS_NOT_FOUND;
 		}
 	}
 
-	public function updateMedication($id, $name, $identifier, $morning, $noon, $evening, $night, $comment): ?Entity
-	{
-		if( !$this->permissionService->medicationData($id, $this->userId)) {
+	public function updateMedication($id, $name, $identifier, $morning, $noon, $evening, $night, $comment): ?Entity {
+		if(!$this->permissionService->medicationData($id, $this->userId)) {
 			return null;
 		}
 		try {
@@ -144,19 +139,19 @@ class MedicationdataService {
 			$d->setNight($night);
 			$d->setComment($comment);
 		} catch(Exception $e) {
-             return Http::STATUS_NOT_FOUND;
+			return Http::STATUS_NOT_FOUND;
 		}
 		return $this->medicationdataMapper->update($d);
 	}
 
 	public function deletePlan($id) {
-		if( !$this->permissionService->medicationData($id, $this->userId)) {
+		if(!$this->permissionService->medicationData($id, $this->userId)) {
 			return null;
 		}
 
 		try {
 			$medication = $this->medicationdataMapper->findAll($id);
-			foreach( $medication as $med ) {
+			foreach($medication as $med) {
 				$this->medicationdataMapper->delete($med);
 			}
 		} catch(Exception $e) {
@@ -166,14 +161,13 @@ class MedicationdataService {
 		try {
 			$plan = $this->medicationPlanMapper->find($id);
 			return $this->medicationPlanMapper->delete($plan);
-        } catch(Exception $e) {
-             return Http::STATUS_NOT_FOUND;
+		} catch(Exception $e) {
+			return Http::STATUS_NOT_FOUND;
 		}
 	}
 
-	public function updatePlan($id, $date, $comment): ?Entity
-	{
-		if( !$this->permissionService->medicationData($id, $this->userId)) {
+	public function updatePlan($id, $date, $comment): ?Entity {
+		if(!$this->permissionService->medicationData($id, $this->userId)) {
 			return null;
 		}
 		try {
@@ -181,7 +175,7 @@ class MedicationdataService {
 			$d->setDate($date);
 			$d->setComment($comment);
 		} catch(Exception $e) {
-             return Http::STATUS_NOT_FOUND;
+			return Http::STATUS_NOT_FOUND;
 		}
 		return $this->medicationPlanMapper->update($d);
 	}

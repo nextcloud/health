@@ -20,35 +20,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-  namespace OCA\Health\Migration;
+namespace OCA\Health\Migration;
 
-  use Closure;
-  use Doctrine\DBAL\Schema\SchemaException;
-  use OCP\DB\ISchemaWrapper;
-  use OCP\Migration\SimpleMigrationStep;
-  use OCP\Migration\IOutput;
+use Closure;
+use Doctrine\DBAL\Schema\SchemaException;
+use OCP\DB\ISchemaWrapper;
+use OCP\Migration\IOutput;
+use OCP\Migration\SimpleMigrationStep;
 
-  class Version0142Date20201104200000 extends SimpleMigrationStep {
+class Version0142Date20201104200000 extends SimpleMigrationStep {
 
-    /**
-    * @param IOutput $output
-    * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
-    * @param array $options
-    * @return null|ISchemaWrapper
-    */
-    public function changeSchema(IOutput $output, Closure $schemaClosure, array $options): ?ISchemaWrapper
-	{
-        /** @var ISchemaWrapper $schema */
-        $schema = $schemaClosure();
+	/**
+	 * @param IOutput $output
+	 * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
+	 * @param array $options
+	 * @return null|ISchemaWrapper
+	 */
+	public function changeSchema(IOutput $output, Closure $schemaClosure, array $options): ?ISchemaWrapper {
+		/** @var ISchemaWrapper $schema */
+		$schema = $schemaClosure();
 
-        $this->extendPersons($schema);
+		$this->extendPersons($schema);
 
-        return $schema;
+		return $schema;
 
-    }
+	}
 
-    private function extendPersons(ISchemaWrapper $schema)
-	{
+	private function extendPersons(ISchemaWrapper $schema) {
 		try {
 			$table = $schema->getTable('health_persons');
 			$newColumns = [

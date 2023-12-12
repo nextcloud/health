@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -25,9 +26,9 @@ declare(strict_types=1);
 namespace OCA\Health\Controller;
 
 use OCA\Health\Services\ActivitiesdataService;
-use OCP\IRequest;
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\IRequest;
 
 class ActivitiesdataApiController extends ApiController {
 
@@ -48,9 +49,8 @@ class ActivitiesdataApiController extends ApiController {
 	 * @param int $personId
 	 * @return DataResponse
 	 */
-	public function findByPerson(int $personId): DataResponse
-	{
-        return new DataResponse($this->activitiesdataService->getAllByPersonId($personId));
+	public function findByPerson(int $personId): DataResponse {
+		return new DataResponse($this->activitiesdataService->getAllByPersonId($personId));
 	}
 
 	/**
@@ -69,8 +69,7 @@ class ActivitiesdataApiController extends ApiController {
 	 * @param string $comment
 	 * @return DataResponse
 	 */
-	public function create(int $personId, string $datetime, int $calories = null, float $duration = null, int $category = null, int $feeling = null, int $intensity = null, float $distance = null, string $comment = ''): DataResponse
-	{
+	public function create(int $personId, string $datetime, int $calories = null, float $duration = null, int $category = null, int $feeling = null, int $intensity = null, float $distance = null, string $comment = ''): DataResponse {
 		return new DataResponse($this->activitiesdataService->create($personId, $datetime, $calories, $duration, $category, $feeling, $intensity, $distance, $comment));
 	}
 
@@ -82,8 +81,7 @@ class ActivitiesdataApiController extends ApiController {
 	 * @param int $id
 	 * @return DataResponse
 	 */
-	public function delete(int $id): DataResponse
-	{
+	public function delete(int $id): DataResponse {
 		return new DataResponse($this->activitiesdataService->delete($id));
 	}
 
@@ -103,8 +101,7 @@ class ActivitiesdataApiController extends ApiController {
 	 * @param string $comment
 	 * @return DataResponse
 	 */
-	public function update(int $id, string $datetime, int $calories = null, float $duration = null, int $category = null, int $feeling = null, int $intensity = null, float $distance = null, string $comment = ''): DataResponse
-	{
+	public function update(int $id, string $datetime, int $calories = null, float $duration = null, int $category = null, int $feeling = null, int $intensity = null, float $distance = null, string $comment = ''): DataResponse {
 		return new DataResponse($this->activitiesdataService->update($id, $datetime, $calories, $duration, $category, $feeling, $intensity, $distance, $comment));
 	}
 }
