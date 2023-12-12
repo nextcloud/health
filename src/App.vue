@@ -8,13 +8,13 @@
 				</NcActions>
 			</div>
 			<PersonsContent v-if="person && activeModule === 'person'" />
-			<WeightContent v-if="person && activeModule === 'weight' && person.enabledModuleWeight" />
-			<FeelingContent v-if="person && activeModule === 'feeling' && person.enabledModuleFeeling" />
-			<MeasurementContent v-if="person && activeModule === 'measurement' && person.enabledModuleMeasurement" />
-			<SleepContent v-if="person && activeModule === 'sleep' && person.enabledModuleSleep" />
-			<SmokingContent v-if="person && activeModule === 'smoking' && person.enabledModuleSmoking" />
-			<ActivitiesContent v-if="person && activeModule === 'activities' && person.enabledModuleActivities" />
-			<MedicationContent v-if="person && activeModule === 'medicine' && person.enabledModuleMedicine" />
+			<WeightContent v-else-if="person && activeModule === 'weight' && person.enabledModuleWeight" />
+			<FeelingContent v-else-if="person && activeModule === 'feeling' && person.enabledModuleFeeling" />
+			<MeasurementContent v-else-if="person && activeModule === 'measurement' && person.enabledModuleMeasurement" />
+			<SleepContent v-else-if="person && activeModule === 'sleep' && person.enabledModuleSleep" />
+			<SmokingContent v-else-if="person && activeModule === 'smoking' && person.enabledModuleSmoking" />
+			<ActivitiesContent v-else-if="person && activeModule === 'activities' && person.enabledModuleActivities" />
+			<MedicationContent v-else-if="person && activeModule === 'medicine' && person.enabledModuleMedicine" />
 			<Startpage v-else />
 		</NcAppContent>
 		<Sidebar :loading="loading" />
