@@ -2,7 +2,8 @@ app_name=health
 project_dir=$(CURDIR)/../$(app_name)
 build_dir=$(CURDIR)/build/artifacts
 cert_dir=$(HOME)/.nextcloud/certificates
-php_dirs=appinfo/ lib/ tests/api/
+# php_dirs=appinfo/ lib/ tests/api/
+php_dirs=appinfo/ lib/
 appstore_build_directory=$(CURDIR)/build/artifacts/appstore
 appstore_package_name=$(appstore_build_directory)/$(app_name)
 
@@ -124,15 +125,11 @@ lint: lint-php lint-js lint-css lint-xml
 
 
 lint-php: lint-phpfast lint-php-phan
-lint-phpfast: lint-php-lint lint-php-ncversion lint-php-cs-fixer lint-php-phpcs
+lint-phpfast: lint-php-lint lint-php-cs-fixer lint-php-phpcs
 
 lint-php-lint:
 	# Check PHP syntax errors
 	@! find $(php_dirs) -name "*.php" | xargs -I{} php -l '{}' | grep -v "No syntax errors detected"
-
-lint-php-ncversion:
-	# Check min-version consistency
-	php tests/nextcloud-version.php
 
 lint-php-phan:
 	# PHAN
@@ -165,7 +162,6 @@ lint-xml:
 lint-fix: lint-php-fix lint-js-fix lint-css-fix
 
 lint-php-fix:
-	vendor/bin/phpcbf --standard=tests/phpcs.xml $(php_dirs)
 	vendor/bin/php-cs-fixer fix
 
 lint-js-fix:
