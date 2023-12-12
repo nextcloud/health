@@ -14,6 +14,6 @@ describe('The Home Page', () => {
 	})
 
 	it('successfully loads', () => {
-		cy.get('h2').contains('Welcome to your health center').should('be.visible')
+		cy.get('h2').contains('Health').should('be.visible')
 	})
 })

@@ -3,10 +3,8 @@
       xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
     <id>health</id>
     <name>Health</name>
-    <summary>Track your health. Use the advantages of a trusted platform.</summary>
-    <description><![CDATA[The app provides different modules to track health data.
-
-Following modules are served:
+    <summary>Track your health privately.</summary>
+    <description><![CDATA[Track your health data within the following provided modules:
 - Weight
 - Feeling
 - Measurement
@@ -16,7 +14,7 @@ Following modules are served:
 - Medication
 
 Health is everything.]]></description>
-    <version>1.6.2</version>
+    <version>1.6.3</version>
     <licence>agpl</licence>
     <author mail="flost-dev@mailbox.org" >Florian Steffens</author>
     <namespace>Health</namespace>
