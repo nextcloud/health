@@ -30,7 +30,7 @@ OC.L10N.register(
     "True" : "Verdadeiro",
     "False" : "Falso",
     "Download (CSV)" : "Descargar (CSV)",
-    "No data yet" : "Aínda non hai datos",
+    "No data yet" : "Aínda non hai ningún dato",
     "Click at the + to add the first data." : "Prema no + para engadir os primeiros datos.",
     "Today" : "Hoxe",
     "Item" : "Elemento",
