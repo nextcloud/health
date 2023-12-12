@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import DataTable from '../../general/DataTable'
+import DataTable from '../../shared/DataTable'
 
 export default {
 	name: 'SmokingTable',

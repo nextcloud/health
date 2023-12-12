@@ -43,12 +43,12 @@ class PageController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
-	public function index() {
+	public function index(): TemplateResponse {
 		// $this->cesService->transformDatasets();
 		// Util::addScript($this->appName, 'vue-chartjs.min');
 		Util::addScript($this->appName, 'health-main');
 		// Util::addScript($this->appName, 'health');
-		Util::addStyle($this->appName, 'icons');
+		//Util::addStyle($this->appName, 'icons');
 		//Util::addStyle($this->appName, 'bulma.min');
 
 		$response = new TemplateResponse($this->appName, 'main');

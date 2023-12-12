@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import Chart from '../../general/Chart'
+import Chart from '../../shared/Chart'
 import moment from '@nextcloud/moment'
 
 export default {

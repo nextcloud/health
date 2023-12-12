@@ -31,6 +31,7 @@
 					:readonly="!canEdit"
 				/>
 				<button v-if="canEdit"
+					:aria-label="t('health', 'save')"
 					@click="updateMission"
 				>
 					{{ t('health', 'Save ') }}

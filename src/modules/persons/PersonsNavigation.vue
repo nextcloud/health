@@ -27,8 +27,7 @@
 				:key="index"
 				:title="p.name"
 				:allow-collapse="true"
-				:open="(index === 0)?true:false"
-				icon="icon-user"
+				:open="index === 0"
 				:editable="p.permissions['PERMISSION_MANAGE']"
 				:edit-label="t('health', 'Edit name')"
 				:class="(index === activePersonId)?'active-person':''"
@@ -36,8 +35,12 @@
 				@update:title="personUpdateName"
 				@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'person')"
 			>
-				<template v-if="p.permissions['PERMISSION_MANAGE']" slot="actions">
+				<template #icon>
+					<IconPerson :size="20" />
+				</template>
+				<template v-if="p.permissions['PERMISSION_MANAGE']" #actions>
 					<NcActionButton
+						:aria-label="t('health', 'Show details')"
 						:close-after-click="true"
 						icon="icon-details"
 						@click="$store.commit('showSidebar', true); $store.dispatch('setActivePerson', index)"
@@ -45,7 +48,7 @@
 						{{ t('health', 'Show details') }}
 					</NcActionButton>
 					<NcActionButton
-						v-show="personsLength != 1"
+						v-show="personsLength !== 1"
 						:close-after-click="true"
 						icon="icon-delete"
 						@click="$store.dispatch('deletePerson', persons[menuOpenPersonId])"
@@ -103,48 +106,32 @@
 					@click="$store.dispatch('setActivePerson', index); $store.dispatch('setActiveModule', 'medicine')"
 				/>
 			</NcAppNavigationItem>
-			<NcAppNavigationItem
+			<NcAppNavigationNewItem
 				:title="t('health', 'New person')"
-				icon="icon-add"
-				:pinned="false"
-				@click.prevent.stop="showNewPersonForm = true"
+				@new-item="createPerson"
 			>
-				<div v-show="showNewPersonForm" class="person-create">
-					<form
-						@submit.prevent.stop="createPerson"
-					>
-						<input
-							ref="newPersonName"
-							:placeholder="t('health', 'Name')"
-							type="text"
-							required
-						>
-						<input type="submit" value="" class="icon-confirm">
-						<NcActions>
-							<NcActionButton class="ab-integrated" icon="icon-close" @click.stop.prevent="closeNewPersonForm" />
-						</NcActions>
-					</form>
-				</div>
-			</NcAppNavigationItem>
+				<template #icon>
+					<IconPlus :size="20" />
+				</template>
+			</NcAppNavigationNewItem>
 		</template>
 		<template #footer>
-			<AppNavigationSettings :title="t('health', 'Information')">
+			<NcAppNavigationSettings :title="t('health', 'Information')">
 				<NcAppNavigationItem
 					:title="t('tables', 'Donations')"
 					icon="icon-category-workflow"
 					@click="openLink('https://github.com/datenangebot/health/wiki/Donations')"
 				/>
-			</AppNavigationSettings>
+			</NcAppNavigationSettings>
 		</template>
 	</NcAppNavigation>
 </template>
 
 <script>
-import NcAppNavigation from '@nextcloud/vue/dist/Components/NcAppNavigation'
-import NcAppNavigationItem from '@nextcloud/vue/dist/Components/NcAppNavigationItem'
-import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton'
-import NcActions from '@nextcloud/vue/dist/Components/NcActions'
+import { NcAppNavigation, NcAppNavigationItem, NcActionButton, NcAppNavigationSettings, NcAppNavigationNewItem } from '@nextcloud/vue'
 import { mapState, mapGetters } from 'vuex'
+import IconPlus from 'vue-material-design-icons/Plus'
+import IconPerson from 'vue-material-design-icons/Account.vue'
 
 export default {
 	name: 'PersonsNavigation',
@@ -152,7 +139,10 @@ export default {
 		NcAppNavigation,
 		NcAppNavigationItem,
 		NcActionButton,
-		NcActions,
+		NcAppNavigationSettings,
+		NcAppNavigationNewItem,
+		IconPlus,
+		IconPerson,
 	},
 	data() {
 		return {
@@ -174,12 +164,9 @@ export default {
 		openLink(link) {
 			window.open(link, '_blank')
 		},
-		createPerson(e) {
-			const name = e.currentTarget.childNodes[0].value
+		createPerson(name) {
 			this.$store.dispatch('addPerson', name)
 			this.$store.commit('showSidebar', true)
-			this.showNewPersonForm = false
-			e.currentTarget.childNodes[0].value = ''
 		},
 		personUpdateName(v) {
 			this.$store.dispatch('setValue', { id: this.persons[this.menuOpenPersonId].id, key: 'name', value: v })
@@ -191,34 +178,3 @@ export default {
 	},
 }
 </script>
-<style lang="scss" scoped>
-
-	.person-create {
-		order: 1;
-		display: flex;
-		height: 44px;
-		padding-left: 10px;
-		form {
-			display: flex;
-			flex-grow: 1;
-			input[type='text'] {
-				flex-grow: 1;
-			}
-		}
-	}
-
-	button, .button, input[type='button'], input[type='submit'], input[type='reset'] {
-		min-height: auto;
-		border-radius: var(--border-radius);
-		padding: 4px;
-	}
-
-	.app-navigation__list {
-		display: none;
-	}
-
-	.app-navigation-entry:hover {
-		background-color: var(--color-background-darker);
-	}
-
-</style>
