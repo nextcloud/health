@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import Chart from '../../general/Chart'
+import Chart from '../../shared/Chart'
 
 export default {
 	name: 'MeasurementDetailChart',

@@ -324,10 +324,6 @@ export default new Vuex.Store({
 			const persons = await personApiClient.load()
 			if (persons && persons.length > 0) {
 				commit('persons', persons)
-				if (state.activePersonId === null) {
-					dispatch('setActivePerson', 0)
-				}
-				dispatch('loadModuleContentForPerson')
 			}
 			commit('initialLoading', false)
 		},
