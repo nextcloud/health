@@ -25,36 +25,36 @@ namespace OCA\Health\Db;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
-use OCP\IDBConnection;
 use OCP\AppFramework\Db\QBMapper;
+use OCP\IDBConnection;
 
 class WeightdataMapper extends QBMapper {
 
-    public function __construct(IDBConnection $db) {
-        parent::__construct($db, 'health_weightdata', Weightdata::class);
-    }
+	public function __construct(IDBConnection $db) {
+		parent::__construct($db, 'health_weightdata', Weightdata::class);
+	}
 
-    public function find(int $id) {
-        $qb = $this->db->getQueryBuilder();
+	public function find(int $id) {
+		$qb = $this->db->getQueryBuilder();
 
-                    $qb->select('*')
-                             ->from($this->getTableName())
-                             ->where(
-                                     $qb->expr()->eq('id', $qb->createNamedParameter($id))
-                             );
+		$qb->select('*')
+				 ->from($this->getTableName())
+				 ->where(
+				 	$qb->expr()->eq('id', $qb->createNamedParameter($id))
+				 );
 
-        return $this->findEntity($qb);
-    }
+		return $this->findEntity($qb);
+	}
 
-    public function findLast(int $personId) {
-        $qb = $this->db->getQueryBuilder();
+	public function findLast(int $personId) {
+		$qb = $this->db->getQueryBuilder();
 
-        $qb->select('*')
-            ->from($this->getTableName())
-            ->where($qb->expr()->eq('person_id', $qb->createNamedParameter($personId))
-        );
-        $qb->orderBy('date', 'desc');
-        $qb->setMaxResults(1);
+		$qb->select('*')
+			->from($this->getTableName())
+			->where($qb->expr()->eq('person_id', $qb->createNamedParameter($personId))
+			);
+		$qb->orderBy('date', 'desc');
+		$qb->setMaxResults(1);
 		try {
 			return $this->findEntity($qb);
 		} catch (DoesNotExistException $e) {
@@ -64,16 +64,16 @@ class WeightdataMapper extends QBMapper {
 		}
 	}
 
-    public function findAll(int $personId) {
-        $qb = $this->db->getQueryBuilder();
+	public function findAll(int $personId) {
+		$qb = $this->db->getQueryBuilder();
 
-        $qb->select('*')
-           ->from($this->getTableName())
-           ->where(
-            $qb->expr()->eq('person_id', $qb->createNamedParameter($personId))
-           );
+		$qb->select('*')
+		   ->from($this->getTableName())
+		   ->where(
+		   	$qb->expr()->eq('person_id', $qb->createNamedParameter($personId))
+		   );
 
-        return $this->findEntities($qb);
-    }
+		return $this->findEntities($qb);
+	}
 
 }

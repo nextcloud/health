@@ -160,7 +160,7 @@
 			:title="t('health', 'No data yet')"
 		>
 			<template #icon>
-				<table-large />
+				<TableLarge />
 			</template>
 			<template v-if="canEdit" #action>
 				{{ t('health', 'Click at the + to add the first data.') }}
@@ -182,7 +182,7 @@ import ModalItem from './ModalItem'
 import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent'
 import moment from '@nextcloud/moment'
 import JsonCSV from 'vue-json-csv'
-import TableLarge from 'vue-material-design-icons/TableLarge.vue';
+import TableLarge from 'vue-material-design-icons/TableLarge.vue'
 
 export default {
 	name: 'DataTable',

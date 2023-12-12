@@ -24,15 +24,13 @@
 
 namespace OCA\Health\Db;
 
-use OCA\Health\Db\Acl;
-use OCA\Health\Db\AclMapper;
 use OCA\Health\Services\PermissionHelperService;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\Entity;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
+use OCP\AppFramework\Db\QBMapper;
 use OCP\IDBConnection;
 use OCP\IGroupManager;
-use OCP\AppFramework\Db\QBMapper;
 
 class PersonMapper extends QBMapper {
 
@@ -40,7 +38,7 @@ class PersonMapper extends QBMapper {
 	private $groupManager;
 	private $permissionHelper;
 
-    public function __construct(
+	public function __construct(
 		IDBConnection $db,
 		AclMapper $aclMapper,
 		IGroupManager $groupManager,
@@ -50,10 +48,9 @@ class PersonMapper extends QBMapper {
 		$this->aclMapper = $aclMapper;
 		$this->groupManager = $groupManager;
 		$this->permissionHelper = $permissionHelper;
-    }
+	}
 
-    public function find(int $id, string $userId = ""): ?Entity
-	{
+	public function find(int $id, string $userId = ""): ?Entity {
 		$qb = $this->db->getQueryBuilder();
 
 		$qb->select('p.*');
@@ -61,12 +58,12 @@ class PersonMapper extends QBMapper {
 		if($userId !== "") {
 			$qb->leftJoin('p', 'health_persons_acl', 'acl', 'p.id=acl.person_id');
 		}
-		$qb->where( $qb->expr()->eq('p.id', $qb->createNamedParameter($id)) );
+		$qb->where($qb->expr()->eq('p.id', $qb->createNamedParameter($id)));
 
 		if($userId !== "") {
-			$qb->andWhere( $qb->expr()->orX(
-				$qb->expr()->eq('acl.participant', $qb->createNamedParameter($userId) ),
-				$qb->expr()->eq('p.user_id', $qb->createNamedParameter($userId) )
+			$qb->andWhere($qb->expr()->orX(
+				$qb->expr()->eq('acl.participant', $qb->createNamedParameter($userId)),
+				$qb->expr()->eq('p.user_id', $qb->createNamedParameter($userId))
 			));
 		}
 		$qb->groupBy('p.id');
@@ -77,8 +74,7 @@ class PersonMapper extends QBMapper {
 		}
 	}
 
-    public function findAll(string $userId): array
-	{
+	public function findAll(string $userId): array {
 		$qb = $this->db->getQueryBuilder();
 
 		// get all acl's

@@ -33,18 +33,17 @@ class MedicationPlan extends Entity implements JsonSerializable {
 	protected $date;
 	protected $comment;
 
-    public function __construct() {
-		$this->addType('id','integer');
-		$this->addType('personId','integer');
+	public function __construct() {
+		$this->addType('id', 'integer');
+		$this->addType('personId', 'integer');
 	}
 
-    public function jsonSerialize(): array
-	{
-        return [
+	public function jsonSerialize(): array {
+		return [
 			'id' => $this->id,
 			'personId' => $this->personId,
 			'date' => $this->date,
 			'comment' => $this->comment,
-        ];
-    }
+		];
+	}
 }

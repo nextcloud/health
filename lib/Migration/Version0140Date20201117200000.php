@@ -20,33 +20,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-  namespace OCA\Health\Migration;
+namespace OCA\Health\Migration;
 
-  use Closure;
-  use OCP\DB\ISchemaWrapper;
-  use OCP\Migration\SimpleMigrationStep;
-  use OCP\Migration\IOutput;
+use Closure;
+use OCP\DB\ISchemaWrapper;
+use OCP\Migration\IOutput;
+use OCP\Migration\SimpleMigrationStep;
 
-  class Version0140Date20201117200000 extends SimpleMigrationStep {
+class Version0140Date20201117200000 extends SimpleMigrationStep {
 
-    /**
-    * @param IOutput $output
-    * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
-    * @param array $options
-    * @return null|ISchemaWrapper
-    */
-    public function changeSchema(IOutput $output, Closure $schemaClosure, array $options) {
-        /** @var ISchemaWrapper $schema */
-        $schema = $schemaClosure();
+	/**
+	 * @param IOutput $output
+	 * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
+	 * @param array $options
+	 * @return null|ISchemaWrapper
+	 */
+	public function changeSchema(IOutput $output, Closure $schemaClosure, array $options) {
+		/** @var ISchemaWrapper $schema */
+		$schema = $schemaClosure();
 
-        // Context Entity Storage
-        $this->createCES($schema);
+		// Context Entity Storage
+		$this->createCES($schema);
 
-        return $schema;
+		return $schema;
 
-    }
+	}
 
-    private function createCES(ISchemaWrapper $schema) {
+	private function createCES(ISchemaWrapper $schema) {
 		if (!$schema->hasTable('health_ces_contexts')) {
 			$table = $schema->createTable('health_ces_contexts');
 			$table->addColumn('id', 'integer', [
@@ -64,8 +64,8 @@
 				'default' => 'CURRENT_TIMESTAMP',
 			]);
 
-            $table->setPrimaryKey(['id']);
-        }
+			$table->setPrimaryKey(['id']);
+		}
 
 		if (!$schema->hasTable('health_ces_entities')) {
 			$table = $schema->createTable('health_ces_entities');
@@ -94,5 +94,5 @@
 
 			$table->setPrimaryKey(['id']);
 		}
-    }
+	}
 }

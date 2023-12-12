@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -24,7 +25,6 @@ declare(strict_types=1);
 
 namespace OCA\Health\Services;
 
-use Exception;
 use OCA\Health\Db\Acl;
 use OCA\Health\Db\Person;
 use OCP\IGroupManager;

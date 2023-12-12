@@ -45,7 +45,7 @@
 			:title="t('health', 'Select a medication plan')"
 		>
 			<template #icon>
-				<clipboard-outline />
+				<ClipboardOutline />
 			</template>
 		</NcEmptyContent>
 
@@ -54,46 +54,46 @@
 </template>
 
 <script>
-	import { mapState, mapGetters } from 'vuex'
-	import MedicationPlanTable from './MedicationPlanTable'
-	import MedicationTable from './MedicationTable'
-	import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent'
-	import ClipboardOutline from 'vue-material-design-icons/ClipboardOutline.vue';
+import { mapState, mapGetters } from 'vuex'
+import MedicationPlanTable from './MedicationPlanTable'
+import MedicationTable from './MedicationTable'
+import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent'
+import ClipboardOutline from 'vue-material-design-icons/ClipboardOutline.vue'
 
-	export default {
-		name: 'MedicationContent',
-		components: {
-			ClipboardOutline,
-			NcEmptyContent,
-			MedicationPlanTable,
-			MedicationTable,
-		},
-		computed: {
-			...mapState(['activeModule', 'showSidebar', 'medicationPlanDatasets', 'medicationDatasets', 'selectedMedicationPlan', 'loading']),
-			...mapGetters(['person']),
-			medicationData() {
-				return !this.medicationDatasets
+export default {
+	name: 'MedicationContent',
+	components: {
+		ClipboardOutline,
+		NcEmptyContent,
+		MedicationPlanTable,
+		MedicationTable,
+	},
+	computed: {
+		...mapState(['activeModule', 'showSidebar', 'medicationPlanDatasets', 'medicationDatasets', 'selectedMedicationPlan', 'loading']),
+		...mapGetters(['person']),
+		medicationData() {
+			return !this.medicationDatasets
 					 ? null
 				// eslint-disable-next-line vue/no-side-effects-in-computed-properties
 					 : this.medicationDatasets.sort(function(a, b) {
 						 return a.name.localeCompare(b.name)
 					 })
-			},
-			medicationPlans() {
-				return !this.medicationPlanDatasets
+		},
+		medicationPlans() {
+			return !this.medicationPlanDatasets
 					 ? null
 				// eslint-disable-next-line vue/no-side-effects-in-computed-properties
 					 : this.medicationPlanDatasets.sort(function(a, b) {
 						 return new Date(b.date) - new Date(a.date)
 					 })
-			},
 		},
-	}
+	},
+}
 </script>
 
 <style lang="scss" scoped>
 	.empty-content {
-	margin-top: 0 !important;
-	margin-bottom: 20px;
+		margin-top: 0 !important;
+		margin-bottom: 20px;
 	}
 </style>

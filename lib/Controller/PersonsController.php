@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -24,10 +25,10 @@ declare(strict_types=1);
 
 namespace OCA\Health\Controller;
 
-use OCP\IRequest;
+use OCA\Health\Services\PersonsService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
-use OCA\Health\Services\PersonsService;
+use OCP\IRequest;
 
 class PersonsController extends Controller {
 
@@ -46,9 +47,8 @@ class PersonsController extends Controller {
 	 *
 	 * @return DataResponse
 	 */
-	public function index(): DataResponse
-	{
-        return new DataResponse($this->personsService->getAllPersons());
+	public function index(): DataResponse {
+		return new DataResponse($this->personsService->getAllPersons());
 	}
 
 	/**
@@ -59,9 +59,8 @@ class PersonsController extends Controller {
 	 *
 	 * @return DataResponse
 	 */
-	public function data(int $personId): DataResponse
-	{
-        return new DataResponse($this->personsService->getData($personId));
+	public function data(int $personId): DataResponse {
+		return new DataResponse($this->personsService->getData($personId));
 	}
 
 	/**
@@ -71,8 +70,7 @@ class PersonsController extends Controller {
 	 *
 	 * @return DataResponse
 	 */
-	public function create(string $name): DataResponse
-	{
+	public function create(string $name): DataResponse {
 		return new DataResponse($this->personsService->createPerson($name));
 	}
 
@@ -83,8 +81,7 @@ class PersonsController extends Controller {
 	 *
 	 * @return DataResponse
 	 */
-	public function destroy(int $id): DataResponse
-	{
+	public function destroy(int $id): DataResponse {
 		return new DataResponse($this->personsService->deletePerson($id));
 	}
 
@@ -97,8 +94,7 @@ class PersonsController extends Controller {
 	 *
 	 * @return DataResponse
 	 */
-	public function update(int $id, string $key, string $value): DataResponse
-	{
+	public function update(int $id, string $key, string $value): DataResponse {
 		return new DataResponse($this->personsService->updatePerson($id, $key, $value));
 	}
 

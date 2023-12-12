@@ -39,19 +39,18 @@ class Activitiesdata extends Entity implements JsonSerializable {
 	protected $distance;
 	protected $comment;
 
-    public function __construct() {
-		$this->addType('id','integer');
-		$this->addType('personId','integer');
-		$this->addType('duration','float');
-		$this->addType('category','integer');
-		$this->addType('feeling','integer');
-		$this->addType('intensity','integer');
-		$this->addType('distance','float');
+	public function __construct() {
+		$this->addType('id', 'integer');
+		$this->addType('personId', 'integer');
+		$this->addType('duration', 'float');
+		$this->addType('category', 'integer');
+		$this->addType('feeling', 'integer');
+		$this->addType('intensity', 'integer');
+		$this->addType('distance', 'float');
 	}
 
-    public function jsonSerialize(): array
-	{
-        return [
+	public function jsonSerialize(): array {
+		return [
 			'id' => $this->id,
 			'personId' => $this->personId,
 			'datetime' => $this->datetime,
@@ -62,6 +61,6 @@ class Activitiesdata extends Entity implements JsonSerializable {
 			'intensity' => $this->intensity,
 			'distance' => $this->distance,
 			'comment' => $this->comment,
-        ];
-    }
+		];
+	}
 }

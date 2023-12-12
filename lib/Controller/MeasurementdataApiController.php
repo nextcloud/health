@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -25,9 +26,9 @@ declare(strict_types=1);
 namespace OCA\Health\Controller;
 
 use OCA\Health\Services\MeasurementdataService;
-use OCP\IRequest;
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\IRequest;
 
 class MeasurementdataApiController extends ApiController {
 
@@ -48,9 +49,8 @@ class MeasurementdataApiController extends ApiController {
 	 * @param int $personId
 	 * @return DataResponse
 	 */
-	public function findByPerson(int $personId): DataResponse
-	{
-        return new DataResponse($this->measurementdataService->getAllByPersonId($personId));
+	public function findByPerson(int $personId): DataResponse {
+		return new DataResponse($this->measurementdataService->getAllByPersonId($personId));
 	}
 
 	/**
@@ -74,8 +74,7 @@ class MeasurementdataApiController extends ApiController {
 	 * @param string $comment
 	 * @return DataResponse
 	 */
-	public function create(int $personId, string $datetime, float $temperature = null, int $heartRate = null, int $bloodPressureS = null, int $bloodPressureD = null, float $bloodSugar = null, float $oxygenSat = null, int $defecation = null, int $appetite = null, int $allergies = null, int $cigarettes = null, int $alcohol = null, string $comment = ''): DataResponse
-	{
+	public function create(int $personId, string $datetime, float $temperature = null, int $heartRate = null, int $bloodPressureS = null, int $bloodPressureD = null, float $bloodSugar = null, float $oxygenSat = null, int $defecation = null, int $appetite = null, int $allergies = null, int $cigarettes = null, int $alcohol = null, string $comment = ''): DataResponse {
 		return new DataResponse($this->measurementdataService->create($personId, $datetime, $temperature, $heartRate, $bloodPressureS, $bloodPressureD, $bloodSugar, $oxygenSat, $defecation, $appetite, $allergies, $cigarettes, $alcohol, $comment));
 	}
 
@@ -87,8 +86,7 @@ class MeasurementdataApiController extends ApiController {
 	 * @param int $id
 	 * @return DataResponse
 	 */
-	public function delete(int $id): DataResponse
-	{
+	public function delete(int $id): DataResponse {
 		return new DataResponse($this->measurementdataService->delete($id));
 	}
 
@@ -113,8 +111,7 @@ class MeasurementdataApiController extends ApiController {
 	 * @param string $comment
 	 * @return DataResponse
 	 */
-	public function update(int $id, string $datetime, float $temperature = null, int $heartRate = null, int $bloodPressureS = null, int $bloodPressureD = null, float $bloodSugar = null, float $oxygenSat = null, int $defecation = null, int $appetite = null, int $allergies = null, int $cigarettes = null, int $alcohol = null, string $comment = ''): DataResponse
-	{
+	public function update(int $id, string $datetime, float $temperature = null, int $heartRate = null, int $bloodPressureS = null, int $bloodPressureD = null, float $bloodSugar = null, float $oxygenSat = null, int $defecation = null, int $appetite = null, int $allergies = null, int $cigarettes = null, int $alcohol = null, string $comment = ''): DataResponse {
 		return new DataResponse($this->measurementdataService->update($id, $datetime, $temperature, $heartRate, $bloodPressureS, $bloodPressureD, $bloodSugar, $oxygenSat, $defecation, $appetite, $allergies, $cigarettes, $alcohol, $comment));
 	}
 }

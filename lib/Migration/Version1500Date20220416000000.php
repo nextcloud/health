@@ -23,13 +23,11 @@
 namespace OCA\Health\Migration;
 
 use Closure;
-  use Doctrine\DBAL\Schema\SchemaException;
-  use Doctrine\DBAL\Types\Type;
-  use OCP\DB\ISchemaWrapper;
-use OCP\DB\Types;
+use Doctrine\DBAL\Schema\SchemaException;
+use OCP\DB\ISchemaWrapper;
 use OCP\IDBConnection;
-  use OCP\Migration\SimpleMigrationStep;
-  use OCP\Migration\IOutput;
+use OCP\Migration\IOutput;
+use OCP\Migration\SimpleMigrationStep;
 
 class Version1500Date20220416000000 extends SimpleMigrationStep {
 
@@ -37,7 +35,7 @@ class Version1500Date20220416000000 extends SimpleMigrationStep {
 	protected $connection;
 
 	public function __construct(IDBConnection $connection) {
-	  $this->connection = $connection;
+		$this->connection = $connection;
 	}
 
 	/**
@@ -47,8 +45,7 @@ class Version1500Date20220416000000 extends SimpleMigrationStep {
 	 * @return null|ISchemaWrapper
 	 * @throws SchemaException
 	 */
-	public function changeSchema(IOutput $output, Closure $schemaClosure, array $options): ?ISchemaWrapper
-	{
+	public function changeSchema(IOutput $output, Closure $schemaClosure, array $options): ?ISchemaWrapper {
 		/** @var ISchemaWrapper $schema */
 		$schema = $schemaClosure();
 

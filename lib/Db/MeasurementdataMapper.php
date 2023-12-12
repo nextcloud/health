@@ -26,24 +26,23 @@ namespace OCA\Health\Db;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\Entity;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
-use OCP\IDBConnection;
 use OCP\AppFramework\Db\QBMapper;
+use OCP\IDBConnection;
 
 class MeasurementdataMapper extends QBMapper {
 
-    public function __construct(IDBConnection $db) {
-        parent::__construct($db, 'health_measurementdata', Measurementdata::class);
-    }
+	public function __construct(IDBConnection $db) {
+		parent::__construct($db, 'health_measurementdata', Measurementdata::class);
+	}
 
-    public function find(int $id): ?Entity
-	{
-        $qb = $this->db->getQueryBuilder();
+	public function find(int $id): ?Entity {
+		$qb = $this->db->getQueryBuilder();
 
-                    $qb->select('*')
-                             ->from($this->getTableName())
-                             ->where(
-                                     $qb->expr()->eq('id', $qb->createNamedParameter($id))
-                             );
+		$qb->select('*')
+				 ->from($this->getTableName())
+				 ->where(
+				 	$qb->expr()->eq('id', $qb->createNamedParameter($id))
+				 );
 
 		try {
 			return $this->findEntity($qb);
@@ -52,17 +51,16 @@ class MeasurementdataMapper extends QBMapper {
 		}
 	}
 
-    public function findAll(int $personId): array
-	{
-        $qb = $this->db->getQueryBuilder();
+	public function findAll(int $personId): array {
+		$qb = $this->db->getQueryBuilder();
 
-        $qb->select('*')
-           ->from($this->getTableName())
-           ->where(
-            $qb->expr()->eq('person_id', $qb->createNamedParameter($personId))
-           );
+		$qb->select('*')
+		   ->from($this->getTableName())
+		   ->where(
+		   	$qb->expr()->eq('person_id', $qb->createNamedParameter($personId))
+		   );
 
-        return $this->findEntities($qb);
-    }
+		return $this->findEntities($qb);
+	}
 
 }

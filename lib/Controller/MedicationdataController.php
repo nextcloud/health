@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -26,8 +27,8 @@ namespace OCA\Health\Controller;
 
 use OCA\Health\Services\MedicationdataService;
 use OCP\AppFramework\ApiController;
-use OCP\IRequest;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\IRequest;
 
 class MedicationdataController extends ApiController {
 
@@ -46,9 +47,8 @@ class MedicationdataController extends ApiController {
 	 * @param int $personId
 	 * @return DataResponse
 	 */
-	public function findPlanByPerson(int $personId): DataResponse
-	{
-        return new DataResponse($this->medicationdataService->getAllPlansByPersonId($personId));
+	public function findPlanByPerson(int $personId): DataResponse {
+		return new DataResponse($this->medicationdataService->getAllPlansByPersonId($personId));
 	}
 
 	/**
@@ -57,9 +57,8 @@ class MedicationdataController extends ApiController {
 	 * @param int $planId
 	 * @return DataResponse
 	 */
-	public function findMedicationByPlan(int $planId): DataResponse
-	{
-        return new DataResponse($this->medicationdataService->getAllMedicationByPlan($planId));
+	public function findMedicationByPlan(int $planId): DataResponse {
+		return new DataResponse($this->medicationdataService->getAllMedicationByPlan($planId));
 	}
 
 	/**
@@ -71,8 +70,7 @@ class MedicationdataController extends ApiController {
 	 * @param bool $takeOver
 	 * @return DataResponse
 	 */
-	public function createPlan(int $personId, string $date, string $comment = '', bool $takeOver = true): DataResponse
-	{
+	public function createPlan(int $personId, string $date, string $comment = '', bool $takeOver = true): DataResponse {
 		return new DataResponse($this->medicationdataService->createPlan($personId, $date, $comment, $takeOver));
 	}
 
@@ -84,13 +82,12 @@ class MedicationdataController extends ApiController {
 	 * @param string $identifier
 	 * @param int|null $morning
 	 * @param int|null $noon
- 	 * @param int|null $evening
+	 * @param int|null $evening
 	 * @param int|null $night
 	 * @param string $comment
 	 * @return DataResponse
 	 */
-	public function createMedication(int $planId, string $name, string $identifier, int $morning = null, int $noon = null, int $evening = null, int $night = null, string $comment = ''): DataResponse
-	{
+	public function createMedication(int $planId, string $name, string $identifier, int $morning = null, int $noon = null, int $evening = null, int $night = null, string $comment = ''): DataResponse {
 		return new DataResponse($this->medicationdataService->createMedication($planId, $name, $identifier, $morning, $noon, $evening, $night, $comment));
 	}
 
@@ -100,8 +97,7 @@ class MedicationdataController extends ApiController {
 	 * @param int $id
 	 * @return DataResponse
 	 */
-	public function deleteMedication(int $id): DataResponse
-	{
+	public function deleteMedication(int $id): DataResponse {
 		return new DataResponse($this->medicationdataService->deleteMedication($id));
 	}
 
@@ -111,8 +107,7 @@ class MedicationdataController extends ApiController {
 	 * @param int $id
 	 * @return DataResponse
 	 */
-	public function deletePlan(int $id): DataResponse
-	{
+	public function deletePlan(int $id): DataResponse {
 		return new DataResponse($this->medicationdataService->deletePlan($id));
 	}
 
@@ -129,8 +124,7 @@ class MedicationdataController extends ApiController {
 	 * @param string $comment
 	 * @return DataResponse
 	 */
-	public function updateMedication(int $id, string $name, string $identifier, int $morning = null, int $noon = null, int $evening = null, int $night = null, string $comment = ''): DataResponse
-	{
+	public function updateMedication(int $id, string $name, string $identifier, int $morning = null, int $noon = null, int $evening = null, int $night = null, string $comment = ''): DataResponse {
 		return new DataResponse($this->medicationdataService->updateMedication($id, $name, $identifier, $morning, $noon, $evening, $night, $comment));
 	}
 
@@ -142,8 +136,7 @@ class MedicationdataController extends ApiController {
 	 * @param string $comment
 	 * @return DataResponse
 	 */
-	public function updatePlan(int $id, string $date, string $comment = ''): DataResponse
-	{
+	public function updatePlan(int $id, string $date, string $comment = ''): DataResponse {
 		return new DataResponse($this->medicationdataService->updatePlan($id, $date, $comment));
 	}
 }

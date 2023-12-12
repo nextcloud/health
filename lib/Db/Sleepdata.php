@@ -37,16 +37,15 @@ class Sleepdata extends Entity implements JsonSerializable {
 	protected $durationWakeups;
 	protected $comment;
 
-    public function __construct() {
-		$this->addType('id','integer');
-		$this->addType('quality','integer');
-		$this->addType('countedWakeups','integer');
-		$this->addType('durationWakeups','float');
+	public function __construct() {
+		$this->addType('id', 'integer');
+		$this->addType('quality', 'integer');
+		$this->addType('countedWakeups', 'integer');
+		$this->addType('durationWakeups', 'float');
 	}
 
-    public function jsonSerialize(): array
-	{
-        return [
+	public function jsonSerialize(): array {
+		return [
 			'id' => $this->id,
 			'personId' => $this->personId,
 			'asleep' => $this->asleep,
@@ -55,6 +54,6 @@ class Sleepdata extends Entity implements JsonSerializable {
 			'countedWakeups' => $this->countedWakeups,
 			'durationWakeups' => $this->durationWakeups,
 			'comment' => $this->comment,
-        ];
-    }
+		];
+	}
 }

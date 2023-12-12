@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -25,11 +26,11 @@ declare(strict_types=1);
 
 namespace OCA\Health\Services;
 
+use Exception;
 use OCA\Health\Db\Acl;
 use OCA\Health\Db\AclMapper;
-use OCA\Health\Db\PersonMapper;
 use OCA\Health\Db\Person;
-use Exception;
+use OCA\Health\Db\PersonMapper;
 use OCP\AppFramework\Http;
 use OCP\IUserManager;
 
@@ -49,17 +50,17 @@ class PersonsService {
 	protected $userManager;
 
 	public function __construct(AclMapper $aclMapper,
-								PersonMapper $personMapper,
-								$userId,
-								WeightdataService $weightdataService,
-								FormatHelperService $formatHelperService,
-								PermissionHelperService $permissionHelper,
-								PermissionService $permissionService,
-								IUserManager $userManager,
-								FeelingdataService $feelingdataService,
-								SleepdataService $sleepdataService,
-								MeasurementdataService $measurementdataService,
-								ActivitiesdataService $activitiesdataService
+		PersonMapper $personMapper,
+		$userId,
+		WeightdataService $weightdataService,
+		FormatHelperService $formatHelperService,
+		PermissionHelperService $permissionHelper,
+		PermissionService $permissionService,
+		IUserManager $userManager,
+		FeelingdataService $feelingdataService,
+		SleepdataService $sleepdataService,
+		MeasurementdataService $measurementdataService,
+		ActivitiesdataService $activitiesdataService
 	) {
 		$this->aclMapper = $aclMapper;
 		$this->personMapper = $personMapper;
@@ -75,12 +76,11 @@ class PersonsService {
 		$this->activitiesdataService = $activitiesdataService;
 	}
 
-	public function getAllPersons(): array
-	{
+	public function getAllPersons(): array {
 		$persons = $this->personMapper->findAll($this->userId);
-		if( count($persons) === 0) {
+		if(count($persons) === 0) {
 			$user = $this->userManager->get($this->userId);
-			$this->createPerson( $user->getDisplayName() );
+			$this->createPerson($user->getDisplayName());
 			$persons = $this->personMapper->findAll($this->userId);
 		}
 		foreach ($persons as $person) {
@@ -96,8 +96,7 @@ class PersonsService {
 	}
 
 	/** @noinspection PhpUndefinedMethodInspection */
-	public function createPerson($name): \OCP\AppFramework\Db\Entity
-	{
+	public function createPerson($name): \OCP\AppFramework\Db\Entity {
 		$time = new \DateTime();
 		$p = new Person();
 		$p->setInsertTime($time->format('Y-m-d H:i:s'));
@@ -142,7 +141,7 @@ class PersonsService {
 	}
 
 	public function deletePerson($id) {
-		if( !$this->permissionService->personData($id, $this->userId)) {
+		if(!$this->permissionService->personData($id, $this->userId)) {
 			return null;
 		}
 
@@ -153,27 +152,27 @@ class PersonsService {
 		}
 
 		$wd = $this->weightdataService->getAllByPersonId($id);
-		foreach( $wd as $i ) {
+		foreach($wd as $i) {
 			$this->weightdataService->delete($i->id);
 		}
 
 		$wd = $this->feelingdataService->getAllByPersonId($id);
-		foreach( $wd as $i ) {
+		foreach($wd as $i) {
 			$this->feelingdataService->delete($i->id);
 		}
 
 		$wd = $this->sleepdataService->getAllByPersonId($id);
-		foreach( $wd as $i ) {
+		foreach($wd as $i) {
 			$this->sleepdataService->delete($i->id);
 		}
 
 		$wd = $this->measurementdataService->getAllByPersonId($id);
-		foreach( $wd as $i ) {
+		foreach($wd as $i) {
 			$this->measurementdataService->delete($i->id);
 		}
 
 		$ad = $this->activitiesdataService->getAllByPersonId($id);
-		foreach( $ad as $i ) {
+		foreach($ad as $i) {
 			$this->activitiesdataService->delete($i->id);
 		}
 
@@ -181,7 +180,7 @@ class PersonsService {
 	}
 
 	public function updatePerson($id, $key, $value) {
-		if( !$this->permissionService->personData($id, $this->userId)) {
+		if(!$this->permissionService->personData($id, $this->userId)) {
 			return null;
 		}
 
@@ -207,7 +206,7 @@ class PersonsService {
 	}
 
 	public function getData($personId) {
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+		if(!$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 
@@ -225,7 +224,7 @@ class PersonsService {
 	 * @return \OCP\AppFramework\Db\Entity
 	 */
 	public function addAcl(int $personId, int $type, string $participant, bool $edit, bool $manage) {
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+		if(!$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 
@@ -249,7 +248,7 @@ class PersonsService {
 	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
 	 */
 	public function updateAcl(int $personId, int $aclId, bool $edit, bool $manage) {
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+		if(!$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 
@@ -270,7 +269,7 @@ class PersonsService {
 	 * @throws BadRequestException
 	 */
 	public function deleteAcl(int $personId, int $aclId) {
-		if( !$this->permissionService->personData($personId, $this->userId)) {
+		if(!$this->permissionService->personData($personId, $this->userId)) {
 			return null;
 		}
 		$acl = $this->aclMapper->find($aclId);

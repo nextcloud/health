@@ -87,7 +87,7 @@
 			:title="t('health', 'No data for a chart')"
 		>
 			<template #icon>
-				<chart-line />
+				<ChartLine />
 			</template>
 			<template #action>
 				{{ t('health', 'More than one dataset is required.') }}<br>
@@ -102,7 +102,7 @@ import LineChart from './charts/LineChart'
 import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent'
 import moment from '@nextcloud/moment'
 import NcActionCheckbox from '@nextcloud/vue/dist/Components/NcActionCheckbox'
-import ChartLine from 'vue-material-design-icons/ChartLine.vue';
+import ChartLine from 'vue-material-design-icons/ChartLine.vue'
 
 export default {
 	name: 'Chart',

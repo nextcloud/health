@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Florian Steffens <flost-dev@mailbox.org>
@@ -25,9 +26,9 @@ declare(strict_types=1);
 namespace OCA\Health\Controller;
 
 use OCA\Health\Services\FeelingdataService;
-use OCP\IRequest;
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\IRequest;
 
 class FeelingdataApiController extends ApiController {
 
@@ -48,9 +49,8 @@ class FeelingdataApiController extends ApiController {
 	 * @param int $personId
 	 * @return DataResponse
 	 */
-	public function findByPerson(int $personId): DataResponse
-	{
-        return new DataResponse($this->feelingdataService->getAllByPersonId($personId));
+	public function findByPerson(int $personId): DataResponse {
+		return new DataResponse($this->feelingdataService->getAllByPersonId($personId));
 	}
 
 	/**
@@ -70,8 +70,7 @@ class FeelingdataApiController extends ApiController {
 	 * @param string $comment
 	 * @return DataResponse
 	 */
-	public function create(int $personId, string $datetime, int $mood = null, int $sadnessLevel = null, string $symptoms = null, string $attacks = null, string $medication = null, int $pain = null, int $energy = null,  string $comment = ''): DataResponse
-	{
+	public function create(int $personId, string $datetime, int $mood = null, int $sadnessLevel = null, string $symptoms = null, string $attacks = null, string $medication = null, int $pain = null, int $energy = null, string $comment = ''): DataResponse {
 		return new DataResponse($this->feelingdataService->create($personId, $datetime, $mood, $sadnessLevel, $symptoms, $attacks, $medication, $pain, $energy, $comment));
 	}
 
@@ -83,8 +82,7 @@ class FeelingdataApiController extends ApiController {
 	 * @param int $id
 	 * @return DataResponse
 	 */
-	public function delete(int $id): DataResponse
-	{
+	public function delete(int $id): DataResponse {
 		return new DataResponse($this->feelingdataService->delete($id));
 	}
 
@@ -105,8 +103,7 @@ class FeelingdataApiController extends ApiController {
 	 * @param string $comment
 	 * @return DataResponse
 	 */
-	public function update(int $id, string $datetime, int $mood = null, int $sadnessLevel = null, string $symptoms = null, string $attacks = null, string $medication = null, int $pain = null, int $energy = null,  string $comment = ''): DataResponse
-	{
+	public function update(int $id, string $datetime, int $mood = null, int $sadnessLevel = null, string $symptoms = null, string $attacks = null, string $medication = null, int $pain = null, int $energy = null, string $comment = ''): DataResponse {
 		return new DataResponse($this->feelingdataService->update($id, $datetime, $mood, $sadnessLevel, $symptoms, $attacks, $medication, $pain, $energy, $comment));
 	}
 }

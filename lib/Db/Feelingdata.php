@@ -40,17 +40,16 @@ class Feelingdata extends Entity implements JsonSerializable {
 	protected $energy;
 	protected $comment;
 
-    public function __construct() {
-		$this->addType('id','integer');
-		$this->addType('mood','integer');
-		$this->addType('sadnessLevel','integer');
-		$this->addType('pain','integer');
-		$this->addType('energy','integer');
+	public function __construct() {
+		$this->addType('id', 'integer');
+		$this->addType('mood', 'integer');
+		$this->addType('sadnessLevel', 'integer');
+		$this->addType('pain', 'integer');
+		$this->addType('energy', 'integer');
 	}
 
-    public function jsonSerialize(): array
-	{
-        return [
+	public function jsonSerialize(): array {
+		return [
 			'id' => $this->id,
 			'personId' => $this->personId,
 			'datetime' => $this->datetime,
@@ -62,6 +61,6 @@ class Feelingdata extends Entity implements JsonSerializable {
 			'pain' => $this->pain,
 			'energy' => $this->energy,
 			'comment' => $this->comment,
-        ];
-    }
+		];
+	}
 }

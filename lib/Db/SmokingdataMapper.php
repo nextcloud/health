@@ -23,37 +23,37 @@
 
 namespace OCA\Health\Db;
 
-use OCP\IDBConnection;
 use OCP\AppFramework\Db\QBMapper;
+use OCP\IDBConnection;
 
 class SmokingdataMapper extends QBMapper {
 
-    public function __construct(IDBConnection $db) {
-        parent::__construct($db, 'health_smokingdata', Smokingdata::class);
-    }
+	public function __construct(IDBConnection $db) {
+		parent::__construct($db, 'health_smokingdata', Smokingdata::class);
+	}
 
-    public function find(int $id) {
-        $qb = $this->db->getQueryBuilder();
+	public function find(int $id) {
+		$qb = $this->db->getQueryBuilder();
 
-                    $qb->select('*')
-                             ->from($this->getTableName())
-                             ->where(
-                                     $qb->expr()->eq('id', $qb->createNamedParameter($id))
-                             );
+		$qb->select('*')
+				 ->from($this->getTableName())
+				 ->where(
+				 	$qb->expr()->eq('id', $qb->createNamedParameter($id))
+				 );
 
-        return $this->findEntity($qb);
-    }
+		return $this->findEntity($qb);
+	}
 
-    public function findAll(int $personId) {
-        $qb = $this->db->getQueryBuilder();
+	public function findAll(int $personId) {
+		$qb = $this->db->getQueryBuilder();
 
-        $qb->select('*')
-           ->from($this->getTableName())
-           ->where(
-            $qb->expr()->eq('person_id', $qb->createNamedParameter($personId))
-           );
+		$qb->select('*')
+		   ->from($this->getTableName())
+		   ->where(
+		   	$qb->expr()->eq('person_id', $qb->createNamedParameter($personId))
+		   );
 
-        return $this->findEntities($qb);
-    }
+		return $this->findEntities($qb);
+	}
 
 }
