@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2.2.2 - 2023-12-13
+### Added
+- Unfortunately this is not a big upgrade as the version number indicates. This is just needed to overwrite a fuzzy version number on the appstore.
+
+### Updated
+- Fix app store releases
+
 ## 1.6.4 - 2023-12-13
 ### Updated
 - Fix app store releases
