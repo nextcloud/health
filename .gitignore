@@ -5,3 +5,5 @@ node_modules
 /.idea
 \.idea/
 /js
+/.php-cs-fixer.cache
+/releaseNotes.md

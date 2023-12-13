@@ -1,12 +1,12 @@
 {
-	"name": "datenangebot/health",
-	"description": "Lint config for datenangebot/health",
+	"name": "nextcloud/health",
+	"description": "Lint config for nextcloud/health",
 	"type": "project",
 	"license": "AGPL",
 	"authors": [
 		{
 			"name": "Florian Steffens",
-			"email": "flost-dev@mailbox.org"
+			"email": "dev@d10t.de"
 		}
 	],
 	"config": {

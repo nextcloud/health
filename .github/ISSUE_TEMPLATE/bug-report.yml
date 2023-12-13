@@ -1,0 +1,37 @@
+name: Bug
+description: Have you encountered a bug? Submit a report and help us improve Nextcloud health.
+labels: ["bug", "0. Needs triage"]
+body:
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: |
+          Describe the steps to reproduce the bug.
+          The better your description is _(go 'here', click 'there'...)_ the fastest you'll get an _(accurate)_ answer.
+      value: |
+          1.
+          2.
+          3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: Tell us what should happen
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual behavior
+      description: Tell us what happens instead
+  - type: input
+    id: health-app-version
+    attributes:
+      label: Health app version
+      description: See apps admin page, e.g. 0.5.3
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional info
+      description: Any additional information related to the issue (ex. screenshots, browser console errors, software versions, db backend, php version, ...).
