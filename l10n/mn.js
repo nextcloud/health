@@ -3,10 +3,6 @@ OC.L10N.register(
     {
     "Share" : "Түгээх",
     "Activities" : "Үйлдлүүд",
-    "Last 24 hours" : "Сүүлийн 24 цаг",
-    "Actions" : "Үйл ажиллагаа",
-    "Today" : "өнөөдөр",
-    "Cancel" : "болиулах",
     "Category" : "Ангилал",
     "Activity" : "Үйлдлүүд",
     "Date" : "Он сар өдөр",
@@ -20,6 +16,10 @@ OC.L10N.register(
     "Delete" : "Устгах",
     "Information" : "Мэдээлэл",
     "Group" : "Бүлэг",
-    "Can edit" : "Can edit"
+    "Can edit" : "Can edit",
+    "Last 24 hours" : "Сүүлийн 24 цаг",
+    "Actions" : "Үйл ажиллагаа",
+    "Today" : "өнөөдөр",
+    "Cancel" : "болиулах"
 },
 "nplurals=2; plural=(n != 1);");

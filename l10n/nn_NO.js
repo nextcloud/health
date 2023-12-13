@@ -3,10 +3,6 @@ OC.L10N.register(
     {
     "Share" : "Del",
     "Activities" : "Aktivitetar",
-    "Last 24 hours" : "Siste 24 timer",
-    "Actions" : "Handlingar",
-    "Today" : "I dag",
-    "Cancel" : "Avbryt",
     "Data" : "Data",
     "Category" : "Kategori",
     "Activity" : "Aktivitet",
@@ -20,6 +16,10 @@ OC.L10N.register(
     "Delete" : "Slett",
     "Information" : "Informasjon",
     "Group" : "Gruppe",
-    "Can edit" : "Can edit"
+    "Can edit" : "Can edit",
+    "Last 24 hours" : "Siste 24 timer",
+    "Actions" : "Handlingar",
+    "Today" : "I dag",
+    "Cancel" : "Avbryt"
 },
 "nplurals=2; plural=(n != 1);");

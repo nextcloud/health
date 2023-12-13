@@ -3,10 +3,6 @@ OC.L10N.register(
     {
     "Share" : "Koplietot",
     "Activities" : "Darbības",
-    "Last 24 hours" : "Pēdējās 24 stundas",
-    "Actions" : "Darbības",
-    "Today" : "Šodien",
-    "Cancel" : "Atcelt",
     "Category" : "Kategorija",
     "Activity" : "Darbības",
     "Date" : "Datums",
@@ -24,6 +20,10 @@ OC.L10N.register(
     "Group" : "Grupa",
     "Can edit" : "Var rediģēt",
     "Quality" : "Kvalitāte",
-    "Strong" : "Stipra"
+    "Strong" : "Stipra",
+    "Last 24 hours" : "Pēdējās 24 stundas",
+    "Actions" : "Darbības",
+    "Today" : "Šodien",
+    "Cancel" : "Atcelt"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

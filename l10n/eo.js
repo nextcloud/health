@@ -3,10 +3,6 @@ OC.L10N.register(
     {
     "Share" : "Kunhavigi",
     "Activities" : "Aktivaĵoj",
-    "Last 24 hours" : "Lastaj 24 horoj",
-    "Actions" : "Agoj",
-    "Today" : "Hodiaŭ",
-    "Cancel" : "Nuligi",
     "Category" : "Kategorio",
     "Activity" : "Aktivaĵoj",
     "Date" : "Date",
@@ -22,6 +18,10 @@ OC.L10N.register(
     "Delete" : "Forigi",
     "Group" : "Grupo",
     "Can edit" : "Povas redakti",
-    "Strong" : "Forta"
+    "Strong" : "Forta",
+    "Last 24 hours" : "Lastaj 24 horoj",
+    "Actions" : "Agoj",
+    "Today" : "Hodiaŭ",
+    "Cancel" : "Nuligi"
 },
 "nplurals=2; plural=(n != 1);");

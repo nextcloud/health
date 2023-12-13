@@ -3,9 +3,6 @@ OC.L10N.register(
     {
     "Weight" : "Pesu",
     "Activities" : "Actividaes",
-    "Actions" : "Aiciones",
-    "Today" : "Güei",
-    "Cancel" : "Encaboxar",
     "Duration" : "Duración",
     "Distance" : "Distancia",
     "Data" : "Datos",
@@ -17,6 +14,9 @@ OC.L10N.register(
     "Delete" : "Desaniciar",
     "Age" : "Edá",
     "Height" : "Altor",
-    "Quality" : "Calidá"
+    "Quality" : "Calidá",
+    "Actions" : "Aiciones",
+    "Today" : "Güei",
+    "Cancel" : "Encaboxar"
 },
 "nplurals=2; plural=(n != 1);");

@@ -3,11 +3,6 @@ OC.L10N.register(
     {
     "Share" : "แชร์",
     "Activities" : "กิจกรรม",
-    "Last week" : "สัปดาห์ที่แล้ว",
-    "Last month" : "เดือนที่แล้ว",
-    "Actions" : "การกระทำ",
-    "Today" : "วันนี้",
-    "Cancel" : "ยกเลิก",
     "Category" : "หมวดหมู่",
     "Activity" : "กิจกรรม",
     "Date" : "วันที่",
@@ -22,6 +17,11 @@ OC.L10N.register(
     "Show details" : "แสดงข้อมูล",
     "Delete" : "ลบ",
     "Group" : "กลุ่ม",
-    "Can edit" : "สามารถแก้ไข"
+    "Can edit" : "สามารถแก้ไข",
+    "Last week" : "สัปดาห์ที่แล้ว",
+    "Last month" : "เดือนที่แล้ว",
+    "Actions" : "การกระทำ",
+    "Today" : "วันนี้",
+    "Cancel" : "ยกเลิก"
 },
 "nplurals=1; plural=0;");

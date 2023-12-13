@@ -3,8 +3,6 @@ OC.L10N.register(
     {
     "Share" : "ແບ່ງປັນ",
     "Activities" : "ບັນດາກິດຈະກຳ",
-    "Today" : "ມື້ນີ້",
-    "Cancel" : "ຍົກເລີກ",
     "Duration" : "ໄລຍະ",
     "Activity" : "ກິດຈະກໍາ",
     "Date" : "ວັນທີ",
@@ -15,6 +13,8 @@ OC.L10N.register(
     "Delete" : "ລຶບ",
     "Information" : "ຂໍ້ມຸນ",
     "Group" : "ກຸ່ມ",
-    "Can edit" : "ແກ້ໄຂໄດ້"
+    "Can edit" : "ແກ້ໄຂໄດ້",
+    "Today" : "ມື້ນີ້",
+    "Cancel" : "ຍົກເລີກ"
 },
 "nplurals=1; plural=0;");

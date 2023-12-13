@@ -2,14 +2,6 @@
     "Health" : "Heilsa",
     "Share" : "Deila",
     "Activities" : "Aðgerðir",
-    "Last week" : "Í síðustu viku",
-    "Last month" : "Í síðasta mánuði",
-    "Last year" : "Á síðasta ári",
-    "Show all" : "Birta allt",
-    "Last 24 hours" : "Síðustu 24 klst",
-    "Actions" : "Aðgerðir",
-    "Today" : "Í dag",
-    "Cancel" : "Hætta við",
     "Duration" : "Duration",
     "Distance" : "Vegalengd",
     "Category" : "Flokkur",
@@ -48,6 +40,14 @@
     "Failed to create share with {displayName}" : "Gat ekki búið til sameign með {displayName}",
     "Quality" : "Quality",
     "Goal" : "Markmið",
-    "Strong" : "Sterkt"
+    "Strong" : "Sterkt",
+    "Last week" : "Í síðustu viku",
+    "Last month" : "Í síðasta mánuði",
+    "Last year" : "Á síðasta ári",
+    "Show all" : "Birta allt",
+    "Last 24 hours" : "Síðustu 24 klst",
+    "Actions" : "Aðgerðir",
+    "Today" : "Í dag",
+    "Cancel" : "Hætta við"
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"
 }

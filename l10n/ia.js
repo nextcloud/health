@@ -3,10 +3,6 @@ OC.L10N.register(
     {
     "Share" : "Compartir",
     "Activities" : "Activitates",
-    "Last 24 hours" : "Ultime 24 horas",
-    "Actions" : "Actiones",
-    "Today" : "Hodie",
-    "Cancel" : "Cancellar",
     "Category" : "Categoria",
     "Activity" : "Activitate",
     "Date" : "Date",
@@ -16,6 +12,10 @@ OC.L10N.register(
     "Name" : "Nomine",
     "Delete" : "Deler",
     "Group" : "Gruppo",
-    "Can edit" : "Can edit"
+    "Can edit" : "Can edit",
+    "Last 24 hours" : "Ultime 24 horas",
+    "Actions" : "Actiones",
+    "Today" : "Hodie",
+    "Cancel" : "Cancellar"
 },
 "nplurals=2; plural=(n != 1);");

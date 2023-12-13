@@ -1,10 +1,6 @@
 { "translations": {
     "Share" : "გაზიარება",
     "Activities" : "აქტივობები",
-    "Last 24 hours" : "ბოლო 24 საათი",
-    "Actions" : "მოქმედებები",
-    "Today" : "დღეს",
-    "Cancel" : "უარყოფა",
     "Category" : "კატეგორია",
     "Activity" : "აქტივობა",
     "Date" : "თარიღი",
@@ -21,6 +17,10 @@
     "Information" : "ინფორმაცია",
     "Group" : "ჯგუფი",
     "Can edit" : "შეუძლია შეცვალოს",
-    "Strong" : "ძლიერია"
+    "Strong" : "ძლიერია",
+    "Last 24 hours" : "ბოლო 24 საათი",
+    "Actions" : "მოქმედებები",
+    "Today" : "დღეს",
+    "Cancel" : "უარყოფა"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

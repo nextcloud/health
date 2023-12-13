@@ -1,10 +1,6 @@
 { "translations": {
     "Share" : "Kunhavigi",
     "Activities" : "Aktivaĵoj",
-    "Last 24 hours" : "Lastaj 24 horoj",
-    "Actions" : "Agoj",
-    "Today" : "Hodiaŭ",
-    "Cancel" : "Nuligi",
     "Category" : "Kategorio",
     "Activity" : "Aktivaĵoj",
     "Date" : "Date",
@@ -20,6 +16,10 @@
     "Delete" : "Forigi",
     "Group" : "Grupo",
     "Can edit" : "Povas redakti",
-    "Strong" : "Forta"
+    "Strong" : "Forta",
+    "Last 24 hours" : "Lastaj 24 horoj",
+    "Actions" : "Agoj",
+    "Today" : "Hodiaŭ",
+    "Cancel" : "Nuligi"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

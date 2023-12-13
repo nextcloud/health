@@ -4,13 +4,6 @@ OC.L10N.register(
     "Health" : "Здравје",
     "Share" : "Сподели",
     "Activities" : "Активности",
-    "Last week" : "Минатата недела",
-    "Last month" : "Минатиот месец",
-    "Show all" : "Прикажи ги сите",
-    "Last 24 hours" : "Последниве 24 часа",
-    "Actions" : "Акции",
-    "Today" : "Денес",
-    "Cancel" : "Откажи",
     "Duration" : "Времетраење",
     "Distance" : "Дистанца",
     "Category" : "Категорија",
@@ -35,6 +28,13 @@ OC.L10N.register(
     "Can edit" : "Може да се уредува",
     "Can manage" : "Може да ја менаџира",
     "Failed to create share with {displayName}" : "Неможе да се сподели со {displayName}",
-    "Quality" : "Квалитет"
+    "Quality" : "Квалитет",
+    "Last week" : "Минатата недела",
+    "Last month" : "Минатиот месец",
+    "Show all" : "Прикажи ги сите",
+    "Last 24 hours" : "Последниве 24 часа",
+    "Actions" : "Акции",
+    "Today" : "Денес",
+    "Cancel" : "Откажи"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

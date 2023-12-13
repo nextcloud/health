@@ -5,12 +5,6 @@ OC.L10N.register(
     "Share" : "Del",
     "Weight" : "Vægt",
     "Activities" : "Aktiviteter",
-    "Last week" : "Seneste uge",
-    "Last month" : "Seneste måned",
-    "Last 24 hours" : "Seneste 24 timer",
-    "Actions" : "Handlinger",
-    "Today" : "I dag",
-    "Cancel" : "Annuller",
     "Duration" : "Varighed",
     "Data" : "Data",
     "Category" : "Kategori",
@@ -42,6 +36,12 @@ OC.L10N.register(
     "Failed to create share with {displayName}" : "Oprettelse af delt drev med {displayName} fejlede",
     "Strong" : "Stærkt",
     "Target" : "Mål",
-    "Body fat" : "fedtprocent"
+    "Body fat" : "fedtprocent",
+    "Last week" : "Seneste uge",
+    "Last month" : "Seneste måned",
+    "Last 24 hours" : "Seneste 24 timer",
+    "Actions" : "Handlinger",
+    "Today" : "I dag",
+    "Cancel" : "Annuller"
 },
 "nplurals=2; plural=(n != 1);");

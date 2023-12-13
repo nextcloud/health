@@ -1,9 +1,6 @@
 { "translations": {
     "Weight" : "Pesu",
     "Activities" : "Actividaes",
-    "Actions" : "Aiciones",
-    "Today" : "Güei",
-    "Cancel" : "Encaboxar",
     "Duration" : "Duración",
     "Distance" : "Distancia",
     "Data" : "Datos",
@@ -15,6 +12,9 @@
     "Delete" : "Desaniciar",
     "Age" : "Edá",
     "Height" : "Altor",
-    "Quality" : "Calidá"
+    "Quality" : "Calidá",
+    "Actions" : "Aiciones",
+    "Today" : "Güei",
+    "Cancel" : "Encaboxar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -1,10 +1,6 @@
 { "translations": {
     "Share" : "Compartir",
     "Activities" : "Actividades",
-    "Last 24 hours" : "Últimas 24 horas",
-    "Actions" : "Acciones",
-    "Today" : "Hoy",
-    "Cancel" : "Cancelar",
     "Data" : "Datos",
     "Category" : "Categoría",
     "Activity" : "Actividad",
@@ -22,6 +18,10 @@
     "Information" : "Información",
     "Group" : "Grupo",
     "Can edit" : "Puede editar",
-    "Strong" : "Fuerte"
+    "Strong" : "Fuerte",
+    "Last 24 hours" : "Últimas 24 horas",
+    "Actions" : "Acciones",
+    "Today" : "Hoy",
+    "Cancel" : "Cancelar"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

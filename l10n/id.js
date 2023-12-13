@@ -3,13 +3,6 @@ OC.L10N.register(
     {
     "Share" : "Bagikan",
     "Activities" : "Aktivitas",
-    "Last week" : "Minggu lalu",
-    "Last month" : "Bulan lalu",
-    "Last 12 hours" : "12 jam lalu",
-    "Last 24 hours" : "24 Jam lalu",
-    "Actions" : "Tindakan",
-    "Today" : "Hari ini",
-    "Cancel" : "Membatalkan",
     "Data" : "Data",
     "Category" : "Kategori",
     "Activity" : "Aktivitas",
@@ -28,6 +21,13 @@ OC.L10N.register(
     "Information" : "Informasi",
     "Group" : "Grup",
     "Can edit" : "Can edit",
-    "Can manage" : "Dapat mengelola"
+    "Can manage" : "Dapat mengelola",
+    "Last week" : "Minggu lalu",
+    "Last month" : "Bulan lalu",
+    "Last 12 hours" : "12 jam lalu",
+    "Last 24 hours" : "24 Jam lalu",
+    "Actions" : "Tindakan",
+    "Today" : "Hari ini",
+    "Cancel" : "Membatalkan"
 },
 "nplurals=1; plural=0;");

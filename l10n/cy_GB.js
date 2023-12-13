@@ -4,9 +4,6 @@ OC.L10N.register(
     "Health" : "Iechyd",
     "Share" : "Rhannu",
     "Activities" : "Gweithgareddau",
-    "Actions" : "Gweithredoedd",
-    "Today" : "Heddiw",
-    "Cancel" : "Diddymu",
     "Duration" : "Hyd",
     "Category" : "Categori",
     "Activity" : "Gweithred",
@@ -24,6 +21,9 @@ OC.L10N.register(
     "Edit name" : "Golygu enw",
     "Delete" : "Dileu",
     "Group" : "Grŵp",
-    "Can edit" : "Can edit"
+    "Can edit" : "Can edit",
+    "Actions" : "Gweithredoedd",
+    "Today" : "Heddiw",
+    "Cancel" : "Diddymu"
 },
 "nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;");

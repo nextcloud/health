@@ -3,8 +3,6 @@ OC.L10N.register(
     {
     "Share" : "ចែក​រំលែក",
     "Activities" : "សកម្មភាពផ្សេងៗ",
-    "Today" : "ថ្ងៃ​នេះ",
-    "Cancel" : "បោះបង់",
     "Chart" : "ក្រាប",
     "Data" : "ទិន្នន័យ",
     "Activity" : "សកម្មភាព",
@@ -15,6 +13,8 @@ OC.L10N.register(
     "Name" : "ឈ្មោះ",
     "Delete" : "លុប",
     "Group" : "Group",
-    "Can edit" : "Can edit"
+    "Can edit" : "Can edit",
+    "Today" : "ថ្ងៃ​នេះ",
+    "Cancel" : "បោះបង់"
 },
 "nplurals=1; plural=0;");

@@ -4,12 +4,6 @@ OC.L10N.register(
     "Health" : "Sức khỏe",
     "Share" : "Chia sẻ",
     "Activities" : "Hoạt động",
-    "Last week" : "Tuần trước",
-    "Last month" : "Tháng trước",
-    "Last 24 hours" : "24 giờ trước",
-    "Actions" : "Hành động",
-    "Today" : "Hôm nay",
-    "Cancel" : "Hủy",
     "Duration" : "Khoảng thời gian",
     "Data" : "Dữ liệu",
     "Category" : "Hạng mục",
@@ -32,6 +26,12 @@ OC.L10N.register(
     "Show details" : "Hiển thị chi tiết",
     "Delete" : "Xóa",
     "Group" : "Nhóm",
-    "Can edit" : "Có thể chỉnh sửa"
+    "Can edit" : "Có thể chỉnh sửa",
+    "Last week" : "Tuần trước",
+    "Last month" : "Tháng trước",
+    "Last 24 hours" : "24 giờ trước",
+    "Actions" : "Hành động",
+    "Today" : "Hôm nay",
+    "Cancel" : "Hủy"
 },
 "nplurals=1; plural=0;");

@@ -1,10 +1,6 @@
 { "translations": {
     "Share" : "Del",
     "Activities" : "Aktivitetar",
-    "Last 24 hours" : "Siste 24 timer",
-    "Actions" : "Handlingar",
-    "Today" : "I dag",
-    "Cancel" : "Avbryt",
     "Data" : "Data",
     "Category" : "Kategori",
     "Activity" : "Aktivitet",
@@ -18,6 +14,10 @@
     "Delete" : "Slett",
     "Information" : "Informasjon",
     "Group" : "Gruppe",
-    "Can edit" : "Can edit"
+    "Can edit" : "Can edit",
+    "Last 24 hours" : "Siste 24 timer",
+    "Actions" : "Handlingar",
+    "Today" : "I dag",
+    "Cancel" : "Avbryt"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

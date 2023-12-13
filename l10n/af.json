@@ -1,10 +1,6 @@
 { "translations": {
     "Share" : "Deel",
     "Activities" : "Aktiwiteite",
-    "Last 24 hours" : "Afgelope 24 uur",
-    "Actions" : "Aksies",
-    "Today" : "Vandag",
-    "Cancel" : "Kanselleer",
     "Duration" : "Duur",
     "Category" : "Kategorie",
     "Activity" : "Aktiwiteit",
@@ -22,6 +18,10 @@
     "No participants found" : "Geen deelnemers gevind",
     "Group" : "Groep",
     "Can edit" : "Kan redigeer",
-    "Quality" : "Kwaliteit"
+    "Quality" : "Kwaliteit",
+    "Last 24 hours" : "Afgelope 24 uur",
+    "Actions" : "Aksies",
+    "Today" : "Vandag",
+    "Cancel" : "Kanselleer"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

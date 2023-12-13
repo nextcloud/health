@@ -4,12 +4,6 @@ OC.L10N.register(
     "Health" : "Sănătate",
     "Share" : "Partajează",
     "Activities" : "Activități",
-    "Last week" : "Săptămâna trecută ",
-    "Last month" : "Luna trecută ",
-    "Last year" : "Anul trecut",
-    "Actions" : "Acțiuni",
-    "Today" : "Astăzi",
-    "Cancel" : "Anulare",
     "Duration" : "Durată",
     "Category" : "Categorie",
     "Activity" : "Activitate",
@@ -35,6 +29,12 @@ OC.L10N.register(
     "Can edit" : "Poate edita",
     "Can manage" : "Poate administra",
     "Failed to create share with {displayName}" : "Nu s-a creat partajarea cu  {displayName}",
-    "Quality" : "Calitatea"
+    "Quality" : "Calitatea",
+    "Last week" : "Săptămâna trecută ",
+    "Last month" : "Luna trecută ",
+    "Last year" : "Anul trecut",
+    "Actions" : "Acțiuni",
+    "Today" : "Astăzi",
+    "Cancel" : "Anulare"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

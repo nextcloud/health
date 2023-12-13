@@ -3,9 +3,6 @@ OC.L10N.register(
     {
     "Share" : "Deelen",
     "Activities" : "Aktivitéiten",
-    "Actions" : "Aktiounen",
-    "Today" : "Haut",
-    "Cancel" : "Ofbriechen",
     "Activity" : "Aktivitéit",
     "Date" : "Date",
     "Other" : "Aner",
@@ -15,6 +12,9 @@ OC.L10N.register(
     "Name" : "Numm",
     "Delete" : "Läschen",
     "Group" : "Grupp",
-    "Can edit" : "Can edit"
+    "Can edit" : "Can edit",
+    "Actions" : "Aktiounen",
+    "Today" : "Haut",
+    "Cancel" : "Ofbriechen"
 },
 "nplurals=2; plural=(n != 1);");

@@ -3,10 +3,6 @@ OC.L10N.register(
     {
     "Share" : "Deel",
     "Activities" : "Aktiwiteite",
-    "Last 24 hours" : "Afgelope 24 uur",
-    "Actions" : "Aksies",
-    "Today" : "Vandag",
-    "Cancel" : "Kanselleer",
     "Duration" : "Duur",
     "Category" : "Kategorie",
     "Activity" : "Aktiwiteit",
@@ -24,6 +20,10 @@ OC.L10N.register(
     "No participants found" : "Geen deelnemers gevind",
     "Group" : "Groep",
     "Can edit" : "Kan redigeer",
-    "Quality" : "Kwaliteit"
+    "Quality" : "Kwaliteit",
+    "Last 24 hours" : "Afgelope 24 uur",
+    "Actions" : "Aksies",
+    "Today" : "Vandag",
+    "Cancel" : "Kanselleer"
 },
 "nplurals=2; plural=(n != 1);");

@@ -3,10 +3,6 @@ OC.L10N.register(
     {
     "Share" : "Shpërndaje",
     "Activities" : "Aktivitetet",
-    "Last 24 hours" : "24 orët e fundit",
-    "Actions" : "Veprimet",
-    "Today" : "Sot",
-    "Cancel" : "Anullo",
     "Duration" : "Kohëzgjatja",
     "Category" : "Kategori",
     "Activity" : "Aktiviteti",
@@ -24,6 +20,10 @@ OC.L10N.register(
     "Information" : "Informacion",
     "Group" : "Grup",
     "Can edit" : "Can edit",
-    "Strong" : "I fortë"
+    "Strong" : "I fortë",
+    "Last 24 hours" : "24 orët e fundit",
+    "Actions" : "Veprimet",
+    "Today" : "Sot",
+    "Cancel" : "Anullo"
 },
 "nplurals=2; plural=(n != 1);");

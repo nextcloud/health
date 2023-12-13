@@ -4,13 +4,6 @@ OC.L10N.register(
     "Health" : "Santat",
     "Share" : "Partejar",
     "Activities" : "Activitats",
-    "Last week" : "La setmana passada",
-    "Last month" : "Lo mes passat",
-    "Show all" : "O veire tot",
-    "Actions" : "Accions",
-    "Download (CSV)" : "Telecargar (CSV)",
-    "Today" : "Uèi",
-    "Cancel" : "Anullar",
     "Duration" : "Durada",
     "Intensity" : "Intensitat",
     "Distance" : "Distància",
@@ -31,6 +24,13 @@ OC.L10N.register(
     "Delete" : "Suprimir",
     "Information" : "Informacions",
     "Group" : "Grop",
-    "Can edit" : "Pòt modificar"
+    "Can edit" : "Pòt modificar",
+    "Last week" : "La setmana passada",
+    "Last month" : "Lo mes passat",
+    "Show all" : "O veire tot",
+    "Actions" : "Accions",
+    "Download (CSV)" : "Telecargar (CSV)",
+    "Today" : "Uèi",
+    "Cancel" : "Anullar"
 },
 "nplurals=2; plural=(n > 1);");

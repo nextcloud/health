@@ -3,10 +3,6 @@ OC.L10N.register(
     {
     "Share" : "გაზიარება",
     "Activities" : "აქტივობები",
-    "Last 24 hours" : "ბოლო 24 საათი",
-    "Actions" : "მოქმედებები",
-    "Today" : "დღეს",
-    "Cancel" : "უარყოფა",
     "Category" : "კატეგორია",
     "Activity" : "აქტივობა",
     "Date" : "თარიღი",
@@ -23,6 +19,10 @@ OC.L10N.register(
     "Information" : "ინფორმაცია",
     "Group" : "ჯგუფი",
     "Can edit" : "შეუძლია შეცვალოს",
-    "Strong" : "ძლიერია"
+    "Strong" : "ძლიერია",
+    "Last 24 hours" : "ბოლო 24 საათი",
+    "Actions" : "მოქმედებები",
+    "Today" : "დღეს",
+    "Cancel" : "უარყოფა"
 },
 "nplurals=2; plural=(n!=1);");

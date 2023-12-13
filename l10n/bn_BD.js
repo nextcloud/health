@@ -2,9 +2,6 @@ OC.L10N.register(
     "health",
     {
     "Share" : "ভাগাভাগি কর",
-    "Actions" : "পদক্ষেপসমূহ",
-    "Today" : "আজ",
-    "Cancel" : "বাতির",
     "Activity" : "সক্রিয়তা",
     "Date" : "Date",
     "Other" : "অন্যান্য",
@@ -14,6 +11,9 @@ OC.L10N.register(
     "Name" : "নাম",
     "Delete" : "মুছে",
     "Group" : "গোষ্ঠীসমূহ",
-    "Can edit" : "Can edit"
+    "Can edit" : "Can edit",
+    "Actions" : "পদক্ষেপসমূহ",
+    "Today" : "আজ",
+    "Cancel" : "বাতির"
 },
 "nplurals=2; plural=(n != 1);");

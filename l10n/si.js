@@ -2,11 +2,6 @@ OC.L10N.register(
     "health",
     {
     "Share" : "බෙදාගන්න",
-    "Last week" : "පසුගිය සතිය",
-    "Last month" : "පසුගිය මාසය",
-    "Actions" : "ක්‍රියාමාර්ග",
-    "Today" : "අද",
-    "Cancel" : "අවලංගු කරන්න",
     "Duration" : "කාල සීමාව",
     "Category" : "ප්‍රවර්ගය",
     "Activity" : "ක්‍රියාකාරකම",
@@ -19,6 +14,11 @@ OC.L10N.register(
     "Name" : "නම",
     "Edit name" : "නම සංස්කරණය",
     "Information" : "තොරතුරු",
-    "Group" : "සමූහය"
+    "Group" : "සමූහය",
+    "Last week" : "පසුගිය සතිය",
+    "Last month" : "පසුගිය මාසය",
+    "Actions" : "ක්‍රියාමාර්ග",
+    "Today" : "අද",
+    "Cancel" : "අවලංගු කරන්න"
 },
 "nplurals=2; plural=(n != 1);");
