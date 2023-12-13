@@ -2,9 +2,9 @@
 	"name": "health",
 	"description": "Nextcloud health app",
 	"version": "1.6.3",
-	"author": "Florian Steffens <flost-dev@mailbox.org>",
+	"author": "Florian Steffens <dev@d10t.de>",
 	"contributors": [
-		"Florian Steffens <flost-dev@mailbox.org>"
+		"Florian Steffens <dev@d10t.de>"
 	],
 	"keywords": [
 		"nextcloud",
@@ -12,13 +12,13 @@
 		"app"
 	],
 	"bugs": {
-		"url": "https://github.com/datenangebot/health/issues"
+		"url": "https://github.com/nextcloud/health/issues/new?assignees=&labels=bug%2C0.+Needs+triage&projects=&template=bug-report.yml"
 	},
 	"repository": {
-		"url": "https://github.com/datenangebot/health",
+		"url": "https://github.com/nextcloud/health",
 		"type": "git"
 	},
-	"homepage": "https://github.com/datenangebot/health",
+	"homepage": "https://github.com/nextcloud/health",
 	"license": "agpl",
 	"private": true,
 	"scripts": {

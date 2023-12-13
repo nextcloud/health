@@ -16,12 +16,17 @@
 Health is everything.]]></description>
     <version>1.6.3</version>
     <licence>agpl</licence>
-    <author mail="flost-dev@mailbox.org" >Florian Steffens</author>
-    <namespace>Health</namespace>
+    <author mail="dev@d10t.de" >Florian Steffens</author>
+	<namespace>Health</namespace>
+	<documentation>
+		<user>https://github.com/nextcloud/health/wiki</user>
+		<admin>https://github.com/nextcloud/health/wiki/API</admin>
+	</documentation>
 	<category>tools</category>
 	<category>organization</category>
-	<website>https://github.com/datenangebot/health</website>
-    <bugs>https://github.com/datenangebot/health/issues</bugs>
+	<website>https://github.com/nextcloud/health</website>
+    <bugs>https://github.com/nextcloud/health/issues/new</bugs>
+	<repository type="git">https://github.com/nextcloud/health.git</repository>
 	<screenshot small-thumbnail="https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-preview.png">https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-start.png</screenshot>
 	<screenshot>https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-person-start.png</screenshot>
 	<screenshot>https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-weight.png</screenshot>
