@@ -22,9 +22,9 @@ Health is everything.]]></description>
 	<category>organization</category>
 	<website>https://github.com/datenangebot/health</website>
     <bugs>https://github.com/datenangebot/health/issues</bugs>
-	<screenshot small-thumbnail="https://dl.datenangebot.de/nc%20health/screenshots/v1.2.x/preview.png">https://dl.datenangebot.de/nc%20health/screenshots/v1.2.x/person%20startpage.png</screenshot>
-	<screenshot>https://dl.datenangebot.de/nc%20health/screenshots/v1.2.x/weight%20chart%20and%20data.png</screenshot>
-	<screenshot>https://dl.datenangebot.de/nc%20health/screenshots/v1.2.x/weight%20overview.png</screenshot>
+	<screenshot small-thumbnail="https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-preview.png">https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-start.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-person-start.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-weight.png</screenshot>
 	<dependencies>
         <nextcloud min-version="25" max-version="29"/>
     </dependencies>
