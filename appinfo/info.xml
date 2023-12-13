@@ -14,7 +14,7 @@
 - Medication
 
 Health is everything.]]></description>
-    <version>1.6.3</version>
+    <version>1.6.4</version>
     <licence>agpl</licence>
     <author mail="dev@d10t.de" >Florian Steffens</author>
 	<namespace>Health</namespace>
@@ -31,7 +31,7 @@ Health is everything.]]></description>
 	<screenshot>https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-person-start.png</screenshot>
 	<screenshot>https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-weight.png</screenshot>
 	<dependencies>
-        <nextcloud min-version="25" max-version="29"/>
+        <nextcloud min-version="24" max-version="29"/>
     </dependencies>
     <navigations>
         <navigation>

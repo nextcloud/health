@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 1.6.4 - 2023-12-13
+### Updated
+- Fix app store releases
+- Make Nextcloud 24 compatible
+
 ## 1.6.3 - 2023-12-13
 ### Updated
 - Startpage
