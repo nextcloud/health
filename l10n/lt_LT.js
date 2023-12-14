@@ -23,6 +23,7 @@ OC.L10N.register(
     "General settings" : "Bendri nustatymai",
     "Name" : "Vardas, pavardė",
     "Identifier" : "Identifikatorius",
+    "save" : "įrašyti",
     "Save " : "Įrašyti",
     "Edit name" : "Taisyti pavadinimą",
     "Show details" : "Rodyti išsamiau",

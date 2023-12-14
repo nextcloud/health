@@ -32,6 +32,7 @@ OC.L10N.register(
     "General settings" : "Allmänna inställningar",
     "Name" : "Namn",
     "Identifier" : "Identifierare",
+    "save" : "spara",
     "Edit name" : "Ändra namn",
     "Show details" : "Visa detaljer",
     "Delete" : "Radera",

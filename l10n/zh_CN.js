@@ -132,6 +132,7 @@ OC.L10N.register(
     "Give some comment, if you want..." : "如果你愿意，请发表一些评论…",
     "Name" : "名字",
     "Identifier" : "标识符",
+    "save" : "保存",
     "Save " : "保存",
     "Edit name" : "编辑名字",
     "Show details" : "显示详情",

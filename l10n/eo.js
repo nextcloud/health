@@ -14,6 +14,7 @@ OC.L10N.register(
     "None" : "Nenio",
     "Temperature" : "Temperaturo",
     "Name" : "Nomo",
+    "save" : "konservi",
     "Show details" : "Montri la detalojn",
     "Delete" : "Forigi",
     "Group" : "Grupo",

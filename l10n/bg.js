@@ -141,6 +141,7 @@ OC.L10N.register(
     "Noon" : "Обед",
     "Evening" : "Вечер",
     "Night" : "Нощ",
+    "save" : "запиши",
     "Save " : "Запиши",
     "You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …" : "Можете да започнете тук, като си зададете лична мисия. Може би имате специална цел, медицинско изискване или облог с вашите приятели или партньор. Може да ви помогне да го опишете тук. Да си дадете награда, ако постигнете целите или да помислите за план за спешни случаи ако нещата започнат да се влошават, също е добра идея...",
     "Edit name" : "Редактиране на името",

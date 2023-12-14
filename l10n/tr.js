@@ -141,6 +141,7 @@ OC.L10N.register(
     "Noon" : "Öğle",
     "Evening" : "Akşam",
     "Night" : "Gece",
+    "save" : "kaydet",
     "Save " : "Kaydet",
     "You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …" : "Başlamak için buradan kendinize kişisel bir görev atayabilirsiniz. Özel bir hedefiniz, tıbbi bir durumunuz veya arkadaşlarınız ya da eşinizle bir iddianız olabilir ve burada belirtebilirsiniz. Hedeflere ulaştığınızda kendinizi ödüllendirin veya işler kötüye giderse bir acil durum planı yapın...",
     "Edit name" : "Adı düzenle",

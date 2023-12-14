@@ -141,6 +141,7 @@ OC.L10N.register(
     "Noon" : "Middagstid",
     "Evening" : "Kveld",
     "Night" : "Natt",
+    "save" : "lagre",
     "Save " : "Lagre ",
     "You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …" : "Du kan starte her med å gi deg selv et personlig oppdrag. Kanskje du har et spesielt mål, en medisinsk spesifikasjon eller et veddemål med vennene dine eller partneren. Det kan hjelpe deg å beskrive det her. Å gi deg selv en dusør hvis du når målene eller tenker på en nødplan, hvis ting blir verre, er også en god idé ...",
     "Edit name" : "Rediger navn",

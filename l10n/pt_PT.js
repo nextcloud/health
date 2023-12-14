@@ -127,6 +127,7 @@ OC.L10N.register(
     "measurement dataset" : "Conjunto de dados de medição",
     "Give some comment, if you want..." : "Se quiser faça comentários...",
     "Name" : "Nome",
+    "save" : "guardar",
     "Save " : "Guardar",
     "Edit name" : "Editar nome",
     "Show details" : "Mostrar detalhes",

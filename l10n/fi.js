@@ -127,6 +127,7 @@ OC.L10N.register(
     "Give some comment, if you want..." : "Lisää halutessasi kommentti ...",
     "Name" : "Nimi",
     "Identifier" : "Tunniste",
+    "save" : "tallenna",
     "Save " : "Tallenna",
     "Edit name" : "Muokkaa nimeä",
     "Show details" : "Näytä lisätiedot",

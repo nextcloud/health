@@ -131,6 +131,7 @@ OC.L10N.register(
     "Give some comment, if you want..." : "Ostavite komentar, ako želite...",
     "Name" : "Naziv",
     "Identifier" : "Identifikator",
+    "save" : "spremi",
     "Save " : "Spremi ",
     "Edit name" : "Uredi naziv",
     "Show details" : "Prikaži pojedinosti",

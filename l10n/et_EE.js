@@ -17,6 +17,7 @@ OC.L10N.register(
     "None" : "Pole",
     "Temperature" : "Temperatuur",
     "Name" : "Nimi",
+    "save" : "salvesta",
     "Edit name" : "Muuda nime",
     "Show details" : "Näita detaile",
     "Delete" : "Kustuta",

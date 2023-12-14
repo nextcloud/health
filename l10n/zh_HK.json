@@ -1,5 +1,8 @@
 { "translations": {
     "Health" : "健康中心",
+    "Track your health privately." : "私密地追蹤您的健康狀況。",
+    "Track your health data within the following provided modules:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "在以下提供的模組中追蹤您的健康數據：\n- 體重\n- 情緒感受\n- 測量數據\n- 睡眠\n- 吸煙情況\n- 活動\n- 藥物用量\n\n健康是一切。",
+    "Show sidebar" : "顯示側邊欄",
     "Created at {creationTime}" : "創建日期 {creationTime}",
     "Person" : "個人",
     "Share" : "分享",
@@ -139,6 +142,8 @@
     "Noon" : "中午",
     "Evening" : "黃昏",
     "Night" : "晚上",
+    "Welcome {name} to your health center" : "歡迎 {name} 來到您的健康中心",
+    "save" : "保存",
     "Save " : "保存",
     "You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …" : "你可以從給自己一個個人任務開始。也許你有一個特殊的目標，一個醫學規範，或者和你的朋友打賭。在這裡描述一下會對你有幫助。如果你達到了目標，就給自己一筆獎勵吧！",
     "Edit name" : "編輯名稱",

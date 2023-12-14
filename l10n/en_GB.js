@@ -2,6 +2,9 @@ OC.L10N.register(
     "health",
     {
     "Health" : "Health",
+    "Track your health privately." : "Track your health privately.",
+    "Track your health data within the following provided modules:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "Track your health data within the following provided modules:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything.",
+    "Show sidebar" : "Show sidebar",
     "Created at {creationTime}" : "Created at {creationTime}",
     "Person" : "Person",
     "Share" : "Share",
@@ -141,6 +144,8 @@ OC.L10N.register(
     "Noon" : "Noon",
     "Evening" : "Evening",
     "Night" : "Night",
+    "Welcome {name} to your health center" : "Welcome {name} to your health center",
+    "save" : "save",
     "Save " : "Save ",
     "You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …" : "You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …",
     "Edit name" : "Edit name",

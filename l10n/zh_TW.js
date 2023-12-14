@@ -27,6 +27,7 @@ OC.L10N.register(
     "Values" : "值",
     "General settings" : "一般設定",
     "Name" : "名稱",
+    "save" : "儲存",
     "Edit name" : "編輯名稱",
     "Show details" : "顯示細節",
     "Delete" : "刪除",

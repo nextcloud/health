@@ -55,6 +55,7 @@ OC.L10N.register(
     "Allergies" : "アレルギー",
     "General settings" : "一般設定",
     "Name" : "名前",
+    "save" : "保存",
     "Save " : "保存",
     "Edit name" : "名前を変更",
     "Show details" : "詳細を見る",

@@ -131,6 +131,7 @@ OC.L10N.register(
     "Give some comment, if you want..." : "אפשר להוסיף תיאור במידת הצורך…",
     "Name" : "שם",
     "Identifier" : "מזהה",
+    "save" : "שמירה",
     "Save " : "שמירה",
     "Edit name" : "עריכת שם",
     "Show details" : "הצגת פרטים",

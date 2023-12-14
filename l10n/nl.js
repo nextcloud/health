@@ -132,6 +132,7 @@ OC.L10N.register(
     "Give some comment, if you want..." : "Reageer als je wilt...",
     "Name" : "Naam",
     "Identifier" : "Identificator",
+    "save" : "opslaan",
     "Save " : "Bewaren",
     "Edit name" : "Bewerk naam",
     "Show details" : "Tonen details",

@@ -136,6 +136,7 @@ OC.L10N.register(
     "Noon" : "Полдень",
     "Evening" : "Вечер",
     "Night" : "Ночь",
+    "save" : "сохранить",
     "Save " : "Сохранить",
     "Edit name" : "Изменить имя",
     "Show details" : "Подробные сведения",

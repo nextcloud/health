@@ -26,6 +26,7 @@ OC.L10N.register(
     "Temperature" : "Температура",
     "General settings" : "Загальні",
     "Name" : "Ім'я",
+    "save" : "зберегти",
     "Edit name" : "Редагувати назву",
     "Show details" : "Показати деталі",
     "Delete" : "Вилучити",

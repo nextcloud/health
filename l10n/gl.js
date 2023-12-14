@@ -141,6 +141,7 @@ OC.L10N.register(
     "Noon" : "Mediodía",
     "Evening" : "Tarde",
     "Night" : "Noite",
+    "save" : "gardar",
     "Save " : "Gardar",
     "You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …" : "Pode comezar aquí propoñéndose unha misión persoal. Quizais teña un obxectivo especial, unha especificación médica ou unha aposta cos seus amigos ou parella. Poderíalle axudar describilo aquí. Darse unha recompensa se acada os obxectivos ou pensar nun plan de emerxencia, se as cousas empeoran tamén é unha boa idea…",
     "Edit name" : "Editar o nome",

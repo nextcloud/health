@@ -2,6 +2,9 @@ OC.L10N.register(
     "health",
     {
     "Health" : "الصحة Health",
+    "Track your health privately." : "راقب صحتك بخصوصية.",
+    "Track your health data within the following provided modules:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "تتبع بياناتك الصحية من النواحي التالية: \n- الوزن \n- الشعور \n- الأبعاد \n- النوم \n- التدخين \n- النشاط \n- الدواء \n\nالصحة هي كل شيء.",
+    "Show sidebar" : "أظهِر الشريط الجانبي",
     "Created at {creationTime}" : "تمّ إنشاؤه في {createTime}",
     "Person" : "شخص",
     "Share" : "مشاركة",
@@ -141,6 +144,8 @@ OC.L10N.register(
     "Noon" : "ظُهراً",
     "Evening" : "مساءً",
     "Night" : "ليلاً",
+    "Welcome {name} to your health center" : "أهلا بك يا {name} في مركزك الصحي",
+    "save" : "حفظ",
     "Save " : "حفظ",
     "You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …" : "يمكنك أن تبدأ هنا بإعطائك مهمة شخصية. ربما لديك هدف خاص أو مواصفات طبية أو رهان مع أصدقائك أو شريكك. يمكن أن يساعدك على وصفه هنا. منح نفسك مكافأة إذا وصلت إلى الأهداف أو فكرت في خطة طوارئ. و مهما ساءت الأمور سيبقى تتبُّع صحتك فكرة صائبة ...",
     "Edit name" : "تعديل الاسم",

@@ -25,6 +25,7 @@ OC.L10N.register(
     "Temperature" : "Temperatur",
     "General settings" : "Generelle indstillinger",
     "Name" : "Navn",
+    "save" : "Gem",
     "Edit name" : "Rediger navn",
     "Show details" : "Vis detaljer",
     "Delete" : "Slet",

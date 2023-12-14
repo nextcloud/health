@@ -29,6 +29,7 @@ OC.L10N.register(
     "General settings" : "Almennar stillingar",
     "Name" : "Heiti",
     "Identifier" : "Auðkenni",
+    "save" : "vista",
     "Edit name" : "Breyta heiti",
     "Show details" : "Birta nánari upplýsingar",
     "Delete" : "Eyða",
