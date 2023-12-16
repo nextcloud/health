@@ -2,6 +2,9 @@ OC.L10N.register(
     "health",
     {
     "Health" : "Saúde",
+    "Track your health privately." : "Acompanhe sua saúde de forma privada.",
+    "Track your health data within the following provided modules:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "Rastreie seus dados de saúde nos seguintes módulos fornecidos: \n- Peso \n- Sentimento \n Medição \n- Sono \n- Fumar \n- Atividades \n- Medicação \n\nSaúde é tudo.",
+    "Show sidebar" : "Mostrar barra lateral",
     "Created at {creationTime}" : "Criado em {creationTime}",
     "Person" : "Pessoa ",
     "Share" : "Compartilhar",
@@ -141,6 +144,7 @@ OC.L10N.register(
     "Noon" : "Meio-Dia",
     "Evening" : "Tarde",
     "Night" : "Noite",
+    "Welcome {name} to your health center" : "Bem-vindo {name} ao seu centro de saúde",
     "save" : "salvar",
     "Save " : "Salvar",
     "You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …" : "Você pode começar aqui dando a si mesmo uma missão pessoal. Talvez você tenha um alvo especial, uma especificação médica ou uma aposta com seus amigos ou parceiro. Poderia ajudá-lo a descrevê-lo aqui. Dar a si mesmo uma recompensa se atingir as metas ou pensar em um plano de emergência, se as coisas piorarem também é uma boa ideia…",
