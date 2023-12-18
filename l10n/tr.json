@@ -1,5 +1,8 @@
 { "translations": {
     "Health" : "Sağlık",
+    "Track your health privately." : "Sağlığınızı gizliliğinizi koruyarak izleyin",
+    "Track your health data within the following provided modules:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "Sağlık verilerinizi şu modüllerle izleyebilirsiniz:\n- Kilo\n- His\n- Ölçüm\n- Uyumak\n- Sigara sayısı\n- Etkinlikler\n- İlaç tedavisi\n\nSağlık her şeydir.",
+    "Show sidebar" : "Yan çubuğu görüntüle",
     "Created at {creationTime}" : "{creationTime} zamanında oluşturuldu",
     "Person" : "Kişi",
     "Share" : "Paylaş",
@@ -139,6 +142,7 @@
     "Noon" : "Öğle",
     "Evening" : "Akşam",
     "Night" : "Gece",
+    "Welcome {name} to your health center" : "Merhaba {name} sağlık merkezinize hoş geldiniz",
     "save" : "kaydet",
     "Save " : "Kaydet",
     "You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …" : "Başlamak için buradan kendinize kişisel bir görev atayabilirsiniz. Özel bir hedefiniz, tıbbi bir durumunuz veya arkadaşlarınız ya da eşinizle bir iddianız olabilir ve burada belirtebilirsiniz. Hedeflere ulaştığınızda kendinizi ödüllendirin veya işler kötüye giderse bir acil durum planı yapın...",
