@@ -244,7 +244,7 @@ OC.L10N.register(
     "If you want, you can set your initial weight and a target for your weight. Do this in the settings in the sidebar. You will see right here how much you added or lost and what is left. Maybe you can be motivated this way." : "If you want, you can set your initial weight and a target for your weight. Do this in the settings in the sidebar. You will see right here how much you added or lost and what is left. Maybe you can be motivated this way.",
     "Last week" : "هفته گذشته",
     "Last month" : "ماه گذشته",
-    "Last year" : "Last year",
+    "Last year" : "پارسال",
     "Show all" : "نمایش همه",
     "Last hour" : "Last hour",
     "Last 4 hours" : "Last 4 hours",
