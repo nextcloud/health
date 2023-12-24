@@ -12,6 +12,7 @@ OC.L10N.register(
     "Bad" : "Buruk",
     "Comment" : "Komentar",
     "None" : "Tidak ada",
+    "Normal" : "Normal",
     "Temperature" : "Suhu",
     "Values" : "Nilai",
     "Name" : "Nama",

@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Share" : "แชร์",
     "Activities" : "กิจกรรม",
+    "Data" : "ข้อมูล",
     "Category" : "หมวดหมู่",
     "Activity" : "กิจกรรม",
     "Date" : "วันที่",
