@@ -10,6 +10,7 @@ OC.L10N.register(
     "Other" : "Lainnya",
     "Good" : "Bagus",
     "Bad" : "Buruk",
+    "Medium" : "Sedang",
     "Comment" : "Komentar",
     "None" : "Tidak ada",
     "Normal" : "Normal",
