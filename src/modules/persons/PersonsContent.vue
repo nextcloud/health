@@ -21,26 +21,29 @@
 	-->
 
 <template>
-	<div>
+	<div class="inner-content">
 		<div class="row first-row">
 			<div class="col-4">
 				<h2>{{ t('health', 'Welcome {name} to your health center', {name: person.name}) }}</h2>
 			</div>
-			<div class="col-2">
-				<textarea ref="mission"
-					class="textarea-mission"
-					:value="person.personalMission"
-					:readonly="!canEdit"
-				/>
+		</div>
+		<div class="row">
+			<div class="col-4">
+				<p>
+					{{ t('health', 'You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …') }}
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-4">
+				<h3>{{ t('health', 'Mission') }}</h3>
+				<TextEditor :text.sync="person.personalMission" />
 				<button v-if="canEdit"
 					:aria-label="t('health', 'save')"
 					@click="updateMission"
 				>
 					{{ t('health', 'Save ') }}
 				</button>
-			</div>
-			<div class="col-2">
-				<p>{{ t('health', 'You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …') }}</p>
 			</div>
 		</div>
 	</div>
@@ -49,26 +52,52 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import moment from '@nextcloud/moment'
+import TextEditor from '../../shared/TextEditor'
 
 export default {
+
 	name: 'PersonsContent',
+
+	components: {
+		TextEditor,
+	},
+
 	filters: {
 		formatMyDate(v) {
 			return moment(v).format('DD.MM.YYYY')
 		},
 	},
+
 	computed: {
 		...mapState([]),
 		...mapGetters(['person', 'canEdit']),
 	},
+
 	methods: {
 		updateMission() {
-			this.$store.dispatch('setValue', { key: 'personalMission', value: this.$refs.mission.value })
+			this.$store.dispatch('setValue', { key: 'personalMission', value: this.person.personalMission })
 		},
 	},
 }
 </script>
 <style lang="scss" scoped>
+
+	.inner-content {
+		width: 50%;
+		max-width: 900px;
+		min-width: 600px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	@media only screen and (max-width: 1025px) {
+		.inner-content {
+			width: 100%;
+			min-width: auto;
+			max-width: none;
+		}
+	}
+
 	.textarea-mission {
 		// width: 67%;
 		min-height: 200px;

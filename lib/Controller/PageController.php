@@ -25,18 +25,20 @@ declare(strict_types=1);
 
 namespace OCA\Health\Controller;
 
+use OCA\Text\Event\LoadEditor;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IRequest;
 use OCP\Util;
 
 class PageController extends Controller {
 
-	protected $cesService;
+	private IEventDispatcher $eventDispatcher;
 
-	public function __construct($appName, IRequest $request) {
+	public function __construct($appName, IRequest $request, IEventDispatcher $eventDispatcher) {
 		parent::__construct($appName, $request);
-		// $this->cesService = $cesService;
+		$this->eventDispatcher = $eventDispatcher;
 	}
 
 	/**
@@ -44,12 +46,11 @@ class PageController extends Controller {
 	 * @NoCSRFRequired
 	 */
 	public function index(): TemplateResponse {
-		// $this->cesService->transformDatasets();
-		// Util::addScript($this->appName, 'vue-chartjs.min');
 		Util::addScript($this->appName, 'health-main');
-		// Util::addScript($this->appName, 'health');
-		//Util::addStyle($this->appName, 'icons');
-		//Util::addStyle($this->appName, 'bulma.min');
+
+		if (class_exists(LoadEditor::class)) {
+			$this->eventDispatcher->dispatchTyped(new LoadEditor());
+		}
 
 		$response = new TemplateResponse($this->appName, 'main');
 		return $response;
