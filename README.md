@@ -29,7 +29,7 @@ The app can be installed through the app store within Nextcloud. You can also do
 
 ## Developing
 
-There are multiple ways to develop on Deck. As you will need a Nextcloud server running, the individual options are described below.
+You will need a Nextcloud server running, the individual options are described below.
 
 ### General build instructions
 
