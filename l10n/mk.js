@@ -31,6 +31,7 @@ OC.L10N.register(
     "Quality" : "Квалитет",
     "Last week" : "Минатата недела",
     "Last month" : "Минатиот месец",
+    "Last year" : "Предходна година",
     "Show all" : "Прикажи ги сите",
     "Last 24 hours" : "Последниве 24 часа",
     "Actions" : "Акции",

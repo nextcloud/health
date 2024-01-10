@@ -1,5 +1,8 @@
 { "translations": {
     "Health" : "Health",
+    "Track your health privately." : "Haga seguimiento a su salud de forma privada.",
+    "Track your health data within the following provided modules:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "Haga seguimiento a sus datos de salud dentro de los siguientes módulos proporcionados:\n- Peso\n- Sensación\n- Medidas\n- Sueño\n- Fumar\n- Actividades\n- Medicación\n\nLa salud lo es todo.",
+    "Show sidebar" : "Mostrar barra lateral",
     "Created at {creationTime}" : "Creado el {creationTime}",
     "Person" : "Persona",
     "Share" : "Compartir",
@@ -139,6 +142,7 @@
     "Noon" : "Mediodía",
     "Evening" : "Tarde",
     "Night" : "Noche",
+    "Welcome {name} to your health center" : "Bienvenido {name} a tu centro de salud",
     "save" : "guardar",
     "Save " : "Guardar",
     "You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …" : "Puedes empezar por darte un objetivo personal. Quizá tengas un objetivo especial, una especificación médica o una apuesta con tus amigos o tu pareja. Podría ayudarte describirlo aquí. Darte una recompensa si alcanzas los objetivos o pensar en un plan de emergencia, si las cosas se hacen valer también es una buena idea …",
