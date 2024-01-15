@@ -1,5 +1,5 @@
 <!--
-	- @copyright Copyright (c) 2019 Florian Steffens <flost-dev@mailbox.org>
+	- @copyright Copyright (c) 2019 Florian Steffens <dev@d10t.de>
 	-
 	- @author Florian Steffens
 	-
@@ -19,28 +19,24 @@
 	- along with this program. If not, see <http://www.gnu.org/licenses/>.
 	-
 	-->
-
 <template>
-	<div>
+	<div class="inner-content">
 		<div class="row first-row">
 			<div class="col-4">
 				<h2>{{ t('health', 'Welcome {name} to your health center', {name: person.name}) }}</h2>
 			</div>
-			<div class="col-2">
-				<textarea ref="mission"
-					class="textarea-mission"
-					:value="person.personalMission"
-					:readonly="!canEdit"
-				/>
-				<button v-if="canEdit"
-					:aria-label="t('health', 'save')"
-					@click="updateMission"
-				>
-					{{ t('health', 'Save ') }}
-				</button>
+		</div>
+		<div class="row">
+			<div class="col-4">
+				<p>
+					{{ t('health', 'You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …') }}
+				</p>
 			</div>
-			<div class="col-2">
-				<p>{{ t('health', 'You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …') }}</p>
+		</div>
+		<div class="row">
+			<div class="col-4">
+				<h3>{{ t('health', 'Mission') }}</h3>
+				<TextEditor :text.sync="motivation" height="small" />
 			</div>
 		</div>
 	</div>
@@ -49,26 +45,69 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import moment from '@nextcloud/moment'
+import TextEditor from '../../shared/TextEditor'
+import debounce from 'debounce'
 
 export default {
-	name: 'PersonsContent',
+
+	components: {
+		TextEditor,
+	},
+
 	filters: {
 		formatMyDate(v) {
 			return moment(v).format('DD.MM.YYYY')
 		},
 	},
+
+	data() {
+		return {
+			motivation: null,
+		}
+	},
+
 	computed: {
 		...mapState([]),
 		...mapGetters(['person', 'canEdit']),
 	},
-	methods: {
-		updateMission() {
-			this.$store.dispatch('setValue', { key: 'personalMission', value: this.$refs.mission.value })
+
+	watch: {
+		motivation() {
+			this.debounceUpdateMotivation()
 		},
+	},
+
+	beforeMount() {
+		this.motivation = this.person.personalMission
+	},
+
+	methods: {
+		debounceUpdateMotivation: debounce(function() {
+			if (this.motivation !== this.person.personalMission) {
+				this.$store.dispatch('setValue', { key: 'personalMission', value: this.motivation })
+			}
+		}, 1000),
 	},
 }
 </script>
 <style lang="scss" scoped>
+
+	.inner-content {
+		width: 50%;
+		max-width: 900px;
+		min-width: 600px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	@media only screen and (max-width: 1025px) {
+		.inner-content {
+			width: 100%;
+			min-width: auto;
+			max-width: none;
+		}
+	}
+
 	.textarea-mission {
 		// width: 67%;
 		min-height: 200px;

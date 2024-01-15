@@ -112,7 +112,7 @@ export default new Vuex.Store({
 		updateAclFromCurrentPerson(state, acl) {
 			const currentPerson = this.state.persons[this.state.activePersonId]
 			const aclIndex = currentPerson.acl.findIndex((entry) => acl.id === entry.id)
-			Vue.set(this.state.persons[this.state.activePersonId].acl, aclIndex, acl)
+			state.persons[this.state.activePersonId].acl[aclIndex] = acl
 		},
 		deleteAclFromCurrentPerson(state, acl) {
 			const currentPerson = this.state.persons[this.state.activePersonId]
@@ -312,7 +312,7 @@ export default new Vuex.Store({
 		},
 		// ----------------
 		setSharees(state, shareesUsersAndGroups) {
-			Vue.set(state, 'sharees', shareesUsersAndGroups.exact.users)
+			state.sharees = shareesUsersAndGroups.exact.users
 			state.sharees.push(...shareesUsersAndGroups.exact.groups)
 			state.sharees.push(...shareesUsersAndGroups.users)
 			state.sharees.push(...shareesUsersAndGroups.groups)
