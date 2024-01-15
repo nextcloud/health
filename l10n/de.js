@@ -211,7 +211,7 @@ OC.L10N.register(
     "Sizes" : "Größen",
     "Body mass index" : "Body-Mass-Index",
     "Body mass index (BMI)" : "Body-Mass-Index (BMI)",
-    "To calculate your BMI, please set your weight in the table below and your age and height in the person settings." : "Um deinen BMI zu berechnen, gebe bitte dein Gewicht in der Tabelle unten und dein Alter und Größe in den Personeneinstellungen ein.",
+    "To calculate your BMI, please set your weight in the table below and your age and height in the person settings." : "Um deinen BMI zu berechnen, gib bitte dein Gewicht in der Tabelle unten und dein Alter und Größe in den Personeneinstellungen ein.",
     "minimum" : "Minimum",
     "actual" : "tatsächlich",
     "maximum" : "Maximum",
