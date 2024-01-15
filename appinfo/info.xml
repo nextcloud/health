@@ -4,17 +4,12 @@
     <id>health</id>
     <name>Health</name>
     <summary>Track your health privately.</summary>
-    <description><![CDATA[Track your health data within the following provided modules:
-- Weight
-- Feeling
-- Measurement
-- Sleep
-- Smoking
-- Activities
-- Medication
+    <description><![CDATA[
 
-Health is everything.]]></description>
-    <version>2.2.2</version>
+Health is everything.
+
+]]></description>
+    <version>3.0.0-dev</version>
     <licence>agpl</licence>
     <author mail="dev@d10t.de" >Florian Steffens</author>
 	<namespace>Health</namespace>
@@ -27,11 +22,8 @@ Health is everything.]]></description>
 	<website>https://github.com/nextcloud/health</website>
     <bugs>https://github.com/nextcloud/health/issues/new</bugs>
 	<repository type="git">https://github.com/nextcloud/health.git</repository>
-	<screenshot small-thumbnail="https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-preview.png">https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-start.png</screenshot>
-	<screenshot>https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-person-start.png</screenshot>
-	<screenshot>https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-weight.png</screenshot>
 	<dependencies>
-        <nextcloud min-version="24" max-version="29"/>
+        <nextcloud min-version="25" max-version="29"/>
     </dependencies>
     <navigations>
         <navigation>

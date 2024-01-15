@@ -29,7 +29,7 @@ npm-upgrade:
 npm-update:
 	npm update
 
-
+ci:	lint-fix lint test
 
 ##### Building #####
 
@@ -112,12 +112,19 @@ watch-js:
 
 
 ##### Testing #####
-test: test-api
+test: test-cypress
 
 test-api:
 	phpunit --bootstrap vendor/autoload.php --testdox tests/api/
 
+test-unit:
+	composer test
 
+test-cypress:
+	./node_modules/.bin/cypress run
+
+test-behat:
+	cd ./tests/integration && ./run.sh && cd ../..
 
 ##### Linting #####
 

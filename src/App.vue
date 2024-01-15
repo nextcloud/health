@@ -1,73 +1,19 @@
 <template>
-	<NcContent :class="{'icon-loading': initialLoading}" app-name="health">
-		<PersonsNavigation />
+	<NcContent app-name="health">
 		<NcAppContent>
-			<div class="content-menu-top-right">
-				<NcActions v-if="canManage" :title="'Details'">
-					<NcActionButton :aria-label="t('health', 'Show sidebar')" icon="icon-menu-sidebar" @click="$store.commit('showSidebar', !showSidebar)" />
-				</NcActions>
-			</div>
-			<PersonsContent v-if="person && activeModule === 'person'" />
-			<WeightContent v-else-if="person && activeModule === 'weight' && person.enabledModuleWeight" />
-			<FeelingContent v-else-if="person && activeModule === 'feeling' && person.enabledModuleFeeling" />
-			<MeasurementContent v-else-if="person && activeModule === 'measurement' && person.enabledModuleMeasurement" />
-			<SleepContent v-else-if="person && activeModule === 'sleep' && person.enabledModuleSleep" />
-			<SmokingContent v-else-if="person && activeModule === 'smoking' && person.enabledModuleSmoking" />
-			<ActivitiesContent v-else-if="person && activeModule === 'activities' && person.enabledModuleActivities" />
-			<MedicationContent v-else-if="person && activeModule === 'medicine' && person.enabledModuleMedicine" />
-			<Startpage v-else />
+			<h2>Health</h2>
 		</NcAppContent>
-		<Sidebar :loading="loading" />
 	</NcContent>
 </template>
 
 <script>
-import { NcContent, NcAppContent, NcActionButton, NcActions } from '@nextcloud/vue'
-import PersonsNavigation from './modules/persons/PersonsNavigation'
-import WeightContent from './modules/weight/WeightContent'
-import FeelingContent from './modules/feeling/FeelingContent'
-import { mapState, mapGetters } from 'vuex'
-import PersonsContent from './modules/persons/PersonsContent'
-import SleepContent from './modules/sleep/SleepContent'
-import MeasurementContent from './modules/measurement/MeasurementContent'
-import SmokingContent from './modules/smoking/SmokingContent'
-import ActivitiesContent from './modules/activities/ActivitiesContent'
-import MedicationContent from './modules/medication/MedicationContent'
-import Sidebar from './Sidebar.vue'
-import Startpage from './Startpage.vue'
+import { NcContent, NcAppContent } from '@nextcloud/vue'
 
 export default {
-	name: 'App',
+
 	components: {
-		Startpage,
-		Sidebar,
-		MeasurementContent,
-		SleepContent,
 		NcContent,
 		NcAppContent,
-		NcActionButton,
-		NcActions,
-		PersonsNavigation,
-		WeightContent,
-		FeelingContent,
-		PersonsContent,
-		SmokingContent,
-		ActivitiesContent,
-		MedicationContent,
-	},
-	data() {
-		return {
-			loading: true,
-		}
-	},
-	computed: {
-		...mapState(['activePersonId', 'activeModule', 'showSidebar', 'persons', 'initialLoading']),
-		...mapGetters(['person', 'canManage']),
-	},
-	async beforeMount() {
-		this.loading = true
-		await this.$store.dispatch('loadPersons')
-		this.loading = false
 	},
 }
 </script>
@@ -85,7 +31,6 @@ export default {
 	}
 
 	.row {
-		// background-color: blueviolet;
 		width: 100%;
 	}
 
@@ -104,12 +49,6 @@ export default {
 	[class*='col-'] {
 		float: left;
 		padding: 15px 15px 0;
-		// border: 1px solid red;
-		// background-color: aqua;
-	}
-
-	[class*='col-']:first-child {
-		// padding-left: 0;
 	}
 
 	.floatReverse [class*='col-'] {
@@ -146,52 +85,6 @@ export default {
 
 	.content-wrapper {
 		padding: 35px 10px 10px 10px;
-	}
-
-	.detailsMainInfo {
-		padding: 10px;
-	}
-
-	.content-menu-top-right {
-		position: fixed;
-		right: 20px;
-		z-index: 1001;
-	}
-
-	h2 {
-		font-size: x-large;
-	}
-
-	h3 {
-		font-size: 20px;
-		margin-top: 40px;
-	}
-
-	h4 {
-		font-size: large;
-		font-weight: 300;
-		margin-bottom: 20px;
-		margin-top: 10px;
-	}
-
-	.h3-icon {
-		background-position: left;
-		padding-left: 20px;
-		opacity: 0.4;
-	}
-
-	.content-wrapper h3:first-child {
-		margin-top: 2px;
-	}
-
-	.content-wrapper span {
-		opacity: .7;
-		font-size: 0.8em;
-		margin-left: 5px;
-	}
-
-	.app-sidebar-tabs h3 {
-		border-bottom: 1px solid #80808057;
 	}
 
 	.green {

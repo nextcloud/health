@@ -25,20 +25,15 @@ declare(strict_types=1);
 
 namespace OCA\Health\Controller;
 
-use OCA\Text\Event\LoadEditor;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
-use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IRequest;
 use OCP\Util;
 
 class PageController extends Controller {
 
-	private IEventDispatcher $eventDispatcher;
-
-	public function __construct($appName, IRequest $request, IEventDispatcher $eventDispatcher) {
+	public function __construct(string $appName, IRequest $request) {
 		parent::__construct($appName, $request);
-		$this->eventDispatcher = $eventDispatcher;
 	}
 
 	/**
@@ -47,12 +42,6 @@ class PageController extends Controller {
 	 */
 	public function index(): TemplateResponse {
 		Util::addScript($this->appName, 'health-main');
-
-		if (class_exists(LoadEditor::class)) {
-			$this->eventDispatcher->dispatchTyped(new LoadEditor());
-		}
-
-		$response = new TemplateResponse($this->appName, 'main');
-		return $response;
+		return new TemplateResponse($this->appName, 'main');
 	}
 }
