@@ -9,7 +9,7 @@
 Health is everything.
 
 ]]></description>
-    <version>3.0.0-dev</version>
+    <version>3.0.1-dev</version>
     <licence>agpl</licence>
     <author mail="dev@d10t.de" >Florian Steffens</author>
 	<namespace>Health</namespace>
