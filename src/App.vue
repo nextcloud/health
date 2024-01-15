@@ -190,11 +190,6 @@ export default {
 		margin-left: 5px;
 	}
 
-	.app-content {
-		padding-left: 15px;
-		padding-right: 15px;
-	}
-
 	.app-sidebar-tabs h3 {
 		border-bottom: 1px solid #80808057;
 	}

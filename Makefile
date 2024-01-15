@@ -123,26 +123,18 @@ test-api:
 
 lint: lint-php lint-js lint-css lint-xml
 
-
-lint-php: lint-phpfast lint-php-phan
-lint-phpfast: lint-php-lint lint-php-cs-fixer lint-php-phpcs
+lint-php: lint-php-lint lint-php-cs-fixer lint-php-psalm
 
 lint-php-lint:
 	# Check PHP syntax errors
 	@! find $(php_dirs) -name "*.php" | xargs -I{} php -l '{}' | grep -v "No syntax errors detected"
 
-lint-php-phan:
-	# PHAN
-	vendor/bin/phan --allow-polyfill-parser -k tests/phan-config.php --no-progress-bar -m checkstyle | vendor/bin/cs2pr --graceful-warnings --colorize
-
-lint-php-phpcs:
-	# PHP CodeSniffer
-	vendor/bin/phpcs --standard=tests/phpcs.xml $(php_dirs) --report=checkstyle | vendor/bin/cs2pr --graceful-warnings --colorize
-
 lint-php-cs-fixer:
 	# PHP Coding Standards Fixer (with Nextcloud coding standards)
 	vendor/bin/php-cs-fixer fix --dry-run --diff
 
+lint-php-psalm:
+	composer psalm
 
 lint-js:
 	npm run lint
