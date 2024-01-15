@@ -1,5 +1,5 @@
 <!--
-	- @copyright Copyright (c) 2019 Florian Steffens <flost-dev@mailbox.org>
+	- @copyright Copyright (c) 2019 Florian Steffens <dev@d10t.de>
 	-
 	- @author Florian Steffens
 	-
@@ -19,7 +19,6 @@
 	- along with this program. If not, see <http://www.gnu.org/licenses/>.
 	-
 	-->
-
 <template>
 	<div class="inner-content">
 		<div class="row first-row">
@@ -37,13 +36,7 @@
 		<div class="row">
 			<div class="col-4">
 				<h3>{{ t('health', 'Mission') }}</h3>
-				<TextEditor :text.sync="person.personalMission" />
-				<button v-if="canEdit"
-					:aria-label="t('health', 'save')"
-					@click="updateMission"
-				>
-					{{ t('health', 'Save ') }}
-				</button>
+				<TextEditor :text.sync="motivation" height="small" />
 			</div>
 		</div>
 	</div>
@@ -53,10 +46,9 @@
 import { mapState, mapGetters } from 'vuex'
 import moment from '@nextcloud/moment'
 import TextEditor from '../../shared/TextEditor'
+import debounce from 'debounce'
 
 export default {
-
-	name: 'PersonsContent',
 
 	components: {
 		TextEditor,
@@ -68,15 +60,33 @@ export default {
 		},
 	},
 
+	data() {
+		return {
+			motivation: null,
+		}
+	},
+
 	computed: {
 		...mapState([]),
 		...mapGetters(['person', 'canEdit']),
 	},
 
-	methods: {
-		updateMission() {
-			this.$store.dispatch('setValue', { key: 'personalMission', value: this.person.personalMission })
+	watch: {
+		motivation() {
+			this.debounceUpdateMotivation()
 		},
+	},
+
+	beforeMount() {
+		this.motivation = this.person.personalMission
+	},
+
+	methods: {
+		debounceUpdateMotivation: debounce(function() {
+			if (this.motivation !== this.person.personalMission) {
+				this.$store.dispatch('setValue', { key: 'personalMission', value: this.motivation })
+			}
+		}, 1000),
 	},
 }
 </script>
