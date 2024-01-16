@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Health" : "Veselība",
     "Share" : "Koplietot",
     "Activities" : "Darbības",
     "Duration" : "Ilgums",
@@ -25,6 +26,7 @@ OC.L10N.register(
     "Last 24 hours" : "Pēdējās 24 stundas",
     "Actions" : "Darbības",
     "Today" : "Šodien",
-    "Cancel" : "Atcelt"
+    "Cancel" : "Atcelt",
+    "Error" : "Kļūda"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

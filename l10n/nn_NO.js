@@ -20,6 +20,7 @@ OC.L10N.register(
     "Last 24 hours" : "Siste 24 timer",
     "Actions" : "Handlingar",
     "Today" : "I dag",
-    "Cancel" : "Avbryt"
+    "Cancel" : "Avbryt",
+    "Error" : "Feil"
 },
 "nplurals=2; plural=(n != 1);");

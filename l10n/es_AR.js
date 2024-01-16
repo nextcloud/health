@@ -18,7 +18,6 @@ OC.L10N.register(
     "Temperature" : "Temperatura",
     "General settings" : "Configuraciones generales",
     "Name" : "Nombre",
-    "save" : "guardar",
     "Edit name" : "Editar nombre",
     "Show details" : "Mostrar detalles",
     "Delete" : "Eliminar",
@@ -31,6 +30,7 @@ OC.L10N.register(
     "Last 24 hours" : "Últimas 24 horas",
     "Actions" : "Acciones",
     "Today" : "Hoy",
-    "Cancel" : "Cancelar"
+    "Cancel" : "Cancelar",
+    "Error" : "Error"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

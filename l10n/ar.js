@@ -145,8 +145,6 @@ OC.L10N.register(
     "Evening" : "مساءً",
     "Night" : "ليلاً",
     "Welcome {name} to your health center" : "أهلا بك يا {name} في مركزك الصحي",
-    "save" : "حفظ",
-    "Save " : "حفظ",
     "You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …" : "يمكنك أن تبدأ هنا بإعطائك مهمة شخصية. ربما لديك هدف خاص أو مواصفات طبية أو رهان مع أصدقائك أو شريكك. يمكن أن يساعدك على وصفه هنا. منح نفسك مكافأة إذا وصلت إلى الأهداف أو فكرت في خطة طوارئ. و مهما ساءت الأمور سيبقى تتبُّع صحتك فكرة صائبة ...",
     "Edit name" : "تعديل الاسم",
     "Show details" : "عرض التفاصيل",

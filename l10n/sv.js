@@ -32,7 +32,6 @@ OC.L10N.register(
     "General settings" : "Allmänna inställningar",
     "Name" : "Namn",
     "Identifier" : "Identifierare",
-    "save" : "spara",
     "Edit name" : "Ändra namn",
     "Show details" : "Visa detaljer",
     "Delete" : "Radera",
@@ -56,6 +55,8 @@ OC.L10N.register(
     "Actions" : "Åtgärder",
     "Today" : "Idag",
     "Cancel" : "Avbryt",
+    "Error" : "Fel",
+    "Could not load editor, text not available." : "Det gick inte att ladda redigeraren, texten är inte tillgänglig.",
     "Underweight" : "Undervikt"
 },
 "nplurals=2; plural=(n != 1);");

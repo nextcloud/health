@@ -23,8 +23,6 @@ OC.L10N.register(
     "General settings" : "Bendri nustatymai",
     "Name" : "Vardas, pavardė",
     "Identifier" : "Identifikatorius",
-    "save" : "įrašyti",
-    "Save " : "Įrašyti",
     "Edit name" : "Taisyti pavadinimą",
     "Show details" : "Rodyti išsamiau",
     "Delete" : "Ištrinti",
@@ -49,6 +47,7 @@ OC.L10N.register(
     "No data yet" : "Kol kas duomenų nėra",
     "Today" : "Šiandiena",
     "Cancel" : "Atšaukti",
+    "Error" : "Klaida",
     "Value successfully saved" : "Reikšmė sėkmingai įrašyta"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

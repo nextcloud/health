@@ -19,6 +19,7 @@ OC.L10N.register(
     "Last month" : "පසුගිය මාසය",
     "Actions" : "ක්‍රියාමාර්ග",
     "Today" : "අද",
-    "Cancel" : "අවලංගු කරන්න"
+    "Cancel" : "අවලංගු කරන්න",
+    "Error" : "දෝෂය"
 },
 "nplurals=2; plural=(n != 1);");

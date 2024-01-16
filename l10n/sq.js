@@ -24,6 +24,7 @@ OC.L10N.register(
     "Last 24 hours" : "24 orët e fundit",
     "Actions" : "Veprimet",
     "Today" : "Sot",
-    "Cancel" : "Anullo"
+    "Cancel" : "Anullo",
+    "Error" : "Gabim"
 },
 "nplurals=2; plural=(n != 1);");

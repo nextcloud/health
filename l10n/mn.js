@@ -20,6 +20,7 @@ OC.L10N.register(
     "Last 24 hours" : "Сүүлийн 24 цаг",
     "Actions" : "Үйл ажиллагаа",
     "Today" : "өнөөдөр",
-    "Cancel" : "болиулах"
+    "Cancel" : "болиулах",
+    "Error" : "Алдаа"
 },
 "nplurals=2; plural=(n != 1);");

@@ -29,6 +29,7 @@
     "Actions" : "Accions",
     "Download (CSV)" : "Telecargar (CSV)",
     "Today" : "Uèi",
-    "Cancel" : "Anullar"
+    "Cancel" : "Anullar",
+    "Error" : "Error"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

@@ -21,6 +21,7 @@
     "Last month" : "เดือนที่แล้ว",
     "Actions" : "การกระทำ",
     "Today" : "วันนี้",
-    "Cancel" : "ยกเลิก"
+    "Cancel" : "ยกเลิก",
+    "Error" : "ข้อผิดพลาด"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

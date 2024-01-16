@@ -55,8 +55,6 @@ OC.L10N.register(
     "Allergies" : "アレルギー",
     "General settings" : "一般設定",
     "Name" : "名前",
-    "save" : "保存",
-    "Save " : "保存",
     "Edit name" : "名前を変更",
     "Show details" : "詳細を見る",
     "Delete" : "削除",
@@ -102,6 +100,7 @@ OC.L10N.register(
     "Add new {entityName}" : "新しい{entityName}",
     "Edit {entityName}" : "{entityName}を編集",
     "Cancel" : "キャンセル",
+    "Error" : "エラー",
     "Underweight" : "低体重",
     "Normal weight" : "普通体重"
 },

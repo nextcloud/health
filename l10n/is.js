@@ -29,7 +29,6 @@ OC.L10N.register(
     "General settings" : "Almennar stillingar",
     "Name" : "Heiti",
     "Identifier" : "Auðkenni",
-    "save" : "vista",
     "Edit name" : "Breyta heiti",
     "Show details" : "Birta nánari upplýsingar",
     "Delete" : "Eyða",
@@ -51,6 +50,7 @@ OC.L10N.register(
     "Last 24 hours" : "Síðustu 24 klst",
     "Actions" : "Aðgerðir",
     "Today" : "Í dag",
-    "Cancel" : "Hætta við"
+    "Cancel" : "Hætta við",
+    "Error" : "Villa"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

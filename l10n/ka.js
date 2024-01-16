@@ -37,6 +37,7 @@ OC.L10N.register(
     "Last year" : "Last year",
     "Actions" : "Actions",
     "Today" : "Today",
-    "Cancel" : "Cancel"
+    "Cancel" : "Cancel",
+    "Error" : "Error"
 },
 "nplurals=2; plural=(n!=1);");

@@ -15,6 +15,7 @@ OC.L10N.register(
     "Group" : "Group",
     "Can edit" : "Can edit",
     "Today" : "ថ្ងៃ​នេះ",
-    "Cancel" : "បោះបង់"
+    "Cancel" : "បោះបង់",
+    "Error" : "កំហុស"
 },
 "nplurals=1; plural=0;");

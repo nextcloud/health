@@ -36,6 +36,7 @@ OC.L10N.register(
     "Last 24 hours" : "Последниве 24 часа",
     "Actions" : "Акции",
     "Today" : "Денес",
-    "Cancel" : "Откажи"
+    "Cancel" : "Откажи",
+    "Error" : "Грешка"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

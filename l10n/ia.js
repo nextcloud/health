@@ -16,6 +16,7 @@ OC.L10N.register(
     "Last 24 hours" : "Ultime 24 horas",
     "Actions" : "Actiones",
     "Today" : "Hodie",
-    "Cancel" : "Cancellar"
+    "Cancel" : "Cancellar",
+    "Error" : "Error"
 },
 "nplurals=2; plural=(n != 1);");

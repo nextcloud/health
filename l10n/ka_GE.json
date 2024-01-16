@@ -21,6 +21,7 @@
     "Last 24 hours" : "ბოლო 24 საათი",
     "Actions" : "მოქმედებები",
     "Today" : "დღეს",
-    "Cancel" : "უარყოფა"
+    "Cancel" : "უარყოფა",
+    "Error" : "შეცდომა"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

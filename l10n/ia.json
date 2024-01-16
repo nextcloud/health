@@ -14,6 +14,7 @@
     "Last 24 hours" : "Ultime 24 horas",
     "Actions" : "Actiones",
     "Today" : "Hodie",
-    "Cancel" : "Cancellar"
+    "Cancel" : "Cancellar",
+    "Error" : "Error"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

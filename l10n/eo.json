@@ -12,7 +12,6 @@
     "None" : "Nenio",
     "Temperature" : "Temperaturo",
     "Name" : "Nomo",
-    "save" : "konservi",
     "Show details" : "Montri la detalojn",
     "Delete" : "Forigi",
     "Group" : "Grupo",
@@ -21,6 +20,7 @@
     "Last 24 hours" : "Lastaj 24 horoj",
     "Actions" : "Agoj",
     "Today" : "Hodiaŭ",
-    "Cancel" : "Nuligi"
+    "Cancel" : "Nuligi",
+    "Error" : "Eraro"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

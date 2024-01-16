@@ -35,6 +35,7 @@
     "Last year" : "Last year",
     "Actions" : "Actions",
     "Today" : "Today",
-    "Cancel" : "Cancel"
+    "Cancel" : "Cancel",
+    "Error" : "Error"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

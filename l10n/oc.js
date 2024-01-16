@@ -31,6 +31,7 @@ OC.L10N.register(
     "Actions" : "Accions",
     "Download (CSV)" : "Telecargar (CSV)",
     "Today" : "Uèi",
-    "Cancel" : "Anullar"
+    "Cancel" : "Anullar",
+    "Error" : "Error"
 },
 "nplurals=2; plural=(n > 1);");

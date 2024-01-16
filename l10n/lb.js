@@ -15,6 +15,7 @@ OC.L10N.register(
     "Can edit" : "Can edit",
     "Actions" : "Aktiounen",
     "Today" : "Haut",
-    "Cancel" : "Ofbriechen"
+    "Cancel" : "Ofbriechen",
+    "Error" : "Fehler"
 },
 "nplurals=2; plural=(n != 1);");

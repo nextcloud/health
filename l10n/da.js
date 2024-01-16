@@ -25,7 +25,6 @@ OC.L10N.register(
     "Temperature" : "Temperatur",
     "General settings" : "Generelle indstillinger",
     "Name" : "Navn",
-    "save" : "Gem",
     "Edit name" : "Rediger navn",
     "Show details" : "Vis detaljer",
     "Delete" : "Slet",
@@ -43,6 +42,7 @@ OC.L10N.register(
     "Last 24 hours" : "Seneste 24 timer",
     "Actions" : "Handlinger",
     "Today" : "I dag",
-    "Cancel" : "Annuller"
+    "Cancel" : "Annuller",
+    "Could not load editor, text not available." : "Kunne ikke indlæse editor, tekst ikke tilgængelig."
 },
 "nplurals=2; plural=(n != 1);");

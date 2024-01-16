@@ -16,7 +16,6 @@ OC.L10N.register(
     "Temperature" : "Temperatura",
     "General settings" : "Configuraciones generales",
     "Name" : "Nombre",
-    "save" : "guardar",
     "Delete" : "Borrar",
     "Information" : "Información",
     "Group" : "Grupo",

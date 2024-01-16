@@ -14,7 +14,6 @@ OC.L10N.register(
     "None" : "Nenio",
     "Temperature" : "Temperaturo",
     "Name" : "Nomo",
-    "save" : "konservi",
     "Show details" : "Montri la detalojn",
     "Delete" : "Forigi",
     "Group" : "Grupo",
@@ -23,6 +22,7 @@ OC.L10N.register(
     "Last 24 hours" : "Lastaj 24 horoj",
     "Actions" : "Agoj",
     "Today" : "Hodiaŭ",
-    "Cancel" : "Nuligi"
+    "Cancel" : "Nuligi",
+    "Error" : "Eraro"
 },
 "nplurals=2; plural=(n != 1);");

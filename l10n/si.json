@@ -17,6 +17,7 @@
     "Last month" : "පසුගිය මාසය",
     "Actions" : "ක්‍රියාමාර්ග",
     "Today" : "අද",
-    "Cancel" : "අවලංගු කරන්න"
+    "Cancel" : "අවලංගු කරන්න",
+    "Error" : "දෝෂය"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

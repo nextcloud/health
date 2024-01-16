@@ -23,6 +23,7 @@ OC.L10N.register(
     "Last month" : "เดือนที่แล้ว",
     "Actions" : "การกระทำ",
     "Today" : "วันนี้",
-    "Cancel" : "ยกเลิก"
+    "Cancel" : "ยกเลิก",
+    "Error" : "ข้อผิดพลาด"
 },
 "nplurals=1; plural=0;");

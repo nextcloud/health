@@ -33,6 +33,7 @@
     "Last 24 hours" : "24 giờ trước",
     "Actions" : "Hành động",
     "Today" : "Hôm nay",
-    "Cancel" : "Hủy"
+    "Cancel" : "Hủy",
+    "Error" : "Lỗi"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

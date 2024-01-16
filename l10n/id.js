@@ -30,6 +30,7 @@ OC.L10N.register(
     "Last 24 hours" : "24 Jam lalu",
     "Actions" : "Tindakan",
     "Today" : "Hari ini",
-    "Cancel" : "Membatalkan"
+    "Cancel" : "Membatalkan",
+    "Error" : "Galat"
 },
 "nplurals=1; plural=0;");

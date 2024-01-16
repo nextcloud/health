@@ -15,7 +15,6 @@
     "None" : "Pole",
     "Temperature" : "Temperatuur",
     "Name" : "Nimi",
-    "save" : "salvesta",
     "Edit name" : "Muuda nime",
     "Show details" : "Näita detaile",
     "Delete" : "Kustuta",
@@ -27,6 +26,7 @@
     "Last 24 hours" : "Viimased 24 tundi",
     "Actions" : "Tegevused",
     "Today" : "Täna",
-    "Cancel" : "Loobu"
+    "Cancel" : "Loobu",
+    "Error" : "Viga"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

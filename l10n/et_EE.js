@@ -17,7 +17,6 @@ OC.L10N.register(
     "None" : "Pole",
     "Temperature" : "Temperatuur",
     "Name" : "Nimi",
-    "save" : "salvesta",
     "Edit name" : "Muuda nime",
     "Show details" : "Näita detaile",
     "Delete" : "Kustuta",
@@ -29,6 +28,7 @@ OC.L10N.register(
     "Last 24 hours" : "Viimased 24 tundi",
     "Actions" : "Tegevused",
     "Today" : "Täna",
-    "Cancel" : "Loobu"
+    "Cancel" : "Loobu",
+    "Error" : "Viga"
 },
 "nplurals=2; plural=(n != 1);");

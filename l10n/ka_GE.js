@@ -23,6 +23,7 @@ OC.L10N.register(
     "Last 24 hours" : "ბოლო 24 საათი",
     "Actions" : "მოქმედებები",
     "Today" : "დღეს",
-    "Cancel" : "უარყოფა"
+    "Cancel" : "უარყოფა",
+    "Error" : "შეცდომა"
 },
 "nplurals=2; plural=(n!=1);");

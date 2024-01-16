@@ -40,6 +40,8 @@ OC.L10N.register(
     "Quality" : "품질",
     "Moderate" : "중재",
     "Strong" : "강함",
+    "Target" : "대상",
+    "Body fat" : "신체 지방",
     "Last week" : "저번 주",
     "Last month" : "저번 달",
     "Last year" : "작년",
@@ -48,6 +50,8 @@ OC.L10N.register(
     "Actions" : "동작",
     "Today" : "오늘",
     "Cancel" : "취소",
+    "Error" : "오류",
+    "Could not load editor, text not available." : "편집기를 불러올 수 없음, 텍스트를 사용할 수 없음",
     "Underweight" : "저체중"
 },
 "nplurals=1; plural=0;");

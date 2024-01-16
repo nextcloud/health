@@ -27,7 +27,6 @@ OC.L10N.register(
     "Values" : "值",
     "General settings" : "一般設定",
     "Name" : "名稱",
-    "save" : "儲存",
     "Edit name" : "編輯名稱",
     "Show details" : "顯示細節",
     "Delete" : "刪除",
@@ -53,6 +52,8 @@ OC.L10N.register(
     "Today" : "今天",
     "Item" : "項目",
     "Cancel" : "取消",
+    "Error" : "錯誤",
+    "Could not load editor, text not available." : "無法載入編輯器，文字不可用。",
     "Underweight" : "過輕"
 },
 "nplurals=1; plural=0;");

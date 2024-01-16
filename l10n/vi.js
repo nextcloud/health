@@ -35,6 +35,7 @@ OC.L10N.register(
     "Last 24 hours" : "24 giờ trước",
     "Actions" : "Hành động",
     "Today" : "Hôm nay",
-    "Cancel" : "Hủy"
+    "Cancel" : "Hủy",
+    "Error" : "Lỗi"
 },
 "nplurals=1; plural=0;");

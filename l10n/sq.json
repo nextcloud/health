@@ -22,6 +22,7 @@
     "Last 24 hours" : "24 orët e fundit",
     "Actions" : "Veprimet",
     "Today" : "Sot",
-    "Cancel" : "Anullo"
+    "Cancel" : "Anullo",
+    "Error" : "Gabim"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

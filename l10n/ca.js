@@ -52,7 +52,6 @@ OC.L10N.register(
     "General settings" : "Paràmetres generals",
     "Name" : "Cognom",
     "Identifier" : "Identificador",
-    "save" : "desa",
     "Edit name" : "Edita el nom",
     "Show details" : "Mostra detalls",
     "Delete" : "Eliminar",
