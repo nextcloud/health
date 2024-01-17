@@ -268,6 +268,7 @@ OC.L10N.register(
     "Will be calculated" : "Ще се изчисли",
     "Send {eName}" : "Изпращане на {eName}",
     "Cancel" : "Отказ",
+    "Error" : "Грешка",
     "Underweight" : "Поднормено тегло",
     "Normal weight" : "Нормално тегло",
     "Pre-obesity" : "Пред затлъстяване",

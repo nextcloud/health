@@ -18,6 +18,7 @@
     "Quality" : "Calidá",
     "Actions" : "Aiciones",
     "Today" : "Güei",
-    "Cancel" : "Encaboxar"
+    "Cancel" : "Encaboxar",
+    "Error" : "Error"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

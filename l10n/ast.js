@@ -20,6 +20,7 @@ OC.L10N.register(
     "Quality" : "Calidá",
     "Actions" : "Aiciones",
     "Today" : "Güei",
-    "Cancel" : "Encaboxar"
+    "Cancel" : "Encaboxar",
+    "Error" : "Error"
 },
 "nplurals=2; plural=(n != 1);");

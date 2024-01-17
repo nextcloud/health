@@ -146,6 +146,7 @@ OC.L10N.register(
     "Night" : "Ноћ",
     "Welcome {name} to your health center" : "Добро дошли у свој здравствени центар, {name}",
     "You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …" : "Можете почети овде тако што ћете себи да задате личну мисију. Можда имате посебан циљ, медицинску спецификацију, или се крадите са пријатељем или партнером. Може да помогне ако то овде опишете. Такође је добра идеја да севи дате награду ако достигнете циљеве или размишљате о плану у хитном случају када ствари крену лоше да се развијају...",
+    "Mission" : "Мисија",
     "Edit name" : "Измени име",
     "Show details" : "Прикажи детаље",
     "Delete" : "Избриши",

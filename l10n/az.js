@@ -16,6 +16,7 @@ OC.L10N.register(
     "Last year" : "Keçən il",
     "Actions" : "İşlər",
     "Today" : "Bu gün",
-    "Cancel" : "Dayandır"
+    "Cancel" : "Dayandır",
+    "Error" : "Səhv"
 },
 "nplurals=2; plural=(n != 1);");
