@@ -63,7 +63,7 @@ OC.L10N.register(
     "Low" : "Basso",
     "Medium" : "Media",
     "High" : "Alto",
-    "Very high" : "Molto Alto",
+    "Very high" : "Molto alto",
     "Comment" : "Commento",
     "Mood" : "Umore",
     "Sadness level" : "Livello di tristezza",
