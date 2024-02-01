@@ -269,6 +269,7 @@ OC.L10N.register(
     "Send {eName}" : "Send {eName}",
     "Cancel" : "Avbryt",
     "Error" : "Feil",
+    "Could not load editor, text not available." : "Kunne ikke laste redigeringsprogram, tekst ikke tilgjengelig.",
     "Underweight" : "Undervektig",
     "Normal weight" : "Normal vekt",
     "Pre-obesity" : "Pre-fedme",
