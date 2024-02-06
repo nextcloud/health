@@ -41,6 +41,7 @@
     "Actions" : "Handlinger",
     "Today" : "I dag",
     "Cancel" : "Annuller",
+    "Error" : "Fejl",
     "Could not load editor, text not available." : "Kunne ikke indlæse editor, tekst ikke tilgængelig."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

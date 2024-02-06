@@ -85,6 +85,7 @@ OC.L10N.register(
     "Today" : "Avui",
     "Item" : "Element",
     "Cancel" : "Cancel·la",
+    "Error" : "Error",
     "Underweight" : "Baix pes"
 },
 "nplurals=2; plural=(n != 1);");

@@ -269,6 +269,7 @@ OC.L10N.register(
     "Will be calculated" : "Bude vypočítáno",
     "Send {eName}" : "Odeslat {eName}",
     "Cancel" : "Storno",
+    "Error" : "Chyba",
     "Could not load editor, text not available." : "Editor se nepodařilo načíst – text není k dispozici.",
     "Underweight" : "Podváha",
     "Normal weight" : "Normální hmotnost",

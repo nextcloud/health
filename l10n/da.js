@@ -43,6 +43,7 @@ OC.L10N.register(
     "Actions" : "Handlinger",
     "Today" : "I dag",
     "Cancel" : "Annuller",
+    "Error" : "Fejl",
     "Could not load editor, text not available." : "Kunne ikke indlæse editor, tekst ikke tilgængelig."
 },
 "nplurals=2; plural=(n != 1);");

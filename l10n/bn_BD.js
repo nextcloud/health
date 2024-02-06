@@ -14,6 +14,7 @@ OC.L10N.register(
     "Can edit" : "Can edit",
     "Actions" : "পদক্ষেপসমূহ",
     "Today" : "আজ",
-    "Cancel" : "বাতির"
+    "Cancel" : "বাতির",
+    "Error" : "সমস্যা"
 },
 "nplurals=2; plural=(n != 1);");
