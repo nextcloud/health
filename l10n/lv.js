@@ -8,6 +8,8 @@ OC.L10N.register(
     "Category" : "Kategorija",
     "Activity" : "Darbības",
     "Date" : "Datums",
+    "Running" : "Skriešana",
+    "Biking" : "Braukšana ar velosipēdu",
     "Driving" : "Braukšana",
     "Other" : "Cits",
     "Good" : "Labs",
