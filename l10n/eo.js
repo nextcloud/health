@@ -19,6 +19,7 @@ OC.L10N.register(
     "Group" : "Grupo",
     "Can edit" : "Povas redakti",
     "Strong" : "Forta",
+    "Last year" : "Lasta jaro",
     "Last 24 hours" : "Lastaj 24 horoj",
     "Actions" : "Agoj",
     "Today" : "Hodiaŭ",
