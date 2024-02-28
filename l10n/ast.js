@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Share" : "Compartir",
     "Weight" : "Pesu",
     "Activities" : "Actividaes",
     "Duration" : "Duración",
