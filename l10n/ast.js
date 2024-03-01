@@ -15,13 +15,17 @@ OC.L10N.register(
     "Comment" : "Comentariu",
     "General settings" : "Configuración xeneral",
     "Name" : "Nome",
+    "Show details" : "Amosar los detalles",
     "Delete" : "Desaniciar",
     "Age" : "Edá",
     "Height" : "Altor",
     "Quality" : "Calidá",
+    "BMI" : "IMC",
+    "Last year" : "L'añu pasáu",
     "Actions" : "Aiciones",
     "Today" : "Güei",
     "Cancel" : "Encaboxar",
-    "Error" : "Error"
+    "Error" : "Error",
+    "Underweight" : "Infrapesu"
 },
 "nplurals=2; plural=(n != 1);");
