@@ -22,11 +22,13 @@ OC.L10N.register(
     "Delete" : "Desaniciar",
     "Age" : "Edá",
     "Height" : "Altor",
+    "Group" : "Grupu",
     "Quality" : "Calidá",
     "BMI" : "IMC",
     "Last year" : "L'añu pasáu",
     "Actions" : "Aiciones",
     "Today" : "Güei",
+    "Item" : "Elementu",
     "Cancel" : "Encaboxar",
     "Error" : "Error",
     "Underweight" : "Infrapesu"
