@@ -6,6 +6,7 @@ OC.L10N.register(
     "Activities" : "Activities",
     "Duration" : "Duration",
     "Distance" : "Distance",
+    "Data" : "მონაცემები",
     "Category" : "Category",
     "Activity" : "Activity",
     "Date" : "Date",
