@@ -258,5 +258,5 @@
     "Obesity class II" : "השמנה דרגה 2",
     "Obesity class III" : "השמנה דרגה 3",
     "Value successfully saved" : "הערך נשמר בהצלחה"
-},"pluralForm" :"nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;"
+},"pluralForm" :"nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: 2;"
 }
