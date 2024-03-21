@@ -36,7 +36,7 @@ OC.L10N.register(
     "Height" : "신장",
     "No participants found" : "참가자를 찾을 수 없음",
     "Group" : "그룹",
-    "Can edit" : "편집할 수 있음",
+    "Can edit" : "수정할 수 있음",
     "Quality" : "품질",
     "Moderate" : "중재",
     "Strong" : "강함",
