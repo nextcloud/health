@@ -269,6 +269,7 @@ OC.L10N.register(
     "Send {eName}" : "Bidali {eName}",
     "Cancel" : "Ezeztatu",
     "Error" : "Errorea",
+    "Could not load editor, text not available." : "Ezin izan da editorea kargatu, testua ez dago eskuragarri.",
     "Underweight" : "Gutxiegizko pisua",
     "Normal weight" : "Pisu normala",
     "Pre-obesity" : "Aurre-obesitatea",
