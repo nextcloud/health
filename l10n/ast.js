@@ -23,6 +23,7 @@ OC.L10N.register(
     "Age" : "Edá",
     "Height" : "Altor",
     "Group" : "Grupu",
+    "Can edit" : "Pue editar",
     "Quality" : "Calidá",
     "BMI" : "IMC",
     "Last year" : "L'añu pasáu",
