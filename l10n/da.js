@@ -39,6 +39,7 @@ OC.L10N.register(
     "Body fat" : "fedtprocent",
     "Last week" : "Seneste uge",
     "Last month" : "Seneste måned",
+    "Last year" : "Sidste år",
     "Last 24 hours" : "Seneste 24 timer",
     "Actions" : "Handlinger",
     "Today" : "I dag",
