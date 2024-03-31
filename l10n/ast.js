@@ -27,6 +27,7 @@ OC.L10N.register(
     "Can edit" : "Pue editar",
     "Quality" : "Calidá",
     "BMI" : "IMC",
+    "Body fat" : "Grasa corporal",
     "Last week" : "La selmana anterior",
     "Last month" : "El mes anterior",
     "Last year" : "L'añu pasáu",
