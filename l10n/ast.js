@@ -16,6 +16,7 @@ OC.L10N.register(
     "Energy" : "Enerxía",
     "None" : "Nada",
     "Normal" : "Normal",
+    "Temperature" : "Temperatura",
     "General settings" : "Configuración xeneral",
     "Name" : "Nome",
     "Identifier" : "Identificador",
