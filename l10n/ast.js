@@ -22,6 +22,7 @@ OC.L10N.register(
     "Identifier" : "Identificador",
     "Show details" : "Amosar los detalles",
     "Delete" : "Desaniciar",
+    "Information" : "Información",
     "Age" : "Edá",
     "Height" : "Altor",
     "Group" : "Grupu",
