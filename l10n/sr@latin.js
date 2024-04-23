@@ -7,6 +7,8 @@ OC.L10N.register(
     "Activity" : "Aktivnost",
     "Date" : "Date",
     "Other" : "Ostali",
+    "Good" : "Dobro",
+    "Bad" : "Loše",
     "Medium" : "Srednji",
     "Comment" : "Komentar",
     "None" : "Ništa",
