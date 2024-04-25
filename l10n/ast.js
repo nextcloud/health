@@ -20,6 +20,7 @@ OC.L10N.register(
     "General settings" : "Configuración xeneral",
     "Name" : "Nome",
     "Identifier" : "Identificador",
+    "Edit name" : "Editar el nome",
     "Show details" : "Amosar los detalles",
     "Delete" : "Desaniciar",
     "Information" : "Información",
