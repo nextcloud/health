@@ -269,6 +269,7 @@ OC.L10N.register(
     "Send {eName}" : "Wyślij {eName}",
     "Cancel" : "Anuluj",
     "Error" : "Błąd",
+    "Could not load editor, text not available." : "Nie można wczytać edytora, tekst jest niedostępny.",
     "Underweight" : "Niedowaga",
     "Normal weight" : "Normalna waga",
     "Pre-obesity" : "Przed otyłością",
