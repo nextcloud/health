@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Share" : "Comhroinn",
+    "Activities" : "Gníomhaíochtaí",
     "Activity" : "Gníomhaíocht",
     "Date" : "Dáta",
     "Comment" : "Trácht",
