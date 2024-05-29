@@ -11,6 +11,7 @@ OC.L10N.register(
     "Show details" : "Sonraí a thaispeáint",
     "Delete" : "Scrios",
     "Group" : "Grúpa",
+    "Can edit" : "Is féidir eagarthóireacht a dhéanamh",
     "Quality" : "Quality",
     "Last year" : "Anuraidh",
     "Actions" : "Gníomhartha",
