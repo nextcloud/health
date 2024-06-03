@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Share" : "Comhroinn",
     "Activities" : "Gníomhaíochtaí",
+    "Duration" : "Fad",
     "Category" : "Catagóir",
     "Activity" : "Gníomhaíocht",
     "Date" : "Dáta",
