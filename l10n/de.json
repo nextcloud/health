@@ -1,5 +1,8 @@
 { "translations": {
     "Health" : "Gesundheit",
+    "Track your health privately." : "Zeichne deine Gesundheit privat auf.",
+    "Track your health data within the following provided modules:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "Verfolge deine Gesundheitsdaten innerhalb der folgenden bereitgestellten Module:\n- Gewicht\n- Gefühl\n- Messung\n- Schlaf\n- Rauchen\n- Aktivitäten\n- Medikation\n\nGesundheit ist alles.",
+    "Show sidebar" : "Seitenleiste anzeigen",
     "Created at {creationTime}" : "Erstellt um {creationTime}",
     "Person" : "Person",
     "Share" : "Teilen",
@@ -139,7 +142,9 @@
     "Noon" : "Mittags",
     "Evening" : "Abends",
     "Night" : "Nachts",
+    "Welcome {name} to your health center" : "Willkommen {name} in deinem Gesundheitszentrum",
     "You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …" : "Du kannst hier beginnen, dir selbst ein persönliches Ziel zu geben. Vielleicht hast du ein besonderes Ziel, eine medizinische Vorgabe oder eine Wette mit deinen Freunden oder deinem Partner. Es könnte dir helfen, es hier zu beschreiben. Es ist auch eine gute Idee, sich eine Belohnung zu gönnen, wenn du die Ziele erreichst oder über einen Notfallplan nachzudenken, wenn die Dinge schlechter werden …",
+    "Mission" : "Aufgabe",
     "Edit name" : "Name bearbeiten",
     "Show details" : "Details anzeigen",
     "Delete" : "Löschen",
