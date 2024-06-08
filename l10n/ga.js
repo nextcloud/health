@@ -15,6 +15,7 @@ OC.L10N.register(
     "None" : "aon cheann",
     "Normal" : "Gnáth",
     "Name" : "Ainm",
+    "Edit name" : "Cuir ainm in eagar",
     "Show details" : "Sonraí a thaispeáint",
     "Delete" : "Scrios",
     "No participants found" : "Níor aimsíodh rannpháirtithe ar bith",
