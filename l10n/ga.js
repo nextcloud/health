@@ -14,6 +14,7 @@ OC.L10N.register(
     "Comment" : "Trácht",
     "None" : "aon cheann",
     "Normal" : "Gnáth",
+    "General settings" : "Socruithe Ginearálta",
     "Name" : "Ainm",
     "Edit name" : "Cuir ainm in eagar",
     "Show details" : "Sonraí a thaispeáint",
