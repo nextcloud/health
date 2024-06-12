@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Health" : "Sláinte",
     "Share" : "Comhroinn",
     "Activities" : "Gníomhaíochtaí",
     "Duration" : "Fad",
@@ -12,6 +13,7 @@ OC.L10N.register(
     "Bad" : "Go dona",
     "Medium" : "Mheán",
     "Comment" : "Trácht",
+    "Energy" : "Fuinneamh",
     "None" : "aon cheann",
     "Normal" : "Gnáth",
     "General settings" : "Socruithe Ginearálta",
