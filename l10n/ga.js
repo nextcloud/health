@@ -8,6 +8,7 @@ OC.L10N.register(
     "Category" : "Catagóir",
     "Activity" : "Gníomhaíocht",
     "Date" : "Dáta",
+    "Running" : "Ag rith",
     "Other" : "Eile",
     "Good" : "Maith",
     "Bad" : "Go dona",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Normal" : "Gnáth",
     "General settings" : "Socruithe Ginearálta",
     "Name" : "Ainm",
+    "Identifier" : "Aitheantóir",
     "Edit name" : "Cuir ainm in eagar",
     "Show details" : "Sonraí a thaispeáint",
     "Delete" : "Scrios",
@@ -32,6 +34,7 @@ OC.L10N.register(
     "Last year" : "Anuraidh",
     "Actions" : "Gníomhartha",
     "Today" : "Inniu",
+    "Item" : "Mír",
     "Cancel" : "Cealaigh",
     "Error" : "Earráid"
 },
