@@ -3,8 +3,10 @@ OC.L10N.register(
     {
     "Health" : "Sláinte",
     "Share" : "Comhroinn",
+    "Weight" : "Meáchan",
     "Activities" : "Gníomhaíochtaí",
     "Duration" : "Fad",
+    "Distance" : "Fad",
     "Category" : "Catagóir",
     "Activity" : "Gníomhaíocht",
     "Date" : "Dáta",
@@ -23,12 +25,15 @@ OC.L10N.register(
     "Edit name" : "Cuir ainm in eagar",
     "Show details" : "Sonraí a thaispeáint",
     "Delete" : "Scrios",
+    "Age" : "Aois",
+    "Height" : "Airde",
     "No participants found" : "Níor aimsíodh rannpháirtithe ar bith",
     "Group" : "Grúpa",
     "Can edit" : "Is féidir eagarthóireacht a dhéanamh",
     "Can manage" : "Is féidir a bhainistiú",
     "Failed to create share with {displayName}" : "Theip ar chomhroinnt le {displayName} a chruthú",
     "Quality" : "Quality",
+    "BMI" : "BMI",
     "Last week" : "An tseachtain seo caite",
     "Last month" : "An mhí seo caite",
     "Last year" : "Anuraidh",
@@ -36,6 +41,7 @@ OC.L10N.register(
     "Today" : "Inniu",
     "Item" : "Mír",
     "Cancel" : "Cealaigh",
-    "Error" : "Earráid"
+    "Error" : "Earráid",
+    "Underweight" : "Faoi-mheáchan"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");
