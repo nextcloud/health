@@ -6,6 +6,7 @@ OC.L10N.register(
     "Weight" : "Vægt",
     "Activities" : "Aktiviteter",
     "Duration" : "Varighed",
+    "Chart" : "Diagram",
     "Data" : "Data",
     "Category" : "Kategori",
     "Activity" : "Aktivitet",
