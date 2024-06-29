@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Share" : "Compartir",
     "Activities" : "Actividades",
+    "Data" : "Datos",
     "Category" : "Categoría",
     "Activity" : "Actividad",
     "Date" : "Fecha",
