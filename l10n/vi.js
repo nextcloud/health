@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Health" : "Sức khỏe",
     "Share" : "Chia sẻ",
+    "Weight" : "Cân nặng",
     "Activities" : "Hoạt động",
     "Duration" : "Khoảng thời gian",
     "Data" : "Dữ liệu",
@@ -30,6 +31,7 @@ OC.L10N.register(
     "Can edit" : "Có thể chỉnh sửa",
     "Can manage" : "Có thể quản lý",
     "Failed to create share with {displayName}" : "Không thể tạo chia sẻ với {displayName}",
+    "Body fat" : "Mỡ cơ thể",
     "Last week" : "Tuần trước",
     "Last month" : "Tháng trước",
     "Last 24 hours" : "24 giờ trước",
