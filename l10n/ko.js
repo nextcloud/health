@@ -38,7 +38,7 @@ OC.L10N.register(
     "Height" : "신장",
     "No participants found" : "참가자를 찾을 수 없음",
     "Group" : "그룹",
-    "Can edit" : "수정할 수 있음",
+    "Can edit" : "편집 허용",
     "Can manage" : "관리 가능",
     "Failed to create share with {displayName}" : "displayName}과(와) 공유를 생성하지 못했습니다.",
     "Quality" : "품질",
