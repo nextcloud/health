@@ -21,6 +21,7 @@ OC.L10N.register(
     "Can edit" : "สามารถแก้ไข",
     "Last week" : "สัปดาห์ที่แล้ว",
     "Last month" : "เดือนที่แล้ว",
+    "Last year" : "ปีที่แล้ว",
     "Actions" : "การกระทำ",
     "Today" : "วันนี้",
     "Cancel" : "ยกเลิก",
