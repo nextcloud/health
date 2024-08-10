@@ -242,7 +242,7 @@
     "Good, you reached your target!" : "Bravo, vous avez atteint votre objectif !",
     "You lost already {diff}{unit} and you have {toGo}{unit} to go." : "Vous avez déjà perdu {diff}{unit} et il vous reste {toGo}{unit} à perdre.",
     "Oops, you become more and more. Be careful!" : "Oops, vous prenez de plus en plus de poids. Faites attention !",
-    "If you want, you can set your initial weight and a target for your weight. Do this in the settings in the sidebar. You will see right here how much you added or lost and what is left. Maybe you can be motivated this way." : "Si vous voulez, vous pouvez définir votre poids initial ainsi qu'un poids cible. Faites-le dans les paramètres dans la barre latérale. Vous verrez ici combien vous en avez gagné ou perdu et ce qui reste à faire. Vous pouvez être plus motivé de cette façon.",
+    "If you want, you can set your initial weight and a target for your weight. Do this in the settings in the sidebar. You will see right here how much you added or lost and what is left. Maybe you can be motivated this way." : "Si vous voulez, vous pouvez définir votre poids initial ainsi qu'un poids cible. Faites-le dans les paramètres dans le panneau latéral. Vous verrez ici combien vous en avez gagné ou perdu et ce qui reste à faire. Vous pouvez être plus motivé de cette façon.",
     "Last week" : "Semaine dernière",
     "Last month" : "Mois dernier",
     "Last year" : "Année dernière",
