@@ -137,6 +137,7 @@ OC.L10N.register(
     "Delete" : "删除",
     "New person" : "新人",
     "Information" : "信息",
+    "Donations" : "捐赠",
     "Age" : "年龄",
     "Height" : "身高",
     "in cm" : "厘米为单位",
