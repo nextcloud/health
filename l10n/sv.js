@@ -36,6 +36,7 @@ OC.L10N.register(
     "Show details" : "Visa detaljer",
     "Delete" : "Radera",
     "Information" : "Information",
+    "Donations" : "Donationer",
     "Age" : "Ålder",
     "Height" : "Höjd",
     "Searching for users and groups …" : "Sök efter användare och grupper ...",
