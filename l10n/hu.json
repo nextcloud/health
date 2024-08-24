@@ -1,5 +1,8 @@
 { "translations": {
     "Health" : "Egészség",
+    "Track your health privately." : "Kövesse nyomon egészségi állapotát magánjellegűen.",
+    "Track your health data within the following provided modules:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "Kövesse nyomon egészségügyi adatait a következő modulokkal:\n- Súly\n- Közérzet\n- Mérés\n- Alvás\n- Dohányzás\n- Tevékenységek\n- Gyógyszerek\n\nAz egészség a legfontosabb.",
+    "Show sidebar" : "Oldalsáv megjelenítése",
     "Created at {creationTime}" : "Létrehozva: {creationTime}",
     "Person" : "Személy",
     "Share" : "Megosztás",
@@ -139,7 +142,9 @@
     "Noon" : "Délben",
     "Evening" : "Este",
     "Night" : "Éjjel",
+    "Welcome {name} to your health center" : "{name}, üdvözli az egészségközpontja",
     "You can start here with giving you yourself a personal mission. Maybe you have a special target, a medical specification or a bet with your friends or partner. It could help you to describe it here. Giving yourself a bounty if you reach the targets or think about an emergency plan, if things getting worse is also a good idea …" : "Itt kezdheti azzal, hogy ad magának egy személyes küldetést. Lehet, hogy különleges célja vagy orvosi előírása van, vagy csak fogadott a barátaival vagy a párjával. Segíthet, ha ezt itt leírja. Adjon magának valami jutalmat, ha eléri a céljait, vagy gondoljon egy vészhelyzeti tervre…",
+    "Mission" : "Küldetés",
     "Edit name" : "Név szerkesztése",
     "Show details" : "Részletek megjelenítése",
     "Delete" : "Törlés",
