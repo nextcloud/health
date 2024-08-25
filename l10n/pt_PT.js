@@ -132,6 +132,7 @@ OC.L10N.register(
     "Delete" : "Apagar",
     "New person" : "Nova pessoa",
     "Information" : "Informação",
+    "Donations" : "Doações",
     "Age" : "Idade",
     "Height" : "Altura",
     "in cm" : "em cm",
