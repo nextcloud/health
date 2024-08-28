@@ -203,7 +203,7 @@ OC.L10N.register(
     "Strong" : "Forte",
     "Very strong" : "Moi forte",
     "Extreme" : "Extremo",
-    "Nothing saved" : "Non aforrou nada",
+    "Nothing saved" : "Non aforrou ren",
     "BMI" : "IMC",
     "Target" : "Destino",
     "Initial weight" : "Peso inicial",
