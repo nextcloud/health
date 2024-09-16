@@ -30,6 +30,7 @@ OC.L10N.register(
     "Show details" : "Показати деталі",
     "Delete" : "Вилучити",
     "Information" : "Інформація",
+    "Donations" : "Пожертви",
     "Group" : "Група",
     "Can edit" : "Можна редагувати",
     "Can manage" : "Може керувати",
