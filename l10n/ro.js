@@ -5,6 +5,7 @@ OC.L10N.register(
     "Share" : "Partajează",
     "Activities" : "Activități",
     "Duration" : "Durată",
+    "Data" : "Date",
     "Category" : "Categorie",
     "Activity" : "Activitate",
     "Date" : "Date",
