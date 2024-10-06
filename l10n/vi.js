@@ -34,6 +34,7 @@ OC.L10N.register(
     "Body fat" : "Mỡ cơ thể",
     "Last week" : "Tuần trước",
     "Last month" : "Tháng trước",
+    "Last year" : "Năm ngoái",
     "Last 24 hours" : "24 giờ trước",
     "Actions" : "Hành động",
     "Today" : "Hôm nay",
