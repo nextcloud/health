@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "Zdraví",
+    "Track your health privately." : "Sledujte své zdraví v soukromí.",
     "Show sidebar" : "Zobrazit postranní panel",
     "Created at {creationTime}" : "Vytvořeno v {creationTime}",
     "Person" : "Osoba",
