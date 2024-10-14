@@ -44,6 +44,7 @@ OC.L10N.register(
     "Show all" : "Показувати все",
     "Last 24 hours" : "За 24 години",
     "Actions" : "Дії",
+    "Download (CSV)" : "Звантажити (CSV)",
     "Today" : "Сьогодні",
     "Cancel" : "Скасувати",
     "Error" : "Помилка",
