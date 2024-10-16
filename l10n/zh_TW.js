@@ -47,6 +47,7 @@ OC.L10N.register(
     "Last month" : "上月",
     "Last year" : "去年",
     "Show all" : "全部顯示",
+    "Last hour" : "上個小時",
     "Last 24 hours" : "24小時前",
     "Actions" : "動作",
     "Today" : "今天",

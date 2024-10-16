@@ -1,6 +1,7 @@
 { "translations": {
     "Health" : "Zdraví",
     "Track your health privately." : "Sledujte své zdraví v soukromí.",
+    "Track your health data within the following provided modules:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "Sledujte své zdravotní údaje v rámci následujících poskytovaných modulů:\n- Váha\n- Pocit\n- Měření\n- Spánek\n- Kouření\n- Aktivity\n- Braní léků\n\nZdraví je vším.",
     "Show sidebar" : "Zobrazit postranní panel",
     "Created at {creationTime}" : "Vytvořeno v {creationTime}",
     "Person" : "Osoba",

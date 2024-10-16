@@ -52,6 +52,7 @@ OC.L10N.register(
     "Last month" : "Förra månaden",
     "Last year" : "Förra året",
     "Show all" : "Visa alla",
+    "Last hour" : "Senaste timmen",
     "Last 24 hours" : "Senaste 24 timmarna",
     "Actions" : "Åtgärder",
     "Today" : "Idag",
