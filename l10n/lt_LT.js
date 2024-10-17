@@ -28,6 +28,7 @@ OC.L10N.register(
     "Delete" : "Ištrinti",
     "Information" : "Informacija",
     "Age" : "Amžius",
+    "Height" : "Aukštis",
     "Sex" : "Lytis",
     "female" : "moteris",
     "male" : "vyras",
