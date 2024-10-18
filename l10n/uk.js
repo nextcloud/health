@@ -42,6 +42,7 @@ OC.L10N.register(
     "Last month" : "Минулого місяця",
     "Last year" : "Минулого року",
     "Show all" : "Показувати все",
+    "Last hour" : "Остання година",
     "Last 24 hours" : "За 24 години",
     "Actions" : "Дії",
     "Download (CSV)" : "Звантажити (CSV)",
