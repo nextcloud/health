@@ -31,6 +31,7 @@ OC.L10N.register(
     "Delete" : "Вилучити",
     "Information" : "Інформація",
     "Donations" : "Пожертви",
+    "Height" : "Висота",
     "Group" : "Група",
     "Can edit" : "Можна редагувати",
     "Can manage" : "Може керувати",
