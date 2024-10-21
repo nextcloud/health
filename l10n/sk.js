@@ -170,7 +170,7 @@ OC.L10N.register(
     "Group" : "Skupina",
     "Can edit" : "Môže upravovať",
     "Can manage" : "Môže spravovať",
-    "Failed to create share with {displayName}" : "Nepodarilo sa vytvoriť sprístupnenie pre {displayName}",
+    "Failed to create share with {displayName}" : "Nepodarilo sa vytvoriť zdieľanie pre {displayName}",
     "Quality" : "Kvalita",
     "Counted wakeups" : "Počet prebudení",
     "Duration [hours]" : "Dĺžka [hodín]",
