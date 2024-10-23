@@ -147,6 +147,7 @@ OC.L10N.register(
     "Group" : "Ryhmä",
     "Can edit" : "Voi muokata",
     "Can manage" : "Voi hallita",
+    "Failed to create share with {displayName}" : "Jaon luonti epäonnistui kohteen {displayName} kanssa",
     "Quality" : "Laatu",
     "Counted wakeups" : "Lasketut heräämiset",
     "Duration [hours]" : "kesto [tuntia]",
