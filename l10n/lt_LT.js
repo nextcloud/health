@@ -47,7 +47,7 @@ OC.L10N.register(
     "Download (CSV)" : "Atsisiųsti (CSV)",
     "No data yet" : "Kol kas duomenų nėra",
     "Today" : "Šiandiena",
-    "Cancel" : "Atšaukti",
+    "Cancel" : "Atsisakyti",
     "Error" : "Klaida",
     "Value successfully saved" : "Reikšmė sėkmingai įrašyta"
 },
