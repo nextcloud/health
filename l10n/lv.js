@@ -5,6 +5,7 @@ OC.L10N.register(
     "Share" : "Koplietot",
     "Activities" : "Darbības",
     "Duration" : "Ilgums",
+    "Data" : "Dati",
     "Category" : "Kategorija",
     "Activity" : "Darbības",
     "Date" : "Datums",
