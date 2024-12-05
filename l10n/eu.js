@@ -2,6 +2,7 @@ OC.L10N.register(
     "health",
     {
     "Health" : "Osasuna",
+    "Show sidebar" : "Erakutsi alboko barra",
     "Created at {creationTime}" : "{creationTime} sortua",
     "Person" : "Pertsona",
     "Share" : "Partekatu",
