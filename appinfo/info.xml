@@ -31,7 +31,7 @@ Health is everything.]]></description>
 	<screenshot>https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-person-start.png</screenshot>
 	<screenshot>https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-weight.png</screenshot>
 	<dependencies>
-        <nextcloud min-version="24" max-version="29"/>
+        <nextcloud min-version="24" max-version="30"/>
     </dependencies>
     <navigations>
         <navigation>
