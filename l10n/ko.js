@@ -34,6 +34,7 @@ OC.L10N.register(
     "Show details" : "세부 정보",
     "Delete" : "삭제",
     "Information" : "정보",
+    "Donations" : "후원",
     "Age" : "나이",
     "Height" : "신장",
     "No participants found" : "참가자를 찾을 수 없음",
