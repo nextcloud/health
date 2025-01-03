@@ -1,3 +1,23 @@
+# Farewell to the Nextcloud Health App 😢
+
+## ⚠️Important Notice:  The Nextcloud Health App is currently unmaintained and may be subject to security risks.  
+
+With this statement, I would like to inform you that I will be discontinuing development of the Nextcloud Health App. 
+
+It has been a great pleasure creating this app and your interest in it has made me very happy! I am proud of what has been achieved. However, due to various circumstances, it is currently not possible for me to further develop the app. The development is time-consuming and the basis of the app, which originated as a learning project, is not optimal. There are security vulnerabilities and unprofessional architectural solutions that urgently need to be addressed. 
+
+**👍Good news:  Most of the features of the Nextcloud Health App can now be used in the new "Nextcloud Tables" app. Analyses can then be performed via "Nextcloud Analytics". Data can be exported as CSV and imported into the Tables app.**
+
+This app is currently looking for a new maintainer.
+
+❓Interested?  Please feel free to contact me at 📧 dev@d10t.de ! 
+
+Thank you for your understanding.
+
+Cheers
+
+---
+
 # Nextcloud Health
 ### Track your health privately.
 
