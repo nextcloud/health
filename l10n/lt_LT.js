@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Health" : "Sveikata",
     "Share" : "Bendrinti",
+    "Weight" : "Svoris",
     "Activities" : "Veiklos",
     "Duration" : "Trukmė",
     "Distance" : "Atstumas",
