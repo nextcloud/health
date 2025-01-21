@@ -165,7 +165,7 @@ OC.L10N.register(
     "Nutrition" : "Nutrición",
     "Share person with a user or group …" : "Compartir persoa cun usuario ou grupo…",
     "Searching for users and groups …" : "Buscar usuarios e grupos…",
-    "No participants found" : "Non se atoparon participantes",
+    "No participants found" : "Non se atopou ningún participante",
     "Originator" : "Creador",
     "Group" : "Grupo",
     "Can edit" : "Pode editar",
