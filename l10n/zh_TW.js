@@ -40,6 +40,7 @@ OC.L10N.register(
     "Can manage" : "可以管理",
     "Failed to create share with {displayName}" : "無法建立與 {displayName} 的分享",
     "Quality" : "品質",
+    "_%nh_::_%nh_" : ["%n小時"],
     "BMI" : "BMI",
     "Target" : "目標",
     "Body fat" : "體脂",
