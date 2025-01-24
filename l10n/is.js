@@ -34,6 +34,7 @@ OC.L10N.register(
     "Delete" : "Eyða",
     "Information" : "Upplýsingar",
     "Age" : "Aldur",
+    "Height" : "Hæð",
     "Currency" : "Gjaldmiðill",
     "No participants found" : "No participants found",
     "Group" : "Hópur",
