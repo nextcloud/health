@@ -42,6 +42,7 @@ OC.L10N.register(
     "Can manage" : "Gerur sýslað með",
     "Failed to create share with {displayName}" : "Gat ekki búið til sameign með {displayName}",
     "Quality" : "Quality",
+    "_%nh_::_%nh_" : ["%nklst","%nklst"],
     "Goal" : "Markmið",
     "Strong" : "Sterkt",
     "Last week" : "Í síðustu viku",
