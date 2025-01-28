@@ -235,6 +235,7 @@ OC.L10N.register(
     "Send {eName}" : "Lähetä {eName}",
     "Cancel" : "Peruuta",
     "Error" : "Virhe",
+    "Could not load editor, text not available." : "Editoria ei voitu ladata, tekstiä ei ole saatavilla.",
     "Underweight" : "Alipainoinen",
     "Normal weight" : "Normaalipainoinen",
     "Pre-obesity" : "Ylipainoinen",
