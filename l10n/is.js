@@ -33,6 +33,7 @@ OC.L10N.register(
     "Show details" : "Birta nánari upplýsingar",
     "Delete" : "Eyða",
     "Information" : "Upplýsingar",
+    "Donations" : "Styrkir",
     "Age" : "Aldur",
     "Height" : "Hæð",
     "Currency" : "Gjaldmiðill",
