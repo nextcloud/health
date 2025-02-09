@@ -1,7 +1,7 @@
 OC.L10N.register(
     "health",
     {
-    "Health" : "Sundhed",
+    "Health" : "Sundhedsstatus",
     "Share" : "Del",
     "Weight" : "Vægt",
     "Activities" : "Aktiviteter",
@@ -17,9 +17,9 @@ OC.L10N.register(
     "Driving" : "Kørsel",
     "Other" : "Andet",
     "Good" : "Godt",
-    "Bad" : "Skidt",
-    "Medium" : "Mellem",
-    "Comment" : "Kommentér",
+    "Bad" : "Dårlig",
+    "Medium" : "Medium",
+    "Comment" : "Kommenter",
     "Energy" : "Energiindhold",
     "None" : "Ingen",
     "Normal" : "Normal",
