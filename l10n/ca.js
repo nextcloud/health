@@ -65,6 +65,7 @@ OC.L10N.register(
     "Can manage" : "Pot gestionar",
     "Failed to create share with {displayName}" : "Ha fallat la creació de la compartició amb {displayName}",
     "Quality" : "Qualitat",
+    "_%nh_::_%nh_" : ["%nh","%nh"],
     "Strong" : "Forta",
     "BMI" : "IMC",
     "Target" : "Objectiu",
