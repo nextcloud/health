@@ -5,12 +5,12 @@ OC.L10N.register(
     "Activities" : "Actividades",
     "Data" : "Datos",
     "Category" : "Categoría",
-    "Activity" : "Actividad",
     "Date" : "Fecha",
     "Other" : "Otro",
     "Good" : "Buena",
     "Bad" : "Malo",
     "Comment" : "Comentario",
+    "Activity" : "Actividad",
     "None" : "Ninguno",
     "Normal" : "Normal",
     "Temperature" : "Temperatura",
@@ -22,8 +22,8 @@ OC.L10N.register(
     "Can edit" : "Puede editar",
     "Strong" : "Fuerte",
     "Last 24 hours" : "Últimas 24 horas",
-    "Actions" : "Acciones",
     "Today" : "Hoy",
+    "Actions" : "Acciones",
     "Cancel" : "Cancelar"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

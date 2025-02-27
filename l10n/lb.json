@@ -1,18 +1,18 @@
 { "translations": {
     "Share" : "Deelen",
     "Activities" : "Aktivitéiten",
-    "Activity" : "Aktivitéit",
     "Date" : "Date",
     "Other" : "Aner",
     "Comment" : "Kommentar",
+    "Activity" : "Aktivitéit",
     "None" : "Keng",
     "Temperature" : "Temperatur",
     "Name" : "Numm",
     "Delete" : "Läschen",
     "Group" : "Grupp",
     "Can edit" : "Can edit",
-    "Actions" : "Aktiounen",
     "Today" : "Haut",
+    "Actions" : "Aktiounen",
     "Cancel" : "Ofbriechen",
     "Error" : "Fehler"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

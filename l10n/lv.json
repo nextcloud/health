@@ -5,7 +5,6 @@
     "Duration" : "Ilgums",
     "Data" : "Dati",
     "Category" : "Kategorija",
-    "Activity" : "Darbības",
     "Date" : "Datums",
     "Running" : "Skriešana",
     "Biking" : "Braukšana ar velosipēdu",
@@ -14,6 +13,7 @@
     "Good" : "Labs",
     "Bad" : "Slikts",
     "Comment" : "Piebilde",
+    "Activity" : "Darbības",
     "None" : "Nav",
     "Temperature" : "Temperatūra",
     "General settings" : "Vispārīgie iestatījumi",
@@ -26,8 +26,8 @@
     "Quality" : "Kvalitāte",
     "Strong" : "Stipra",
     "Last 24 hours" : "Pēdējās 24 stundas",
-    "Actions" : "Darbības",
     "Today" : "Šodien",
+    "Actions" : "Darbības",
     "Cancel" : "Atcelt",
     "Error" : "Kļūda"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"

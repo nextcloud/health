@@ -2,12 +2,12 @@
     "Share" : "გაზიარება",
     "Activities" : "აქტივობები",
     "Category" : "კატეგორია",
-    "Activity" : "აქტივობა",
     "Date" : "თარიღი",
     "Other" : "სხვა",
     "Good" : "კარგია",
     "Bad" : "ცუდი",
     "Comment" : "კომენტარი",
+    "Activity" : "აქტივობა",
     "None" : "არც ერთი",
     "Normal" : "ნორმალური",
     "Temperature" : "ტემპერატურა",
@@ -19,8 +19,8 @@
     "Can edit" : "შეუძლია შეცვალოს",
     "Strong" : "ძლიერია",
     "Last 24 hours" : "ბოლო 24 საათი",
-    "Actions" : "მოქმედებები",
     "Today" : "დღეს",
+    "Actions" : "მოქმედებები",
     "Cancel" : "უარყოფა",
     "Error" : "შეცდომა"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"

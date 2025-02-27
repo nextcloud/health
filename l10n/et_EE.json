@@ -5,7 +5,6 @@
     "Duration" : "Kestus",
     "Data" : "Andmed",
     "Category" : "Kategooria",
-    "Activity" : "Tegevus",
     "Date" : "Kuupäev",
     "Running" : "Jooksmine",
     "Biking" : "Jalgrattaga sõitmine",
@@ -13,6 +12,7 @@
     "Good" : "Hea",
     "Bad" : "Halb",
     "Comment" : "Kommentaar",
+    "Activity" : "Tegevus",
     "None" : "Pole",
     "Temperature" : "Temperatuur",
     "Name" : "Nimi",
@@ -28,8 +28,8 @@
     "Last month" : "Eelmine kuu",
     "Show all" : "Kuva kõik",
     "Last 24 hours" : "Viimased 24 tundi",
-    "Actions" : "Tegevused",
     "Today" : "Täna",
+    "Actions" : "Tegevused",
     "Cancel" : "Loobu",
     "Error" : "Viga"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

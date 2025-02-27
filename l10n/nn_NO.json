@@ -3,12 +3,12 @@
     "Activities" : "Aktivitetar",
     "Data" : "Data",
     "Category" : "Kategori",
-    "Activity" : "Aktivitet",
     "Date" : "Dato",
     "Other" : "Anna",
     "Good" : "Bra",
     "Bad" : "Dårleg",
     "Comment" : "Kommentér",
+    "Activity" : "Aktivitet",
     "None" : "Ingen",
     "Name" : "Namn",
     "Delete" : "Slett",
@@ -16,8 +16,8 @@
     "Group" : "Gruppe",
     "Can edit" : "Can edit",
     "Last 24 hours" : "Siste 24 timer",
-    "Actions" : "Handlingar",
     "Today" : "I dag",
+    "Actions" : "Handlingar",
     "Cancel" : "Avbryt",
     "Error" : "Feil"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

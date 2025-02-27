@@ -3,12 +3,12 @@
     "Activities" : "Aktivitetet",
     "Duration" : "Kohëzgjatja",
     "Category" : "Kategori",
-    "Activity" : "Aktiviteti",
     "Date" : "Data",
     "Other" : "Tjetër",
     "Good" : "I mirë",
     "Bad" : "Keq",
     "Comment" : "Koment",
+    "Activity" : "Aktiviteti",
     "None" : "Asnjë",
     "Normal" : "Normal",
     "Temperature" : "Temperatura",
@@ -20,8 +20,8 @@
     "Can edit" : "Can edit",
     "Strong" : "I fortë",
     "Last 24 hours" : "24 orët e fundit",
-    "Actions" : "Veprimet",
     "Today" : "Sot",
+    "Actions" : "Veprimet",
     "Cancel" : "Anullo",
     "Error" : "Gabim"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

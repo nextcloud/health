@@ -2,12 +2,12 @@
     "Share" : "Түгээх",
     "Activities" : "Үйлдлүүд",
     "Category" : "Ангилал",
-    "Activity" : "Үйлдлүүд",
     "Date" : "Он сар өдөр",
     "Other" : "Бусад",
     "Good" : "Сайн",
     "Bad" : " Муу",
     "Comment" : "undefined",
+    "Activity" : "Үйлдлүүд",
     "None" : "юу ч үгүй",
     "Normal" : "Хэвийн",
     "Name" : "Нэр",
@@ -16,8 +16,8 @@
     "Group" : "Бүлэг",
     "Can edit" : "Can edit",
     "Last 24 hours" : "Сүүлийн 24 цаг",
-    "Actions" : "Үйл ажиллагаа",
     "Today" : "өнөөдөр",
+    "Actions" : "Үйл ажиллагаа",
     "Cancel" : "болиулах",
     "Error" : "Алдаа"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

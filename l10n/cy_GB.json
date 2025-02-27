@@ -4,7 +4,6 @@
     "Activities" : "Gweithgareddau",
     "Duration" : "Hyd",
     "Category" : "Categori",
-    "Activity" : "Gweithred",
     "Date" : "Date",
     "Running" : "Rhedeg",
     "Biking" : "Beicio",
@@ -13,6 +12,7 @@
     "Good" : "Da",
     "Bad" : "Drwg",
     "Comment" : "Sylw",
+    "Activity" : "Gweithred",
     "None" : "Dim",
     "Normal" : "Arferol",
     "Name" : "Enw",
@@ -20,8 +20,8 @@
     "Delete" : "Dileu",
     "Group" : "Grŵp",
     "Can edit" : "Can edit",
-    "Actions" : "Gweithredoedd",
     "Today" : "Heddiw",
+    "Actions" : "Gweithredoedd",
     "Cancel" : "Diddymu",
     "Error" : "Gwall"
 },"pluralForm" :"nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;"

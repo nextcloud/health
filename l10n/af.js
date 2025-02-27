@@ -5,12 +5,12 @@ OC.L10N.register(
     "Activities" : "Aktiwiteite",
     "Duration" : "Duur",
     "Category" : "Kategorie",
-    "Activity" : "Aktiwiteit",
     "Date" : "Datum",
     "Other" : "Ander",
     "Good" : "Goed",
     "Bad" : "Sleg",
     "Comment" : "Kommentaar",
+    "Activity" : "Aktiwiteit",
     "None" : "Geen",
     "Normal" : "Normaal",
     "Temperature" : "Temperatuur",
@@ -22,8 +22,8 @@ OC.L10N.register(
     "Can edit" : "Kan redigeer",
     "Quality" : "Kwaliteit",
     "Last 24 hours" : "Afgelope 24 uur",
-    "Actions" : "Aksies",
     "Today" : "Vandag",
+    "Actions" : "Aksies",
     "Cancel" : "Kanselleer"
 },
 "nplurals=2; plural=(n != 1);");
