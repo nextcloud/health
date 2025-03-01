@@ -46,6 +46,7 @@ OC.L10N.register(
     "Can edit" : "Kan ändra",
     "Can manage" : "Kan hanter",
     "Quality" : "Kvalitet",
+    "_%nh_::_%nh_" : ["%nt","%nt"],
     "Strong" : "Starkt",
     "Target" : "Mål",
     "Last week" : "Förra veckan",
