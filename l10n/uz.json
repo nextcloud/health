@@ -1,6 +1,9 @@
 { "translations": {
+    "Share" : "Ulashish",
     "Activities" : "Activities",
     "Duration" : "Davomiyligi",
+    "Chart" : "Grafik",
+    "Data" : "Ma'lumotlar",
     "Date" : "Sana",
     "Other" : "Boshqa",
     "Activity" : "Faollik",

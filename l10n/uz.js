@@ -1,8 +1,11 @@
 OC.L10N.register(
     "health",
     {
+    "Share" : "Ulashish",
     "Activities" : "Activities",
     "Duration" : "Davomiyligi",
+    "Chart" : "Grafik",
+    "Data" : "Ma'lumotlar",
     "Date" : "Sana",
     "Other" : "Boshqa",
     "Activity" : "Faollik",
