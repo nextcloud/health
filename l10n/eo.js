@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Share" : "Kunhavigi",
     "Activities" : "Aktivaĵoj",
+    "Data" : "Datumoj",
     "Category" : "Kategorio",
     "Date" : "Date",
     "Running" : "Kuras",
