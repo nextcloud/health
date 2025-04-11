@@ -28,6 +28,7 @@ OC.L10N.register(
     "Group" : "Grupp",
     "Can edit" : "Võib redigeerida",
     "Quality" : "Kvaliteet",
+    "_%nh_::_%nh_" : ["%n t","%n t"],
     "Last week" : "Eelmine nädal",
     "Last month" : "Eelmine kuu",
     "Last year" : "Eelmisel aastal",
