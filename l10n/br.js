@@ -20,6 +20,7 @@ OC.L10N.register(
     "Information" : "Titouroù",
     "Group" : "Stollad",
     "Can edit" : "Posuple eo embann",
+    "in {unit}" : "e {unit}",
     "Today" : "Hiziv",
     "Actions" : "Oberoù",
     "Cancel" : "Nullañ",
