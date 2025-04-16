@@ -21,7 +21,7 @@ OC.L10N.register(
     "General settings" : "Vispārīgie iestatījumi",
     "Name" : "Vārds",
     "Show details" : "Rādīt detaļas",
-    "Delete" : "Dzēst",
+    "Delete" : "Izdzēst",
     "Information" : "Informācija",
     "Group" : "Grupa",
     "Can edit" : "Var labot",
