@@ -48,6 +48,7 @@ OC.L10N.register(
     "Last week" : "Seneste uge",
     "Last month" : "Seneste måned",
     "Last year" : "Sidste år",
+    "Show all" : "Vis alle",
     "Last 24 hours" : "Seneste 24 timer",
     "Today" : "I dag",
     "Actions" : "Handlinger",
