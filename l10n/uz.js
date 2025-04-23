@@ -8,6 +8,7 @@ OC.L10N.register(
     "Data" : "Ma'lumotlar",
     "Date" : "Sana",
     "Other" : "Boshqa",
+    "Comment" : "Izoh",
     "Activity" : "Faollik",
     "None" : "None",
     "Name" : "Name",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Last year" : "O`tgan yil",
     "Today" : "Today",
     "Actions" : "Actions",
+    "Edit {entityName}" : " {entityName}ni tahrirlash",
     "Cancel" : "Cancel",
     "Error" : "Error"
 },

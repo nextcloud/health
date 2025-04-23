@@ -6,6 +6,7 @@
     "Data" : "Ma'lumotlar",
     "Date" : "Sana",
     "Other" : "Boshqa",
+    "Comment" : "Izoh",
     "Activity" : "Faollik",
     "None" : "None",
     "Name" : "Name",
@@ -16,6 +17,7 @@
     "Last year" : "O`tgan yil",
     "Today" : "Today",
     "Actions" : "Actions",
+    "Edit {entityName}" : " {entityName}ni tahrirlash",
     "Cancel" : "Cancel",
     "Error" : "Error"
 },"pluralForm" :"nplurals=1; plural=0;"
