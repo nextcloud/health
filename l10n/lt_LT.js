@@ -44,6 +44,7 @@ OC.L10N.register(
     "Last week" : "Praeitą savaitę",
     "Last month" : "Praeitą mėnesį",
     "Show all" : "Rodyti visus",
+    "Last hour" : "Paskutinė valanda",
     "Last 24 hours" : "Paskutinės 24 valandos",
     "Today" : "Šiandiena",
     "Actions" : "Veiksmai",

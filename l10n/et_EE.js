@@ -24,6 +24,7 @@ OC.L10N.register(
     "Show details" : "Näita detaile",
     "Delete" : "Kustuta",
     "Information" : "Informatsioon",
+    "Donations" : "Annetused",
     "Height" : "Kõrgus",
     "Group" : "Grupp",
     "Can edit" : "Võib redigeerida",
