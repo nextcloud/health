@@ -38,6 +38,7 @@ OC.L10N.register(
     "Last 24 hours" : "Viimased 24 tundi",
     "Today" : "Täna",
     "Actions" : "Tegevused",
+    "Edit {entityName}" : "Muuda „{entityName}“",
     "Cancel" : "Loobu",
     "Error" : "Viga"
 },

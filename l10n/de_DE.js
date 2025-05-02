@@ -163,7 +163,7 @@ OC.L10N.register(
     "Manage modules" : "Module konfigurieren",
     "Breaks" : "Pausen",
     "Nutrition" : "Ernährung",
-    "Failed to create share with {displayName}" : "Fehler beim Erstellen der Freigabe mit dem Namen {displayName}",
+    "Failed to create share with {displayName}" : "Freigabe mit dem Namen {displayName} konnte nicht erstellt werden",
     "Share person with a user or group …" : "Person mit einem Benutzer oder einer Gruppe teilen …",
     "Searching for users and groups …" : "Suche nach Benutzern und Gruppen …",
     "No participants found" : "Keine Teilnehmer gefunden",
