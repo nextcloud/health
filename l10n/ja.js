@@ -96,6 +96,7 @@ OC.L10N.register(
     "Last month" : "先月",
     "Last year" : "去年",
     "Show all" : "全て表示",
+    "Last hour" : "1時間以内",
     "Last 24 hours" : "24時間以内",
     "Today" : "今日",
     "Item" : "アイテム",
