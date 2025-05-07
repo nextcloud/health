@@ -5,6 +5,7 @@ OC.L10N.register(
     "Share" : "Jaga",
     "Activities" : "Tegevused",
     "Duration" : "Kestus",
+    "Distance" : "Vahemaa",
     "Data" : "Andmed",
     "Category" : "Kategooria",
     "Date" : "Kuupäev",
