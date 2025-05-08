@@ -17,6 +17,7 @@ OC.L10N.register(
     "Medium" : "Keskmine",
     "Comment" : "Kommentaar",
     "Activity" : "Tegevus",
+    "Energy" : "Energiasisaldus",
     "None" : "Pole",
     "Normal" : "Tavaline",
     "Temperature" : "Temperatuur",
