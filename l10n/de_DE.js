@@ -281,6 +281,6 @@ OC.L10N.register(
     "Obesity class I" : "Fettleibigkeit ersten Grades",
     "Obesity class II" : "Fettleibigkeit zweiten Grades",
     "Obesity class III" : "Fettleibigkeit dritten Grades",
-    "Value successfully saved" : "Wert erfolgreich gespeichert"
+    "Value successfully saved" : "Wert gespeichert"
 },
 "nplurals=2; plural=(n != 1);");
