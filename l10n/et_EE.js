@@ -38,6 +38,7 @@ OC.L10N.register(
     "_%nh_::_%nh_" : ["%n t","%n t"],
     "Strong" : "Tugev",
     "Body fat" : "Keharasv",
+    "in {unit}" : "{unit} kuus",
     "Last week" : "Eelmine nädal",
     "Last month" : "Eelmine kuu",
     "Last year" : "Eelmisel aastal",
