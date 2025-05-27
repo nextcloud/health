@@ -9,6 +9,7 @@ OC.L10N.register(
     "Duration" : "Kestus",
     "Distance" : "Vahemaa",
     "Data" : "Andmed",
+    "Column selection" : "Veergude valik",
     "Category" : "Kategooria",
     "Date" : "Kuupäev",
     "Running" : "Jooksmine",

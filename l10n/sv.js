@@ -9,6 +9,7 @@ OC.L10N.register(
     "Distance" : "Distans",
     "Chart" : "Diagram",
     "Data" : "Data",
+    "Column selection" : "Kolumnurval",
     "Category" : "Kategori",
     "Date" : "Datum",
     "Running" : "Löpning",
