@@ -9,6 +9,7 @@ OC.L10N.register(
     "Distance" : "距離",
     "Chart" : "圖表",
     "Data" : "資料",
+    "Column selection" : "欄位選取",
     "Category" : "分類",
     "Date" : "日期",
     "Running" : "跑步",
