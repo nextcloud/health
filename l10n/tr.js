@@ -223,7 +223,7 @@ OC.L10N.register(
     "Custom measurement" : "Özel ölçüm",
     "Unit for weight" : "Kilo birimi",
     "Custom column name" : "Özel sütun adı",
-    "What else do you want to track? Set here a name and you can add data in the data-table. The values have to be numbers. Please do not forget to activate the column in the column selections." : "Başka neyi izlemek istersiniz? Buradan bir ad belirterek veri tablosuna ekleyebilirsiniz. Değerler sayı olmalıdır. Lütfen sütun seçimlerinden sütunu kullanıma almayı unutmayın.",
+    "What else do you want to track? Set here a name and you can add data in the data-table. The values have to be numbers. Please do not forget to activate the column in the column selections." : "Başka neyi izlemek istersiniz? Buradan bir ad belirterek veri tablosuna ekleyebilirsiniz. Değerler sayı olmalıdır. Lütfen sütun seçimlerinden sütunu etkinleştirmeyi unutmayın.",
     "Weight target" : "Kilo hedefi",
     "in {unit}" : "{unit} olarak",
     "Leave blank for none." : "Hiçbiri için boş bırakın.",
