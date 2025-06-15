@@ -13,6 +13,7 @@ OC.L10N.register(
     "Group" : "Kundi",
     "Can edit" : "Inaweza kuhariri",
     "Can manage" : "Inaweza kusimamia",
+    "in {unit}" : "Katika {unit}",
     "Today" : "Leo",
     "Actions" : "Utendekaji",
     "Cancel" : "Cancel"
