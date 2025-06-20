@@ -7,6 +7,7 @@ OC.L10N.register(
     "Other" : "Mengine",
     "Activity" : "Shughuli",
     "Name" : "Jina",
+    "Show details" : "Onesha maelezo",
     "Delete" : "Futa",
     "Failed to create share with {displayName}" : "Imeshindwa kutengeneza ushiriki na {displayName}",
     "No participants found" : "Hakuna mshiriki aliyepatikana",
@@ -14,8 +15,10 @@ OC.L10N.register(
     "Can edit" : "Inaweza kuhariri",
     "Can manage" : "Inaweza kusimamia",
     "in {unit}" : "Katika {unit}",
+    "Last year" : "Mwaka uliopita",
     "Today" : "Leo",
     "Actions" : "Utendekaji",
-    "Cancel" : "Cancel"
+    "Cancel" : "Cancel",
+    "Error" : "Hitilafu"
 },
 "nplurals=2; plural=(n != 1);");
