@@ -132,7 +132,7 @@
     "Give some comment, if you want..." : "Wenn du willst, gib einen Kommentar …",
     "measurement dataset" : "Gemessene Daten",
     "Medication plans" : "Medikationspläne",
-    "Select a medication plan" : "Wähle einen Medikationsplan",
+    "Select a medication plan" : "Medikationsplan auswählen",
     "Take over previous medication" : "Bisherige Medikamente übernehmen",
     "A new plan will take over the medication from the previous medication plan by default. Uncheck this option to create an empty medication plan." : "Ein neuer Plan übernimmt standardmäßig die Medikation aus dem vorherigen Medikationsplan. Deaktiviere diese Option, um einen leeren Medikationsplan zu erstellen.",
     "Medication plan" : "Medikationsplan",
