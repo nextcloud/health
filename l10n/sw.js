@@ -6,6 +6,7 @@ OC.L10N.register(
     "Date" : "Tarehe",
     "Other" : "Mengine",
     "Activity" : "Shughuli",
+    "None" : "Hakuna",
     "Name" : "Jina",
     "Show details" : "Onesha maelezo",
     "Delete" : "Futa",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Last year" : "Mwaka uliopita",
     "Today" : "Leo",
     "Actions" : "Utendekaji",
+    "Edit {entityName}" : "Hariri {entityName}",
     "Cancel" : "Cancel",
     "Error" : "Hitilafu"
 },
