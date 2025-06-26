@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Share" : "Shirikisha",
     "Duration" : "Muda",
+    "Category" : "Kipengele",
     "Date" : "Tarehe",
     "Other" : "Mengine",
     "Good" : "Nzuri",
