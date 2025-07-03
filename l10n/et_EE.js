@@ -31,6 +31,7 @@ OC.L10N.register(
     "Delete" : "Kustuta",
     "Information" : "Teave",
     "Donations" : "Annetused",
+    "Age" : "Vanus",
     "Height" : "Kõrgus",
     "Failed to create share with {displayName}" : "Jagamine ei õnnestunud: {displayName}",
     "No participants found" : "Osalejaid ei leidu",
@@ -53,6 +54,7 @@ OC.L10N.register(
     "Actions" : "Tegevused",
     "Edit {entityName}" : "Muuda „{entityName}“",
     "Cancel" : "Loobu",
-    "Error" : "Viga"
+    "Error" : "Viga",
+    "Underweight" : "Alakaal"
 },
 "nplurals=2; plural=(n != 1);");
