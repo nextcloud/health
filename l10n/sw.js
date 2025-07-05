@@ -14,6 +14,7 @@ OC.L10N.register(
     "Name" : "Jina",
     "Show details" : "Onesha maelezo",
     "Delete" : "Futa",
+    "Information" : "Taarifa",
     "Failed to create share with {displayName}" : "Imeshindwa kutengeneza ushiriki na {displayName}",
     "No participants found" : "Hakuna mshiriki aliyepatikana",
     "Group" : "Kundi",
