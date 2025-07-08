@@ -1,6 +1,7 @@
 OC.L10N.register(
     "health",
     {
+    "Health" : "Afya",
     "Share" : "Shirikisha",
     "Duration" : "Muda",
     "Category" : "Kipengele",
