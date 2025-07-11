@@ -42,6 +42,7 @@ OC.L10N.register(
     "_%nh_::_%nh_" : ["%n t","%n t"],
     "Strong" : "Tugev",
     "BMI" : "BMI",
+    "Target" : "Eesmärk",
     "Body fat" : "Keharasv",
     "in {unit}" : "{unit} kuus",
     "Last week" : "Eelmine nädal",
