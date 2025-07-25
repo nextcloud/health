@@ -12,11 +12,11 @@ OC.L10N.register(
     "Medium" : "O'rta",
     "Comment" : "Izoh",
     "Activity" : "Faollik",
-    "None" : "None",
+    "None" : "Yo'q",
     "Normal" : "Oddiy",
     "Name" : "Name",
     "Show details" : "Tafsilotlarni ko'rsatish",
-    "Delete" : "Delete",
+    "Delete" : "O'chirish",
     "Can edit" : "Can edit",
     "in {unit}" : " {unit} da",
     "Last week" : "O`tgan yil",
@@ -25,7 +25,7 @@ OC.L10N.register(
     "Today" : "Today",
     "Actions" : "Actions",
     "Edit {entityName}" : " {entityName}ni tahrirlash",
-    "Cancel" : "Cancel",
-    "Error" : "Error"
+    "Cancel" : "Bekor qilish",
+    "Error" : "Xatolik"
 },
 "nplurals=1; plural=0;");
