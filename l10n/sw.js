@@ -12,6 +12,7 @@ OC.L10N.register(
     "Other" : "Mengine",
     "Good" : "Nzuri",
     "Bad" : "Mbaya",
+    "Medium" : "Medium",
     "Comment" : "Maoni",
     "Activity" : "Shughuli",
     "None" : "Hakuna",
