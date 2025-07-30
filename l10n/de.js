@@ -93,7 +93,7 @@ OC.L10N.register(
     "Panic attack" : "Panikattacke",
     "Fit of rage" : "Wutanfall",
     "Asthma attack" : "Asthmaanfall",
-    "What medicine did you take?" : "Welche Medizin hast du genommen?",
+    "What medicine did you take?" : "Welche Medizin hast du eingenommen?",
     "No pain" : "Keine Schmerzen",
     "Very Mild" : "Sehr mild",
     "Discomforting" : "Unangenehm",
