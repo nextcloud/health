@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Health" : "Afya",
     "Share" : "Shirikisha",
+    "Activities" : "Shughuli",
     "Duration" : "Muda",
     "Chart" : "Chati",
     "Data" : "Data",

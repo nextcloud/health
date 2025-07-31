@@ -54,6 +54,7 @@ OC.L10N.register(
     "Today" : "今天",
     "Item" : "項目",
     "Actions" : "動作",
+    "Edit {entityName}" : "編輯 {entityName}",
     "Cancel" : "取消",
     "Error" : "錯誤",
     "Could not load editor, text not available." : "無法載入編輯器，文字不可用。",
