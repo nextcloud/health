@@ -20,6 +20,7 @@ OC.L10N.register(
     "Last 48 hours" : "Апошнія 48 гадзін",
     "Today" : "Сёння",
     "Actions" : "Дзеянні",
+    "Edit {entityName}" : "Рэдагаваць {entityName}",
     "Cancel" : "Скасаваць",
     "Error" : "Памылка"
 },
