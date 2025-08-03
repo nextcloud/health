@@ -10,6 +10,7 @@ OC.L10N.register(
     "Column selection" : "Column selection",
     "Category" : "Kipengele",
     "Date" : "Tarehe",
+    "Running" : "Running",
     "Other" : "Mengine",
     "Good" : "Nzuri",
     "Bad" : "Mbaya",
