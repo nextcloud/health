@@ -5,6 +5,7 @@ OC.L10N.register(
     "Activities" : "Актыўнасць",
     "Date" : "Дата",
     "Activity" : "Актыўнасць",
+    "None" : "Няма",
     "Name" : "Назва",
     "Delete" : "Выдаліць",
     "Group" : "Група",
