@@ -36,6 +36,7 @@ OC.L10N.register(
     "Last year" : "Mwaka uliopita",
     "Show all" : "Show all",
     "Today" : "Leo",
+    "Item" : "Kipengele",
     "Actions" : "Utendekaji",
     "Edit {entityName}" : "Hariri {entityName}",
     "Cancel" : "Cancel",

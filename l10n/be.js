@@ -10,6 +10,7 @@ OC.L10N.register(
     "Delete" : "Выдаліць",
     "Group" : "Група",
     "Can edit" : "Можа рэдагаваць",
+    "Quality" : "Якасць",
     "_%nh_::_%nh_" : ["%n г","%n г","%n г","%n г"],
     "in {unit}" : "у {unit}",
     "Last week" : "Мінулы тыдзень",
