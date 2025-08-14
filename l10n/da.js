@@ -9,6 +9,7 @@ OC.L10N.register(
     "Duration" : "Varighed",
     "Chart" : "Diagram",
     "Data" : "Data",
+    "Column selection" : "Kolonnevalg",
     "Category" : "Kategori",
     "Date" : "Dato",
     "Running" : "Løber",
