@@ -19,6 +19,7 @@ OC.L10N.register(
     "Activity" : "Shughuli",
     "None" : "Hakuna",
     "Normal" : "Kawaida",
+    "General settings" : "General settings",
     "Name" : "Jina",
     "Show details" : "Onesha maelezo",
     "Delete" : "Futa",
