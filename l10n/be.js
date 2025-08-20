@@ -4,6 +4,7 @@ OC.L10N.register(
     "Share" : "Абагуліць",
     "Activities" : "Актыўнасць",
     "Date" : "Дата",
+    "Comment" : "Каментарый",
     "Activity" : "Актыўнасць",
     "None" : "Няма",
     "Name" : "Назва",
