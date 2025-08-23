@@ -8,6 +8,7 @@ OC.L10N.register(
     "Duration" : "길이",
     "Distance" : "거리",
     "Data" : "데이터",
+    "Column selection" : "열 선택",
     "Category" : "분류",
     "Date" : "날짜",
     "Running" : "달리기",
