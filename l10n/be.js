@@ -3,6 +3,8 @@ OC.L10N.register(
     {
     "Share" : "Абагуліць",
     "Activities" : "Актыўнасць",
+    "Duration" : "Працягласць",
+    "Category" : "Катэгорыя",
     "Date" : "Дата",
     "Comment" : "Каментарый",
     "Activity" : "Актыўнасць",
