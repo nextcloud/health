@@ -10,6 +10,7 @@ OC.L10N.register(
     "Activity" : "Актыўнасць",
     "None" : "Няма",
     "Name" : "Назва",
+    "Show details" : "Паказаць падрабязнасці",
     "Delete" : "Выдаліць",
     "Group" : "Група",
     "Can edit" : "Можа рэдагаваць",
