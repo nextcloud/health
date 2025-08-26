@@ -18,7 +18,7 @@ OC.L10N.register(
     "Activity" : "Darbības",
     "None" : "Nav",
     "Temperature" : "Temperatūra",
-    "General settings" : "Vispārīgie iestatījumi",
+    "General settings" : "Vispārīgi iestatījumi",
     "Name" : "Vārds",
     "Show details" : "Rādīt informāciju",
     "Delete" : "Izdzēst",
