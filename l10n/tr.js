@@ -274,7 +274,7 @@ OC.L10N.register(
     "Send {eName}" : "{eName} gönder",
     "Cancel" : "İptal",
     "Error" : "Hata",
-    "Could not load editor, text not available." : "Düzenleyici yüklenemedi. Metin kullanılamıyor.",
+    "Could not load editor, text not available." : "Düzenleyici yüklenemedi. Yazı uygulaması kullanılamıyor.",
     "Underweight" : "Zayıf",
     "Normal weight" : "Normal",
     "Pre-obesity" : "Kilolu",
