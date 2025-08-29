@@ -6,6 +6,7 @@ OC.L10N.register(
     "Duration" : "Davomiyligi",
     "Chart" : "Grafik",
     "Data" : "Ma'lumotlar",
+    "Column selection" : "Ustunni tanlash",
     "Category" : "Kategoriya",
     "Date" : "Sana",
     "Other" : "Boshqa",

@@ -12,6 +12,7 @@ OC.L10N.register(
     "Activity" : "Актыўнасць",
     "None" : "Няма",
     "Name" : "Назва",
+    "Edit name" : "Рэдагаваць імя",
     "Show details" : "Паказаць падрабязнасці",
     "Delete" : "Выдаліць",
     "Donations" : "Ахвяраванні",
