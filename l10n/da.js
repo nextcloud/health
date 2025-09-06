@@ -50,6 +50,7 @@ OC.L10N.register(
     "Last month" : "Seneste måned",
     "Last year" : "Sidste år",
     "Show all" : "Vis alle",
+    "Last hour" : "Seneste time",
     "Last 24 hours" : "Seneste 24 timer",
     "Today" : "I dag",
     "Actions" : "Handlinger",
