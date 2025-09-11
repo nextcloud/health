@@ -29,7 +29,7 @@ OC.L10N.register(
     "Temperature" : "Temperatur",
     "General settings" : "Generelle indstillinger",
     "Name" : "Navn",
-    "Edit name" : "Rediger navn",
+    "Edit name" : "Redigér navn",
     "Show details" : "Vis detaljer",
     "Delete" : "Slet",
     "Information" : "Information",
@@ -54,6 +54,7 @@ OC.L10N.register(
     "Last 24 hours" : "Seneste 24 timer",
     "Today" : "I dag",
     "Actions" : "Handlinger",
+    "Edit {entityName}" : "Redigér {entityName}",
     "Cancel" : "Annuller",
     "Error" : "Fejl",
     "Could not load editor, text not available." : "Kunne ikke indlæse editor, tekst ikke tilgængelig."

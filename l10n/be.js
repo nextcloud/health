@@ -8,6 +8,7 @@ OC.L10N.register(
     "Data" : "Даныя",
     "Category" : "Катэгорыя",
     "Date" : "Дата",
+    "Other" : "Іншае",
     "Comment" : "Каментарый",
     "Activity" : "Актыўнасць",
     "None" : "Няма",
