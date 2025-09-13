@@ -23,6 +23,7 @@ OC.L10N.register(
     "Last week" : "O`tgan yil",
     "Last month" : "Oxirgi oy",
     "Last year" : "O`tgan yil",
+    "Show all" : "Hammasini ko'rsatish",
     "Today" : "Today",
     "Actions" : "Actions",
     "Edit {entityName}" : " {entityName}ni tahrirlash",
