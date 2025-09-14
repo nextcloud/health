@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "Health" : "Saúde",
     "Track your health privately." : "Faga un seguimento da súa saúde de xeito privado.",
-    "Track your health data within the following provided modules:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "Faga un seguimento dos seus datos de saúde nos seguintes módulos fornecidos:\n– Peso\n– Como me sinto\n– Medidas\n– Sono\n– Fumar\n– Actividades\n– Medicación\n\nA saúde é todo.",
+    "Track your health data within the following provided modules:\n- Weight\n- Feeling\n- Measurement\n- Sleep\n- Smoking\n- Activities\n- Medication\n\nHealth is everything." : "Faga un seguimento dos seus datos de saúde nos seguintes módulos fornecidos:\n- Peso\n- Como me sinto\n- Medidas\n- Sono\n- Fumar\n- Actividades\n- Medicación\n\nA saúde é todo.",
     "Show sidebar" : "Amosar a barra lateral",
     "Created at {creationTime}" : "Creado ás {creationTime}",
     "Person" : "Persoa",
