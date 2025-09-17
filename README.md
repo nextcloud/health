@@ -6,7 +6,8 @@ With this statement, I would like to inform you that I will be discontinuing dev
 
 It has been a great pleasure creating this app and your interest in it has made me very happy! I am proud of what has been achieved. However, due to various circumstances, it is currently not possible for me to further develop the app. The development is time-consuming and the basis of the app, which originated as a learning project, is not optimal. There are security vulnerabilities and unprofessional architectural solutions that urgently need to be addressed. 
 
-**👍Good news:  Most of the features of the Nextcloud Health App can now be used in the new "Nextcloud Tables" app. Analyses can then be performed via "Nextcloud Analytics". Data can be exported as CSV and imported into the Tables app.**
+**👍Good news:  Most of the features of the Nextcloud Health App can now be used in the new "Nextcloud Tables" app. Analyses can then be performed via "Nextcloud Analytics". Data can be exported as CSV and imported into the Tables app.
+@deandreamatias has written a helpful tutorial on the topic: [Migrate Nextcloud Health to Tables and Analytics](https://medium.com/@deandreamatias/migrate-nextcloud-health-to-tables-and-analytics-542cfb63cff2).**
 
 This app is currently looking for a new maintainer.
 
