@@ -17,6 +17,7 @@ OC.L10N.register(
     "Medium" : "Medium",
     "Comment" : "Maoni",
     "Activity" : "Shughuli",
+    "Energy" : "Energy",
     "None" : "Hakuna",
     "Normal" : "Kawaida",
     "General settings" : "General settings",
