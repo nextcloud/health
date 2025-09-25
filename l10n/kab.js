@@ -13,6 +13,7 @@ OC.L10N.register(
     "Show details" : "Sken talqayt",
     "Delete" : "Kkes",
     "Group" : "Agraw",
+    "Last year" : "Ilindi",
     "Today" : "Ass-a",
     "Actions" : "Tigawin",
     "Cancel" : "Sefsex",
