@@ -65,6 +65,6 @@ class Version0230Date20210110000000 extends SimpleMigrationStep {
 		$query = $this->connection->getQueryBuilder();
 		$query->update('health_weightdata')
 			  ->set('bodyfat', 'bodyfat2');
-		$query->execute();
+		$query->executeStatement();
 	}
 }
