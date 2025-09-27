@@ -33,6 +33,7 @@ OC.L10N.register(
     "Donations" : "Annetused",
     "Age" : "Vanus",
     "Height" : "Kõrgus",
+    "Currency" : "Valuuta",
     "Failed to create share with {displayName}" : "Jagamine ei õnnestunud: {displayName}",
     "No participants found" : "Osalejaid ei leidu",
     "Group" : "Grupp",

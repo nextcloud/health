@@ -35,6 +35,7 @@ OC.L10N.register(
     "Information" : "Information",
     "Donations" : "Donationer",
     "Height" : "Højde",
+    "Currency" : "Valuta",
     "Failed to create share with {displayName}" : "Oprettelse af delt drev med {displayName} fejlede",
     "No participants found" : "Ingen deltagere fundet",
     "Group" : "Gruppe",
