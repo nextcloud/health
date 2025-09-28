@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Share" : "Bḍu",
     "Activities" : "Irmuden",
+    "Category" : "Taggayt",
     "Date" : "Azemz",
     "Other" : "Wayeḍ",
     "Comment" : "Commentaire",
@@ -14,6 +15,7 @@ OC.L10N.register(
     "Delete" : "Kkes",
     "Group" : "Agraw",
     "Last year" : "Ilindi",
+    "Show all" : "Sken-iten-id akk",
     "Today" : "Ass-a",
     "Actions" : "Tigawin",
     "Cancel" : "Sefsex",

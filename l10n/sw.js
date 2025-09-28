@@ -3,8 +3,10 @@ OC.L10N.register(
     {
     "Health" : "Afya",
     "Share" : "Shirikisha",
+    "Weight" : "Uzito",
     "Activities" : "Shughuli",
     "Duration" : "Muda",
+    "Distance" : "Distance",
     "Chart" : "Chati",
     "Data" : "Data",
     "Column selection" : "Column selection",
@@ -26,13 +28,16 @@ OC.L10N.register(
     "Show details" : "Onesha maelezo",
     "Delete" : "Futa",
     "Information" : "Taarifa",
+    "Age" : "Age",
     "Height" : "Urefu",
+    "Currency" : "Currency",
     "Failed to create share with {displayName}" : "Imeshindwa kutengeneza ushiriki na {displayName}",
     "No participants found" : "Hakuna mshiriki aliyepatikana",
     "Group" : "Kundi",
     "Can edit" : "Inaweza kuhariri",
     "Can manage" : "Inaweza kusimamia",
     "Quality" : "Quality",
+    "BMI" : "BMI",
     "in {unit}" : "Katika {unit}",
     "Last week" : "Wiki iliyopita",
     "Last month" : "Mwezi uliopita",
@@ -44,6 +49,7 @@ OC.L10N.register(
     "Actions" : "Utendekaji",
     "Edit {entityName}" : "Hariri {entityName}",
     "Cancel" : "Cancel",
-    "Error" : "Hitilafu"
+    "Error" : "Hitilafu",
+    "Underweight" : "Underweight"
 },
 "nplurals=2; plural=(n != 1);");

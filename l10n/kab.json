@@ -1,6 +1,7 @@
 { "translations": {
     "Share" : "Bḍu",
     "Activities" : "Irmuden",
+    "Category" : "Taggayt",
     "Date" : "Azemz",
     "Other" : "Wayeḍ",
     "Comment" : "Commentaire",
@@ -12,6 +13,7 @@
     "Delete" : "Kkes",
     "Group" : "Agraw",
     "Last year" : "Ilindi",
+    "Show all" : "Sken-iten-id akk",
     "Today" : "Ass-a",
     "Actions" : "Tigawin",
     "Cancel" : "Sefsex",
