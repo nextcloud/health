@@ -35,6 +35,7 @@ OC.L10N.register(
     "Donations" : "捐款",
     "Age" : "年齡",
     "Height" : "高度",
+    "Currency" : "貨幣",
     "Failed to create share with {displayName}" : "無法建立與 {displayName} 的分享",
     "No participants found" : "找不到參與者",
     "Group" : "群組",
