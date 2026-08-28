@@ -2,7 +2,7 @@
 import type { HealthConfiguration } from './api/configuration.ts'
 
 import { t } from '@nextcloud/l10n'
-import { computed, provide, ref } from 'vue'
+import { computed, provide, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcAppNavigation from '@nextcloud/vue/components/NcAppNavigation'
@@ -11,6 +11,7 @@ import NcAppSettingsDialog from '@nextcloud/vue/components/NcAppSettingsDialog'
 import NcContent from '@nextcloud/vue/components/NcContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import SettingsContent from './components/SettingsContent.vue'
+import SupportDialog from './components/SupportDialog.vue'
 import { healthConfigurationKey } from './configurationContext.ts'
 import { iconPaths } from './icons.ts'
 import { localDateKey } from './utils/dates.ts'
@@ -19,6 +20,7 @@ const router = useRouter()
 
 type ViewKey = 'journal' | 'goals' | 'statistics'
 const settingsOpen = ref(false)
+const supportOpen = ref(false)
 const configuration = ref<HealthConfiguration | null>(null)
 
 provide(healthConfigurationKey, configuration)
@@ -45,6 +47,19 @@ function navigate(view: ViewKey) {
 
 	void router.push({ name: view })
 }
+
+function closeSupport() {
+	supportOpen.value = false
+	if (route.name === 'donate') {
+		void router.replace({ name: 'journal', params: { date: localDateKey(new Date()) } })
+	}
+}
+
+watch(() => route.name, (name) => {
+	if (name === 'donate') {
+		supportOpen.value = true
+	}
+}, { immediate: true })
 </script>
 
 <template>
@@ -68,6 +83,13 @@ function navigate(view: ViewKey) {
 			<template #footer>
 				<ul>
 					<NcAppNavigationItem
+						:name="t('health', 'Support')"
+						@click.prevent="supportOpen = true">
+						<template #icon>
+							<NcIconSvgWrapper :path="iconPaths.heartOutline" />
+						</template>
+					</NcAppNavigationItem>
+					<NcAppNavigationItem
 						:name="t('health', 'Settings')"
 						icon="icon-settings"
 						@click.prevent="settingsOpen = true" />
@@ -84,6 +106,9 @@ function navigate(view: ViewKey) {
 			no-version>
 			<SettingsContent />
 		</NcAppSettingsDialog>
+		<SupportDialog
+			:open="supportOpen"
+			@update:open="(open) => open ? supportOpen = true : closeSupport()" />
 	</NcContent>
 </template>
 

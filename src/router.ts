@@ -37,6 +37,12 @@ const router = createRouter({
 			component: StatisticsView,
 		},
 		{
+			path: '/donate',
+			name: 'donate',
+			component: JournalView,
+			props: () => ({ date: localDateKey(new Date()) }),
+		},
+		{
 			path: '/settings',
 			redirect: todayRoute,
 		},
