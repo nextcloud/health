@@ -1,0 +1,170 @@
+name: Release to Nextcloud App Store
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build-sign-and-publish:
+    name: Build, sign, and publish Health
+    runs-on: ubuntu-latest
+    environment: release
+
+    steps:
+      - name: Check out the published release tag
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          persist-credentials: false
+
+      - name: Validate release material
+        shell: bash
+        env:
+          APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+          APP_PUBLIC_CRT: ${{ secrets.APP_PUBLIC_CRT }}
+          APPSTORE_TOKEN: ${{ secrets.APPSTORE_TOKEN }}
+        run: |
+          set -euo pipefail
+          for secret_name in APP_PRIVATE_KEY APP_PUBLIC_CRT APPSTORE_TOKEN; do
+            if [[ -z "${!secret_name:-}" ]]; then
+              echo "Required release secret ${secret_name} is not configured." >&2
+              exit 1
+            fi
+          done
+
+      - name: Set up PHP 8.2
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1 # v2.36.0
+        with:
+          php-version: 8.2
+          extensions: bz2, ctype, curl, dom, fileinfo, gd, iconv, intl, json, libxml, mbstring, openssl, pcntl, posix, session, simplexml, xmlreader, xmlwriter, zip, zlib, sqlite, pdo_sqlite
+          coverage: none
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+        with:
+          node-version: 24
+
+      - name: Set up npm 11.3
+        run: npm install --global npm@11.3.0
+
+      - name: Validate app and release versions
+        id: release
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          set -euo pipefail
+          app_version="$(php -r '$info = simplexml_load_file("appinfo/info.xml"); if ($info === false || !isset($info->version)) { fwrite(STDERR, "Unable to read app version from appinfo/info.xml\\n"); exit(1); } echo (string)$info->version;')"
+          release_tag="$RELEASE_TAG"
+
+          if [[ ! "$app_version" =~ ^[0-9]+(\.[0-9]+){2}([-.][0-9A-Za-z.-]+)?$ ]]; then
+            echo "App version '$app_version' is not a supported release version." >&2
+            exit 1
+          fi
+
+          if [[ "$release_tag" != "$app_version" && "$release_tag" != "v$app_version" ]]; then
+            echo "Published release tag '$release_tag' must match app version '$app_version' (optionally prefixed with v)." >&2
+            exit 1
+          fi
+
+          artifact_name="health-${app_version}.tar.gz"
+          artifact_path="$RUNNER_TEMP/$artifact_name"
+          download_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download/$release_tag/$artifact_name"
+
+          {
+            echo "version=$app_version"
+            echo "tag=$release_tag"
+            echo "artifact_name=$artifact_name"
+            echo "artifact_path=$artifact_path"
+            echo "download_url=$download_url"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Install production PHP dependencies
+        run: composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader --no-scripts
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build production frontend assets
+        run: npm run build
+
+      - name: Set up Nextcloud 33 for signing
+        uses: SMillerDev/nextcloud-actions/setup-nextcloud@b13a04eb6a4e48972d31fa07559619843fcc2102 # main
+        with:
+          version: stable33
+          cron: false
+          database-type: sqlite
+
+      - name: Stage and sign the App Store package
+        shell: bash
+        env:
+          APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+          APP_PUBLIC_CRT: ${{ secrets.APP_PUBLIC_CRT }}
+        run: |
+          set -euo pipefail
+          release_directory="$RUNNER_TEMP/health-release"
+          package_directory="$release_directory/health"
+          private_key_path="$RUNNER_TEMP/health-app.key"
+          certificate_path="$RUNNER_TEMP/health-app.crt"
+
+          rm -rf -- "$release_directory"
+          mkdir -p "$package_directory"
+          rsync -a --exclude-from=.nextcloudignore ./ "$package_directory/"
+
+          umask 077
+          printf '%s' "$APP_PRIVATE_KEY" > "$private_key_path"
+          printf '%s' "$APP_PUBLIC_CRT" > "$certificate_path"
+          php ../server/occ integrity:sign-app \
+            --privateKey="$private_key_path" \
+            --certificate="$certificate_path" \
+            --path="$package_directory"
+
+          test -f "$package_directory/appinfo/signature.json"
+
+      - name: Create and validate the release archive
+        shell: bash
+        env:
+          ARCHIVE_PATH: ${{ steps.release.outputs.artifact_path }}
+        run: |
+          set -euo pipefail
+          release_directory="$RUNNER_TEMP/health-release"
+          archive_path="$ARCHIVE_PATH"
+
+          tar -C "$release_directory" -czf "$archive_path" health
+          tar -tzf "$archive_path" | awk -F/ '$1 != "health" { exit 1 }'
+          tar -tzf "$archive_path" | grep -Fx 'health/appinfo/info.xml'
+          tar -tzf "$archive_path" | grep -Fx 'health/appinfo/signature.json'
+
+      - name: Attach the signed archive to the GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+          ARCHIVE_PATH: ${{ steps.release.outputs.artifact_path }}
+          ARTIFACT_NAME: ${{ steps.release.outputs.artifact_name }}
+        run: |
+          set -euo pipefail
+          gh release upload "$RELEASE_TAG" \
+            "$ARCHIVE_PATH#$ARTIFACT_NAME" \
+            --clobber
+
+      - name: Publish the attached archive to the Nextcloud App Store
+        uses: R0Wi/nextcloud-appstore-push-action@ad2020a77eb694e8fe145d2ebd6bc21c246240fd # v1.0.5
+        with:
+          app_name: health
+          appstore_token: ${{ secrets.APPSTORE_TOKEN }}
+          download_url: ${{ steps.release.outputs.download_url }}
+          app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
+          # Semantic-version prerelease suffixes (alpha, beta, rc) determine
+          # prerelease status. True App Store nightlies need a separate workflow.
+          nightly: false
+
+      - name: Remove temporary signing material
+        if: always()
+        shell: bash
+        run: |
+          rm -rf -- "$RUNNER_TEMP/health-release"
+          rm -f -- "$RUNNER_TEMP/health-app.key" "$RUNNER_TEMP/health-app.crt" "$GITHUB_WORKSPACE/health.key"
