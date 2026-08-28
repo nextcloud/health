@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace OCA\Health\Migration;
 
 use Closure;
-use Doctrine\DBAL\Schema\Table;
 use OCP\DB\ISchemaWrapper;
 use OCP\DB\Types;
 use OCP\Migration\IOutput;
@@ -18,7 +17,8 @@ class Version3000Date20260820130000 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable('health_daily_values')) {
 			$table = $schema->createTable('health_daily_values');
-			$this->addPrimaryKey($table);
+			$table->addColumn('id', Types::BIGINT, ['autoincrement' => true, 'notnull' => true, 'unsigned' => true]);
+			$table->setPrimaryKey(['id']);
 			$table->addColumn('user_id', Types::STRING, ['length' => 64, 'notnull' => true]);
 			$table->addColumn('metric_key', Types::STRING, ['length' => 64, 'notnull' => true]);
 			$table->addColumn('numeric_value', Types::DECIMAL, ['precision' => 20, 'scale' => 6, 'notnull' => true]);
@@ -30,7 +30,8 @@ class Version3000Date20260820130000 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable('health_measurements')) {
 			$table = $schema->createTable('health_measurements');
-			$this->addPrimaryKey($table);
+			$table->addColumn('id', Types::BIGINT, ['autoincrement' => true, 'notnull' => true, 'unsigned' => true]);
+			$table->setPrimaryKey(['id']);
 			$table->addColumn('user_id', Types::STRING, ['length' => 64, 'notnull' => true]);
 			$table->addColumn('metric_key', Types::STRING, ['length' => 64, 'notnull' => true]);
 			$table->addColumn('numeric_value', Types::DECIMAL, ['precision' => 20, 'scale' => 6, 'notnull' => true]);
@@ -47,7 +48,8 @@ class Version3000Date20260820130000 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable('health_user_metrics')) {
 			$table = $schema->createTable('health_user_metrics');
-			$this->addPrimaryKey($table);
+			$table->addColumn('id', Types::BIGINT, ['autoincrement' => true, 'notnull' => true, 'unsigned' => true]);
+			$table->setPrimaryKey(['id']);
 			$table->addColumn('user_id', Types::STRING, ['length' => 64, 'notnull' => true]);
 			$table->addColumn('metric_key', Types::STRING, ['length' => 64, 'notnull' => true]);
 			$table->addColumn('enabled', Types::BOOLEAN, ['notnull' => true]);
@@ -59,7 +61,8 @@ class Version3000Date20260820130000 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable('health_user_settings')) {
 			$table = $schema->createTable('health_user_settings');
-			$this->addPrimaryKey($table);
+			$table->addColumn('id', Types::BIGINT, ['autoincrement' => true, 'notnull' => true, 'unsigned' => true]);
+			$table->setPrimaryKey(['id']);
 			$table->addColumn('user_id', Types::STRING, ['length' => 64, 'notnull' => true]);
 			$table->addColumn('height_cm', Types::DECIMAL, ['precision' => 20, 'scale' => 6, 'notnull' => false]);
 			$table->addColumn('height_display_unit', Types::STRING, ['length' => 32, 'notnull' => true, 'default' => 'cm']);
@@ -67,10 +70,5 @@ class Version3000Date20260820130000 extends SimpleMigrationStep {
 		}
 
 		return $schema;
-	}
-
-	private function addPrimaryKey(Table $table): void {
-		$table->addColumn('id', Types::BIGINT, ['autoincrement' => true, 'notnull' => true, 'unsigned' => true]);
-		$table->setPrimaryKey(['id']);
 	}
 }

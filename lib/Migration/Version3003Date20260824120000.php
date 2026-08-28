@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace OCA\Health\Migration;
 
 use Closure;
-use Doctrine\DBAL\Schema\Table;
 use OCP\DB\ISchemaWrapper;
 use OCP\DB\Types;
 use OCP\Migration\IOutput;
@@ -22,7 +21,8 @@ class Version3003Date20260824120000 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable('health_goals')) {
 			$table = $schema->createTable('health_goals');
-			$this->addPrimaryKey($table);
+			$table->addColumn('id', Types::BIGINT, ['autoincrement' => true, 'notnull' => true, 'unsigned' => true]);
+			$table->setPrimaryKey(['id']);
 			$table->addColumn('user_id', Types::STRING, ['length' => 64, 'notnull' => true]);
 			$table->addColumn('target_key', Types::STRING, ['length' => 64, 'notnull' => true]);
 			$table->addColumn('period', Types::STRING, ['length' => 16, 'notnull' => true]);
@@ -38,7 +38,8 @@ class Version3003Date20260824120000 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable('health_goal_revisions')) {
 			$table = $schema->createTable('health_goal_revisions');
-			$this->addPrimaryKey($table);
+			$table->addColumn('id', Types::BIGINT, ['autoincrement' => true, 'notnull' => true, 'unsigned' => true]);
+			$table->setPrimaryKey(['id']);
 			$table->addColumn('goal_id', Types::BIGINT, ['notnull' => true, 'unsigned' => true]);
 			$table->addColumn('comparator', Types::STRING, ['length' => 8, 'notnull' => true]);
 			$table->addColumn('target_value', Types::DECIMAL, ['precision' => 20, 'scale' => 6, 'notnull' => true]);
@@ -53,7 +54,8 @@ class Version3003Date20260824120000 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable('health_goal_reminder_state')) {
 			$table = $schema->createTable('health_goal_reminder_state');
-			$this->addPrimaryKey($table);
+			$table->addColumn('id', Types::BIGINT, ['autoincrement' => true, 'notnull' => true, 'unsigned' => true]);
+			$table->setPrimaryKey(['id']);
 			$table->addColumn('goal_id', Types::BIGINT, ['notnull' => true, 'unsigned' => true]);
 			$table->addColumn('period_key', Types::STRING, ['length' => 16, 'notnull' => true]);
 			$table->addColumn('last_notification_at', Types::DATETIME_IMMUTABLE, ['notnull' => false]);
@@ -64,10 +66,5 @@ class Version3003Date20260824120000 extends SimpleMigrationStep {
 		}
 
 		return $schema;
-	}
-
-	private function addPrimaryKey(Table $table): void {
-		$table->addColumn('id', Types::BIGINT, ['autoincrement' => true, 'notnull' => true, 'unsigned' => true]);
-		$table->setPrimaryKey(['id']);
 	}
 }
