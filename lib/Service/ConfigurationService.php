@@ -9,7 +9,7 @@ use OCA\Health\Exception\InvalidEntryException;
 
 /**
  * @psalm-import-type HealthConfiguration from \OCA\Health\ResponseDefinitions
- * @psalm-import-type HealthMetricDefinition from \OCA\Health\ResponseDefinitions
+ * @psalm-import-type HealthMetricDefinition from \OCA\Health\Types\MetricTypes
  */
 class ConfigurationService {
 	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */

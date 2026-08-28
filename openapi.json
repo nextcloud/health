@@ -20,6 +20,72 @@
             }
         },
         "schemas": {
+            "BloodPressureMeasurement": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "metricKey",
+                    "numericValue",
+                    "values",
+                    "context",
+                    "source",
+                    "recordedAt",
+                    "createdAt",
+                    "updatedAt",
+                    "note"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "metricKey": {
+                        "type": "string",
+                        "enum": [
+                            "blood_pressure"
+                        ]
+                    },
+                    "numericValue": {
+                        "nullable": true
+                    },
+                    "values": {
+                        "type": "object",
+                        "required": [
+                            "systolic",
+                            "diastolic"
+                        ],
+                        "properties": {
+                            "systolic": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "diastolic": {
+                                "type": "number",
+                                "format": "double"
+                            }
+                        }
+                    },
+                    "context": {
+                        "type": "string"
+                    },
+                    "source": {
+                        "type": "string"
+                    },
+                    "recordedAt": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    },
+                    "note": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                }
+            },
             "Capabilities": {
                 "type": "object",
                 "required": [
@@ -750,70 +816,14 @@
                 }
             },
             "Measurement": {
-                "type": "object",
-                "required": [
-                    "id",
-                    "metricKey",
-                    "numericValue",
-                    "values",
-                    "context",
-                    "source",
-                    "recordedAt",
-                    "createdAt",
-                    "updatedAt",
-                    "note"
-                ],
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "format": "int64"
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/SingleMeasurement"
                     },
-                    "metricKey": {
-                        "type": "string"
-                    },
-                    "numericValue": {
-                        "type": "number",
-                        "format": "double",
-                        "nullable": true
-                    },
-                    "values": {
-                        "type": "object",
-                        "nullable": true,
-                        "required": [
-                            "systolic",
-                            "diastolic"
-                        ],
-                        "properties": {
-                            "systolic": {
-                                "type": "number",
-                                "format": "double"
-                            },
-                            "diastolic": {
-                                "type": "number",
-                                "format": "double"
-                            }
-                        }
-                    },
-                    "context": {
-                        "type": "string"
-                    },
-                    "source": {
-                        "type": "string"
-                    },
-                    "recordedAt": {
-                        "type": "string"
-                    },
-                    "createdAt": {
-                        "type": "string"
-                    },
-                    "updatedAt": {
-                        "type": "string"
-                    },
-                    "note": {
-                        "type": "string",
-                        "nullable": true
+                    {
+                        "$ref": "#/components/schemas/BloodPressureMeasurement"
                     }
-                }
+                ]
             },
             "MeasurementsPage": {
                 "type": "object",
@@ -878,6 +888,56 @@
                         "items": {
                             "$ref": "#/components/schemas/DailyValue"
                         }
+                    }
+                }
+            },
+            "SingleMeasurement": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "metricKey",
+                    "numericValue",
+                    "values",
+                    "context",
+                    "source",
+                    "recordedAt",
+                    "createdAt",
+                    "updatedAt",
+                    "note"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "metricKey": {
+                        "type": "string"
+                    },
+                    "numericValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "values": {
+                        "nullable": true
+                    },
+                    "context": {
+                        "type": "string"
+                    },
+                    "source": {
+                        "type": "string"
+                    },
+                    "recordedAt": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    },
+                    "note": {
+                        "type": "string",
+                        "nullable": true
                     }
                 }
             },

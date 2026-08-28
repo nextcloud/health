@@ -51,17 +51,6 @@ namespace OCA\Health;
  *   createdMeasurements: list<HealthMeasurement>,
  *   updatedDailyValues: list<HealthDailyValue>
  * }
- * @psalm-type HealthMetricDefinition = array{
- *   metricKey: string,
- *   category: 'journal'|'measurement'|'daily_value',
- *   valueType: 'scale'|'event'|'numeric'|'composite',
- *   minimum: int|null,
- *   maximum: int|null,
- *   allowedOptions: list<string>|null,
- *   aggregation: 'average'|'count'|'daily',
- *   canonicalUnit: string|null,
- *   supportedUnits: list<string>
- * }
  * @psalm-type HealthConfiguration = array{
  *   profile: array{heightCm: float|null, heightDisplayUnit: 'cm'|'in', dateOfBirth: string|null, growthReferenceSex: 'female'|'male'|null},
  *   metrics: array<string, array{enabled: bool, checkInEnabled: bool, checkOutEnabled: bool, displayUnit: string|null}>,
