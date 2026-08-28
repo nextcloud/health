@@ -886,6 +886,7 @@ A feature is complete only when:
 * accessibility requirements are respected
 * no Health data is logged
 * no unrelated scope was added
+* OpenAPI artifacts have been regenerated and are up to date when API response or type definitions change
 
 ---
 
@@ -935,3 +936,228 @@ Journal display
 ```
 
 Do not implement additional metrics as part of this slice unless explicitly requested.
+
+---
+
+# 41. Development Environment and Verification
+
+`AGENTS.md` is the authoritative development instruction source for coding
+agents. `CLAUDE.md` intentionally references this file rather than maintaining
+a second, potentially divergent copy of these rules.
+
+Development must not depend on globally installed host PHP, Composer, or
+Node.js. Run commands from the Health repository root, using the existing
+development container where available or generic Docker mounts for fixed
+runtimes. Do not add developer-specific absolute paths to repository
+documentation or scripts.
+
+Run Composer inside the existing `nextcloud` Docker Compose service, from the
+Health directory mounted in that container. For example, when Docker Compose
+can discover its project:
+
+```bash
+docker compose exec -T nextcloud sh -lc 'cd /var/www/html/apps-extra/health && composer install'
+```
+
+Do not mutate `composer.json` or `composer.lock` merely to reproduce CI in the
+active worktree. In particular, do not routinely run CI matrix preparation
+commands such as `composer remove nextcloud/ocp --dev --no-scripts` there. The
+complete OCP-version matrix is CI's responsibility unless it is explicitly
+reproduced in an isolated temporary environment.
+
+## PHP and Psalm
+
+The application may be developed and tested with newer PHP versions in a
+Nextcloud development instance. Psalm is different: `psalm.xml` declares PHP
+8.2, and Psalm 5.26.x is known to fail when run with the PHP 8.5 development
+container. Psalm must therefore run with PHP 8.2 using this exact command:
+
+```bash
+docker run --rm \
+  -v "$PWD":/app \
+  -w /app \
+  php:8.2-cli \
+  php vendor/bin/psalm \
+    --threads=1 \
+    --no-cache \
+    --monochrome \
+    --no-progress
+```
+
+The required successful result is `No errors found!`. Psalm must reach zero
+errors before an implementation task is complete. Never lower the configured
+level, globally suppress issue categories, replace precise API response types
+with `mixed`, or add broad suppressions merely to obtain green CI. A narrowly
+scoped and justified suppression is permitted only for a genuine Nextcloud
+lifecycle false positive, such as dependency injection, Entity/Mapper
+hydration, migrations, background jobs, Dashboard widgets, Unified Search
+providers, Notifications, or capabilities.
+
+Run PHP coding standards through that service:
+
+```bash
+docker compose exec -T nextcloud sh -lc 'cd /var/www/html/apps-extra/health && composer run cs:check'
+```
+
+PHP-CS failures are mandatory. If they are formatting-only failures, use the
+configured fixer, then verify the result:
+
+```bash
+docker compose exec -T nextcloud sh -lc 'cd /var/www/html/apps-extra/health && composer run cs:fix'
+docker compose exec -T nextcloud sh -lc 'cd /var/www/html/apps-extra/health && composer run cs:check'
+```
+
+Do not manually imitate PHP-CS formatting when the configured fixer can make
+the correction.
+
+Run PHP unit tests through that service:
+
+```bash
+docker compose exec -T nextcloud sh -lc 'cd /var/www/html/apps-extra/health && composer run test:unit'
+```
+
+Do not use `composer run test`: this repository does not define that script.
+The unit suite fails on warnings and risky tests, so a pass has no failures,
+errors, warnings, or risky tests.
+
+## OpenAPI Artifacts
+
+Run OpenAPI generation as a mandatory verification step:
+
+```bash
+docker compose exec -T nextcloud sh -lc 'cd /var/www/html/apps-extra/health && composer run openapi'
+```
+
+The command must succeed without fatal extractor errors. Non-fatal extractor
+warnings do not block a pass unless the command exits non-zero. API response or
+type-definition changes require regeneration of OpenAPI artifacts.
+
+Generated `openapi*.json` files are version-controlled. When regeneration
+changes them, retain and commit those generated changes with the corresponding
+source change. After generation, verify that the generated OpenAPI artifacts
+are up to date; do not hand-edit them to make that check pass.
+
+## Frontend
+
+Frontend development uses Node.js 24 (and the repository-declared npm version).
+Prefer an ephemeral Node 24 Docker environment instead of requiring host npm;
+for example:
+
+```bash
+docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app node:24-bookworm npm ci
+```
+
+The required frontend checks are the scripts defined in `package.json`:
+
+```bash
+npm run typecheck
+npm run lint
+npm run stylelint
+npm run build
+```
+
+Compiled production frontend assets are intentionally version-controlled in
+Health. After frontend source changes, run `npm run build` and include the
+generated runtime assets in the change where applicable. Never commit
+`node_modules`, and do not delete generated production bundles merely because
+they are build artifacts.
+
+## Final Verification Order
+
+Before reporting an implementation task complete, run the applicable checks in
+this order:
+
+1. `docker compose exec -T nextcloud ... composer run cs:check`
+2. Psalm with the PHP 8.2 Docker command above
+3. `docker compose exec -T nextcloud ... composer run test:unit`
+4. `docker compose exec -T nextcloud ... composer run openapi`
+5. verify generated `openapi*.json` artifacts are up to date
+6. `npm run typecheck`
+7. `npm run lint`
+8. `npm run stylelint`
+9. `npm run build`
+10. `git diff --check`
+11. `git status --short`
+
+If `cs:check` needs formatting corrections, run `composer run cs:fix` through
+the `nextcloud` service, then rerun `cs:check` and Psalm. `git diff --check` is
+mandatory and must produce no whitespace errors. A task must not be reported
+complete while a required check fails. If a check genuinely does not apply,
+explain why in the completion report; do not hide failures by weakening
+configuration.
+
+`scripts/verify.sh` provides this final verification sequence. It locates the
+Health repository from its own location, discovers the nearest enclosing Docker
+Compose project, and uses its running `nextcloud` service for Composer checks.
+It never fixes formatting, changes dependencies, resets/cleans/stashes Git
+state, or commits.
+
+---
+
+# 42. Git Commit Policy
+
+Codex must not create a commit unless the user explicitly asks for one. When a
+commit is requested, every commit must use Conventional Commits and include a
+DCO sign-off produced by Git:
+
+```bash
+git commit -s -m "<type>: <description>"
+```
+
+Use an appropriate prefix such as `feat:`, `fix:`, `docs:`, `style:`, `test:`,
+`refactor:`, `chore:`, `build:`, or `ci:`. Use lowercase description wording
+where practical. Unprefixed subjects such as `Update README`, `Add feature`,
+or `Fix issue` are not acceptable.
+
+Examples:
+
+```text
+feat: add support dialog
+fix: correct search result deep link
+docs: update README
+style: apply PHP coding standards
+test: add search provider regression test
+refactor: improve goal response typing
+chore: update development tooling
+```
+
+Use `git commit -s` rather than manually fabricating the required
+`Signed-off-by: <Git user name> <Git user email>` trailer. Do not invent a
+person's name or email. To preserve an existing commit message while adding a
+sign-off, use `git commit --amend -s --no-edit`; to change it, use
+`git commit --amend -s -m "fix: correct ..."`.
+
+Do not rewrite shared history automatically. If an already-pushed commit must
+be rewritten for DCO or Conventional Commit compliance, use interactive rebase
+or amend, verify the resulting history, then use `git push --force-with-lease`.
+Never recommend plain `git push --force` when `--force-with-lease` is
+sufficient. For newly appended commits with no rewritten history, use ordinary
+`git push`.
+
+## Completion Report
+
+Finish coding tasks with a compact report containing:
+
+```text
+Changed:
+- relevant files/features
+
+Verification:
+- PHP CS: PASS / FAIL / N/A
+- Psalm PHP 8.2: PASS / FAIL / N/A
+- PHP unit tests: PASS / FAIL / N/A
+- OpenAPI generation: PASS / FAIL / N/A
+- OpenAPI artifacts up to date: PASS / FAIL / N/A
+- TypeScript: PASS / FAIL / N/A
+- ESLint: PASS / FAIL / N/A
+- Stylelint: PASS / FAIL / N/A
+- Production build: PASS / FAIL / N/A
+- git diff --check: PASS / FAIL
+
+Git:
+- commit created: yes/no
+- if yes: commit hash and subject
+- DCO sign-off present: yes/no
+```
+
+Never claim `PASS` for a command that was not executed.
