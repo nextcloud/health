@@ -1,42 +1,34 @@
 <?xml version="1.0"?>
-<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
-    <id>health</id>
-    <name>Health</name>
-    <summary>Track your health privately.</summary>
-    <description><![CDATA[Track your health data within the following provided modules:
-- Weight
-- Feeling
-- Measurement
-- Sleep
-- Smoking
-- Activities
-- Medication
+<info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+	<id>health</id>
+	<name>Health</name>
+	<summary>A private, configurable health and wellbeing journal for tracking personal metrics, habits, goals, and trends.</summary>
+	<description>Health helps users keep an eye on their personal health and wellbeing in everyday life and at work. The app provides a configurable journal for health metrics and habits such as stress, energy, mood, hydration, breaks, movement, sleep, and weight.
 
-Health is everything.]]></description>
-    <version>2.2.2</version>
-    <licence>agpl</licence>
-    <author mail="dev@d10t.de" >Florian Steffens</author>
+Users decide which areas they want to track and whether they want to receive reminders. Short check-ins, check-outs, and quick entries make the app easy to use with minimal effort. Daily, weekly, and monthly overviews, together with simple statistics, visualize trends, goal progress, and personal developments without providing medical diagnoses or automated health assessments.
+
+Health is designed with a privacy-first and API-first approach. The Health application and API enforce user isolation so users can access only their own personal Health data. This application-level isolation is not a claim that data is cryptographically hidden from the Nextcloud server operator. The web interface is built on top of Nextcloud APIs, allowing the application to support external clients in the future.</description>
+	<version>3.0.3</version>
+	<licence>AGPL-3.0-or-later</licence>
+	<author mail="mail@datenangebot.de">Florian Steffens</author>
 	<namespace>Health</namespace>
-	<documentation>
-		<user>https://github.com/nextcloud/health/wiki</user>
-		<admin>https://github.com/nextcloud/health/wiki/API</admin>
-	</documentation>
-	<category>tools</category>
 	<category>organization</category>
-	<website>https://github.com/nextcloud/health</website>
-    <bugs>https://github.com/nextcloud/health/issues/new</bugs>
-	<repository type="git">https://github.com/nextcloud/health.git</repository>
-	<screenshot small-thumbnail="https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-preview.png">https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-start.png</screenshot>
-	<screenshot>https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-person-start.png</screenshot>
-	<screenshot>https://raw.githubusercontent.com/nextcloud/health/main/screenshots/health-weight.png</screenshot>
+	<bugs>https://github.com/nextcloud/health/issues</bugs>
 	<dependencies>
-        <nextcloud min-version="24" max-version="30"/>
-    </dependencies>
-    <navigations>
-        <navigation>
-            <name>Health</name>
-            <route>health.page.index</route>
-        </navigation>
-    </navigations>
+		<php min-version="8.2" max-version="8.5"/>
+		<nextcloud min-version="33" max-version="35"/>
+	</dependencies>
+	<background-jobs>
+		<job>OCA\Health\BackgroundJob\GoalReminderJob</job>
+	</background-jobs>
+	<navigations>
+		<navigation>
+			<id>health</id>
+			<name>Health</name>
+			<route>health.page.index</route>
+			<icon>app.svg</icon>
+			<type>link</type>
+		</navigation>
+	</navigations>
 </info>

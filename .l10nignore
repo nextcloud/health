@@ -1,1 +1,7 @@
+# Generated/bundled files must not be scanned for translation source strings
 js/
+css/
+vendor/
+docs/
+coverage/
+build/

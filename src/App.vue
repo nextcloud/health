@@ -1,205 +1,122 @@
+<script setup lang="ts">
+import type { HealthConfiguration } from './api/configuration.ts'
+
+import { t } from '@nextcloud/l10n'
+import { computed, provide, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import NcAppContent from '@nextcloud/vue/components/NcAppContent'
+import NcAppNavigation from '@nextcloud/vue/components/NcAppNavigation'
+import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
+import NcAppSettingsDialog from '@nextcloud/vue/components/NcAppSettingsDialog'
+import NcContent from '@nextcloud/vue/components/NcContent'
+import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
+import SettingsContent from './components/SettingsContent.vue'
+import SupportDialog from './components/SupportDialog.vue'
+import { healthConfigurationKey } from './configurationContext.ts'
+import { iconPaths } from './icons.ts'
+import { localDateKey } from './utils/dates.ts'
+const route = useRoute()
+const router = useRouter()
+
+type ViewKey = 'journal' | 'goals' | 'statistics'
+const settingsOpen = ref(false)
+const supportOpen = ref(false)
+const configuration = ref<HealthConfiguration | null>(null)
+
+provide(healthConfigurationKey, configuration)
+
+const activeView = computed<ViewKey>(() => {
+	if (route.name === 'goals' || route.name === 'statistics') {
+		return route.name
+	}
+
+	return 'journal'
+})
+
+const navigationItems: Array<{ key: ViewKey, name: string, icon: string }> = [
+	{ key: 'journal', name: t('health', 'Journal'), icon: 'book' },
+	{ key: 'goals', name: t('health', 'Goals'), icon: 'flag' },
+	{ key: 'statistics', name: t('health', 'Statistics'), icon: 'icon-search' },
+]
+
+function navigate(view: ViewKey) {
+	if (view === 'journal') {
+		void router.push({ name: 'journal', params: { date: localDateKey(new Date()) } })
+		return
+	}
+
+	void router.push({ name: view })
+}
+
+function closeSupport() {
+	supportOpen.value = false
+	if (route.name === 'donate') {
+		void router.replace({ name: 'journal', params: { date: localDateKey(new Date()) } })
+	}
+}
+
+watch(() => route.name, (name) => {
+	if (name === 'donate') {
+		supportOpen.value = true
+	}
+}, { immediate: true })
+</script>
+
 <template>
-	<NcContent :class="{'icon-loading': initialLoading}" app-name="health">
-		<PersonsNavigation />
+	<NcContent app-name="health">
+		<NcAppNavigation :aria-label="t('health', 'Health views')">
+			<template #list>
+				<ul>
+					<NcAppNavigationItem
+						v-for="item in navigationItems"
+						:key="item.key"
+						:active="activeView === item.key"
+						:icon="item.icon.startsWith('icon-') ? item.icon : undefined"
+						:name="item.name"
+						@click.prevent="navigate(item.key)">
+						<template v-if="item.icon === 'book' || item.icon === 'flag'" #icon>
+							<NcIconSvgWrapper :path="item.icon === 'book' ? iconPaths.book : iconPaths.flag" />
+						</template>
+					</NcAppNavigationItem>
+				</ul>
+			</template>
+			<template #footer>
+				<ul>
+					<NcAppNavigationItem
+						:name="t('health', 'Support')"
+						@click.prevent="supportOpen = true">
+						<template #icon>
+							<NcIconSvgWrapper :path="iconPaths.heartOutline" />
+						</template>
+					</NcAppNavigationItem>
+					<NcAppNavigationItem
+						:name="t('health', 'Settings')"
+						icon="icon-settings"
+						@click.prevent="settingsOpen = true" />
+				</ul>
+			</template>
+		</NcAppNavigation>
 		<NcAppContent>
-			<div class="content-menu-top-right">
-				<NcActions v-if="canManage" :title="'Details'">
-					<NcActionButton :aria-label="t('health', 'Show sidebar')" icon="icon-menu-sidebar" @click="$store.commit('showSidebar', !showSidebar)" />
-				</NcActions>
-			</div>
-			<PersonsContent v-if="person && activeModule === 'person'" />
-			<WeightContent v-else-if="person && activeModule === 'weight' && person.enabledModuleWeight" />
-			<FeelingContent v-else-if="person && activeModule === 'feeling' && person.enabledModuleFeeling" />
-			<MeasurementContent v-else-if="person && activeModule === 'measurement' && person.enabledModuleMeasurement" />
-			<SleepContent v-else-if="person && activeModule === 'sleep' && person.enabledModuleSleep" />
-			<SmokingContent v-else-if="person && activeModule === 'smoking' && person.enabledModuleSmoking" />
-			<ActivitiesContent v-else-if="person && activeModule === 'activities' && person.enabledModuleActivities" />
-			<MedicationContent v-else-if="person && activeModule === 'medicine' && person.enabledModuleMedicine" />
-			<Startpage v-else />
+			<RouterView />
 		</NcAppContent>
-		<Sidebar :loading="loading" />
+		<NcAppSettingsDialog
+			v-model:open="settingsOpen"
+			:name="t('health', 'Health settings')"
+			show-navigation
+			no-version>
+			<SettingsContent />
+		</NcAppSettingsDialog>
+		<SupportDialog
+			:open="supportOpen"
+			@update:open="(open) => open ? supportOpen = true : closeSupport()" />
 	</NcContent>
 </template>
 
-<script>
-import { NcContent, NcAppContent, NcActionButton, NcActions } from '@nextcloud/vue'
-import PersonsNavigation from './modules/persons/PersonsNavigation'
-import WeightContent from './modules/weight/WeightContent'
-import FeelingContent from './modules/feeling/FeelingContent'
-import { mapState, mapGetters } from 'vuex'
-import PersonsContent from './modules/persons/PersonsContent'
-import SleepContent from './modules/sleep/SleepContent'
-import MeasurementContent from './modules/measurement/MeasurementContent'
-import SmokingContent from './modules/smoking/SmokingContent'
-import ActivitiesContent from './modules/activities/ActivitiesContent'
-import MedicationContent from './modules/medication/MedicationContent'
-import Sidebar from './Sidebar.vue'
-import Startpage from './Startpage.vue'
-
-export default {
-	name: 'App',
-	components: {
-		Startpage,
-		Sidebar,
-		MeasurementContent,
-		SleepContent,
-		NcContent,
-		NcAppContent,
-		NcActionButton,
-		NcActions,
-		PersonsNavigation,
-		WeightContent,
-		FeelingContent,
-		PersonsContent,
-		SmokingContent,
-		ActivitiesContent,
-		MedicationContent,
-	},
-	data() {
-		return {
-			loading: true,
-		}
-	},
-	computed: {
-		...mapState(['activePersonId', 'activeModule', 'showSidebar', 'persons', 'initialLoading']),
-		...mapGetters(['person', 'canManage']),
-	},
-	async beforeMount() {
-		this.loading = true
-		await this.$store.dispatch('loadPersons')
-		this.loading = false
-	},
+<style>
+.health-page-title {
+	margin: 0;
+	font-size: 2rem;
+	font-weight: var(--font-weight-bold);
+	line-height: 1.2;
 }
-</script>
-<style lang="scss">
-
-	.app-content {
-		padding-left: calc(var(--default-grid-baseline) * 6) !important;
-		padding-right: calc(var(--default-grid-baseline) * 5) !important;
-	}
-
-	.content-wrapper *:after, .content-wrapper *:before{
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		box-sizing: border-box;
-	}
-
-	.row {
-		// background-color: blueviolet;
-		width: 100%;
-	}
-
-	.row.first-row {
-		margin-top: calc(var(--default-grid-baseline) * 10);
-	}
-
-	.col-1 { width: 25%; }
-
-	.col-2 { width: 50%; }
-
-	.col-3 { width: 75%; }
-
-	.col-4 { width: 100%; }
-
-	[class*='col-'] {
-		float: left;
-		padding: 15px 15px 0;
-		// border: 1px solid red;
-		// background-color: aqua;
-	}
-
-	[class*='col-']:first-child {
-		// padding-left: 0;
-	}
-
-	.floatReverse [class*='col-'] {
-		float: right;
-	}
-
-	.row::after {
-		content: '';
-		clear: both;
-		display: table;
-	}
-
-	@media only screen and (max-width: 1025px) {
-		.hide-m {
-			display: none;
-		}
-
-		.col-1 { width: 50%; }
-
-		.col-3 { width: 100%; }
-
-	}
-
-	@media only screen and (max-width: 641px) {
-		.hide-s {
-			display: none;
-		}
-
-		.col-1 { width: 50%; }
-
-		.col-2 { width: 100%; }
-
-	}
-
-	.content-wrapper {
-		padding: 35px 10px 10px 10px;
-	}
-
-	.detailsMainInfo {
-		padding: 10px;
-	}
-
-	.content-menu-top-right {
-		position: fixed;
-		right: 20px;
-		z-index: 1001;
-	}
-
-	h2 {
-		font-size: x-large;
-	}
-
-	h3 {
-		font-size: 20px;
-		margin-top: 40px;
-	}
-
-	h4 {
-		font-size: large;
-		font-weight: 300;
-		margin-bottom: 20px;
-		margin-top: 10px;
-	}
-
-	.h3-icon {
-		background-position: left;
-		padding-left: 20px;
-		opacity: 0.4;
-	}
-
-	.content-wrapper h3:first-child {
-		margin-top: 2px;
-	}
-
-	.content-wrapper span {
-		opacity: .7;
-		font-size: 0.8em;
-		margin-left: 5px;
-	}
-
-	.app-sidebar-tabs h3 {
-		border-bottom: 1px solid #80808057;
-	}
-
-	.green {
-		color: #19880C;
-	}
-
-	.red {
-		color: #bd1500;
-	}
-
 </style>

@@ -1,9 +1,54 @@
-/vendor
-.DS_Store
-node_modules
+# Dependencies installed locally
+/node_modules/
+/vendor/
+/vendor-bin/*/vendor/
+
+## Build/cache directories that are not runtime artifacts
 /build/
-/.idea
-\.idea/
-/js
+/.cache/
+/.vite/
+
+# Test and coverage output
+/coverage/
+/.phpunit.result.cache
+/tests/.phpunit.cache/
 /.php-cs-fixer.cache
+/playwright-report/
+/test-results/
+/cypress/screenshots/
+cypress/videos/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Local environment files / secrets
+.env
+.env.local
+.env.*.local
+
+# IDE / editor state
+/.idea/
+/.vscode/
+*.code-workspace
+
+# Operating-system files
+.DS_Store
+.AppleDouble
+._*
+Thumbs.db
+
+# Local release artifacts
+/*.tar.gz
+/*.tgz
+/release/
 /releaseNotes.md
+
+# IMPORTANT:
+# Production frontend bundles are intentionally tracked so a fresh clone can run
+# without requiring a frontend build. Therefore do NOT ignore /js/, /css/, or any
+# other directory that is your actual production bundle output (for example /dist/).
