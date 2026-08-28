@@ -11,6 +11,7 @@
 # Test and coverage output
 /coverage/
 /.phpunit.result.cache
+/tests/.phpunit.cache/
 /.php-cs-fixer.cache
 /playwright-report/
 /test-results/

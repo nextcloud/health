@@ -1018,7 +1018,10 @@ docker compose exec -T nextcloud sh -lc 'cd /var/www/html/apps-extra/health && c
 
 Do not use `composer run test`: this repository does not define that script.
 The unit suite fails on warnings and risky tests, so a pass has no failures,
-errors, warnings, or risky tests.
+errors, warnings, or risky tests. PHPUnit cache files are not version-controlled;
+do not add `tests/.phpunit.cache/` or other PHPUnit result-cache output to a
+change. `scripts/verify.sh` passes `--do-not-cache-result` so verification
+does not create or modify PHPUnit cache output.
 
 ## OpenAPI Artifacts
 
@@ -1055,6 +1058,11 @@ npm run lint
 npm run stylelint
 npm run build
 ```
+
+`scripts/verify.sh` runs `npm ci` followed by all four checks in one ephemeral
+Node 24 container. `npm ci` uses the committed `package-lock.json` for a
+deterministic dependency installation; `node_modules` remains untracked and
+must never be committed.
 
 Compiled production frontend assets are intentionally version-controlled in
 Health. After frontend source changes, run `npm run build` and include the

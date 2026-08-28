@@ -50,7 +50,6 @@ run_nextcloud 'test -d . || { echo "Health repository is unavailable in the next
 	test -f vendor/autoload.php || { echo "PHP dependencies are missing. Run composer install in the nextcloud container." >&2; exit 1; }'
 
 [[ -x "$REPO_ROOT/vendor/bin/psalm" ]] || fail 'Psalm dependencies are missing. Run composer install in the nextcloud container.'
-[[ -d "$REPO_ROOT/node_modules" ]] || fail 'Frontend dependencies are missing. Run npm ci with Node 24 before verification.'
 
 cd "$REPO_ROOT"
 
@@ -69,7 +68,7 @@ docker run --rm \
 		--no-progress
 
 section "PHP unit tests"
-run_nextcloud 'composer run test:unit'
+run_nextcloud 'composer run test:unit -- --do-not-cache-result'
 
 section "OpenAPI generation"
 run_nextcloud 'composer run openapi'
@@ -81,26 +80,15 @@ if [[ -n "$(git status --porcelain -- ':(glob)openapi*.json')" ]]; then
 	exit 1
 fi
 
-run_node() {
-	docker run --rm \
-		-u "$(id -u):$(id -g)" \
-		-v "$REPO_ROOT":/app \
-		-w /app \
-		node:24-bookworm \
-		npm run "$1"
-}
-
-section "TypeScript"
-run_node typecheck
-
-section "ESLint"
-run_node lint
-
-section "Stylelint"
-run_node stylelint
-
-section "Production frontend build"
-run_node build
+section "Frontend verification (Node 24)"
+docker run --rm \
+	-u "$(id -u):$(id -g)" \
+	-e HOME=/tmp \
+	-e NPM_CONFIG_CACHE=/tmp/npm-cache \
+	-v "$REPO_ROOT":/app \
+	-w /app \
+	node:24-bookworm \
+	sh -lc 'npm ci && npm run typecheck && npm run lint && npm run stylelint && npm run build'
 
 section "Whitespace"
 git diff --check
