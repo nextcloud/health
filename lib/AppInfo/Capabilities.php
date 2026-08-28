@@ -8,7 +8,9 @@ use OCA\Health\Service\GoalTargetRegistry;
 use OCA\Health\Service\MetricService;
 use OCP\Capabilities\ICapability;
 
+/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud capabilities discovery. */
 class Capabilities implements ICapability {
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud capabilities discovery. */
 	public function __construct(
 		private GoalTargetRegistry $goalTargetRegistry,
 	) {

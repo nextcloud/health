@@ -11,7 +11,9 @@ use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\Util;
 
+/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dashboard discovery. */
 class HealthDashboardWidget implements IWidget, IIconWidget {
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dashboard discovery. */
 	public function __construct(
 		private IL10N $l10n,
 		private IURLGenerator $urlGenerator,

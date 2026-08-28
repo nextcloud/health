@@ -7,7 +7,9 @@ namespace OCA\Health\Db;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
+/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 class ConfigurationMapper {
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 	public function __construct(
 		private IDBConnection $db,
 	) {
@@ -38,7 +40,7 @@ class ConfigurationMapper {
 			->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR)))
 			->andWhere($qb->expr()->eq('metric_key', $qb->createNamedParameter($metricKey, IQueryBuilder::PARAM_STR)));
 		$id = $qb->executeQuery()->fetchOne();
-		if ($id === false) {
+		if ($id === false || !is_scalar($id)) {
 			$insert = $this->db->getQueryBuilder();
 			$insert->insert('health_user_metrics')->values([
 				'user_id' => $insert->createNamedParameter($userId, IQueryBuilder::PARAM_STR),
@@ -97,8 +99,15 @@ class ConfigurationMapper {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('search_daily_notes')->from('health_user_settings')
 			->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR)));
-		$value = $qb->executeQuery()->fetchOne();
-		return $value !== false && (bool)$value;
+		/** @psalm-suppress MixedAssignment The database API exposes an untyped scalar, narrowed below. */
+		$raw = $qb->executeQuery()->fetchOne();
+		if (is_bool($raw)) {
+			return $raw;
+		}
+		if (is_int($raw)) {
+			return $raw === 1;
+		}
+		return is_string($raw) && $raw === '1';
 	}
 
 	public function saveSearchDailyNotesForUser(string $userId, bool $enabled): void {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OCA\Health\Migration;
 
 use Closure;
+use Doctrine\DBAL\Schema\Table;
 use OCP\DB\ISchemaWrapper;
 use OCP\DB\Types;
 use OCP\Migration\IOutput;
@@ -68,7 +69,7 @@ class Version3000Date20260820130000 extends SimpleMigrationStep {
 		return $schema;
 	}
 
-	private function addPrimaryKey(object $table): void {
+	private function addPrimaryKey(Table $table): void {
 		$table->addColumn('id', Types::BIGINT, ['autoincrement' => true, 'notnull' => true, 'unsigned' => true]);
 		$table->setPrimaryKey(['id']);
 	}

@@ -10,15 +10,21 @@ use OCA\Health\Db\Goal;
 use OCA\Health\Db\GoalReminderState;
 use OCP\IDateTimeZone;
 
-/** Decides whether a reminder is useful without using Health interpretation or AI. */
+/**
+ * Decides whether a reminder is useful without using Health interpretation or AI.
+ *
+ * @psalm-import-type GoalProgressInternal from GoalProgressService
+ * @psalm-import-type HealthGoalTarget from \OCA\Health\ResponseDefinitions
+ */
 class GoalReminderEvaluationService {
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 	public function __construct(
 		private GoalTargetRegistry $goalTargetRegistry,
 		private IDateTimeZone $dateTimeZone,
 	) {
 	}
 
-	/** @param array<string, mixed> $progress */
+	/** @param GoalProgressInternal $progress */
 	public function reason(Goal $goal, array $progress, bool $metricEnabled, ?GoalReminderState $state, DateTimeImmutable $now): ?string {
 		if (!$goal->isActive() || !$goal->isRemindersEnabled() || !$metricEnabled || ($progress['status'] ?? null) === 'paused') {
 			return null;
@@ -41,22 +47,22 @@ class GoalReminderEvaluationService {
 		return $reason;
 	}
 
-	/** @param array<string, mixed> $progress @param array<string, mixed> $definition */
+	/** @param GoalProgressInternal $progress @param HealthGoalTarget $definition */
 	private function candidateReason(Goal $goal, array $progress, array $definition, DateTimeImmutable $localNow): ?string {
 		$current = $progress['currentValue'] ?? null;
-		$target = (float)$progress['targetValue'];
-		$comparator = (string)$progress['comparator'];
+		$target = $progress['targetValue'];
+		$comparator = $progress['comparator'];
 		if ($definition['kind'] === 'threshold_occurrence' && ($progress['observedValue'] ?? null) === null) {
 			return 'measurement_missing';
 		}
-		if ($definition['targetKey'] === 'job_satisfaction' && ($current === null || (float)$current === 0.0)) {
+		if ($definition['targetKey'] === 'job_satisfaction' && ($current === null || $current === 0.0)) {
 			return 'measurement_missing';
 		}
 		if ($comparator === 'lte') {
-			if ($current !== null && (float)$current > $target) {
+			if ($current !== null && $current > $target) {
 				return 'limit_exceeded';
 			}
-			if ($current !== null && (float)$current === $target) {
+			if ($current !== null && $current === $target) {
 				return 'limit_reached';
 			}
 			return null;
@@ -72,13 +78,13 @@ class GoalReminderEvaluationService {
 			return $goal->getCreatedAt() < $localNow->setTimezone($goal->getCreatedAt()->getTimezone())->sub(new DateInterval('PT' . GoalReminderPolicy::STALE_LONG_TERM_SECONDS . 'S')) ? 'stale_measurement' : null;
 		}
 		$ratio = $progress['progressRatio'] ?? null;
-		if ($ratio === null || !$this->meaningfullyBehind((float)$ratio, $goal->getPeriod(), $progress, $localNow)) {
+		if ($ratio === null || !$this->meaningfullyBehind($ratio, $goal->getPeriod(), $progress, $localNow)) {
 			return null;
 		}
 		return 'behind_progress';
 	}
 
-	/** @param array<string, mixed> $progress */
+	/** @param GoalProgressInternal $progress */
 	private function meaningfullyBehind(float $actualRatio, string $period, array $progress, DateTimeImmutable $localNow): bool {
 		if ($period === 'day') {
 			$start = $localNow->setTime(GoalReminderPolicy::DAILY_WINDOW_START_HOUR, 0);
@@ -86,7 +92,7 @@ class GoalReminderEvaluationService {
 			$expected = min(1.0, max(0.0, ($localNow->getTimestamp() - $start->getTimestamp()) / max(1, $end->getTimestamp() - $start->getTimestamp())));
 			return $actualRatio + GoalReminderPolicy::EXPECTED_PROGRESS_MARGIN < $expected;
 		}
-		$periodStart = new DateTimeImmutable((string)$progress['periodStart'], $localNow->getTimezone());
+		$periodStart = new DateTimeImmutable($progress['periodStart'], $localNow->getTimezone());
 		$periodEnd = new DateTimeImmutable((string)$progress['periodEnd'], $localNow->getTimezone());
 		$expected = min(1.0, max(0.0, ($localNow->getTimestamp() - $periodStart->getTimestamp()) / max(1, $periodEnd->getTimestamp() - $periodStart->getTimestamp())));
 		return $actualRatio + GoalReminderPolicy::EXPECTED_PROGRESS_MARGIN < $expected;

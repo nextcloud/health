@@ -11,15 +11,12 @@ use OCA\Health\Exception\InvalidEntryException;
  *
  * Goal keys are separate from metric keys because one atomic metric can expose several
  * meaningful targets (for example water and coffee hydration events).
+ *
+ * @psalm-import-type HealthGoalTarget from \OCA\Health\ResponseDefinitions
  */
 class GoalTargetRegistry {
 	/**
-	 * @var array<string, array{
-	 *   targetKey: string, metricKey: string, category: 'journal'|'measurement'|'daily_value',
-	 *   periods: list<'day'|'week'|'month'|'long_term'>, comparators: list<'gte'|'lte'>,
-	 *   kind: 'count'|'period_value'|'threshold_occurrence'|'latest_value', unit: string|null,
-	 *   options?: list<string>, minimum?: float, maximum?: float
-	 * }>
+	 * @var array<string, HealthGoalTarget>
 	 */
 	private const TARGETS = [
 		'hydration.water' => ['targetKey' => 'hydration.water', 'metricKey' => 'hydration', 'category' => 'journal', 'periods' => ['day', 'week', 'month'], 'comparators' => ['gte', 'lte'], 'kind' => 'count', 'unit' => 'glasses', 'options' => ['small_glass', 'large_glass'], 'minimum' => 1.0],
@@ -34,12 +31,12 @@ class GoalTargetRegistry {
 		'weight' => ['targetKey' => 'weight', 'metricKey' => 'weight', 'category' => 'daily_value', 'periods' => ['long_term'], 'comparators' => ['gte', 'lte'], 'kind' => 'latest_value', 'unit' => 'kg', 'minimum' => 0.000001],
 	];
 
-	/** @return list<array<string, mixed>> */
+	/** @return list<HealthGoalTarget> */
 	public function getDefinitions(): array {
 		return array_values(self::TARGETS);
 	}
 
-	/** @return array<string, mixed> */
+	/** @return HealthGoalTarget */
 	public function getDefinition(mixed $targetKey): array {
 		if (!is_string($targetKey) || !isset(self::TARGETS[$targetKey])) {
 			throw new InvalidEntryException('Unsupported goal target.');

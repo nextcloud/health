@@ -12,6 +12,7 @@ use OCP\IDBConnection;
 
 /** @extends QBMapper<DailyValue> */
 class DailyValueMapper extends QBMapper {
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, 'health_daily_values', DailyValue::class);
 	}
@@ -65,8 +66,12 @@ class DailyValueMapper extends QBMapper {
 			->andWhere($qb->expr()->eq('metric_key', $qb->createNamedParameter($metricKey, IQueryBuilder::PARAM_STR)))
 			->andWhere($qb->expr()->gte('local_date', $qb->createNamedParameter($fromDate, IQueryBuilder::PARAM_STR)))
 			->andWhere($qb->expr()->lt('local_date', $qb->createNamedParameter($toDate, IQueryBuilder::PARAM_STR)));
-		$value = $qb->executeQuery()->fetchOne();
-		return $value === false || $value === null ? 0.0 : (float)$value;
+		/** @psalm-suppress MixedAssignment The database API exposes an untyped scalar, narrowed below. */
+		$raw = $qb->executeQuery()->fetchOne();
+		if (is_int($raw) || is_float($raw)) {
+			return (float)$raw;
+		}
+		return is_string($raw) && is_numeric($raw) ? (float)$raw : 0.0;
 	}
 
 	public function findLatestForUserMetricOnOrBefore(string $userId, string $metricKey, string $date): ?DailyValue {

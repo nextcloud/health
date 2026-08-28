@@ -12,9 +12,11 @@ use OCA\Health\Exception\InvalidEntryException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
+/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 class DailyValueService {
 	private DateTimeZone $utc;
 
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 	public function __construct(
 		private DailyValueMapper $dailyValueMapper,
 		private MetricService $metricService,

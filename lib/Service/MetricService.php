@@ -6,18 +6,18 @@ namespace OCA\Health\Service;
 
 use OCA\Health\Exception\InvalidEntryException;
 
-/** Central registry for built-in metric definitions. */
+/**
+ * Central registry for built-in metric definitions.
+ *
+ * @psalm-import-type HealthMetricDefinition from \OCA\Health\ResponseDefinitions
+ */
 class MetricService {
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 	private const SCALE_MINIMUM = 1;
 	private const SCALE_MAXIMUM = 5;
 
 	/**
-	 * @var array<string, array{
-	 *   metricKey: string, category: 'journal'|'measurement'|'daily_value',
-	 *   valueType: 'scale'|'event'|'numeric'|'composite', minimum: int|null, maximum: int|null,
-	 *   allowedOptions: list<string>|null, aggregation: 'average'|'count'|'daily',
-	 *   canonicalUnit: string|null, supportedUnits: list<string>
-	 * }>
+	 * @var array<string, HealthMetricDefinition>
 	 */
 	private const METRIC_DEFINITIONS = [
 		'stress' => ['metricKey' => 'stress', 'category' => 'journal', 'valueType' => 'scale', 'minimum' => self::SCALE_MINIMUM, 'maximum' => self::SCALE_MAXIMUM, 'allowedOptions' => null, 'aggregation' => 'average', 'canonicalUnit' => null, 'supportedUnits' => []],
@@ -40,7 +40,7 @@ class MetricService {
 		'job_satisfaction' => ['metricKey' => 'job_satisfaction', 'category' => 'daily_value', 'valueType' => 'scale', 'minimum' => self::SCALE_MINIMUM, 'maximum' => self::SCALE_MAXIMUM, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => null, 'supportedUnits' => []],
 	];
 
-	/** @return list<array<string, mixed>> */
+	/** @return list<HealthMetricDefinition> */
 	public static function getMetricDefinitions(): array {
 		return array_values(self::METRIC_DEFINITIONS);
 	}
@@ -51,11 +51,12 @@ class MetricService {
 	}
 
 	/** @return list<string> */
+	/** @psalm-suppress PossiblyUnusedMethod Public metric-registry helper retained for application integrations. */
 	public static function getMetricKeysForCategory(string $category): array {
 		return array_keys(array_filter(self::METRIC_DEFINITIONS, static fn (array $definition): bool => $definition['category'] === $category));
 	}
 
-	/** @return array<string, mixed> */
+	/** @return HealthMetricDefinition */
 	public function getDefinition(string $metricKey): array {
 		if (!isset(self::METRIC_DEFINITIONS[$metricKey])) {
 			throw new InvalidEntryException('Unsupported metric key.');
@@ -104,7 +105,6 @@ class MetricService {
 
 	/** @return list<string> */
 	public function getSupportedUnits(string $metricKey): array {
-		/** @var list<string> $units */
 		$units = $this->getDefinition($metricKey)['supportedUnits'];
 		return $units;
 	}

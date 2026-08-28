@@ -10,6 +10,7 @@ use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
 
 /** Runs the deterministic Gentle reminder check approximately once per hour. */
+/** @psalm-suppress UnusedClass Registered and instantiated by Nextcloud background-job discovery. */
 class GoalReminderJob extends TimedJob {
 	public function __construct(
 		ITimeFactory $time,

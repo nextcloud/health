@@ -11,7 +11,9 @@ use OCP\Notification\INotification;
 use OCP\Notification\INotifier;
 use OCP\Notification\UnknownNotificationException;
 
+/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud notification discovery. */
 class GoalNotifier implements INotifier {
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud notification discovery. */
 	public function __construct(
 		private IFactory $l10nFactory,
 		private IURLGenerator $urlGenerator,

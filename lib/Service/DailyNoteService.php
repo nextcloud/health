@@ -13,11 +13,13 @@ use OCA\Health\Exception\InvalidEntryException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
+/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 class DailyNoteService {
 	private const MAXIMUM_CONTENT_LENGTH = 2000;
 
 	private DateTimeZone $utc;
 
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 	public function __construct(
 		private DailyNoteMapper $dailyNoteMapper,
 	) {

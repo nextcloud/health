@@ -22,6 +22,10 @@ use OCP\IDateTimeZone;
  * The service deliberately aggregates after owner-scoped range queries instead of
  * relying on database-specific date functions. This keeps local-day semantics
  * portable across supported Nextcloud database backends.
+ *
+ * @psalm-import-type HealthGoalTarget from \OCA\Health\ResponseDefinitions
+ * @psalm-import-type HealthStatisticsMetric from \OCA\Health\ResponseDefinitions
+ * @psalm-import-type HealthStatisticsResponse from \OCA\Health\ResponseDefinitions
  */
 class StatisticsService {
 	private const DEFAULT_PERIOD = 'last_30_days';
@@ -56,12 +60,7 @@ class StatisticsService {
 	}
 
 	/**
-	 * @return array{
-	 *   period: string,
-	 *   from: string,
-	 *   to: string,
-	 *   metrics: list<array<string, mixed>>,
-	 * }
+	 * @return HealthStatisticsResponse
 	 */
 	public function get(string $userId, mixed $period = self::DEFAULT_PERIOD, mixed $metrics = null): array {
 		if ($userId === '') {
@@ -78,6 +77,7 @@ class StatisticsService {
 		$dateKeys = $this->dateKeys($selection['from'], $selection['to']);
 		$sourceData = $this->sourceData($userId, $definitions, $selection, $dateKeys);
 		$goals = $this->goalSegments($userId, $definitions, $selection);
+		/** @var list<HealthStatisticsMetric> $result */
 		$result = [];
 
 		foreach ($metricKeys as $metricKey) {
@@ -103,7 +103,8 @@ class StatisticsService {
 				);
 			}
 
-			$result[] = [
+			/** @var HealthStatisticsMetric $metric */
+			$metric = [
 				'metricKey' => $metricKey,
 				'category' => $definition['category'],
 				'valueType' => $definition['valueType'],
@@ -114,14 +115,17 @@ class StatisticsService {
 				'summary' => $statistics['summary'],
 				'goals' => $goals[$metricKey],
 			];
+			$result[] = $metric;
 		}
 
-		return [
+		/** @var HealthStatisticsResponse $response */
+		$response = [
 			'period' => $selection['period'],
 			'from' => $selection['from']->format('Y-m-d'),
 			'to' => $selection['to']->format('Y-m-d'),
 			'metrics' => $result,
 		];
+		return $response;
 	}
 
 	/**
@@ -182,7 +186,7 @@ class StatisticsService {
 
 		$selected = [];
 		foreach ($requested as $requestedMetric) {
-			if (!is_string($requestedMetric) || trim($requestedMetric) === '') {
+			if (trim($requestedMetric) === '') {
 				throw new InvalidEntryException('metrics must contain supported metric keys.');
 			}
 
@@ -351,8 +355,13 @@ class StatisticsService {
 	 * @param 'systolic'|'diastolic' $subseriesKey
 	 */
 	private function appendBloodPressureValue(array &$bloodPressure, string $subseriesKey, string $dateKey, float $value): void {
-		$bloodPressure[$subseriesKey][$dateKey] ??= [];
-		$bloodPressure[$subseriesKey][$dateKey][] = $value;
+		if ($subseriesKey === 'systolic') {
+			$bloodPressure['systolic'][$dateKey] ??= [];
+			$bloodPressure['systolic'][$dateKey][] = $value;
+			return;
+		}
+		$bloodPressure['diastolic'][$dateKey] ??= [];
+		$bloodPressure['diastolic'][$dateKey][] = $value;
 	}
 
 	/** @return array<string, list<string>> */
@@ -360,9 +369,7 @@ class StatisticsService {
 		$definition = $this->metricService->getDefinition($metricKey);
 		$allowedOptions = [];
 		foreach ($definition['allowedOptions'] ?? [] as $option) {
-			if (is_string($option)) {
-				$allowedOptions[] = $option;
-			}
+			$allowedOptions[] = $option;
 		}
 
 		if ($metricKey === 'hydration') {
@@ -372,10 +379,8 @@ class StatisticsService {
 				$target = $this->goalTargetRegistry->getDefinition('hydration.' . $groupKey);
 				$options = [];
 				foreach ($target['options'] ?? [] as $option) {
-					if (is_string($option)) {
-						$options[] = $option;
-						$assignedOptions[] = $option;
-					}
+					$options[] = $option;
+					$assignedOptions[] = $option;
 				}
 				$groups[$groupKey] = $options;
 			}
@@ -411,7 +416,7 @@ class StatisticsService {
 		$dailyValues = [];
 		foreach ($dateKeys as $dateKey) {
 			$rawValues = $values[$dateKey] ?? [];
-			$value = $rawValues === [] ? null : (float)(array_sum($rawValues) / count($rawValues));
+			$value = $rawValues === [] ? null : array_sum($rawValues) / count($rawValues);
 			$series[] = ['date' => $dateKey, 'value' => $value, 'subseries' => null];
 			$dailyValues[] = $value;
 		}
@@ -468,9 +473,9 @@ class StatisticsService {
 	 */
 	private function eventSummary(array $dailyValues, int $sourceCount): array {
 		return [
-			'average' => $dailyValues === [] ? null : (float)(array_sum($dailyValues) / count($dailyValues)),
-			'minimum' => $dailyValues === [] ? null : (float)min($dailyValues),
-			'maximum' => $dailyValues === [] ? null : (float)max($dailyValues),
+			'average' => $dailyValues === [] ? null : array_sum($dailyValues) / count($dailyValues),
+			'minimum' => $dailyValues === [] ? null : min($dailyValues),
+			'maximum' => $dailyValues === [] ? null : max($dailyValues),
 			'count' => $sourceCount,
 			'activeDays' => count(array_filter($dailyValues, static fn (float $value): bool => $value > 0)),
 			'subseries' => null,
@@ -494,8 +499,10 @@ class StatisticsService {
 			$subseries = [];
 			$hasValue = false;
 			foreach (['systolic', 'diastolic'] as $subseriesKey) {
-				$rawValues = $bloodPressure[$subseriesKey][$dateKey] ?? [];
-				$value = $rawValues === [] ? null : (float)(array_sum($rawValues) / count($rawValues));
+				$rawValues = $subseriesKey === 'systolic'
+					? ($bloodPressure['systolic'][$dateKey] ?? [])
+					: ($bloodPressure['diastolic'][$dateKey] ?? []);
+				$value = $rawValues === [] ? null : array_sum($rawValues) / count($rawValues);
 				$subseries[$subseriesKey] = $value;
 				$values[$subseriesKey][] = $value;
 				$hasValue = $hasValue || $value !== null;
@@ -546,9 +553,9 @@ class StatisticsService {
 		}
 
 		return [
-			'average' => (float)(array_sum($points) / count($points)),
-			'minimum' => (float)min($points),
-			'maximum' => (float)max($points),
+			'average' => array_sum($points) / count($points),
+			'minimum' => min($points),
+			'maximum' => max($points),
 			'count' => $sourceCount,
 			'activeDays' => count($points),
 			'subseries' => null,
@@ -603,7 +610,7 @@ class StatisticsService {
 		return $result;
 	}
 
-	/** @param array<string, mixed> $target */
+	/** @param HealthGoalTarget $target */
 	private function goalSeriesKey(array $target): ?string {
 		return match ($target['targetKey']) {
 			'hydration.water' => 'water',
@@ -624,15 +631,13 @@ class StatisticsService {
 	}
 
 	/**
-	 * @param array<string, mixed> $target
+	 * @param HealthGoalTarget $target
 	 * @return array<string, mixed>
 	 */
 	private function formatGoalSegment(Goal $goal, GoalRevision $revision, array $target, string $seriesKey, ?string $effectiveTo): array {
 		$options = [];
 		foreach ($target['options'] ?? [] as $option) {
-			if (is_string($option)) {
-				$options[] = $option;
-			}
+			$options[] = $option;
 		}
 
 		return [

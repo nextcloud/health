@@ -16,9 +16,14 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCP\IDateTimeZone;
 
+/**
+ * @psalm-import-type HealthGoal from \OCA\Health\ResponseDefinitions
+ */
 class GoalService {
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 	private DateTimeZone $utc;
 
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 	public function __construct(
 		private GoalMapper $goalMapper,
 		private GoalRevisionMapper $goalRevisionMapper,
@@ -28,12 +33,12 @@ class GoalService {
 		$this->utc = new DateTimeZone('UTC');
 	}
 
-	/** @return list<array<string, mixed>> */
+	/** @return list<HealthGoal> */
 	public function list(string $userId): array {
 		return array_map(fn (Goal $goal): array => $this->format($goal, $this->currentRevision($goal)), $this->goalMapper->findManageableForUser($userId));
 	}
 
-	/** @return array<string, mixed> */
+	/** @return HealthGoal */
 	public function create(string $userId, mixed $targetKey, mixed $period, mixed $comparator, mixed $targetValue, mixed $remindersEnabled = false): array {
 		$target = $this->goalTargetRegistry->getDefinition($targetKey);
 		$targetKey = $target['targetKey'];
@@ -59,7 +64,7 @@ class GoalService {
 		return $this->format($goal, $this->goalRevisionMapper->create($revision));
 	}
 
-	/** @return array<string, mixed> */
+	/** @return HealthGoal */
 	public function update(string $userId, int $id, mixed $targetKey = null, mixed $period = null, mixed $comparator = null, mixed $targetValue = null, mixed $active = null, mixed $remindersEnabled = null): array {
 		$goal = $this->findForUser($userId, $id);
 		if ($goal->getRetiredAt() !== null) {
@@ -94,7 +99,7 @@ class GoalService {
 		return $this->format($goal, $currentRevision);
 	}
 
-	/** @return array<string, mixed> */
+	/** @return HealthGoal */
 	public function retire(string $userId, int $id): array {
 		$goal = $this->findForUser($userId, $id);
 		$this->retireGoal($goal);
@@ -182,26 +187,34 @@ class GoalService {
 		}
 	}
 
-	/** @return array<string, mixed> */
+	/** @return HealthGoal */
 	private function format(Goal $goal, GoalRevision $revision): array {
-		return [
+		$period = $goal->getPeriod();
+		/** @var 'day'|'week'|'month'|'long_term' $period */
+		$reminderPolicy = $goal->getReminderPolicy();
+		/** @var 'gentle' $reminderPolicy */
+		$comparator = $revision->getComparator();
+		/** @var 'gte'|'lte' $comparator */
+		/** @var HealthGoal $formatted */
+		$formatted = [
 			'id' => $goal->getId(),
 			'targetKey' => $goal->getTargetKey(),
-			'period' => $goal->getPeriod(),
+			'period' => $period,
 			'active' => $goal->isActive(),
 			'remindersEnabled' => $goal->isRemindersEnabled(),
-			'reminderPolicy' => $goal->getReminderPolicy(),
+			'reminderPolicy' => $reminderPolicy,
 			'retiredAt' => $goal->getRetiredAt()?->setTimezone($this->utc)->format('Y-m-d\TH:i:s\Z'),
 			'createdAt' => $goal->getCreatedAt()->setTimezone($this->utc)->format('Y-m-d\TH:i:s\Z'),
 			'updatedAt' => $goal->getUpdatedAt()->setTimezone($this->utc)->format('Y-m-d\TH:i:s\Z'),
 			'currentRevision' => [
 				'id' => $revision->getId(),
-				'comparator' => $revision->getComparator(),
+				'comparator' => $comparator,
 				'targetValue' => (float)$revision->getTargetValue(),
 				'secondaryTargetValue' => $revision->getSecondaryTargetValue() === null ? null : (float)$revision->getSecondaryTargetValue(),
 				'effectiveFrom' => $revision->getEffectiveFrom(),
 				'effectiveTo' => $revision->getEffectiveTo(),
 			],
 		];
+		return $formatted;
 	}
 }

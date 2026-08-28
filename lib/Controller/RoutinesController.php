@@ -51,7 +51,10 @@ class RoutinesController extends OCSController {
 	#[NoAdminRequired] #[OpenAPI] #[ApiRoute(verb: 'POST', url: '/api/v2/routines/{context}', requirements: ['context' => 'check-in|check-out'])]
 	public function submit(string $context, mixed $date, mixed $recordedAt, mixed $journalMetrics = [], mixed $measurements = [], mixed $dailyValues = []): DataResponse {
 		try {
-			$internalContext = $context === 'check-in' ? 'checkin' : ($context === 'check-out' ? 'checkout' : '');
+			$internalContext = match ($context) {
+				'check-in' => 'checkin',
+				'check-out' => 'checkout',
+			};
 			return new DataResponse($this->routineService->submit($this->userId(), $internalContext, $date, $recordedAt, $journalMetrics, $measurements, $dailyValues));
 		} catch (InvalidEntryException $exception) {
 			throw new OCSBadRequestException($exception->getMessage(), $exception);

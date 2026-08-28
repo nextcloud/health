@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OCA\Health\Search;
 
+use DateTime;
 use DateTimeImmutable;
 use OCA\Health\AppInfo\Application;
 use OCA\Health\Db\DailyNote;
@@ -18,9 +19,11 @@ use OCP\Search\ISearchQuery;
 use OCP\Search\SearchResult;
 use OCP\Search\SearchResultEntry;
 
+/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud search-provider discovery. */
 class DailyNoteSearchProvider implements IProvider {
 	private const SNIPPET_LENGTH = 160;
 
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud search-provider discovery. */
 	public function __construct(
 		private ConfigurationService $configurationService,
 		private DailyNoteMapper $dailyNoteMapper,
@@ -71,7 +74,7 @@ class DailyNoteSearchProvider implements IProvider {
 	/** @param list<string> $tokens */
 	private function entry(DailyNote $note, array $tokens): SearchResultEntry {
 		$date = new DateTimeImmutable($note->getLocalDate() . ' 12:00:00', $this->dateTimeZone->getTimeZone(false, $note->getUserId()));
-		$localizedDate = (string)$this->l10n->l('date', $date, ['width' => 'full']);
+		$localizedDate = (string)$this->l10n->l('date', DateTime::createFromImmutable($date), ['width' => 'full']);
 		$icon = $this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath(Application::APP_ID, 'app.svg'));
 
 		return new SearchResultEntry(

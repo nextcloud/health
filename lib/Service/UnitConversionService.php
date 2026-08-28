@@ -6,7 +6,9 @@ namespace OCA\Health\Service;
 
 use OCA\Health\Exception\InvalidEntryException;
 
+/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 class UnitConversionService {
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 	public function __construct(
 		private MetricService $metricService,
 	) {
@@ -17,11 +19,20 @@ class UnitConversionService {
 			throw new InvalidEntryException('Numeric value must be a JSON number.');
 		}
 		$supportedUnits = $metricKey === 'height' ? ['cm', 'in'] : $this->metricService->getSupportedUnits($metricKey);
-		if (!is_finite((float)$value) || ($supportedUnits === [] ? $unit !== null : (!is_string($unit) || !in_array($unit, $supportedUnits, true)))) {
+		if (!is_finite((float)$value)) {
 			throw new InvalidEntryException('Unsupported unit or numeric value.');
 		}
 
 		$value = (float)$value;
+		if ($supportedUnits === []) {
+			if ($unit !== null) {
+				throw new InvalidEntryException('Unsupported unit or numeric value.');
+			}
+			return $value;
+		}
+		if (!is_string($unit) || !in_array($unit, $supportedUnits, true)) {
+			throw new InvalidEntryException('Unsupported unit or numeric value.');
+		}
 		return match ($metricKey . ':' . $unit) {
 			'weight:lb' => $value / 2.20462262,
 			'weight:st' => $value * 6.35029318,
@@ -33,6 +44,7 @@ class UnitConversionService {
 		};
 	}
 
+	/** @psalm-suppress PossiblyUnusedMethod Public conversion operation retained for presentation integrations. */
 	public function fromCanonical(string $metricKey, float $value, string $unit): float {
 		$supportedUnits = $metricKey === 'height' ? ['cm', 'in'] : $this->metricService->getSupportedUnits($metricKey);
 		if (!in_array($unit, $supportedUnits, true)) {

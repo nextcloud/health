@@ -7,7 +7,12 @@ namespace OCA\Health\Service;
 use OCA\Health\Db\ConfigurationMapper;
 use OCA\Health\Exception\InvalidEntryException;
 
+/**
+ * @psalm-import-type HealthConfiguration from \OCA\Health\ResponseDefinitions
+ * @psalm-import-type HealthMetricDefinition from \OCA\Health\ResponseDefinitions
+ */
 class ConfigurationService {
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 	public function __construct(
 		private ConfigurationMapper $configurationMapper,
 		private MetricService $metricService,
@@ -15,19 +20,21 @@ class ConfigurationService {
 	) {
 	}
 
-	/** @return array{profile: array{heightCm: float|null, heightDisplayUnit: string, dateOfBirth: string|null, growthReferenceSex: string|null}, metrics: array<string, array{enabled: bool, checkInEnabled: bool, checkOutEnabled: bool, displayUnit: string|null}>, searchDailyNotes: bool} */
+	/** @return HealthConfiguration */
 	public function get(string $userId): array {
 		$stored = $this->configurationMapper->findMetricsForUser($userId);
 		$metrics = [];
 		foreach (MetricService::getMetricDefinitions() as $definition) {
-			$metricKey = (string)$definition['metricKey'];
+			$metricKey = $definition['metricKey'];
 			$metrics[$metricKey] = $stored[$metricKey] ?? $this->defaultMetricConfiguration($definition);
 		}
 		$profile = $this->configurationMapper->findProfileForUser($userId) ?? ['heightCm' => null, 'heightDisplayUnit' => 'cm', 'dateOfBirth' => null, 'growthReferenceSex' => null];
-		return ['profile' => $profile, 'metrics' => $metrics, 'searchDailyNotes' => $this->configurationMapper->findSearchDailyNotesForUser($userId)];
+		/** @var HealthConfiguration $configuration */
+		$configuration = ['profile' => $profile, 'metrics' => $metrics, 'searchDailyNotes' => $this->configurationMapper->findSearchDailyNotesForUser($userId)];
+		return $configuration;
 	}
 
-	/** @return array{profile: array{heightCm: float|null, heightDisplayUnit: string, dateOfBirth: string|null, growthReferenceSex: string|null}, metrics: array<string, array{enabled: bool, checkInEnabled: bool, checkOutEnabled: bool, displayUnit: string|null}>, searchDailyNotes: bool} */
+	/** @return HealthConfiguration */
 	public function update(string $userId, mixed $profile, mixed $metrics, mixed $searchDailyNotes): array {
 		$current = $this->get($userId);
 		if ($profile !== null) {
@@ -36,7 +43,6 @@ class ConfigurationService {
 			}
 			$heightUnit = $profile['heightUnit'] ?? $current['profile']['heightDisplayUnit'];
 			$heightProvided = array_key_exists('height', $profile);
-			$height = $heightProvided ? $profile['height'] : null;
 			$dateOfBirth = array_key_exists('dateOfBirth', $profile) ? $profile['dateOfBirth'] : $current['profile']['dateOfBirth'];
 			$growthReferenceSex = array_key_exists('growthReferenceSex', $profile) ? $profile['growthReferenceSex'] : $current['profile']['growthReferenceSex'];
 			if (!is_string($heightUnit) || !in_array($heightUnit, ['cm', 'in'], true)) {
@@ -48,7 +54,7 @@ class ConfigurationService {
 			if ($growthReferenceSex !== null && (!is_string($growthReferenceSex) || !in_array($growthReferenceSex, ['female', 'male'], true))) {
 				throw new InvalidEntryException('Unsupported growth reference sex.');
 			}
-			$heightCm = !$heightProvided ? $current['profile']['heightCm'] : ($height === null ? null : $this->unitConversionService->toCanonical('height', $height, $heightUnit));
+			$heightCm = !$heightProvided ? $current['profile']['heightCm'] : (($profile['height'] ?? null) === null ? null : $this->unitConversionService->toCanonical('height', $profile['height'], $heightUnit));
 			$this->configurationMapper->saveProfileForUser($userId, $heightCm, $heightUnit, $dateOfBirth, $growthReferenceSex);
 		}
 		if ($metrics !== null) {
@@ -91,7 +97,7 @@ class ConfigurationService {
 		return preg_match('/^(\d{4})-(\d{2})-(\d{2})$/D', $date, $matches) === 1 && checkdate((int)$matches[2], (int)$matches[3], (int)$matches[1]);
 	}
 
-	/** @param array<string, mixed> $definition @return array{enabled: bool, checkInEnabled: bool, checkOutEnabled: bool, displayUnit: string|null} */
+	/** @param HealthMetricDefinition $definition @return array{enabled: bool, checkInEnabled: bool, checkOutEnabled: bool, displayUnit: string|null} */
 	private function defaultMetricConfiguration(array $definition): array {
 		$units = $definition['supportedUnits'];
 		return [

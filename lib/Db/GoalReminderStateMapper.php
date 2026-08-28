@@ -12,12 +12,15 @@ use OCP\IDBConnection;
 
 /** @extends QBMapper<GoalReminderState> */
 class GoalReminderStateMapper extends QBMapper {
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, 'health_goal_reminder_state', GoalReminderState::class);
 	}
+	/** @psalm-suppress PossiblyUnusedReturnValue Persistence result is intentionally ignored after notification state is recorded. */
 	public function create(GoalReminderState $state): GoalReminderState {
 		return $this->insert($state);
 	}
+	/** @psalm-suppress PossiblyUnusedReturnValue Persistence result is intentionally ignored after notification state is recorded. */
 	public function updateForGoal(GoalReminderState $state): GoalReminderState {
 		return $this->update($state);
 	}

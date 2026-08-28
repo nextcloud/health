@@ -5,12 +5,17 @@ declare(strict_types=1);
 namespace OCA\Health\Migration;
 
 use Closure;
+use Doctrine\DBAL\Schema\Table;
 use OCP\DB\ISchemaWrapper;
 use OCP\DB\Types;
 use OCP\Migration\IOutput;
 use OCP\Migration\SimpleMigrationStep;
 
-/** Adds the additive Health v3 goal, revision, and notification-deduplication schema. */
+/**
+ * Adds the additive Health v3 goal, revision, and notification-deduplication schema.
+ *
+ * @psalm-suppress UnusedClass Migrations are discovered by Nextcloud.
+ */
 class Version3003Date20260824120000 extends SimpleMigrationStep {
 	public function changeSchema(IOutput $output, Closure $schemaClosure, array $options): ?ISchemaWrapper {
 		$schema = $schemaClosure();
@@ -61,7 +66,7 @@ class Version3003Date20260824120000 extends SimpleMigrationStep {
 		return $schema;
 	}
 
-	private function addPrimaryKey(object $table): void {
+	private function addPrimaryKey(Table $table): void {
 		$table->addColumn('id', Types::BIGINT, ['autoincrement' => true, 'notnull' => true, 'unsigned' => true]);
 		$table->setPrimaryKey(['id']);
 	}

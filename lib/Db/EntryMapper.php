@@ -186,7 +186,8 @@ class EntryMapper extends QBMapper {
 			->andWhere($qb->expr()->in('option_value', $qb->createNamedParameter($options, IQueryBuilder::PARAM_STR_ARRAY)))
 			->andWhere($qb->expr()->gte('recorded_at', $qb->createNamedParameter($since, IQueryBuilder::PARAM_DATETIME_IMMUTABLE)))
 			->orderBy('recorded_at', 'DESC')->setMaxResults(1);
-		$value = $qb->executeQuery()->fetchOne();
-		return $value === false ? null : new DateTimeImmutable((string)$value);
+		/** @psalm-suppress MixedAssignment The database API exposes an untyped timestamp scalar, narrowed below. */
+		$raw = $qb->executeQuery()->fetchOne();
+		return is_string($raw) ? new DateTimeImmutable($raw) : null;
 	}
 }

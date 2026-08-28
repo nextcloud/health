@@ -8,6 +8,10 @@ use DateTimeImmutable;
 use OCP\AppFramework\Db\Entity;
 use OCP\DB\Types;
 
+/**
+ * @psalm-suppress PropertyNotSetInConstructor The ID is populated by Nextcloud's Entity/Mapper lifecycle.
+ * @psalm-suppress PossiblyUnusedMethod Entity accessors are used by hydration and mapper consumers.
+ */
 class DailyValue extends Entity {
 	protected ?string $userId = null;
 	protected ?string $metricKey = null;
@@ -23,6 +27,7 @@ class DailyValue extends Entity {
 		$this->addType('updatedAt', Types::DATETIME_IMMUTABLE);
 	}
 
+	/** @psalm-suppress PossiblyUnusedMethod Used by Nextcloud entity hydration and mapper consumers. */
 	public function getUserId(): string {
 		return $this->userId ?? '';
 	}

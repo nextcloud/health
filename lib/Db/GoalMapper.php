@@ -12,6 +12,7 @@ use OCP\IDBConnection;
 
 /** @extends QBMapper<Goal> */
 class GoalMapper extends QBMapper {
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, 'health_goals', Goal::class);
 	}
@@ -32,6 +33,7 @@ class GoalMapper extends QBMapper {
 	}
 
 	/** @throws DoesNotExistException|MultipleObjectsReturnedException */
+	/** @psalm-suppress PossiblyUnusedReturnValue Its exception distinguishes an existing goal identity during creation. */
 	public function findForIdentity(string $userId, string $targetKey, string $period): Goal {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')->from($this->tableName)

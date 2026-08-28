@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use OCP\AppFramework\Db\Entity;
 use OCP\DB\Types;
 
+/** @psalm-suppress PropertyNotSetInConstructor The ID is populated by Nextcloud's Entity/Mapper lifecycle. */
 class Goal extends Entity {
 	protected ?string $userId = null;
 	protected ?string $targetKey = null;

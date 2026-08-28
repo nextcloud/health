@@ -13,6 +13,7 @@ use OCP\IDBConnection;
 
 /** @extends QBMapper<Measurement> */
 class MeasurementMapper extends QBMapper {
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, 'health_measurements', Measurement::class);
 	}
@@ -100,6 +101,7 @@ class MeasurementMapper extends QBMapper {
 			->andWhere($qb->expr()->gte('recorded_at', $qb->createNamedParameter($from, IQueryBuilder::PARAM_DATETIME_IMMUTABLE)))
 			->andWhere($qb->expr()->lt('recorded_at', $qb->createNamedParameter($to, IQueryBuilder::PARAM_DATETIME_IMMUTABLE)));
 		$groups = $qb->executeQuery()->fetchFirstColumn();
-		return count(array_unique(array_map('strval', $groups)));
+		$groupIds = array_values(array_filter($groups, static fn (mixed $group): bool => is_string($group)));
+		return count(array_unique($groupIds));
 	}
 }

@@ -10,7 +10,6 @@ use OCA\Health\Db\DailyValueMapper;
 use OCA\Health\Db\EntryMapper;
 use OCA\Health\Db\Goal;
 use OCA\Health\Db\GoalMapper;
-use OCA\Health\Db\GoalRevision;
 use OCA\Health\Db\GoalRevisionMapper;
 use OCA\Health\Db\MeasurementMapper;
 use OCA\Health\Exception\InvalidEntryException;
@@ -18,10 +17,25 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCP\IDateTimeZone;
 
-/** Calculates all goal progress from owner-scoped Health source data. */
+/**
+ * Calculates all goal progress from owner-scoped Health source data.
+ *
+ * @psalm-import-type HealthGoalProgress from \OCA\Health\ResponseDefinitions
+ * @psalm-import-type HealthGoalTarget from \OCA\Health\ResponseDefinitions
+ * @psalm-type GoalProgressInternal = array{
+ *   goalId: int, targetKey: string, metricKey: string,
+ *   period: 'day'|'week'|'month'|'long_term', periodStart: string, periodEnd: string|null,
+ *   periodKey: string, active: bool, remindersEnabled: bool, comparator: 'gte'|'lte',
+ *   targetValue: float, currentValue: float|null, observedValue: float|null,
+ *   progressRatio: float|null, remaining: float|null,
+ *   status: 'in_progress'|'reached'|'within_limit'|'exceeded'|'not_reached'|'paused',
+ *   effectiveFrom: string, lastActivityAt: DateTimeImmutable|null
+ * }
+ */
 class GoalProgressService {
 	private DateTimeZone $utc;
 
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 	public function __construct(
 		private GoalMapper $goalMapper,
 		private GoalRevisionMapper $goalRevisionMapper,
@@ -34,9 +48,13 @@ class GoalProgressService {
 		$this->utc = new DateTimeZone('UTC');
 	}
 
-	/** @return list<array<string, mixed>> */
+	/**
+	 * @psalm-return list<HealthGoalProgress>
+	 * @psalm-suppress MixedReturnTypeCoercion Psalm loses this fixed response shape while composing owner-scoped source results.
+	 */
 	public function list(string $userId, mixed $period, mixed $date = null): array {
 		$selection = $this->selection($userId, $period, $date);
+		/** @var list<HealthGoalProgress> $result */
 		$result = [];
 		foreach ($this->goalMapper->findAllForUser($userId) as $goal) {
 			if ($goal->getPeriod() !== $selection['period']) {
@@ -44,6 +62,7 @@ class GoalProgressService {
 			}
 			$progress = $this->evaluateGoal($userId, $goal, $selection);
 			if ($progress !== null) {
+				/** @psalm-suppress MixedArgumentTypeCoercion Psalm loses the internal fixed shape across the private evaluator boundary. */
 				$result[] = $this->publicResult($progress);
 			}
 		}
@@ -51,7 +70,8 @@ class GoalProgressService {
 	}
 
 	/**
-	 * @return array<string, mixed>|null Internal evaluation includes lastActivityAt for reminder policy decisions.
+	 * @psalm-return GoalProgressInternal|null Internal evaluation includes lastActivityAt for reminder policy decisions.
+	 * @psalm-suppress MixedReturnTypeCoercion Psalm loses this fixed internal shape while composing source results.
 	 */
 	public function evaluateCurrentGoal(string $userId, Goal $goal, ?DateTimeImmutable $now = null): ?array {
 		$localNow = ($now ?? new DateTimeImmutable('now', $this->utc))->setTimezone($this->dateTimeZone->getTimeZone(false, $userId));
@@ -59,11 +79,15 @@ class GoalProgressService {
 		return $this->evaluateGoal($userId, $goal, $selection);
 	}
 
-	/** @return array{period: 'day'|'week'|'month'|'long_term', periodStart: DateTimeImmutable, periodEnd: DateTimeImmutable|null, periodStartKey: string, periodEndKey: string|null, periodKey: string, closed: bool, current: bool, timezone: DateTimeZone} */
+	/** @psalm-return array{period: 'day'|'week'|'month'|'long_term', periodStart: DateTimeImmutable, periodEnd: DateTimeImmutable|null, periodStartKey: string, periodEndKey: string|null, periodKey: string, closed: bool, current: bool, timezone: DateTimeZone} */
 	public function selection(string $userId, mixed $period, mixed $date = null, ?DateTimeImmutable $now = null): array {
-		if (!is_string($period) || !in_array($period, ['day', 'week', 'month', 'long_term'], true)) {
-			throw new InvalidEntryException('Unsupported goal period.');
-		}
+		$period = match ($period) {
+			'day' => 'day',
+			'week' => 'week',
+			'month' => 'month',
+			'long_term' => 'long_term',
+			default => throw new InvalidEntryException('Unsupported goal period.'),
+		};
 		$timezone = $this->dateTimeZone->getTimeZone(false, $userId);
 		$localNow = ($now ?? new DateTimeImmutable('now', $this->utc))->setTimezone($timezone);
 		$today = $localNow->setTime(0, 0);
@@ -120,7 +144,11 @@ class GoalProgressService {
 		];
 	}
 
-	/** @param array{period: string, periodStart: DateTimeImmutable, periodEnd: DateTimeImmutable|null, periodStartKey: string, periodEndKey: string|null, periodKey: string, closed: bool, current: bool, timezone: DateTimeZone} $selection @return array<string, mixed>|null */
+	/**
+	 * @param array{period: 'day'|'week'|'month'|'long_term', periodStart: DateTimeImmutable, periodEnd: DateTimeImmutable|null, periodStartKey: string, periodEndKey: string|null, periodKey: string, closed: bool, current: bool, timezone: DateTimeZone} $selection
+	 * @psalm-return GoalProgressInternal|null
+	 * @psalm-suppress MixedReturnTypeCoercion Psalm loses this fixed internal shape while composing source results.
+	 */
 	private function evaluateGoal(string $userId, Goal $goal, array $selection): ?array {
 		try {
 			$revision = $this->goalRevisionMapper->findForGoalPeriod($goal->getId(), $selection['periodStartKey']);
@@ -128,18 +156,23 @@ class GoalProgressService {
 			return null;
 		}
 		$target = $this->goalTargetRegistry->getDefinition($goal->getTargetKey());
+		$comparator = match ($revision->getComparator()) {
+			'gte' => 'gte',
+			'lte' => 'lte',
+			default => throw new \LogicException('Unsupported persisted goal comparator.'),
+		};
 		$targetValue = (float)$revision->getTargetValue();
 		$fromUtc = $selection['periodStart']->setTimezone($this->utc);
 		$toUtc = $selection['periodEnd']?->setTimezone($this->utc);
-		$currentValue = 0.0;
+		/** @var float|null $observedValue */
 		$observedValue = null;
+		/** @var DateTimeImmutable|null $lastActivityAt */
 		$lastActivityAt = null;
 
 		if ($target['category'] === 'journal') {
 			if ($toUtc === null) {
 				throw new \LogicException('Journal goal must have a finite period.');
 			}
-			/** @var list<string> $options */
 			$options = $target['options'] ?? [];
 			$currentValue = (float)$this->entryMapper->countForUserMetricOptionsRange($userId, $target['metricKey'], $options, $fromUtc, $toUtc);
 			$lastActivityAt = $this->entryMapper->findLatestForUserMetricOptionsSince($userId, $target['metricKey'], $options, $fromUtc);
@@ -163,10 +196,10 @@ class GoalProgressService {
 			$measurements = $this->measurementMapper->findForUserMetricRange($userId, $target['metricKey'], $fromUtc, $toUtc);
 			$values = array_map(static fn ($item): float => (float)$item->getNumericValue(), $measurements);
 			if ($values !== []) {
-				$observedValue = $revision->getComparator() === 'lte' ? min($values) : max($values);
+				$observedValue = $comparator === 'lte' ? min($values) : max($values);
 				$lastActivityAt = $measurements[0]->getRecordedAt();
 			}
-			$currentValue = (float)count(array_filter($values, fn (float $value): bool => $this->matches($value, $targetValue, $revision->getComparator())));
+			$currentValue = (float)count(array_filter($values, fn (float $value): bool => $this->matches($value, $targetValue, $comparator)));
 		} else {
 			if ($toUtc === null) {
 				throw new \LogicException('Measurement count goal must have a finite period.');
@@ -176,19 +209,20 @@ class GoalProgressService {
 			$lastActivityAt = $measurements === [] ? null : $measurements[0]->getRecordedAt();
 		}
 
-		$status = $this->status($goal, $target, $revision, $currentValue, $targetValue, $selection['closed'], $selection['current']);
-		$minimumStyle = $revision->getComparator() === 'gte' && $target['kind'] !== 'latest_value';
-		return [
-			'goalId' => $goal->getId(),
+		$status = $this->status($goal, $target, $comparator, $currentValue, $targetValue, $selection['closed'], $selection['current']);
+		$minimumStyle = $comparator === 'gte' && $target['kind'] !== 'latest_value';
+		$goalId = $goal->getId();
+		$progress = [
+			'goalId' => $goalId,
 			'targetKey' => $goal->getTargetKey(),
 			'metricKey' => $target['metricKey'],
-			'period' => $goal->getPeriod(),
+			'period' => $selection['period'],
 			'periodStart' => $selection['periodStartKey'],
 			'periodEnd' => $selection['periodEndKey'],
 			'periodKey' => $selection['periodKey'],
 			'active' => $goal->isActive(),
 			'remindersEnabled' => $goal->isRemindersEnabled(),
-			'comparator' => $revision->getComparator(),
+			'comparator' => $comparator,
 			'targetValue' => $targetValue,
 			'currentValue' => $currentValue,
 			'observedValue' => $observedValue,
@@ -198,10 +232,15 @@ class GoalProgressService {
 			'effectiveFrom' => $revision->getEffectiveFrom(),
 			'lastActivityAt' => $lastActivityAt,
 		];
+		return $progress;
 	}
 
-	/** @param array<string, mixed> $target */
-	private function status(Goal $goal, array $target, GoalRevision $revision, ?float $currentValue, float $targetValue, bool $closed, bool $current): string {
+	/**
+	 * @param HealthGoalTarget $target
+	 * @param 'gte'|'lte' $comparator
+	 * @return 'in_progress'|'reached'|'within_limit'|'exceeded'|'not_reached'|'paused'
+	 */
+	private function status(Goal $goal, array $target, string $comparator, ?float $currentValue, float $targetValue, bool $closed, bool $current): string {
 		if (!$goal->isActive() && $current) {
 			return 'paused';
 		}
@@ -214,7 +253,7 @@ class GoalProgressService {
 		if ($currentValue === null) {
 			return $closed ? 'not_reached' : 'in_progress';
 		}
-		if ($revision->getComparator() === 'gte') {
+		if ($comparator === 'gte') {
 			if ($currentValue >= $targetValue) {
 				return 'reached';
 			}
@@ -234,9 +273,27 @@ class GoalProgressService {
 		return preg_match('/^(\d{4})-(\d{2})-(\d{2})$/D', $date, $matches) === 1 && checkdate((int)$matches[2], (int)$matches[3], (int)$matches[1]);
 	}
 
-	/** @param array<string, mixed> $progress @return array<string, mixed> */
+	/** @param GoalProgressInternal $progress @psalm-return HealthGoalProgress */
 	private function publicResult(array $progress): array {
-		unset($progress['lastActivityAt']);
-		return $progress;
+		$public = [
+			'goalId' => $progress['goalId'],
+			'targetKey' => $progress['targetKey'],
+			'metricKey' => $progress['metricKey'],
+			'period' => $progress['period'],
+			'periodStart' => $progress['periodStart'],
+			'periodEnd' => $progress['periodEnd'],
+			'periodKey' => $progress['periodKey'],
+			'active' => $progress['active'],
+			'remindersEnabled' => $progress['remindersEnabled'],
+			'comparator' => $progress['comparator'],
+			'targetValue' => $progress['targetValue'],
+			'currentValue' => $progress['currentValue'],
+			'observedValue' => $progress['observedValue'],
+			'progressRatio' => $progress['progressRatio'],
+			'remaining' => $progress['remaining'],
+			'status' => $progress['status'],
+			'effectiveFrom' => $progress['effectiveFrom'],
+		];
+		return $public;
 	}
 }

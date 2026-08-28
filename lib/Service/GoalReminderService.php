@@ -15,7 +15,9 @@ use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCP\Notification\IManager;
 
 /** Sends only policy-approved private Nextcloud notifications. */
+/** @psalm-suppress PossiblyUnusedMethod Invoked by the registered Nextcloud background job. */
 class GoalReminderService {
+	/** @psalm-suppress PossiblyUnusedMethod Invoked by the registered Nextcloud background job. */
 	public function __construct(
 		private GoalMapper $goalMapper,
 		private GoalReminderStateMapper $goalReminderStateMapper,
@@ -36,7 +38,7 @@ class GoalReminderService {
 			$target = $this->goalTargetRegistry->getDefinition($goal->getTargetKey());
 			$configuration = $this->configurationService->get($goal->getUserId());
 			$metricEnabled = $configuration['metrics'][$target['metricKey']]['enabled'] ?? false;
-			$state = $this->state($goal->getId(), (string)$progress['periodKey']);
+			$state = $this->state($goal->getId(), $progress['periodKey']);
 			$reason = $this->goalReminderEvaluationService->reason($goal, $progress, $metricEnabled, $state, $now);
 			if ($reason === null) {
 				continue;
@@ -48,7 +50,7 @@ class GoalReminderService {
 				->setObject('goal_reminder', $goal->getId() . ':' . $progress['periodKey'] . ':' . $reason)
 				->setSubject($reason);
 			$this->notificationManager->notify($notification);
-			$this->record($goal->getId(), (string)$progress['periodKey'], $reason, $state, $now);
+			$this->record($goal->getId(), $progress['periodKey'], $reason, $state, $now);
 		}
 	}
 

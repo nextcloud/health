@@ -12,6 +12,7 @@ use OCP\IDBConnection;
 
 /** @extends QBMapper<GoalRevision> */
 class GoalRevisionMapper extends QBMapper {
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, 'health_goal_revisions', GoalRevision::class);
 	}

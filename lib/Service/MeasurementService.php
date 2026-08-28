@@ -13,10 +13,16 @@ use OCA\Health\Exception\InvalidEntryException;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
+/**
+ * @psalm-import-type HealthMeasurement from \OCA\Health\ResponseDefinitions
+ * @psalm-import-type HealthSingleMeasurement from \OCA\Health\ResponseDefinitions
+ * @psalm-import-type HealthBloodPressureMeasurement from \OCA\Health\ResponseDefinitions
+ */
 class MeasurementService {
 	private const CONTEXTS = ['manual', 'checkin', 'checkout'];
 	private DateTimeZone $utc;
 
+	/** @psalm-suppress PossiblyUnusedMethod Instantiated through Nextcloud dependency injection. */
 	public function __construct(
 		private MeasurementMapper $measurementMapper,
 		private MetricService $metricService,
@@ -25,7 +31,10 @@ class MeasurementService {
 		$this->utc = new DateTimeZone('UTC');
 	}
 
-	/** @return array<string, mixed> */
+	/**
+	 * @psalm-return HealthMeasurement
+	 * @psalm-suppress MixedReturnTypeCoercion Psalm loses the discriminated response shape while composing persisted measurement rows.
+	 */
 	public function create(string $userId, mixed $metricKey, mixed $numericValue, mixed $values, mixed $unit, mixed $recordedAt, mixed $note, mixed $context = 'manual', mixed $source = 'api'): array {
 		$metricKey = $this->metricService->validateMeasurementMetricKey($metricKey);
 		$timestamp = $this->parseTimestamp($recordedAt);
@@ -37,10 +46,12 @@ class MeasurementService {
 				throw new InvalidEntryException('Blood pressure requires systolic and diastolic values.');
 			}
 			$groupId = bin2hex(random_bytes(16));
+			/** @var non-empty-list<Measurement> $rows */
 			$rows = [
 				$this->newMeasurement($userId, 'blood_pressure_systolic', $this->unitConversionService->toCanonical('blood_pressure', $values['systolic'], $unit), $groupId, $context, $source, $timestamp, $note),
 				$this->newMeasurement($userId, 'blood_pressure_diastolic', $this->unitConversionService->toCanonical('blood_pressure', $values['diastolic'], $unit), $groupId, $context, $source, $timestamp, $note),
 			];
+			/** @psalm-suppress MixedReturnTypeCoercion Psalm loses the documented blood-pressure row shape at this private formatter boundary. */
 			return $this->formatBloodPressure($rows);
 		}
 		if ($values !== null) {
@@ -50,36 +61,47 @@ class MeasurementService {
 		return $this->formatSingle($this->newMeasurement($userId, $metricKey, $value, null, $context, $source, $timestamp, $note));
 	}
 
-	/** @return list<array<string, mixed>> */
+	/**
+	 * @psalm-return list<HealthMeasurement>
+	 * @psalm-suppress MixedReturnTypeCoercion Psalm loses the discriminated response shape while grouping persisted measurement rows.
+	 */
 	public function list(string $userId, mixed $from = null, mixed $to = null): array {
 		$items = $this->measurementMapper->findForUserRange($userId, $from === null ? null : $this->parseTimestamp($from), $to === null ? null : $this->parseTimestamp($to));
+		/** @var list<HealthMeasurement> $result */
 		$result = [];
+		/** @var array<string, non-empty-list<Measurement>> $groups */
 		$groups = [];
 		foreach ($items as $item) {
-			if ($item->getGroupId() === null) {
+			$groupId = $item->getGroupId();
+			if ($groupId === null) {
 				$result[] = $this->formatSingle($item);
 				continue;
 			}
-			$groups[$item->getGroupId()][] = $item;
+			$groups[$groupId][] = $item;
 		}
 		foreach ($groups as $group) {
+			/** @psalm-suppress MixedReturnTypeCoercion Psalm loses the documented blood-pressure row shape at this private formatter boundary. */
 			$result[] = $this->formatBloodPressure($group);
 		}
 		usort($result, static fn (array $left, array $right): int => [$right['recordedAt'], $right['id']] <=> [$left['recordedAt'], $left['id']]);
 		return $result;
 	}
 
-	/** @return array<string, mixed> */
+	/**
+	 * @psalm-return HealthMeasurement
+	 * @psalm-suppress MixedReturnTypeCoercion Psalm loses the discriminated response shape while composing persisted measurement rows.
+	 */
 	public function update(string $userId, int $id, mixed $numericValue, mixed $values, mixed $unit, mixed $recordedAt, mixed $note, mixed $context): array {
 		$measurement = $this->findForUser($id, $userId);
 		$timestamp = $this->parseTimestamp($recordedAt);
 		$context = $this->validateContext($context);
 		$note = $this->validateNote($note);
-		if ($measurement->getGroupId() !== null) {
+		$groupId = $measurement->getGroupId();
+		if ($groupId !== null) {
 			if (!is_array($values) || !array_key_exists('systolic', $values) || !array_key_exists('diastolic', $values)) {
 				throw new InvalidEntryException('Blood pressure requires systolic and diastolic values.');
 			}
-			$rows = $this->measurementMapper->findForUserGroup($userId, $measurement->getGroupId());
+			$rows = $this->measurementMapper->findForUserGroup($userId, $groupId);
 			if (count($rows) !== 2) {
 				throw new EntryNotFoundException('Blood pressure measurement not found.');
 			}
@@ -91,6 +113,7 @@ class MeasurementService {
 				$row->setUpdatedAt(new DateTimeImmutable('now', $this->utc));
 				$this->measurementMapper->updateForUser($row);
 			}
+			/** @psalm-suppress MixedReturnTypeCoercion Psalm loses the documented blood-pressure row shape at this private formatter boundary. */
 			return $this->formatBloodPressure($rows);
 		}
 		$metricKey = $measurement->getMetricKey();
@@ -104,11 +127,12 @@ class MeasurementService {
 
 	public function delete(string $userId, int $id): void {
 		$measurement = $this->findForUser($id, $userId);
-		if ($measurement->getGroupId() === null) {
+		$groupId = $measurement->getGroupId();
+		if ($groupId === null) {
 			$this->measurementMapper->deleteForUser($measurement);
 			return;
 		}
-		foreach ($this->measurementMapper->findForUserGroup($userId, $measurement->getGroupId()) as $row) {
+		foreach ($this->measurementMapper->findForUserGroup($userId, $groupId) as $row) {
 			$this->measurementMapper->deleteForUser($row);
 		}
 	}
@@ -137,22 +161,33 @@ class MeasurementService {
 		}
 	}
 
-	/** @return array<string, mixed> */
+	/** @psalm-return HealthSingleMeasurement */
 	private function formatSingle(Measurement $item): array {
-		return ['id' => $item->getId(), 'metricKey' => $item->getMetricKey(), 'numericValue' => (float)$item->getNumericValue(), 'values' => null, 'context' => $item->getContext(), 'source' => $item->getSource(), 'recordedAt' => $item->getRecordedAt()->format('Y-m-d\TH:i:s\Z'), 'createdAt' => $item->getCreatedAt()->format('Y-m-d\TH:i:s\Z'), 'updatedAt' => $item->getUpdatedAt()->format('Y-m-d\TH:i:s\Z'), 'note' => $item->getNote()];
+		$id = $item->getId();
+		/** @var HealthSingleMeasurement $measurement */
+		$measurement = ['id' => $id, 'metricKey' => $item->getMetricKey(), 'numericValue' => (float)$item->getNumericValue(), 'values' => null, 'context' => $item->getContext(), 'source' => $item->getSource(), 'recordedAt' => $item->getRecordedAt()->format('Y-m-d\TH:i:s\Z'), 'createdAt' => $item->getCreatedAt()->format('Y-m-d\TH:i:s\Z'), 'updatedAt' => $item->getUpdatedAt()->format('Y-m-d\TH:i:s\Z'), 'note' => $item->getNote()];
+		return $measurement;
 	}
 
-	/** @param list<Measurement> $items @return array<string, mixed> */
+	/** @param non-empty-list<Measurement> $items @psalm-return HealthBloodPressureMeasurement */
 	private function formatBloodPressure(array $items): array {
-		$values = [];
+		$systolic = null;
+		$diastolic = null;
 		foreach ($items as $item) {
-			$values[$item->getMetricKey() === 'blood_pressure_systolic' ? 'systolic' : 'diastolic'] = (float)$item->getNumericValue();
+			if ($item->getMetricKey() === 'blood_pressure_systolic') {
+				$systolic = (float)$item->getNumericValue();
+			} else {
+				$diastolic = (float)$item->getNumericValue();
+			}
 		}
-		if (!isset($values['systolic'], $values['diastolic'])) {
+		if ($systolic === null || $diastolic === null) {
 			throw new \LogicException('Incomplete blood pressure group.');
 		}
 		$first = $items[0];
-		return ['id' => $first->getId(), 'metricKey' => 'blood_pressure', 'numericValue' => null, 'values' => $values, 'context' => $first->getContext(), 'source' => $first->getSource(), 'recordedAt' => $first->getRecordedAt()->format('Y-m-d\TH:i:s\Z'), 'createdAt' => $first->getCreatedAt()->format('Y-m-d\TH:i:s\Z'), 'updatedAt' => $first->getUpdatedAt()->format('Y-m-d\TH:i:s\Z'), 'note' => $first->getNote()];
+		$id = $first->getId();
+		/** @var HealthBloodPressureMeasurement $measurement */
+		$measurement = ['id' => $id, 'metricKey' => 'blood_pressure', 'numericValue' => null, 'values' => ['systolic' => $systolic, 'diastolic' => $diastolic], 'context' => $first->getContext(), 'source' => $first->getSource(), 'recordedAt' => $first->getRecordedAt()->format('Y-m-d\TH:i:s\Z'), 'createdAt' => $first->getCreatedAt()->format('Y-m-d\TH:i:s\Z'), 'updatedAt' => $first->getUpdatedAt()->format('Y-m-d\TH:i:s\Z'), 'note' => $first->getNote()];
+		return $measurement;
 	}
 
 	private function validateContext(mixed $context): string {

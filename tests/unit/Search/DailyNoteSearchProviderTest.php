@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OCA\Health\Tests\Unit\Search;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use DateTimeZone;
 use OCA\Health\Db\DailyNote;
 use OCA\Health\Db\DailyNoteMapper;
@@ -96,7 +96,7 @@ class DailyNoteSearchProviderTest extends TestCase {
 		$l10n->method('t')->willReturnCallback(static function (string $message, array $parameters = []): string {
 			return $parameters === [] ? $message : vsprintf($message, array_values($parameters));
 		});
-		$l10n->method('l')->willReturnCallback(static function (string $type, DateTimeImmutable $date): string {
+		$l10n->method('l')->willReturnCallback(static function (string $type, DateTimeInterface $date): string {
 			return $date->format('l, d F Y');
 		});
 		$url = $this->createMock(IURLGenerator::class);

@@ -8,6 +8,10 @@ use DateTimeImmutable;
 use OCP\AppFramework\Db\Entity;
 use OCP\DB\Types;
 
+/**
+ * @psalm-suppress PropertyNotSetInConstructor The ID is populated by Nextcloud's Entity/Mapper lifecycle.
+ * @psalm-suppress PossiblyUnusedMethod Entity accessors are used by hydration and mapper consumers.
+ */
 class GoalRevision extends Entity {
 	protected ?int $goalId = null;
 	protected ?string $comparator = null;
@@ -27,6 +31,7 @@ class GoalRevision extends Entity {
 		$this->addType('updatedAt', Types::DATETIME_IMMUTABLE);
 	}
 
+	/** @psalm-suppress PossiblyUnusedMethod Used by Nextcloud entity hydration and mapper consumers. */
 	public function getGoalId(): int {
 		return $this->goalId ?? 0;
 	}
@@ -63,12 +68,14 @@ class GoalRevision extends Entity {
 	public function setEffectiveTo(?string $value): void {
 		$this->setter('effectiveTo', [$value]);
 	}
+	/** @psalm-suppress PossiblyUnusedMethod Used by Nextcloud entity hydration and mapper consumers. */
 	public function getCreatedAt(): DateTimeImmutable {
 		return $this->createdAt ?? throw new \LogicException('createdAt has not been set.');
 	}
 	public function setCreatedAt(DateTimeImmutable $value): void {
 		$this->setter('createdAt', [$value]);
 	}
+	/** @psalm-suppress PossiblyUnusedMethod Used by Nextcloud entity hydration and mapper consumers. */
 	public function getUpdatedAt(): DateTimeImmutable {
 		return $this->updatedAt ?? throw new \LogicException('updatedAt has not been set.');
 	}

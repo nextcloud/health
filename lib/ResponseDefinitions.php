@@ -35,16 +35,32 @@ namespace OCA\Health;
  *   createdAt: string, updatedAt: string, bmi: float|null
  * }
  * @psalm-type HealthDailyValuesPage = array{values: list<HealthDailyValue>}
- * @psalm-type HealthMeasurement = array{
- *   id: int, metricKey: string, numericValue: float|null,
- *   values: array{systolic: float, diastolic: float}|null, context: string,
+ * @psalm-type HealthSingleMeasurement = array{
+ *   id: int, metricKey: string, numericValue: float, values: null, context: string,
  *   source: string, recordedAt: string, createdAt: string, updatedAt: string, note: string|null
  * }
+ * @psalm-type HealthBloodPressureMeasurement = array{
+ *   id: int, metricKey: 'blood_pressure', numericValue: null,
+ *   values: array{systolic: float, diastolic: float}, context: string,
+ *   source: string, recordedAt: string, createdAt: string, updatedAt: string, note: string|null
+ * }
+ * @psalm-type HealthMeasurement = HealthSingleMeasurement|HealthBloodPressureMeasurement
  * @psalm-type HealthMeasurementsPage = array{measurements: list<HealthMeasurement>}
  * @psalm-type HealthRoutineResult = array{
  *   createdEntries: list<HealthEntry>,
  *   createdMeasurements: list<HealthMeasurement>,
  *   updatedDailyValues: list<HealthDailyValue>
+ * }
+ * @psalm-type HealthMetricDefinition = array{
+ *   metricKey: string,
+ *   category: 'journal'|'measurement'|'daily_value',
+ *   valueType: 'scale'|'event'|'numeric'|'composite',
+ *   minimum: int|null,
+ *   maximum: int|null,
+ *   allowedOptions: list<string>|null,
+ *   aggregation: 'average'|'count'|'daily',
+ *   canonicalUnit: string|null,
+ *   supportedUnits: list<string>
  * }
  * @psalm-type HealthConfiguration = array{
  *   profile: array{heightCm: float|null, heightDisplayUnit: 'cm'|'in', dateOfBirth: string|null, growthReferenceSex: 'female'|'male'|null},
