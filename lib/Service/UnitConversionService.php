@@ -7,7 +7,9 @@ namespace OCA\Health\Service;
 use OCA\Health\Exception\InvalidEntryException;
 
 class UnitConversionService {
-	public function __construct(private MetricService $metricService) {
+	public function __construct(
+		private MetricService $metricService,
+	) {
 	}
 
 	public function toCanonical(string $metricKey, mixed $value, mixed $unit): float {

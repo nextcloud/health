@@ -27,17 +27,23 @@ class RoutineService {
 		try {
 			$result = ['createdEntries' => [], 'createdMeasurements' => [], 'updatedDailyValues' => []];
 			foreach ($journalMetrics as $item) {
-				if (!is_array($item) || !is_string($item['metricKey'] ?? null)) { throw new InvalidEntryException('Invalid journal metric.'); }
+				if (!is_array($item) || !is_string($item['metricKey'] ?? null)) {
+					throw new InvalidEntryException('Invalid journal metric.');
+				}
 				$this->assertRoutineMetric($configuration, $item['metricKey'], $context);
 				$result['createdEntries'][] = $this->entryService->create($userId, $item['metricKey'], $item['numericValue'] ?? null, $item['optionValue'] ?? null, $context, $recordedAt, $item['note'] ?? null, 'web');
 			}
 			foreach ($measurements as $item) {
-				if (!is_array($item) || !is_string($item['metricKey'] ?? null)) { throw new InvalidEntryException('Invalid measurement.'); }
+				if (!is_array($item) || !is_string($item['metricKey'] ?? null)) {
+					throw new InvalidEntryException('Invalid measurement.');
+				}
 				$this->assertRoutineMetric($configuration, $item['metricKey'], $context);
 				$result['createdMeasurements'][] = $this->measurementService->create($userId, $item['metricKey'], $item['numericValue'] ?? null, $item['values'] ?? null, $item['unit'] ?? null, $recordedAt, $item['note'] ?? null, $context, 'web');
 			}
 			foreach ($dailyValues as $item) {
-				if (!is_array($item) || !is_string($item['metricKey'] ?? null)) { throw new InvalidEntryException('Invalid daily value.'); }
+				if (!is_array($item) || !is_string($item['metricKey'] ?? null)) {
+					throw new InvalidEntryException('Invalid daily value.');
+				}
 				$this->assertRoutineMetric($configuration, $item['metricKey'], $context);
 				$result['updatedDailyValues'][] = $this->dailyValueService->upsert($userId, $item['metricKey'], $date, $item['numericValue'] ?? null, $item['unit'] ?? null);
 			}

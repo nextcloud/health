@@ -28,24 +28,64 @@ class Measurement extends Entity {
 		$this->addType('updatedAt', Types::DATETIME_IMMUTABLE);
 	}
 
-	public function getUserId(): string { return $this->userId ?? ''; }
-	public function setUserId(string $value): void { $this->setter('userId', [$value]); }
-	public function getMetricKey(): string { return $this->metricKey ?? ''; }
-	public function setMetricKey(string $value): void { $this->setter('metricKey', [$value]); }
-	public function getNumericValue(): string { return $this->numericValue ?? ''; }
-	public function setNumericValue(string $value): void { $this->setter('numericValue', [$value]); }
-	public function getGroupId(): ?string { return $this->groupId; }
-	public function setGroupId(?string $value): void { $this->setter('groupId', [$value]); }
-	public function getContext(): string { return $this->context ?? ''; }
-	public function setContext(string $value): void { $this->setter('context', [$value]); }
-	public function getSource(): string { return $this->source ?? ''; }
-	public function setSource(string $value): void { $this->setter('source', [$value]); }
-	public function getRecordedAt(): DateTimeImmutable { return $this->recordedAt ?? throw new \LogicException('recordedAt has not been set.'); }
-	public function setRecordedAt(DateTimeImmutable $value): void { $this->setter('recordedAt', [$value]); }
-	public function getCreatedAt(): DateTimeImmutable { return $this->createdAt ?? throw new \LogicException('createdAt has not been set.'); }
-	public function setCreatedAt(DateTimeImmutable $value): void { $this->setter('createdAt', [$value]); }
-	public function getUpdatedAt(): DateTimeImmutable { return $this->updatedAt ?? throw new \LogicException('updatedAt has not been set.'); }
-	public function setUpdatedAt(DateTimeImmutable $value): void { $this->setter('updatedAt', [$value]); }
-	public function getNote(): ?string { return $this->note; }
-	public function setNote(?string $value): void { $this->setter('note', [$value]); }
+	public function getUserId(): string {
+		return $this->userId ?? '';
+	}
+	public function setUserId(string $value): void {
+		$this->setter('userId', [$value]);
+	}
+	public function getMetricKey(): string {
+		return $this->metricKey ?? '';
+	}
+	public function setMetricKey(string $value): void {
+		$this->setter('metricKey', [$value]);
+	}
+	public function getNumericValue(): string {
+		return $this->numericValue ?? '';
+	}
+	public function setNumericValue(string $value): void {
+		$this->setter('numericValue', [$value]);
+	}
+	public function getGroupId(): ?string {
+		return $this->groupId;
+	}
+	public function setGroupId(?string $value): void {
+		$this->setter('groupId', [$value]);
+	}
+	public function getContext(): string {
+		return $this->context ?? '';
+	}
+	public function setContext(string $value): void {
+		$this->setter('context', [$value]);
+	}
+	public function getSource(): string {
+		return $this->source ?? '';
+	}
+	public function setSource(string $value): void {
+		$this->setter('source', [$value]);
+	}
+	public function getRecordedAt(): DateTimeImmutable {
+		return $this->recordedAt ?? throw new \LogicException('recordedAt has not been set.');
+	}
+	public function setRecordedAt(DateTimeImmutable $value): void {
+		$this->setter('recordedAt', [$value]);
+	}
+	public function getCreatedAt(): DateTimeImmutable {
+		return $this->createdAt ?? throw new \LogicException('createdAt has not been set.');
+	}
+	public function setCreatedAt(DateTimeImmutable $value): void {
+		$this->setter('createdAt', [$value]);
+	}
+	public function getUpdatedAt(): DateTimeImmutable {
+		return $this->updatedAt ?? throw new \LogicException('updatedAt has not been set.');
+	}
+	public function setUpdatedAt(DateTimeImmutable $value): void {
+		$this->setter('updatedAt', [$value]);
+	}
+	public function getNote(): ?string {
+		return $this->note;
+	}
+	public function setNote(?string $value): void {
+		$this->setter('note', [$value]);
+	}
 }

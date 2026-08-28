@@ -30,7 +30,11 @@ class DailyValueService {
 		$profile = $this->configurationService->get($userId)['profile'];
 		$values = $this->dailyValueMapper->findForUserDate($userId, $date);
 		$weight = null;
-		foreach ($values as $value) { if ($value->getMetricKey() === 'weight') { $weight = (float)$value->getNumericValue(); } }
+		foreach ($values as $value) {
+			if ($value->getMetricKey() === 'weight') {
+				$weight = (float)$value->getNumericValue();
+			}
+		}
 		$bmi = $weight === null || $profile['heightCm'] === null || $profile['heightCm'] <= 0
 			? null : $weight / (($profile['heightCm'] / 100) ** 2);
 		return array_map(fn (DailyValue $value): array => $this->format($value, $bmi), $values);

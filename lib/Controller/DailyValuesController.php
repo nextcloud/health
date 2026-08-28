@@ -61,7 +61,7 @@ class DailyValuesController extends OCSController {
 	 * @param string $metricKey Stable daily value metric identifier.
 	 * @param string $date Local calendar date in YYYY-MM-DD format.
 	 * @param int|float $numericValue Numeric value in the supplied unit.
- 	 * @param string|null $unit Supported display unit for the metric, or null for unitless scale metrics.
+	 * @param string|null $unit Supported display unit for the metric, or null for unitless scale metrics.
 	 * @return DataResponse<Http::STATUS_OK, HealthDailyValue, array{}>
 	 * @throws OCSBadRequestException A metric, value, unit, or date is invalid.
 	 *

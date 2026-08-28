@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace OCA\Health\AppInfo;
 
-use OCA\Health\Service\MetricService;
 use OCA\Health\Service\GoalTargetRegistry;
+use OCA\Health\Service\MetricService;
 use OCP\Capabilities\ICapability;
 
 class Capabilities implements ICapability {
