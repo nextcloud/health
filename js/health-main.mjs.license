@@ -40,7 +40,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 15.0.5
 	- license: BSD-3-Clause
 - health
-	- version: 3.0.3
+	- version: 3.0.4
 	- license: AGPL-3.0-or-later
 - splitpanes
 	- version: 4.1.2

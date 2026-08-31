@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.4]
+
+### Fixed
+
+- Fix Statistics chart rendering for regional locales.
+- Improve compatibility with released database migrations.
+
 ### Added
 
 - First release
