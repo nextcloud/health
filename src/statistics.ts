@@ -2,12 +2,18 @@ import type { HealthConfiguration } from './api/configuration.ts'
 import type { StatisticsPeriod } from './api/statistics.ts'
 import type { AllMetricKey, Unit } from './metrics.ts'
 
-import { t } from '@nextcloud/l10n'
+import { getCanonicalLocale, t } from '@nextcloud/l10n'
 import { getMetricLabel, getMetricUnits } from './metrics.ts'
 
 export interface StatisticsPeriodOption {
 	id: StatisticsPeriod
 	label: string
+}
+
+export function formatStatisticsDate(dateKey: string, full = false): string {
+	return new Intl.DateTimeFormat(getCanonicalLocale(), full
+		? { weekday: 'long', month: 'long', day: 'numeric' }
+		: { month: 'short', day: 'numeric' }).format(new Date(`${dateKey}T12:00:00`))
 }
 
 export function getStatisticsPeriodOptions(): StatisticsPeriodOption[] {
