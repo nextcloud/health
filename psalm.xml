@@ -15,6 +15,17 @@
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
+	<issueHandlers>
+		<DeprecatedMethod>
+			<!-- These already-released migrations intentionally preserve their DBAL schema API calls for migration immutability and backward compatibility. New migrations must use current non-deprecated APIs. -->
+			<errorLevel type="suppress">
+				<file name="lib/Migration/Version3000Date20260817000000.php" />
+				<file name="lib/Migration/Version3000Date20260817220000.php" />
+				<file name="lib/Migration/Version3000Date20260820130000.php" />
+				<file name="lib/Migration/Version3003Date20260824120000.php" />
+			</errorLevel>
+		</DeprecatedMethod>
+	</issueHandlers>
 	<extraFiles>
 		<directory name="vendor"/>
 	</extraFiles>
