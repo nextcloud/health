@@ -7,7 +7,9 @@
     "build": "vite build",
     "dev": "vite --mode development build",
     "lint": "eslint src",
+    "prebuild": "npm run test:frontend",
     "stylelint": "stylelint src/**/*.vue src/**/*.scss src/**/*.css",
+    "test:frontend": "node --test tests/frontend/*.test.mjs",
     "typecheck": "vue-tsc --noEmit",
     "watch": "vite --mode development build --watch"
   },

@@ -4,11 +4,11 @@ import type { HealthConfiguration } from '../../api/configuration.ts'
 import type { StatisticsGoalOverlay, StatisticsMetric } from '../../api/statistics.ts'
 import type { AllMetricKey, EventMetricKey } from '../../metrics.ts'
 
-import { getLocale, t } from '@nextcloud/l10n'
+import { t } from '@nextcloud/l10n'
 import { BarController, BarElement, CategoryScale, Chart as ChartJs, LinearScale, LineController, LineElement, PointElement, Tooltip } from 'chart.js'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { colorWithAlpha, fromCanonical, getChartableMetricDefinition, getEventChartSeries, getEventChartSeriesLabel, getMetricLabel, getMetricVisual, getUnitLabel } from '../../metrics.ts'
-import { displayUnitForMetric, getStatisticsGoalLabel } from '../../statistics.ts'
+import { displayUnitForMetric, formatStatisticsDate, getStatisticsGoalLabel } from '../../statistics.ts'
 
 const props = defineProps<{
 	metrics: StatisticsMetric[]
@@ -69,12 +69,6 @@ let chart: Chart | null = null
 let themeObserver: MutationObserver | null = null
 let focusedIndex = -1
 const focusedDescription = ref('')
-
-function formatDate(dateKey: string, full = false): string {
-	return new Intl.DateTimeFormat(getLocale(), full
-		? { weekday: 'long', month: 'long', day: 'numeric' }
-		: { month: 'short', day: 'numeric' }).format(new Date(`${dateKey}T12:00:00`))
-}
 
 function axisIdForMetric(metricKey: AllMetricKey): string {
 	const definition = getChartableMetricDefinition(metricKey)
@@ -297,7 +291,7 @@ function renderChart(): void {
 				color: textColor,
 				autoSkip: true,
 				maxTicksLimit: labels.value.length > 180 ? 8 : labels.value.length > 30 ? 10 : 14,
-				callback: (_value: number | string, index: number) => labels.value[index] === undefined ? '' : formatDate(labels.value[index]),
+				callback: (_value: number | string, index: number) => labels.value[index] === undefined ? '' : formatStatisticsDate(labels.value[index]),
 			},
 			grid: { color: gridColor },
 		},
@@ -338,7 +332,7 @@ function renderChart(): void {
 					callbacks: {
 						title: (items: TooltipItem<'line' | 'bar'>[]) => {
 							const date = labels.value[items[0]?.dataIndex ?? -1]
-							return date === undefined ? '' : formatDate(date, true)
+							return date === undefined ? '' : formatStatisticsDate(date, true)
 						},
 						label: (item: TooltipItem<'line' | 'bar'>) => {
 							const dataset = chartDatasets.value[item.datasetIndex]
@@ -392,8 +386,8 @@ function focusDataPoint(event: KeyboardEvent): void {
 			values.push(t('health', 'Total {count}', { count: total }))
 		}
 		focusedDescription.value = values.length === 0
-			? t('health', '{date}. No data in this period.', { date: formatDate(date, true) })
-			: `${formatDate(date, true)}. ${title.value}. ${values.join('. ')}`
+			? t('health', '{date}. No data in this period.', { date: formatStatisticsDate(date, true) })
+			: `${formatStatisticsDate(date, true)}. ${title.value}. ${values.join('. ')}`
 	}
 	const point = active[0] === undefined ? undefined : chart.getDatasetMeta(active[0].datasetIndex).data[focusedIndex]
 	if (point === undefined) {
