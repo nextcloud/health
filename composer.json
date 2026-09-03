@@ -33,7 +33,7 @@
 		"php": "^8.2"
 	},
 	"require-dev": {
-		"doctrine/dbal": "^4.4",
+		"doctrine/dbal": "^3.10",
 		"nextcloud/ocp": "dev-stable33",
 		"roave/security-advisories": "dev-latest"
 	},
