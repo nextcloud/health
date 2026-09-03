@@ -2,7 +2,7 @@
     "openapi": "3.0.3",
     "info": {
         "title": "health",
-        "version": "3.1.0",
+        "version": "0.0.1",
         "description": "A private, configurable health and wellbeing journal for tracking personal metrics, habits, goals, and trends.",
         "license": {
             "name": "AGPL-3.0-or-later"
