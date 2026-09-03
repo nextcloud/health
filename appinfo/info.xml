@@ -9,12 +9,16 @@
 Users decide which areas they want to track and whether they want to receive reminders. Short check-ins, check-outs, and quick entries make the app easy to use with minimal effort. Daily, weekly, and monthly overviews, together with simple statistics, visualize trends, goal progress, and personal developments without providing medical diagnoses or automated health assessments.
 
 Health is designed with a privacy-first and API-first approach. The Health application and API enforce user isolation so users can access only their own personal Health data. This application-level isolation is not a claim that data is cryptographically hidden from the Nextcloud server operator. The web interface is built on top of Nextcloud APIs, allowing the application to support external clients in the future.</description>
-	<version>3.0.4</version>
+	<version>3.1.0</version>
 	<licence>AGPL-3.0-or-later</licence>
 	<author mail="mail@datenangebot.de">Florian Steffens</author>
 	<namespace>Health</namespace>
 	<category>organization</category>
 	<bugs>https://github.com/nextcloud/health/issues</bugs>
+	<screenshot small-thumbnail="https://dl.datenangebot.de/nextcloud/health/health-1-small.jpg">https://dl.datenangebot.de/nextcloud/health/health-1.png</screenshot>
+    <screenshot>https://dl.datenangebot.de/nextcloud/health/health-2.png</screenshot>
+    <screenshot>https://dl.datenangebot.de/nextcloud/health/health-3.png</screenshot>
+    <screenshot>https://dl.datenangebot.de/nextcloud/health/health-4.png</screenshot>
 	<dependencies>
 		<php min-version="8.2" max-version="8.5"/>
 		<nextcloud min-version="33" max-version="35"/>
