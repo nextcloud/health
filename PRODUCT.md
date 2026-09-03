@@ -95,6 +95,7 @@ Users can view:
 - yearly trends
 - goal completion
 - metric history
+- reusable private saved views of selected metrics and periods
 
 The application should visualize data but should not automatically claim causal relationships.
 
@@ -133,4 +134,4 @@ Initially Health does not include:
 
 ## Goals, progress, and Job Satisfaction
 
-Health goals are private, user-configured targets for a small, fixed registry of journal events, daily values, and measurements. They show descriptive progress only; they do not interpret a user's health or work situation. A Job Satisfaction value is an optional daily 1–5 self-report that is disabled by default and belongs only to its owner. Gentle goal reminders are opt-in, private Nextcloud notifications with generic wording and no Health values.
+Health goals are private, user-configured targets for a small, fixed registry of journal events, daily values, and measurements. They show descriptive progress only; they do not interpret a user's health or work situation. A Job Satisfaction value is an optional daily 1–5 self-report that is disabled by default and belongs only to its owner. Gentle goal reminders are opt-in, private Nextcloud notifications that may identify their metric or topic with its localized label and icon, but never include Health values, targets, progress, remaining amounts, notes, or history.

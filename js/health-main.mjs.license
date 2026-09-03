@@ -10,11 +10,19 @@ SPDX-FileCopyrightText: Evan You
 SPDX-FileCopyrightText: Jeff Sagal <sagalbot@gmail.com>
 SPDX-FileCopyrightText: Jordan Humphreys <jordan@zurb.com>
 SPDX-FileCopyrightText: Nextcloud GmbH and Nextcloud contributors
+SPDX-FileCopyrightText: Scott Cooper <scttcper@gmail.com>
 SPDX-FileCopyrightText: atomiks
+SPDX-FileCopyrightText: chenkai
 SPDX-FileCopyrightText: debounce developers
 SPDX-FileCopyrightText: health developers
 
 This file is generated from multiple sources. Included packages:
+- @ckpack/vue-color
+	- version: 1.6.0
+	- license: MIT
+- @ctrl/tinycolor
+	- version: 3.6.1
+	- license: MIT
 - @floating-ui/dom
 	- version: 1.8.0
 	- license: MIT

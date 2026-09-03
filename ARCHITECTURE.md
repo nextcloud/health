@@ -301,6 +301,10 @@ They:
 
 Business rules must not be implemented in mappers.
 
+## Saved Statistics Views
+
+Saved Statistics views are ordinary owner-scoped configuration resources. Their controller delegates validation and lifecycle operations to a service, which uses an owner-scoped mapper. They store only a title, icon, selected stable metric identifiers, and a Statistics period preset; Statistics values remain derived on demand.
+
 ---
 
 # 13. Modules and Generic Metric Model

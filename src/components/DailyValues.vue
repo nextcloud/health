@@ -10,6 +10,7 @@ import { t } from '@nextcloud/l10n'
 import { computed, ref, watch } from 'vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcDialog from '@nextcloud/vue/components/NcDialog'
+import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 import NcProgressBar from '@nextcloud/vue/components/NcProgressBar'
 import NcRadioGroup from '@nextcloud/vue/components/NcRadioGroup'
 import NcRadioGroupButton from '@nextcloud/vue/components/NcRadioGroupButton'
@@ -23,6 +24,7 @@ import { getEnabledMetricKeys } from '../api/configuration.ts'
 import { listDailyValues, upsertDailyValue } from '../api/dailyValues.ts'
 import { goalProgressForMetric, goalTargetByKey } from '../goals.ts'
 import { DAILY_VALUE_METRIC_KEYS, fromCanonical, getMetricLabel, getMetricUnits, getUnitLabel, hasDisplayUnit } from '../metrics.ts'
+import { normalizeWeightInput } from '../utils/weightInput.ts'
 
 const props = defineProps<{
 	date: string
@@ -36,6 +38,7 @@ const editingKey = ref<DailyValueMetricKey | null>(null)
 const numericValue = ref('')
 const editorUnit = ref<Unit | null>('kg')
 const saving = ref(false)
+const inputError = ref<string | null>(null)
 const enabledKeys = computed(() => getEnabledMetricKeys(props.configuration, DAILY_VALUE_METRIC_KEYS))
 const editingUnit = computed(() => editorUnit.value)
 
@@ -52,6 +55,7 @@ function find(metricKey: DailyValueMetricKey): DailyValue | undefined { return v
 async function load() { try { values.value = await listDailyValues(props.date) } catch { showError(t('health', 'Daily values could not be loaded.')) } }
 function edit(metricKey: DailyValueMetricKey) {
 	editingKey.value = metricKey
+	inputError.value = null
 	editorUnit.value = displayUnit(metricKey)
 	const value = find(metricKey)
 	numericValue.value = value === undefined ? '' : String(editorUnit.value === null ? value.numericValue : fromCanonical(metricKey, value.numericValue, editorUnit.value))
@@ -76,8 +80,14 @@ function compactProgressColor(metricKey: DailyValueMetricKey): string {
 }
 async function save() {
 	if (editingKey.value === null || numericValue.value.trim() === '') { return }
-	const value = Number(numericValue.value)
-	if (!Number.isFinite(value)) { return }
+	const value = editingKey.value === 'weight'
+		? normalizeWeightInput(numericValue.value)
+		: Number(numericValue.value)
+	if (value === null || !Number.isFinite(value)) {
+		inputError.value = t('health', 'Enter a valid number.')
+		return
+	}
+	inputError.value = null
 	saving.value = true
 	try {
 		const updated = await upsertDailyValue(editingKey.value, props.date, value, editingUnit.value)
@@ -148,6 +158,7 @@ watch(() => [props.date, props.configuration] as const, load, { immediate: true 
 		:name="getMetricLabel(editingKey)"
 		size="small"
 		@closing="editingKey = null">
+		<NcNoteCard v-if="inputError !== null" type="error" :text="inputError" />
 		<template v-if="editingKey === 'job_satisfaction'">
 			<NcRadioGroup v-model="numericValue"
 				:label="getMetricLabel(editingKey)"

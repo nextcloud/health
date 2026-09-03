@@ -37,6 +37,12 @@ const router = createRouter({
 			component: StatisticsView,
 		},
 		{
+			path: '/statistics/views/:id',
+			name: 'statistics-view',
+			component: StatisticsView,
+			props: true,
+		},
+		{
 			path: '/donate',
 			name: 'donate',
 			component: JournalView,

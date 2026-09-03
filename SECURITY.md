@@ -637,7 +637,9 @@ or:
 You only drank 3 glasses today
 ```
 
-Health values must not be included in notification titles or messages.
+Goal reminder notifications may identify the associated metric or topic using its localized label and associated icon. This deliberate exception makes reminders useful, for example by showing a Water reminder with the Water icon.
+
+Goal reminder notifications must not include measurement values, goal target values, current progress or completion, remaining amounts, percentages, journal text or notes, detailed history, or medical interpretation. Health values must not be included in notification titles or messages.
 
 This is important because notifications may be visible outside the Health application.
 
@@ -944,4 +946,4 @@ Daily notes are sensitive Health data. Reads and writes are scoped to the authen
 
 ## Goals and notifications
 
-Goals, revisions, derived progress, and reminder state are personal Health data. Every goal lookup and source query is scoped to the authenticated owner; no client user ID is accepted, and reminder state has no public API. The background job evaluates each stored goal using that goal's owner and configuration only. Notifications are sent through the authenticated owner's Nextcloud notifications account, use generic text without metric names, targets, values, notes, or dates, and link only to the authenticated Goals route. No Health request, response, progress result, or reminder evaluation is logged.
+Goals, revisions, derived progress, and reminder state are personal Health data. Every goal lookup and source query is scoped to the authenticated owner; no client user ID is accepted, and reminder state has no public API. The background job evaluates each stored goal using that goal's owner and configuration only. Notifications are sent through the authenticated owner's Nextcloud notifications account and may identify the associated metric or topic using its localized label and icon. They must not include measurement values, goal target values, current progress or completion, remaining amounts, percentages, notes, journal text, dates, or detailed Health history, and they link only to the authenticated Goals route. No Health request, response, progress result, or reminder evaluation is logged.

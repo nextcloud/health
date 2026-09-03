@@ -1,7 +1,6 @@
 SPDX-License-Identifier: AGPL-3.0-or-later
 SPDX-License-Identifier: MIT
 SPDX-FileCopyrightText: Jukka Kurkela
-SPDX-FileCopyrightText: Nextcloud GmbH and Nextcloud contributors
 SPDX-FileCopyrightText: chart.js developers
 SPDX-FileCopyrightText: health developers
 
@@ -9,9 +8,6 @@ This file is generated from multiple sources. Included packages:
 - @kurkle/color
 	- version: 0.3.4
 	- license: MIT
-- @nextcloud/vue
-	- version: 9.9.0
-	- license: AGPL-3.0-or-later
 - chart.js
 	- version: 4.5.1
 	- license: MIT

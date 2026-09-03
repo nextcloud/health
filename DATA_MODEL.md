@@ -1050,6 +1050,10 @@ No statistics cache table should initially be introduced.
 
 Optimize only when actual data or performance measurements justify it.
 
+## Saved Statistics Views
+
+`health_statistics_views` stores reusable, owner-scoped Statistics configurations only. Each row contains a stable numeric ID, `user_id`, title, native icon selected by the supported Nextcloud picker, ordered comma-separated stable metric identifiers, a validated Statistics period preset, and timestamps. It does not store chart points, summaries, Health values, arbitrary metric payloads, or cached statistics.
+
 ---
 
 # 26. Daily Summaries

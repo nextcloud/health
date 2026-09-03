@@ -1,82 +1,63 @@
 <script setup lang="ts">
 import type { HealthConfiguration } from '../api/configuration.ts'
 import type { StatisticsPeriod, StatisticsResponse } from '../api/statistics.ts'
+import type { SavedStatisticsView } from '../api/statisticsViews.ts'
 import type { AllMetricKey } from '../metrics.ts'
 
+import { showError } from '@nextcloud/dialogs'
 import { t } from '@nextcloud/l10n'
 import { computed, inject, onMounted, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
+import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
-import NcSelect from '@nextcloud/vue/components/NcSelect'
-import MetricIcon from '../components/MetricIcon.vue'
+import SavedStatisticsViewActions from '../components/statistics/SavedStatisticsViewActions.vue'
+import SavedStatisticsViewIcon from '../components/statistics/SavedStatisticsViewIcon.vue'
 import StatisticsChart from '../components/statistics/StatisticsChart.vue'
+import StatisticsConfigurationFields from '../components/statistics/StatisticsConfigurationFields.vue'
 import StatisticsSummaryBox from '../components/statistics/StatisticsSummaryBox.vue'
 import { getConfiguration, getEnabledMetricKeys } from '../api/configuration.ts'
 import { getStatistics } from '../api/statistics.ts'
+import { getSavedStatisticsView } from '../api/statisticsViews.ts'
 import { healthConfigurationKey } from '../configurationContext.ts'
-import { ALL_METRIC_KEYS, getMetricLabel, METRIC_KEYS } from '../metrics.ts'
-import { getStatisticsPeriodOptions } from '../statistics.ts'
+import { iconPaths } from '../icons.ts'
+import { ALL_METRIC_KEYS, METRIC_KEYS } from '../metrics.ts'
+import { savedStatisticsViewsKey } from '../statisticsViewContext.ts'
+import { statisticsViewMode } from '../statisticsViews.ts'
 
-interface MetricOption {
-	kind: 'metric'
-	id: AllMetricKey
-	label: string
-}
-
-interface MetricGroupOption {
-	kind: 'group'
-	id: string
-	label: string
-}
-
-type StatisticsOption = MetricOption | MetricGroupOption
-
+const route = useRoute()
+const router = useRouter()
 const configuration = inject(healthConfigurationKey)
+const savedStatisticsViews = inject(savedStatisticsViewsKey)
 const period = ref<StatisticsPeriod>('last_30_days')
-const selectedMetrics = ref<MetricOption[]>([])
+const selectedMetricKeys = ref<AllMetricKey[]>([])
 const response = ref<StatisticsResponse | null>(null)
+const savedView = ref<SavedStatisticsView | null>(null)
+const savedViewLoading = ref(false)
 const loading = ref(false)
 const loadError = ref(false)
 const defaultsApplied = ref(false)
 const currentConfiguration = computed<HealthConfiguration | null>(() => configuration?.value ?? null)
 const configurationLoading = ref(currentConfiguration.value === null)
-let requestGeneration = 0
+const mode = computed(() => statisticsViewMode(route.name))
+const isSavedView = computed(() => mode.value === 'saved')
+const savedViewId = computed<number | null>(() => {
+	if (!isSavedView.value || typeof route.params.id !== 'string') {
+		return null
+	}
 
-const periodOptions = computed(() => getStatisticsPeriodOptions())
-const selectedPeriod = computed({
-	get: () => periodOptions.value.find((option) => option.id === period.value) ?? periodOptions.value[0]!,
-	set: (option: { id: StatisticsPeriod }) => {
-		period.value = option.id
-	},
+	const id = Number(route.params.id)
+	return Number.isSafeInteger(id) && id > 0 ? id : null
 })
-const selectedMetricKeys = computed(() => selectedMetrics.value.map((option) => option.id))
-const metricOptions = computed<StatisticsOption[]>(() => [
-	...metricOptionsFor(METRIC_KEYS, t('health', 'Journal Metrics')),
-	...metricOptionsFor(['temperature', 'oxygen_saturation', 'blood_glucose', 'pulse', 'blood_pressure'], t('health', 'Measurements')),
-	...metricOptionsFor(['weight', 'body_fat', 'waist', 'hip', 'muscle_percentage', 'sins', 'steps', 'job_satisfaction'], t('health', 'Daily Values')),
-])
 const displayedMetrics = computed(() => response.value?.metrics ?? [])
-
-function metricOptionsFor(metricKeys: readonly AllMetricKey[], heading: string): StatisticsOption[] {
-	const enabledMetricKeys = new Set(getEnabledMetricKeys(currentConfiguration.value, ALL_METRIC_KEYS))
-	const selectedKeys = new Set(selectedMetricKeys.value)
-	const options = metricKeys
-		.filter((metricKey) => enabledMetricKeys.has(metricKey) && !selectedKeys.has(metricKey))
-		.map((metricKey): MetricOption => ({ kind: 'metric', id: metricKey, label: getMetricLabel(metricKey) }))
-
-	return options.length === 0
-		? []
-		: [{ kind: 'group', id: `group-${heading}`, label: heading }, ...options]
-}
-
-function isSelectableMetricOption(option: StatisticsOption): boolean {
-	return option.kind === 'metric'
-}
+const pageTitle = computed(() => savedView.value?.title ?? t('health', 'Statistics'))
+let requestGeneration = 0
+let savedViewGeneration = 0
 
 function applyDefaults(configuration: HealthConfiguration): void {
-	selectedMetrics.value = getEnabledMetricKeys(configuration, METRIC_KEYS)
-		.map((metricKey): MetricOption => ({ kind: 'metric', id: metricKey, label: getMetricLabel(metricKey) }))
+	selectedMetricKeys.value = getEnabledMetricKeys(configuration, METRIC_KEYS)
 	defaultsApplied.value = true
 }
 
@@ -97,9 +78,52 @@ async function loadConfiguration(): Promise<void> {
 	}
 }
 
+async function loadSavedView(): Promise<void> {
+	const generation = ++savedViewGeneration
+	const id = savedViewId.value
+	if (!isSavedView.value) {
+		savedView.value = null
+		if (!defaultsApplied.value && currentConfiguration.value !== null) {
+			applyDefaults(currentConfiguration.value)
+		}
+		return
+	}
+	if (id === null) {
+		showError(t('health', 'The saved Statistics view could not be found.'))
+		void router.replace({ name: 'statistics' })
+		return
+	}
+
+	savedViewLoading.value = true
+	loadError.value = false
+	try {
+		const view = await getSavedStatisticsView(id)
+		if (generation !== savedViewGeneration) {
+			return
+		}
+		savedView.value = view
+		savedStatisticsViews?.upsert(view)
+		period.value = view.period
+		selectedMetricKeys.value = [...view.metricKeys]
+		defaultsApplied.value = true
+	} catch {
+		if (generation === savedViewGeneration) {
+			showError(t('health', 'The saved Statistics view could not be found.'))
+			void router.replace({ name: 'statistics' })
+		}
+	} finally {
+		if (generation === savedViewGeneration) {
+			savedViewLoading.value = false
+		}
+	}
+}
+
 async function loadStatistics(): Promise<void> {
 	const metricKeys = selectedMetricKeys.value
 	const generation = ++requestGeneration
+	if (isSavedView.value && savedView.value === null) {
+		return
+	}
 	if (metricKeys.length === 0) {
 		response.value = null
 		loading.value = false
@@ -125,8 +149,19 @@ async function loadStatistics(): Promise<void> {
 	}
 }
 
+function saveCurrentView(): void {
+	if (selectedMetricKeys.value.length === 0) {
+		return
+	}
+
+	savedStatisticsViews?.openCreate({
+		metricKeys: [...selectedMetricKeys.value],
+		period: period.value,
+	})
+}
+
 watch(currentConfiguration, (nextConfiguration) => {
-	if (nextConfiguration === null) {
+	if (nextConfiguration === null || isSavedView.value) {
 		return
 	}
 
@@ -136,10 +171,29 @@ watch(currentConfiguration, (nextConfiguration) => {
 	}
 
 	const availableKeys = new Set(getEnabledMetricKeys(nextConfiguration, ALL_METRIC_KEYS))
-	selectedMetrics.value = selectedMetrics.value.filter((option) => availableKeys.has(option.id))
+	selectedMetricKeys.value = selectedMetricKeys.value.filter((metricKey) => availableKeys.has(metricKey))
 }, { immediate: true })
 
-watch([period, selectedMetricKeys], () => {
+watch([savedViewId, isSavedView], () => {
+	void loadSavedView()
+}, { immediate: true })
+
+watch(() => savedStatisticsViews?.views.value, (views) => {
+	if (savedView.value === null) {
+		return
+	}
+
+	const updated = views?.find((view) => view.id === savedView.value?.id)
+	if (updated === undefined) {
+		return
+	}
+
+	savedView.value = updated
+	period.value = updated.period
+	selectedMetricKeys.value = [...updated.metricKeys]
+})
+
+watch([period, selectedMetricKeys, savedView], () => {
 	void loadStatistics()
 }, { immediate: true })
 
@@ -151,53 +205,38 @@ onMounted(() => {
 <template>
 	<main class="health-statistics">
 		<header class="health-statistics__header">
-			<h1 class="health-page-title">
-				{{ t('health', 'Statistics') }}
-			</h1>
-			<div class="health-statistics__filters">
-				<div class="health-statistics__filter">
-					<label class="health-statistics__filter-label" for="statistics-period">{{ t('health', 'Period') }}</label>
-					<NcSelect
-						v-model="selectedPeriod"
-						:clearable="false"
-						:options="periodOptions"
-						:searchable="false"
-						input-id="statistics-period"
-						label-outside
-						label="label" />
+			<div class="health-statistics__title-row">
+				<div class="health-statistics__title">
+					<SavedStatisticsViewIcon v-if="savedView !== null" :icon="savedView.icon" />
+					<h1 class="health-page-title">
+						{{ pageTitle }}
+					</h1>
 				</div>
-				<div class="health-statistics__filter health-statistics__filter--metrics">
-					<label class="health-statistics__filter-label" for="statistics-metrics">{{ t('health', 'Metrics') }}</label>
-					<NcSelect
-						v-model="selectedMetrics"
-						:clearable="true"
-						:options="metricOptions"
-						:searchable="true"
-						input-id="statistics-metrics"
-						label-outside
-						keep-open
-						label="label"
-						multiple
-						no-wrap
-						:selectable="isSelectableMetricOption">
-						<template #option="option">
-							<span v-if="option.kind === 'group'" class="health-statistics__metric-group">
-								{{ option.label }}
-							</span>
-							<span v-else class="health-statistics__metric-option">
-								<MetricIcon :metric-key="option.id" />
-								{{ option.label }}
-							</span>
-						</template>
-						<template #selected-option="option">
-							<span class="health-statistics__metric-option health-statistics__metric-option--selected">
-								<MetricIcon :metric-key="option.id" />
-								{{ option.label }}
-							</span>
-						</template>
-					</NcSelect>
-				</div>
+				<NcButton
+					v-if="!isSavedView"
+					:aria-label="t('health', 'Save the current Statistics configuration as a view')"
+					:disabled="selectedMetricKeys.length === 0"
+					:text="t('health', 'Save view')"
+					variant="primary"
+					@click="saveCurrentView">
+					<template #icon>
+						<NcIconSvgWrapper :path="iconPaths.plus" />
+					</template>
+				</NcButton>
+				<SavedStatisticsViewActions
+					v-else-if="savedView !== null"
+					variant="secondary"
+					@delete="savedStatisticsViews?.openDelete(savedView)"
+					@edit="savedStatisticsViews?.openEdit(savedView)" />
 			</div>
+			<p v-if="isSavedView" class="health-statistics__saved-description">
+				{{ t('health', 'Saved Statistics view') }}
+			</p>
+			<StatisticsConfigurationFields
+				v-model:metric-keys="selectedMetricKeys"
+				v-model:period="period"
+				:configuration="currentConfiguration"
+				:readonly="isSavedView" />
 		</header>
 
 		<NcNoteCard
@@ -205,7 +244,7 @@ onMounted(() => {
 			type="error"
 			:text="t('health', 'Statistics could not be loaded.')" />
 
-		<div v-if="configurationLoading || (loading && response === null)" class="health-statistics__initial-loading">
+		<div v-if="configurationLoading || savedViewLoading || (loading && response === null)" class="health-statistics__initial-loading">
 			<NcLoadingIcon :name="t('health', 'Loading statistics')" />
 		</div>
 
@@ -243,10 +282,11 @@ onMounted(() => {
 <style scoped>
 .health-statistics {
 	display: flex;
+	box-sizing: border-box;
 	flex-direction: column;
-	width: min(100%, 1200px);
+	width: min(100%, 1280px);
 	margin: 0 auto;
-	padding: 24px 24px 300px;
+	padding: 24px clamp(32px, 4vw, 48px) 300px;
 	gap: 24px;
 }
 
@@ -255,57 +295,28 @@ onMounted(() => {
 	gap: 16px;
 }
 
-.health-statistics__filters {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	min-width: 0;
-	gap: 16px;
-}
-
-.health-statistics__filter {
-	display: grid;
-	min-width: 0;
-	gap: 4px;
-}
-
-.health-statistics__filter-label {
-	font-weight: var(--font-weight-bold);
-}
-
-.health-statistics__metric-option {
-	display: inline-flex;
+.health-statistics__title-row,
+.health-statistics__title {
+	display: flex;
 	align-items: center;
-	min-width: 0;
-	gap: calc(2 * var(--default-grid-baseline));
+	gap: 12px;
 }
 
-.health-statistics__metric-option--selected {
-	gap: 4px;
+.health-statistics__title-row {
+	justify-content: space-between;
 }
 
-.health-statistics__metric-option--selected :deep(.metric-icon) {
-	--health-metric-icon-box-size: 18px;
-	--health-metric-icon-svg-size: 16px;
-}
-
-.health-statistics__metric-group {
-	display: block;
-	padding-block: var(--default-grid-baseline);
+.health-statistics__saved-description,
+.health-statistics__updating {
+	margin: 0;
 	color: var(--color-text-maxcontrast);
 	font-size: var(--font-size-small);
-	font-weight: var(--font-weight-bold);
 }
 
 .health-statistics__initial-loading {
 	display: flex;
 	justify-content: center;
 	padding: 48px;
-}
-
-.health-statistics__updating {
-	margin: 0;
-	color: var(--color-text-maxcontrast);
-	font-size: var(--font-size-small);
 }
 
 .health-statistics__charts {
@@ -332,15 +343,14 @@ onMounted(() => {
 	gap: calc(3 * var(--default-grid-baseline));
 }
 
-@media (max-width: 760px) {
-	.health-statistics__filters {
-		grid-template-columns: minmax(0, 1fr);
-	}
-}
-
 @media (max-width: 600px) {
 	.health-statistics {
-		padding: 16px 16px 300px;
+		padding: 16px 24px 300px;
+	}
+
+	.health-statistics__title-row {
+		align-items: flex-start;
+		flex-direction: column;
 	}
 }
 </style>

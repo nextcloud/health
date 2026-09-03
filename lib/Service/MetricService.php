@@ -50,6 +50,25 @@ class MetricService {
 		return array_keys(self::METRIC_DEFINITIONS);
 	}
 
+	/**
+	 * Returns the monochrome notification icon asset associated with a metric.
+	 *
+	 * The assets use the same Material Design icons as the Health frontend. A
+	 * missing icon intentionally falls back to the app icon at presentation time.
+	 */
+	public static function getNotificationIconName(string $metricKey): ?string {
+		return match ($metricKey) {
+			'hydration' => 'water',
+			'break' => 'break',
+			'steps' => 'steps',
+			'job_satisfaction' => 'job-satisfaction',
+			'pulse' => 'pulse',
+			'blood_pressure' => 'blood-pressure',
+			'weight' => 'weight',
+			default => null,
+		};
+	}
+
 	/** @return list<string> */
 	/** @psalm-suppress PossiblyUnusedMethod Public metric-registry helper retained for application integrations. */
 	public static function getMetricKeysForCategory(string $category): array {
