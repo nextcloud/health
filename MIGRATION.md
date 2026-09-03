@@ -191,3 +191,7 @@ The later design must be restartable or otherwise guarantee that interruption ca
 ## Goals migration
 
 `Version3003Date20260824120000` is additive and creates `health_goals`, `health_goal_revisions`, and `health_goal_reminder_state` only when absent. It does not change legacy tables, journal rows, daily values, measurements, user settings, or existing Health data. The unique goal identity is `(user_id, target_key, period)`; revision and reminder-state unique indexes preserve historical period semantics and notification deduplication. The migration is schema-only and creates no goals, progress rows, notifications, or Health values.
+
+## Saved Statistics views migration
+
+`Version3004Date20260902230000` is additive and creates `health_statistics_views` only when absent. It stores private reusable Statistics configuration, never derived statistics or Health values. It does not change legacy tables, journal rows, goals, settings, measurements, daily values, or existing Health data.

@@ -1135,6 +1135,34 @@ Statistics response definitions are explicit in OpenAPI. Avoid undocumented dyna
 
 ---
 
+## Saved Statistics Views
+
+Saved Statistics views are owner-scoped reusable configurations. They contain a numeric ID, title, native icon, ordered stable `metricKeys`, a Statistics `period`, and RFC3339 timestamps. They never contain cached or derived Health values.
+
+```text
+GET    /api/v2/statistics/views
+POST   /api/v2/statistics/views
+GET    /api/v2/statistics/views/{id}
+PUT    /api/v2/statistics/views/{id}
+DELETE /api/v2/statistics/views/{id}
+```
+
+Create and update accept all of `title`, `icon`, `metricKeys`, and `period`. `metricKeys` is a non-empty array of stable metric identifiers and `period` is validated by the same canonical Statistics selection validation as `GET /statistics`. The authenticated user is the owner; requests never accept a user ID. A missing or another user's ID returns `404` for get, update, and delete.
+
+```json
+{
+  "id": 17,
+  "title": "Workdays",
+  "icon": "📈",
+  "metricKeys": ["stress", "energy"],
+  "period": "last_30_days",
+  "createdAt": "2026-09-02T10:00:00Z",
+  "updatedAt": "2026-09-02T10:00:00Z"
+}
+```
+
+---
+
 # 40. No Cross-Metric Analysis in API v2 MVP
 
 The MVP does not provide endpoints such as:
@@ -1468,6 +1496,11 @@ DELETE /api/v2/reminders/{id}
 GET    /api/v2/summaries/days
 
 GET    /api/v2/statistics
+GET    /api/v2/statistics/views
+POST   /api/v2/statistics/views
+GET    /api/v2/statistics/views/{id}
+PUT    /api/v2/statistics/views/{id}
+DELETE /api/v2/statistics/views/{id}
 
 GET    /api/v2/daily-notes/{date}
 PUT    /api/v2/daily-notes/{date}

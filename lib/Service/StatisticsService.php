@@ -63,12 +63,9 @@ class StatisticsService {
 	 * @return HealthStatisticsResponse
 	 */
 	public function get(string $userId, mixed $period = self::DEFAULT_PERIOD, mixed $metrics = null): array {
-		if ($userId === '') {
-			throw new InvalidEntryException('An authenticated user is required.');
-		}
-
-		$selection = $this->selectPeriod($userId, $period);
-		$metricKeys = $this->selectedMetricKeys($userId, $metrics);
+		$configuration = $this->validateConfiguration($userId, $period, $metrics);
+		$selection = $this->selectPeriod($userId, $configuration['period']);
+		$metricKeys = $configuration['metricKeys'];
 		$definitions = [];
 		foreach ($metricKeys as $metricKey) {
 			$definitions[$metricKey] = $this->metricService->getDefinition($metricKey);
@@ -129,12 +126,29 @@ class StatisticsService {
 	}
 
 	/**
+	 * Validate the reusable, public Statistics configuration shared by interactive and saved views.
+	 *
+	 * @return array{
+	 *   period: 'this_week'|'last_week'|'last_7_days'|'last_30_days'|'this_month'|'last_month'|'this_year'|'last_year',
+	 *   metricKeys: list<string>
+	 * }
+	 */
+	public function validateConfiguration(string $userId, mixed $period = self::DEFAULT_PERIOD, mixed $metrics = null): array {
+		if ($userId === '') {
+			throw new InvalidEntryException('An authenticated user is required.');
+		}
+
+		return [
+			'period' => $this->validatePeriod($period),
+			'metricKeys' => $this->selectedMetricKeys($userId, $metrics),
+		];
+	}
+
+	/**
 	 * @return array{period: string, from: DateTimeImmutable, to: DateTimeImmutable, timezone: DateTimeZone}
 	 */
 	private function selectPeriod(string $userId, mixed $period): array {
-		if (!is_string($period) || !in_array($period, self::PERIODS, true)) {
-			throw new InvalidEntryException('Unsupported statistics period.');
-		}
+		$period = $this->validatePeriod($period);
 
 		$timezone = $this->dateTimeZone->getTimeZone(false, $userId);
 		$today = (new DateTimeImmutable('now', $this->utc))->setTimezone($timezone)->setTime(0, 0);
@@ -160,6 +174,15 @@ class StatisticsService {
 			'to' => $to,
 			'timezone' => $timezone,
 		];
+	}
+
+	/** @return 'this_week'|'last_week'|'last_7_days'|'last_30_days'|'this_month'|'last_month'|'this_year'|'last_year' */
+	private function validatePeriod(mixed $period): string {
+		if (!is_string($period) || !in_array($period, self::PERIODS, true)) {
+			throw new InvalidEntryException('Unsupported statistics period.');
+		}
+
+		return $period;
 	}
 
 	/** @return list<string> */

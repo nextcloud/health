@@ -47,8 +47,8 @@ class GoalReminderService {
 			$notification->setApp(Application::APP_ID)
 				->setUser($goal->getUserId())
 				->setDateTime(DateTime::createFromImmutable($now))
-				->setObject('goal_reminder', $goal->getId() . ':' . $progress['periodKey'] . ':' . $reason)
-				->setSubject($reason);
+				->setObject('goal_reminder', (string)$goal->getId())
+				->setSubject('goal_reminder', ['targetKey' => $goal->getTargetKey()]);
 			$this->notificationManager->notify($notification);
 			$this->record($goal->getId(), $progress['periodKey'], $reason, $state, $now);
 		}

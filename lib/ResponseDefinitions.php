@@ -130,6 +130,16 @@ namespace OCA\Health;
  *   to: string,
  *   metrics: list<HealthStatisticsMetric>
  * }
+ * @psalm-type HealthSavedStatisticsView = array{
+ *   id: int,
+ *   title: string,
+ *   icon: string,
+ *   metricKeys: list<string>,
+ *   period: 'this_week'|'last_week'|'last_7_days'|'last_30_days'|'this_month'|'last_month'|'this_year'|'last_year',
+ *   createdAt: string,
+ *   updatedAt: string
+ * }
+ * @psalm-type HealthSavedStatisticsViewsPage = array{views: list<HealthSavedStatisticsView>}
  * @psalm-suppress UnusedClass Types are imported by API controller documentation.
  */
 final class ResponseDefinitions {

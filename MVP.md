@@ -106,6 +106,8 @@ Initial periods:
 
 Statistics are descriptive only.
 
+Users may save a private reusable Statistics configuration containing its selected metrics and time period. Saved views do not store or interpret Health values.
+
 ### Settings
 
 Users configure:
