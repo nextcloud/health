@@ -1,6 +1,7 @@
 import type { SavedStatisticsView, StatisticsViewConfiguration } from './api/statisticsViews.ts'
 
 export const DEFAULT_SAVED_STATISTICS_VIEW_ICON = '📊'
+export const SAVED_STATISTICS_VIEW_ROUTE_PATH = '/statistics/views/:id'
 
 export type StatisticsViewMode = 'main' | 'saved'
 

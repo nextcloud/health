@@ -286,7 +286,7 @@ onMounted(() => {
 	flex-direction: column;
 	width: min(100%, 1280px);
 	margin: 0 auto;
-	padding: 24px clamp(32px, 4vw, 48px) 300px;
+	padding: 24px 24px 300px;
 	gap: 24px;
 }
 
@@ -345,7 +345,7 @@ onMounted(() => {
 
 @media (max-width: 600px) {
 	.health-statistics {
-		padding: 16px 24px 300px;
+		padding: 16px 16px 300px;
 	}
 
 	.health-statistics__title-row {
