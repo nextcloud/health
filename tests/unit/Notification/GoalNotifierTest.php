@@ -14,26 +14,58 @@ use OCP\Notification\INotification;
 use PHPUnit\Framework\TestCase;
 
 class GoalNotifierTest extends TestCase {
-	public function testGoalReminderUsesTheLocalizedTopicAndItsMetricIconWithoutValues(): void {
-		$l10n = $this->l10n();
+	public function testWeightReminderUsesThePresentationLanguageAndMetricIconWithoutValues(): void {
+		$l10n = $this->l10n([
+			'%s reminder' => '%s Erinnerung',
+			'Weight' => 'Gewicht',
+			'Open Health to review your reminder.' => 'Öffne Health, um deine Erinnerung anzusehen.',
+		]);
 		$factory = $this->createMock(IFactory::class);
-		$factory->method('get')->willReturn($l10n);
+		$factory->expects(self::once())->method('get')->with(Application::APP_ID, 'de')->willReturn($l10n);
 		$urlGenerator = $this->createMock(IURLGenerator::class);
 		$urlGenerator->expects(self::once())->method('linkToRoute')->with('health.page.goals')->willReturn('/apps/health/goals');
-		$urlGenerator->expects(self::once())->method('imagePath')->with(Application::APP_ID, 'notifications/water.svg')->willReturn('/apps/health/img/notifications/water.svg');
-		$urlGenerator->expects(self::once())->method('getAbsoluteURL')->with('/apps/health/img/notifications/water.svg')->willReturn('https://cloud.example/apps/health/img/notifications/water.svg');
-		$notification = $this->notification('goal_reminder', ['targetKey' => 'hydration.water']);
-		$notification->expects(self::once())->method('setParsedSubject')->with('Water reminder')->willReturnSelf();
-		$notification->expects(self::once())->method('setParsedMessage')->with('Open Health to review your reminder.')->willReturnSelf();
+		$urlGenerator->expects(self::once())->method('imagePath')->with(Application::APP_ID, 'notifications/weight.svg')->willReturn('/apps/health/img/notifications/weight.svg');
+		$urlGenerator->expects(self::once())->method('getAbsoluteURL')->with('/apps/health/img/notifications/weight.svg')->willReturn('https://cloud.example/apps/health/img/notifications/weight.svg');
+		$notification = $this->notification('goal_reminder', ['targetKey' => 'weight']);
+		$preparedSubject = '';
+		$preparedMessage = '';
+		$notification->expects(self::once())->method('setParsedSubject')->willReturnCallback(static function (string $subject) use (&$preparedSubject, $notification): INotification {
+			$preparedSubject = $subject;
+			return $notification;
+		});
+		$notification->expects(self::once())->method('setParsedMessage')->willReturnCallback(static function (string $message) use (&$preparedMessage, $notification): INotification {
+			$preparedMessage = $message;
+			return $notification;
+		});
 		$notification->expects(self::once())->method('setLink')->with('/apps/health/goals')->willReturnSelf();
-		$notification->expects(self::once())->method('setIcon')->with('https://cloud.example/apps/health/img/notifications/water.svg')->willReturnSelf();
+		$notification->expects(self::once())->method('setIcon')->with('https://cloud.example/apps/health/img/notifications/weight.svg')->willReturnSelf();
 
 		$result = (new GoalNotifier($factory, $urlGenerator, new GoalTargetRegistry()))->prepare($notification, 'de');
 
 		self::assertSame($notification, $result);
-		self::assertStringNotContainsString('1.2', 'Water reminder');
-		self::assertStringNotContainsString('2.5', 'Open Health to review your reminder.');
-		self::assertStringNotContainsString('%', 'Open Health to review your reminder.');
+		self::assertSame('Gewicht Erinnerung', $preparedSubject);
+		self::assertStringNotContainsString('{topic}', $preparedSubject);
+		$displayedNotification = $preparedSubject . "\n" . $preparedMessage;
+		foreach (['72.5', '80', '48%', '7.5 remaining', 'Personal journal note'] as $privateValue) {
+			self::assertStringNotContainsString($privateValue, $displayedNotification);
+		}
+	}
+
+	public function testStepsReminderUsesTheCorrectTopicAndMetricIcon(): void {
+		$l10n = $this->l10n();
+		$factory = $this->createMock(IFactory::class);
+		$factory->expects(self::once())->method('get')->with(Application::APP_ID, 'en')->willReturn($l10n);
+		$urlGenerator = $this->createMock(IURLGenerator::class);
+		$urlGenerator->expects(self::once())->method('linkToRoute')->with('health.page.goals')->willReturn('/apps/health/goals');
+		$urlGenerator->expects(self::once())->method('imagePath')->with(Application::APP_ID, 'notifications/steps.svg')->willReturn('/apps/health/img/notifications/steps.svg');
+		$urlGenerator->expects(self::once())->method('getAbsoluteURL')->with('/apps/health/img/notifications/steps.svg')->willReturn('https://cloud.example/apps/health/img/notifications/steps.svg');
+		$notification = $this->notification('goal_reminder', ['targetKey' => 'steps']);
+		$notification->expects(self::once())->method('setParsedSubject')->with('Steps reminder')->willReturnSelf();
+		$notification->expects(self::once())->method('setParsedMessage')->with('Open Health to review your reminder.')->willReturnSelf();
+		$notification->expects(self::once())->method('setLink')->with('/apps/health/goals')->willReturnSelf();
+		$notification->expects(self::once())->method('setIcon')->with('https://cloud.example/apps/health/img/notifications/steps.svg')->willReturnSelf();
+
+		(new GoalNotifier($factory, $urlGenerator, new GoalTargetRegistry()))->prepare($notification, 'en');
 	}
 
 	public function testLegacyReminderFallsBackToTheThemeSafeAppIcon(): void {
@@ -53,10 +85,32 @@ class GoalNotifierTest extends TestCase {
 		(new GoalNotifier($factory, $urlGenerator, new GoalTargetRegistry()))->prepare($notification, 'en');
 	}
 
-	private function l10n(): IL10N {
+	public function testUnknownGoalTargetUsesTheGenericReminderFallback(): void {
+		$l10n = $this->l10n();
+		$factory = $this->createMock(IFactory::class);
+		$factory->expects(self::once())->method('get')->with(Application::APP_ID, 'en')->willReturn($l10n);
+		$urlGenerator = $this->createMock(IURLGenerator::class);
+		$urlGenerator->expects(self::once())->method('linkToRoute')->with('health.page.goals')->willReturn('/apps/health/goals');
+		$urlGenerator->expects(self::once())->method('imagePath')->with(Application::APP_ID, 'app-dark.svg')->willReturn('/apps/health/img/app-dark.svg');
+		$urlGenerator->expects(self::once())->method('getAbsoluteURL')->with('/apps/health/img/app-dark.svg')->willReturn('https://cloud.example/apps/health/img/app-dark.svg');
+		$notification = $this->notification('goal_reminder', ['targetKey' => 'removed.topic']);
+		$notification->expects(self::once())->method('setParsedSubject')->with('Health reminder')->willReturnSelf();
+		$notification->expects(self::once())->method('setParsedMessage')->with('Open Health to review your reminder.')->willReturnSelf();
+		$notification->expects(self::once())->method('setLink')->with('/apps/health/goals')->willReturnSelf();
+		$notification->expects(self::once())->method('setIcon')->with('https://cloud.example/apps/health/img/app-dark.svg')->willReturnSelf();
+
+		(new GoalNotifier($factory, $urlGenerator, new GoalTargetRegistry()))->prepare($notification, 'en');
+	}
+
+	/** @param array<string, string> $translations */
+	private function l10n(array $translations = []): IL10N {
 		$l10n = $this->createMock(IL10N::class);
-		$l10n->method('t')->willReturnCallback(static function (string $text, array $parameters = []): string {
-			return strtr($text, ['{topic}' => $parameters['topic'] ?? '']);
+		$l10n->method('t')->willReturnCallback(static function (string $text, mixed $parameters = []) use ($translations): string {
+			$translatedText = $translations[$text] ?? $text;
+			if (!is_array($parameters)) {
+				$parameters = [$parameters];
+			}
+			return $parameters === [] ? $translatedText : vsprintf($translatedText, $parameters);
 		});
 		return $l10n;
 	}

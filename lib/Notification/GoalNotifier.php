@@ -45,7 +45,7 @@ class GoalNotifier implements INotifier {
 		$iconName = $metricKey === null ? null : MetricService::getNotificationIconName($metricKey);
 		$notification->setParsedSubject($metricKey === null
 			? $l->t('Health reminder')
-			: $l->t('{topic} reminder', ['topic' => $this->topicLabel($l, $this->targetKey($notification) ?? '')]));
+			: $l->t('%s reminder', [$this->topicLabel($l, $this->targetKey($notification) ?? '')]));
 		$notification->setParsedMessage($l->t('Open Health to review your reminder.'));
 		$notification->setLink($this->urlGenerator->linkToRoute('health.page.goals'));
 		$notification->setIcon($this->urlGenerator->getAbsoluteURL($this->urlGenerator->imagePath(
