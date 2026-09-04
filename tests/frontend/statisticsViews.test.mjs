@@ -6,7 +6,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { savedStatisticsViewConfiguration, safeSavedStatisticsViewIcon, statisticsViewMode } from '../../src/statisticsViews.ts'
+import { SAVED_STATISTICS_VIEW_ROUTE_PATH, savedStatisticsViewConfiguration, safeSavedStatisticsViewIcon, statisticsViewMode } from '../../src/statisticsViews.ts'
 
 test('copies saved Statistics configuration without mutating its source', () => {
 	const source = {
@@ -28,6 +28,7 @@ test('copies saved Statistics configuration without mutating its source', () => 
 })
 
 test('distinguishes read-only saved Statistics routes and safely displays invalid legacy icons', () => {
+	assert.equal(SAVED_STATISTICS_VIEW_ROUTE_PATH, '/statistics/views/:id')
 	assert.equal(statisticsViewMode('statistics'), 'main')
 	assert.equal(statisticsViewMode('statistics-view'), 'saved')
 	assert.equal(safeSavedStatisticsViewIcon('\u0000'), '📊')

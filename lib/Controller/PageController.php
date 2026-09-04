@@ -23,6 +23,8 @@ class PageController extends Controller {
 	#[FrontpageRoute(verb: 'GET', url: '/journal/{date}', postfix: 'journal')]
 	#[FrontpageRoute(verb: 'GET', url: '/goals', postfix: 'goals')]
 	#[FrontpageRoute(verb: 'GET', url: '/statistics', postfix: 'statistics')]
+	#[FrontpageRoute(verb: 'GET', url: '/statistics/views/{id}', postfix: 'statistics-view')]
+	#[FrontpageRoute(verb: 'GET', url: '/donate', postfix: 'donate')]
 	#[FrontpageRoute(verb: 'GET', url: '/settings', postfix: 'settings')]
 	public function index(): TemplateResponse {
 		return new TemplateResponse(

@@ -599,7 +599,7 @@ class StatisticsService {
 		$fromDate = $selection['from']->format('Y-m-d');
 		$toDate = $selection['to']->format('Y-m-d');
 		foreach ($this->goalMapper->findAllForUser($userId) as $goal) {
-			if ($goal->getPeriod() !== 'day' || (!$goal->isActive() && $goal->getRetiredAt() === null)) {
+			if (!in_array($goal->getPeriod(), ['day', 'long_term'], true) || (!$goal->isActive() && $goal->getRetiredAt() === null)) {
 				continue;
 			}
 
@@ -641,7 +641,7 @@ class StatisticsService {
 			'hydration.tea' => 'tea',
 			'break.all' => 'total',
 			'break.mindfulness' => 'mindfulness',
-			default => in_array($target['kind'], ['period_value', 'threshold_occurrence'], true) ? 'value' : null,
+			default => in_array($target['kind'], ['period_value', 'threshold_occurrence', 'latest_value'], true) ? 'value' : null,
 		};
 	}
 

@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.1]
+
+### Fixed
+
+- Draw configured goal targets as visible dashed lines in Statistics charts.
+- Restore direct reloads of saved Statistics view links.
+
+### Changed
+
+- Improve Statistics chart scale padding and connect measurements across missing dates.
+- Align Statistics and saved-view spacing with the Journal and Goals views.
+
 ## [3.1.0]
 
 ### Fixed

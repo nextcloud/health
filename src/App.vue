@@ -213,7 +213,9 @@ onMounted(() => {
 			</template>
 		</NcAppNavigation>
 		<NcAppContent>
-			<RouterView />
+			<div class="health-app-content">
+				<RouterView />
+			</div>
 		</NcAppContent>
 		<NcAppSettingsDialog
 			v-model:open="settingsOpen"
@@ -242,6 +244,12 @@ onMounted(() => {
 </template>
 
 <style>
+.health-app-content {
+	box-sizing: border-box;
+	min-height: 100%;
+	padding-block-start: calc(var(--default-clickable-area) - var(--default-grid-baseline));
+}
+
 .health-page-title {
 	margin: 0;
 	font-size: 2rem;

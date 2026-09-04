@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import type { Chart, ChartConfiguration, TooltipItem } from 'chart.js'
 import type { HealthConfiguration } from '../../api/configuration.ts'
-import type { StatisticsGoalOverlay, StatisticsMetric } from '../../api/statistics.ts'
+import type { StatisticsMetric } from '../../api/statistics.ts'
 import type { AllMetricKey, EventMetricKey } from '../../metrics.ts'
 
 import { t } from '@nextcloud/l10n'
 import { BarController, BarElement, CategoryScale, Chart as ChartJs, LinearScale, LineController, LineElement, PointElement, Tooltip } from 'chart.js'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { colorWithAlpha, fromCanonical, getChartableMetricDefinition, getEventChartSeries, getEventChartSeriesLabel, getMetricLabel, getMetricVisual, getUnitLabel } from '../../metrics.ts'
-import { displayUnitForMetric, formatStatisticsDate, getStatisticsGoalLabel } from '../../statistics.ts'
+import { createStatisticsGoalChartDataset, displayUnitForMetric, formatStatisticsDate, getPaddedStatisticsScaleRange, getStatisticsGoalChartSeriesValues, getStatisticsGoalLabel } from '../../statistics.ts'
 
 const props = defineProps<{
 	metrics: StatisticsMetric[]
@@ -36,8 +36,8 @@ interface ChartAxis {
 	label: string
 	stacked: boolean
 	beginAtZero: boolean
-	minimum?: number
-	maximum?: number
+	minimum: number
+	maximum: number
 }
 
 interface LegendItem {
@@ -53,16 +53,27 @@ const canvas = ref<HTMLCanvasElement | null>(null)
 const labels = computed(() => props.metrics[0]?.series.map((point) => point.date) ?? [])
 const title = computed(() => t('health', 'Statistics'))
 const chartDatasets = computed(() => buildDatasets())
-const chartAxes = computed(() => buildAxes())
-const legendItems = computed<LegendItem[]>(() => chartDatasets.value.map((dataset, index) => ({
-	key: `${index}-${dataset.label}`,
-	label: dataset.label,
-	color: dataset.color,
-	dashed: dataset.goal,
-	bar: dataset.bar,
-	pointStyle: dataset.pointStyle,
-})))
-const hasData = computed(() => props.metrics.some((metric) => metric.valueType === 'event' || metric.summary.count > 0))
+const chartAxes = computed(() => buildAxes(chartDatasets.value))
+const legendItems = computed<LegendItem[]>(() => {
+	const goalLabels = new Set<string>()
+	return chartDatasets.value.flatMap((dataset, index) => {
+		if (dataset.goal && goalLabels.has(dataset.label)) {
+			return []
+		}
+		if (dataset.goal) {
+			goalLabels.add(dataset.label)
+		}
+		return [{
+			key: `${index}-${dataset.label}`,
+			label: dataset.label,
+			color: dataset.color,
+			dashed: dataset.goal,
+			bar: dataset.bar,
+			pointStyle: dataset.pointStyle,
+		}]
+	})
+})
+const hasData = computed(() => props.metrics.some((metric) => metric.valueType === 'event' || metric.summary.count > 0 || metric.goals.length > 0))
 const canvasLabel = computed(() => t('health', '{title} chart. Use the arrow keys to hear values by date. The visible legend identifies each series.', { title: title.value }))
 
 let chart: Chart | null = null
@@ -89,7 +100,7 @@ function axisIdForMetric(metricKey: AllMetricKey): string {
 	return `metric-${metricKey}`
 }
 
-function buildAxes(): ChartAxis[] {
+function buildAxes(datasets: PlotDataset[]): ChartAxis[] {
 	const axes = new Map<string, ChartAxis>()
 	for (const metric of props.metrics) {
 		const id = axisIdForMetric(metric.metricKey)
@@ -99,20 +110,51 @@ function buildAxes(): ChartAxis[] {
 
 		const unit = displayUnitForMetric(props.configuration, metric.metricKey)
 		if (id === 'event-count') {
-			axes.set(id, { id, label: t('health', 'Events per day'), stacked: true, beginAtZero: true })
+			axes.set(id, { id, label: t('health', 'Events per day'), stacked: true, beginAtZero: true, minimum: 0, maximum: 1 })
 		} else if (id === 'scale-1-5') {
-			axes.set(id, { id, label: t('health', 'Scale 1–5'), stacked: false, beginAtZero: false, minimum: 1, maximum: 5 })
+			axes.set(id, { id, label: t('health', 'Scale 1–5'), stacked: false, beginAtZero: false, minimum: 0, maximum: 1 })
 		} else if (id.startsWith('length-')) {
-			axes.set(id, { id, label: unit === null ? t('health', 'Length') : getUnitLabel(unit), stacked: false, beginAtZero: false })
+			axes.set(id, { id, label: unit === null ? t('health', 'Length') : getUnitLabel(unit), stacked: false, beginAtZero: false, minimum: 0, maximum: 1 })
 		} else if (id.startsWith('blood-pressure-')) {
-			axes.set(id, { id, label: unit === null ? getMetricLabel(metric.metricKey) : getUnitLabel(unit), stacked: false, beginAtZero: false })
+			axes.set(id, { id, label: unit === null ? getMetricLabel(metric.metricKey) : getUnitLabel(unit), stacked: false, beginAtZero: false, minimum: 0, maximum: 1 })
 		} else {
 			const label = unit === null ? getMetricLabel(metric.metricKey) : `${getMetricLabel(metric.metricKey)} (${getUnitLabel(unit)})`
-			axes.set(id, { id, label, stacked: false, beginAtZero: false })
+			axes.set(id, { id, label, stacked: false, beginAtZero: false, minimum: 0, maximum: 1 })
 		}
 	}
 
+	for (const axis of axes.values()) {
+		const visibleValues = visibleValuesForAxis(axis, datasets)
+		const range = getPaddedStatisticsScaleRange(visibleValues)
+		axis.minimum = range.minimum
+		axis.maximum = range.maximum
+	}
+
 	return [...axes.values()]
+}
+
+function visibleValuesForAxis(axis: ChartAxis, datasets: PlotDataset[]): number[] {
+	const axisDatasets = datasets.filter((dataset) => dataset.axisId === axis.id)
+	const visibleValues = axisDatasets
+		.filter((dataset) => !dataset.bar)
+		.flatMap((dataset) => dataset.data)
+		.filter((value): value is number => value !== null && Number.isFinite(value))
+
+	if (!axis.stacked) {
+		return visibleValues
+	}
+
+	const stackedDatasets = axisDatasets.filter((dataset) => dataset.bar)
+	const stacks = new Map<string, number[]>()
+	for (const dataset of stackedDatasets) {
+		const values = stacks.get(dataset.stack ?? dataset.label) ?? Array.from({ length: labels.value.length }, () => 0)
+		for (const [index, value] of dataset.data.entries()) {
+			values[index] += value ?? 0
+		}
+		stacks.set(dataset.stack ?? dataset.label, values)
+	}
+
+	return [...visibleValues, ...Array.from(stacks.values()).flat()]
 }
 
 function displayValue(metricKey: AllMetricKey, value: number): number {
@@ -141,25 +183,10 @@ function goalColor(metricKey: AllMetricKey, seriesKey: string): string {
 	return getMetricVisual(metricKey).color
 }
 
-function overlayValue(goals: StatisticsGoalOverlay[], date: string): number | null {
-	const matchingGoal = goals
-		.filter((goal) => goal.effectiveFrom <= date && (goal.effectiveTo === null || date <= goal.effectiveTo))
-		.sort((left, right) => right.effectiveFrom.localeCompare(left.effectiveFrom))[0]
-	return matchingGoal?.targetValue ?? null
-}
-
 function appendGoalDatasets(metric: StatisticsMetric, datasets: PlotDataset[]): void {
-	const groupedGoals = new Map<string, StatisticsGoalOverlay[]>()
 	for (const goal of metric.goals) {
-		const key = `${goal.goalId}:${goal.seriesKey}`
-		const segments = groupedGoals.get(key) ?? []
-		segments.push(goal)
-		groupedGoals.set(key, segments)
-	}
-
-	for (const segments of groupedGoals.values()) {
-		const goal = segments[0]
-		if (goal === undefined) {
+		const values = getStatisticsGoalChartSeriesValues(metric.metricKey, goal, metric.series.map((point) => point.date))
+		if (!values.some((value) => value !== null)) {
 			continue
 		}
 
@@ -167,8 +194,7 @@ function appendGoalDatasets(metric: StatisticsMetric, datasets: PlotDataset[]): 
 		datasets.push({
 			label: getStatisticsGoalLabel(goal.targetKey, goal.comparator, metric.metricKey),
 			metricKey: metric.metricKey,
-			data: metric.series.map((point) => {
-				const value = overlayValue(segments, point.date)
+			data: values.map((value) => {
 				return value === null || eventGoal ? value : displayValue(metric.metricKey, value)
 			}),
 			color: goalColor(metric.metricKey, goal.seriesKey),
@@ -176,7 +202,7 @@ function appendGoalDatasets(metric: StatisticsMetric, datasets: PlotDataset[]): 
 			goal: true,
 			bar: false,
 			displayValues: !eventGoal,
-			stack: `goal:${goal.goalId}:${goal.seriesKey}`,
+			stack: `goal:${goal.goalId}:${goal.seriesKey}:${goal.effectiveFrom}`,
 			axisId: axisIdForMetric(metric.metricKey),
 		})
 	}
@@ -265,27 +291,42 @@ function renderChart(): void {
 	const gridColor = cssColor('--color-border-dark', '#d9d9d9')
 	const tooltipBackground = cssColor('--color-main-background', '#fff')
 	const hasBarSeries = chartDatasets.value.some((dataset) => dataset.bar)
-	const datasets = chartDatasets.value.map((dataset) => ({
-		label: dataset.label,
-		data: dataset.data,
-		type: dataset.type,
-		backgroundColor: dataset.bar ? dataset.color : 'transparent',
-		borderColor: dataset.color,
-		borderWidth: dataset.goal ? 2 : 2,
-		fill: false,
-		borderDash: dataset.goal ? [6, 4] : [],
-		borderRadius: dataset.bar ? 2 : 0,
-		pointRadius: dataset.goal ? 0 : 3,
-		pointHoverRadius: dataset.goal ? 0 : 5,
-		pointStyle: dataset.pointStyle ?? 'circle',
-		stepped: dataset.goal ? 'after' : false,
-		spanGaps: false,
-		stack: dataset.stack,
-		yAxisID: dataset.axisId,
-		order: dataset.bar ? 2 : dataset.goal ? 1 : 0,
-	}))
+	const datasets = chartDatasets.value.map((dataset) => {
+		if (dataset.goal) {
+			return createStatisticsGoalChartDataset({
+				label: dataset.label,
+				data: dataset.data,
+				color: dataset.color,
+				yAxisID: dataset.axisId,
+				stack: dataset.stack ?? '',
+			})
+		}
+
+		return {
+			label: dataset.label,
+			data: dataset.data,
+			type: dataset.type,
+			backgroundColor: dataset.bar ? dataset.color : 'transparent',
+			borderColor: dataset.color,
+			borderWidth: 2,
+			fill: false,
+			borderDash: [],
+			borderRadius: dataset.bar ? 2 : 0,
+			pointRadius: 3,
+			pointHoverRadius: 5,
+			pointStyle: dataset.pointStyle ?? 'circle',
+			stepped: false,
+			spanGaps: true,
+			showLine: !dataset.bar,
+			stack: dataset.stack,
+			xAxisID: 'x',
+			yAxisID: dataset.axisId,
+			order: dataset.bar ? 2 : 0,
+		}
+	})
 	const scales = {
 		x: {
+			type: 'category' as const,
 			stacked: hasBarSeries,
 			ticks: {
 				color: textColor,

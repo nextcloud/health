@@ -167,7 +167,7 @@ function isSelectableMetricOption(option: StatisticsOption): boolean {
 }
 
 .statistics-configuration-fields__label {
-	font-weight: var(--font-weight-bold);
+	font-weight: var(--font-weight-heading, bold);
 }
 
 .statistics-configuration-fields__metric-list {

@@ -2,6 +2,7 @@ import { generateUrl } from '@nextcloud/router'
 import { createRouter, createWebHistory } from 'vue-router'
 import GoalsView from './views/GoalsView.vue'
 import JournalView from './views/JournalView.vue'
+import { SAVED_STATISTICS_VIEW_ROUTE_PATH } from './statisticsViews.ts'
 import { localDateKey } from './utils/dates.ts'
 
 const StatisticsView = () => import('./views/StatisticsView.vue')
@@ -37,7 +38,7 @@ const router = createRouter({
 			component: StatisticsView,
 		},
 		{
-			path: '/statistics/views/:id',
+			path: SAVED_STATISTICS_VIEW_ROUTE_PATH,
 			name: 'statistics-view',
 			component: StatisticsView,
 			props: true,

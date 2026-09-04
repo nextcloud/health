@@ -189,6 +189,50 @@ class StatisticsApiTest extends TestCase {
 		self::assertNull($hydration['goals'][1]['effectiveTo']);
 	}
 
+	public function testStatisticsReturnOpenEndedLongTermGoalRevisions(): void {
+		$range = $this->statisticsAs(self::$userA, 'last_7_days', 'weight,steps');
+		$from = $range['from'];
+		$today = (new DateTimeImmutable($range['to'], new DateTimeZone('UTC')))->modify('-1 day')->format('Y-m-d');
+		$yesterday = (new DateTimeImmutable($today, new DateTimeZone('UTC')))->modify('-1 day')->format('Y-m-d');
+		$beforeRange = (new DateTimeImmutable($from, new DateTimeZone('UTC')))->modify('-1 day')->format('Y-m-d');
+
+		$weightGoal = $this->ocsData($this->requestAs(self::$userA, 'POST', 'goals', ['json' => [
+			'targetKey' => 'weight',
+			'period' => 'long_term',
+			'comparator' => 'lte',
+			'targetValue' => 80,
+			'remindersEnabled' => false,
+		]]));
+		$this->ocsData($this->requestAs(self::$userA, 'POST', 'goals', ['json' => [
+			'targetKey' => 'steps',
+			'period' => 'day',
+			'comparator' => 'gte',
+			'targetValue' => 5000,
+			'remindersEnabled' => false,
+		]]));
+		$qb = self::$db->getQueryBuilder();
+		$qb->update('health_goal_revisions')
+			->set('effective_from', $qb->createNamedParameter($beforeRange, IQueryBuilder::PARAM_STR))
+			->where($qb->expr()->eq('goal_id', $qb->createNamedParameter($weightGoal['id'], IQueryBuilder::PARAM_INT)))
+			->executeStatement();
+		self::assertSame(200, $this->requestAs(self::$userA, 'PUT', 'goals/' . $weightGoal['id'], ['json' => ['targetValue' => 75]])->getStatusCode());
+
+		$statistics = $this->statisticsAs(self::$userA, 'last_7_days', 'weight,steps');
+		$weight = $this->metric($statistics, 'weight');
+		self::assertCount(2, $weight['goals']);
+		self::assertSame('weight', $weight['goals'][0]['metricKey']);
+		self::assertSame('latest_value', $weight['goals'][0]['kind']);
+		self::assertEquals(80.0, $weight['goals'][0]['targetValue']);
+		self::assertSame($beforeRange, $weight['goals'][0]['effectiveFrom']);
+		self::assertSame($yesterday, $weight['goals'][0]['effectiveTo']);
+		self::assertEquals(75.0, $weight['goals'][1]['targetValue']);
+		self::assertSame($today, $weight['goals'][1]['effectiveFrom']);
+		self::assertNull($weight['goals'][1]['effectiveTo']);
+		$steps = $this->metric($statistics, 'steps');
+		self::assertCount(1, $steps['goals']);
+		self::assertSame('steps', $steps['goals'][0]['metricKey']);
+	}
+
 	public function testStatisticsUseTheAuthenticatedUsersTimezoneForBuckets(): void {
 		self::$config->setUserValue(self::$userA, 'core', 'timezone', 'Europe/Berlin');
 		$range = $this->statisticsAs(self::$userA, 'last_7_days', 'stress');
