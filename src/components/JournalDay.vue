@@ -220,9 +220,10 @@ async function loadConfiguration() {
 async function loadGoalProgress() {
 	const dayKey = localDateKey(props.date)
 	try {
-		const [definitions, progresses] = await Promise.all([
+		const [definitions, progresses, longTermProgresses] = await Promise.all([
 			goalTargets.value.length === 0 ? listGoals() : Promise.resolve(null),
 			listGoalProgress('day', dayKey),
+			dayKey === localDateKey(new Date()) ? listGoalProgress('long_term') : Promise.resolve([]),
 		])
 		if (localDateKey(props.date) !== dayKey) {
 			return
@@ -230,7 +231,7 @@ async function loadGoalProgress() {
 		if (definitions !== null) {
 			goalTargets.value = definitions.targets
 		}
-		goalProgresses.value = progresses
+		goalProgresses.value = [...progresses, ...longTermProgresses]
 	} catch {
 		// Goal indicators are supplementary; journal data remains usable if they cannot load.
 	}

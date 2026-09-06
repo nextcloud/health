@@ -4,6 +4,8 @@ import {
 	mdiBloodBag,
 	mdiBriefcase,
 	mdiEmoticonHappy,
+	mdiFire,
+	mdiFoodApple,
 	mdiFootPrint,
 	mdiGauge,
 	mdiHeartPulse,
@@ -22,7 +24,7 @@ import { t } from '@nextcloud/l10n'
 
 export const METRIC_KEYS = ['stress', 'energy', 'mood', 'hydration', 'break'] as const
 export const MEASUREMENT_METRIC_KEYS = ['temperature', 'oxygen_saturation', 'blood_glucose', 'pulse', 'blood_pressure'] as const
-export const DAILY_VALUE_METRIC_KEYS = ['weight', 'body_fat', 'waist', 'hip', 'muscle_percentage', 'sins', 'steps', 'job_satisfaction'] as const
+export const DAILY_VALUE_METRIC_KEYS = ['weight', 'body_fat', 'waist', 'hip', 'muscle_percentage', 'sins', 'steps', 'kilocalories', 'fruit', 'job_satisfaction'] as const
 export const ALL_METRIC_KEYS = [...METRIC_KEYS, ...MEASUREMENT_METRIC_KEYS, ...DAILY_VALUE_METRIC_KEYS] as const
 export const SCALE_METRIC_KEYS = ['stress', 'energy', 'mood'] as const
 export const WATER_OPTIONS = ['small_glass', 'large_glass'] as const
@@ -36,7 +38,7 @@ export type MetricKey = typeof METRIC_KEYS[number]
 export type MeasurementMetricKey = typeof MEASUREMENT_METRIC_KEYS[number]
 export type DailyValueMetricKey = typeof DAILY_VALUE_METRIC_KEYS[number]
 export type AllMetricKey = typeof ALL_METRIC_KEYS[number]
-export type Unit = 'cm' | 'in' | 'kg' | 'lb' | 'st' | 'percent' | 'count' | 'steps' | 'celsius' | 'fahrenheit' | 'mmol_l' | 'mg_dl' | 'bpm' | 'mmhg' | 'kpa'
+export type Unit = 'cm' | 'in' | 'kg' | 'lb' | 'st' | 'percent' | 'count' | 'steps' | 'kcal' | 'pieces' | 'celsius' | 'fahrenheit' | 'mmol_l' | 'mg_dl' | 'bpm' | 'mmhg' | 'kpa'
 export type ScaleMetricKey = typeof SCALE_METRIC_KEYS[number]
 export type EventMetricKey = 'hydration' | 'break'
 export type CoffeeOption = typeof COFFEE_OPTIONS[number]
@@ -86,6 +88,8 @@ const METRIC_VISUALS: Record<AllMetricKey, MetricVisual> = {
 	muscle_percentage: { color: '#388E3C', iconPath: mdiArmFlex },
 	sins: { color: '#8E6C4A', iconPath: mdiThumbDown },
 	steps: { color: '#39796B', iconPath: mdiFootPrint },
+	kilocalories: { color: '#C05A16', iconPath: mdiFire },
+	fruit: { color: '#6C8E24', iconPath: mdiFoodApple },
 	job_satisfaction: { color: '#5C6BC0', iconPath: mdiBriefcase },
 }
 
@@ -111,6 +115,8 @@ const CHARTABLE_METRICS: Record<AllMetricKey, ChartableMetricDefinition> = {
 	muscle_percentage: { chartType: 'line', compatibilityGroup: 'individual' },
 	sins: { chartType: 'line', compatibilityGroup: 'individual' },
 	steps: { chartType: 'line', compatibilityGroup: 'individual' },
+	kilocalories: { chartType: 'line', compatibilityGroup: 'individual' },
+	fruit: { chartType: 'line', compatibilityGroup: 'individual' },
 	job_satisfaction: { chartType: 'line', compatibilityGroup: 'scale_1_5' },
 }
 
@@ -196,6 +202,10 @@ export function getMetricLabel(metricKey: string): string {
 			return t('health', 'Sins')
 		case 'steps':
 			return t('health', 'Steps')
+		case 'kilocalories':
+			return t('health', 'Kilocalories')
+		case 'fruit':
+			return t('health', 'Fruit')
 		case 'job_satisfaction':
 			return t('health', 'Job Satisfaction')
 		default:
@@ -208,11 +218,11 @@ export function hasDisplayUnit(metricKey: AllMetricKey): boolean {
 }
 
 export function getUnitLabel(unit: Unit): string {
-	return ({ cm: 'cm', in: 'in', kg: 'kg', lb: 'lb', st: 'st', percent: '%', count: t('health', 'count'), steps: t('health', 'steps'), celsius: '°C', fahrenheit: '°F', mmol_l: 'mmol/L', mg_dl: 'mg/dL', bpm: 'bpm', mmhg: 'mmHg', kpa: 'kPa' })[unit]
+	return ({ cm: 'cm', in: 'in', kg: 'kg', lb: 'lb', st: 'st', percent: '%', count: t('health', 'count'), steps: t('health', 'steps'), kcal: t('health', 'kcal'), pieces: t('health', 'pieces'), celsius: '°C', fahrenheit: '°F', mmol_l: 'mmol/L', mg_dl: 'mg/dL', bpm: 'bpm', mmhg: 'mmHg', kpa: 'kPa' })[unit]
 }
 
 export function getMetricUnits(metricKey: AllMetricKey): readonly Unit[] {
-	return ({ stress: [], energy: [], mood: [], hydration: [], break: [], temperature: ['celsius', 'fahrenheit'], oxygen_saturation: ['percent'], blood_glucose: ['mmol_l', 'mg_dl'], pulse: ['bpm'], blood_pressure: ['mmhg', 'kpa'], weight: ['kg', 'lb', 'st'], body_fat: ['percent'], waist: ['cm', 'in'], hip: ['cm', 'in'], muscle_percentage: ['percent'], sins: ['count'], steps: ['steps'], job_satisfaction: [] })[metricKey] as readonly Unit[]
+	return ({ stress: [], energy: [], mood: [], hydration: [], break: [], temperature: ['celsius', 'fahrenheit'], oxygen_saturation: ['percent'], blood_glucose: ['mmol_l', 'mg_dl'], pulse: ['bpm'], blood_pressure: ['mmhg', 'kpa'], weight: ['kg', 'lb', 'st'], body_fat: ['percent'], waist: ['cm', 'in'], hip: ['cm', 'in'], muscle_percentage: ['percent'], sins: ['count'], steps: ['steps'], kilocalories: ['kcal'], fruit: ['pieces'], job_satisfaction: [] })[metricKey] as readonly Unit[]
 }
 
 export function fromCanonical(metricKey: AllMetricKey, value: number, unit: Unit): number {

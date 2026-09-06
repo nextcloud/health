@@ -4,8 +4,10 @@ import type { AllMetricKey, Unit } from '../metrics.ts'
 
 import { showError, showSuccess } from '@nextcloud/dialogs'
 import { t } from '@nextcloud/l10n'
+import { generateUrl } from '@nextcloud/router'
 import { computed, inject, onBeforeUnmount, onMounted, ref } from 'vue'
 import NcAppSettingsSection from '@nextcloud/vue/components/NcAppSettingsSection'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import NcRadioGroup from '@nextcloud/vue/components/NcRadioGroup'
@@ -212,6 +214,10 @@ function updateGrowthReferenceSex(value: unknown) {
 		growthReferenceSex.value = value
 		scheduleProfileSave()
 	}
+}
+
+function openPwa(reset = false) {
+	window.open(generateUrl('/apps/health/pwa/') + (reset ? '?disconnect=1' : ''), '_blank', 'noopener,noreferrer')
 }
 
 function profileMatchesSaved(heightCm: number | null, unit: 'cm' | 'in', savedDateOfBirth: string | null, savedGrowthReferenceSex: 'female' | 'male' | null): boolean {
@@ -429,6 +435,14 @@ onBeforeUnmount(() => {
 			:name="t('health', 'Integration')"
 			:order="40">
 			<div :aria-busy="savingIntegration" class="settings-content__section settings-content__integration">
+				<h4>{{ t('health', 'Progressive Web App') }}</h4>
+				<p class="settings-content__integration-help">
+					{{ t('health', 'Install Health for fast, offline-capable data entry. The PWA does not show Health history, totals, goals, or statistics.') }}
+				</p>
+				<div class="settings-content__pwa-actions">
+					<NcButton :text="t('health', 'Open / Set up PWA')" variant="primary" @click="openPwa()" />
+					<NcButton :text="t('health', 'Reset PWA connection')" variant="secondary" @click="openPwa(true)" />
+				</div>
 				<h4>{{ t('health', 'Search') }}</h4>
 				<div class="settings-content__setting-row">
 					<span class="settings-content__setting-label">{{ t('health', 'Include Daily Notes in Nextcloud search') }}</span>
@@ -545,6 +559,8 @@ onBeforeUnmount(() => {
 	margin: var(--default-grid-baseline) 0 0;
 	color: var(--color-text-maxcontrast);
 }
+
+.settings-content__pwa-actions { display: flex; flex-wrap: wrap; margin-top: 12px; gap: 8px; }
 
 .settings-content__unit-row {
 	display: grid;

@@ -94,6 +94,8 @@ class GoalNotifier implements INotifier {
 			'break.all' => $l->t('Break'),
 			'break.mindfulness' => $l->t('Mindfulness'),
 			'steps' => $l->t('Steps'),
+			'kilocalories' => $l->t('Kilocalories'),
+			'fruit' => $l->t('Fruit'),
 			'job_satisfaction' => $l->t('Job Satisfaction'),
 			'pulse' => $l->t('Pulse'),
 			'blood_pressure' => $l->t('Blood pressure'),

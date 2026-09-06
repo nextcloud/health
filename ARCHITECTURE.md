@@ -432,6 +432,20 @@ steps
 sleep_duration
 sleep_recovery
 weight
+body_fat
+waist
+hip
+muscle_percentage
+sins
+steps
+kilocalories
+fruit
+job_satisfaction
+temperature
+oxygen_saturation
+blood_glucose
+pulse
+blood_pressure
 ```
 
 Module and metric identifiers form part of the public API and must not be changed casually.
@@ -532,6 +546,8 @@ aggregation: count
 ```
 
 The implemented Break metric is also an event metric. Its allowed options are `short`, `regular`, `short_walk`, `long_walk`, `mindfulness`, and `fresh_air`; it uses count aggregation. These are atomic entries and do not require a separate endpoint or table.
+
+`kilocalories` is a non-negative daily numeric metric with fixed canonical unit `kcal`. `fruit` is a non-negative whole-number daily counter with fixed canonical count unit `pieces`. Both reuse `health_daily_values`, configuration, goals, Statistics, saved Statistics views, Journal, and the shared frontend metric presentation registry.
 
 Module and metric definitions are application definitions and are not database records.
 
@@ -1222,3 +1238,11 @@ The Health Vue client uses browser-history routing rooted at the Nextcloud-gener
 ## Goals and reminders
 
 Goals use the public OCS v2 controller → service → mapper layers. `GoalTargetRegistry` is the sole source of supported public target identifiers and their permitted periods, comparators, units, and source metrics. `GoalProgressService` derives owner-scoped progress directly from entries, daily values, and measurements; no progress cache is persisted. Goal revisions retain the local period in which a target change became effective. `GoalReminderJob` is an hourly official Nextcloud `TimedJob` that evaluates deterministic, privacy-safe policy through the Notifications API. The Vue Goals view and Journal indicators consume only typed Health OCS clients.
+
+Goal identity is `(user_id, target_key, period)`. Distinct periods for the same metric coexist and remain independently editable, retireable, and remindable. Long-term latest-value progress uses the value applicable when the revision begins as its baseline and derives a clamped directional journey ratio; finite-period latest-value goals use values recorded within the selected period.
+
+## Integrated quick-entry PWA
+
+The PWA is a second frontend surface of the existing `health` app, not a separate Nextcloud app or backend. Source lives in `src/pwa/`, its application and service-worker bundles use dedicated Vite configurations, and three explicit public shell routes serve `/apps/health/pwa/`, its manifest, and its worker. All Health data APIs remain authenticated and CSRF-protected.
+
+The PWA uses Nextcloud Login Flow v2 to obtain a revocable app password, discovers public metric definitions from Nextcloud Capabilities and owner-scoped enablement from Health Configuration, and submits to the existing OCS v2 entry, measurement, and daily-value endpoints. Its home renders only uniform metric launchers; a selected metric opens a focused dialog whose controls derive direct named-option buttons, small finite range buttons, direct counter increments, and numeric/composite inputs from that definition metadata. Cache Storage contains only the static shell. IndexedDB contains the connection metadata and minimum pending-write outbox. Event and measurement replays carry a UUID v4 `operationId`; daily values use idempotent PUT; daily counter increments are converted once to a persisted absolute daily-value PUT before submission. The header uses the same compact sync and device-action conventions as Taskbook; diagnostics are generated from a technical allow-list rather than from local Health records.

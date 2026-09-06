@@ -48,7 +48,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 15.0.5
 	- license: BSD-3-Clause
 - health
-	- version: 3.1.2
+	- version: 3.2.0
 	- license: AGPL-3.0-or-later
 - splitpanes
 	- version: 4.1.2

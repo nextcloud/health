@@ -53,6 +53,7 @@ export interface GoalProgress {
 	comparator: GoalComparator
 	targetValue: number
 	currentValue: number | null
+	baselineValue: number | null
 	observedValue: number | null
 	progressRatio: number | null
 	remaining: number | null

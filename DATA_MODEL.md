@@ -1272,4 +1272,10 @@ Do not sacrifice understandable data for theoretical flexibility.
 
 ## Goals and reminder state
 
-`health_goals` stores the owner-scoped logical identity (`user_id`, stable `target_key`, period), active/reminder flags, retirement timestamp, and audit timestamps. `health_goal_revisions` stores comparator and canonical target values with inclusive local-date effective ranges; a revision changes current and future periods without rewriting history. `health_goal_reminder_state` stores only per-goal/period deduplication metadata (time, count, reason), never a Health value. Progress itself is derived and is not stored. `job_satisfaction` is an atomic `health_daily_values` metric with integer canonical values 1–5 and no unit.
+`health_goals` stores the owner-scoped logical identity (`user_id`, stable `target_key`, period), active/reminder flags, retirement timestamp, and audit timestamps. Its uniqueness is per target and period, not per metric, allowing distinct periods to coexist. `health_goal_revisions` stores comparator and canonical target values with inclusive local-date effective ranges; a revision changes current and future periods without rewriting history. `health_goal_reminder_state` stores only per-goal/period deduplication metadata (time, count, reason), never a Health value. Progress itself is derived and is not stored. Long-term latest-value baselines are derived from daily values at the revision boundary and are not persisted. `job_satisfaction` is an atomic `health_daily_values` metric with integer canonical values 1–5 and no unit.
+
+## Kilocalories, Fruit, and replay identity
+
+`kilocalories` and `fruit` are atomic `health_daily_values` metrics, so no metric-specific table is added. Kilocalories stores a non-negative canonical numeric `kcal` value per local date. Fruit stores a non-negative whole-number canonical `pieces` count per local date.
+
+Nullable `client_operation_id` columns on `health_entries` and `health_measurements` store only a client-generated UUID v4 replay identity. Owner-scoped unique indexes make retried timestamped writes idempotent without exposing or trusting a client user ID. Blood-pressure rows may share an operation ID because uniqueness also includes their atomic metric key. The replay identity is write metadata and is not returned as Health history.

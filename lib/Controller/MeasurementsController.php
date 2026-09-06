@@ -69,6 +69,7 @@ class MeasurementsController extends OCSController {
 	 * @param string|null $note Optional plain-text note of at most 1000 characters.
 	 * @param 'manual'|'checkin'|'checkout' $context Recording context. Defaults to `manual`.
 	 * @param 'web'|'api'|'mobile'|'notification' $source Recording source. Defaults to `api`.
+	 * @param string|null $operationId Optional UUID v4 idempotency key for safely retrying creation.
 	 * @return DataResponse<Http::STATUS_CREATED, HealthMeasurement, array{}>
 	 * @throws OCSBadRequestException The measurement fields are invalid.
 	 *
@@ -76,9 +77,9 @@ class MeasurementsController extends OCSController {
 	 * 400: Invalid measurement data
 	 */
 	#[NoAdminRequired] #[OpenAPI] #[ApiRoute(verb: 'POST', url: '/api/v2/measurements')]
-	public function create(mixed $metricKey, mixed $numericValue = null, mixed $values = null, mixed $unit = null, mixed $recordedAt = null, mixed $note = null, mixed $context = 'manual', mixed $source = 'api'): DataResponse {
+	public function create(mixed $metricKey, mixed $numericValue = null, mixed $values = null, mixed $unit = null, mixed $recordedAt = null, mixed $note = null, mixed $context = 'manual', mixed $source = 'api', mixed $operationId = null): DataResponse {
 		try {
-			return new DataResponse($this->measurementService->create($this->userId(), $metricKey, $numericValue, $values, $unit, $recordedAt, $note, $context, $source), 201);
+			return new DataResponse($this->measurementService->create($this->userId(), $metricKey, $numericValue, $values, $unit, $recordedAt, $note, $context, $source, $operationId), 201);
 		} catch (InvalidEntryException $exception) {
 			throw new OCSBadRequestException($exception->getMessage(), $exception);
 		}

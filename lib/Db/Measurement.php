@@ -19,6 +19,7 @@ class Measurement extends Entity {
 	protected ?string $groupId = null;
 	protected ?string $context = null;
 	protected ?string $source = null;
+	protected ?string $clientOperationId = null;
 	protected ?DateTimeImmutable $recordedAt = null;
 	protected ?DateTimeImmutable $createdAt = null;
 	protected ?DateTimeImmutable $updatedAt = null;
@@ -68,6 +69,13 @@ class Measurement extends Entity {
 	}
 	public function setSource(string $value): void {
 		$this->setter('source', [$value]);
+	}
+	/** @psalm-suppress PossiblyUnusedMethod Used by Nextcloud entity hydration. */
+	public function getClientOperationId(): ?string {
+		return $this->clientOperationId;
+	}
+	public function setClientOperationId(?string $value): void {
+		$this->setter('clientOperationId', [$value]);
 	}
 	public function getRecordedAt(): DateTimeImmutable {
 		return $this->recordedAt ?? throw new \LogicException('recordedAt has not been set.');

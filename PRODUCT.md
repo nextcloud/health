@@ -36,6 +36,8 @@ Possible metrics include:
 - Movement
 - Sleep
 - Weight
+- Kilocalories
+- Fruit
 
 Only enabled metrics appear in the user's journal.
 
@@ -83,6 +85,8 @@ Users can define personal goals such as:
 
 Goals can be evaluated per day and summarized across weeks and months.
 
+A metric may have distinct daily, weekly, monthly, and long-term goals where the target supports those periods. Each target/period identity remains independently editable and remindable. Long-term Weight progress is a directional journey from its applicable baseline to the target, so movement toward either a lower maximum or a higher minimum advances progress.
+
 ## Statistics
 
 Health provides descriptive statistics only.
@@ -100,6 +104,10 @@ Users can view:
 The application should visualize data but should not automatically claim causal relationships.
 
 The user interprets their own patterns.
+
+## Quick-entry PWA
+
+Health includes an installable, offline-first quick-entry surface inside the Health app. It discovers the signed-in user's enabled metrics and records through the same Health OCS API. It is intentionally capture-only: it does not display current values, history, goals, Statistics, trends, or interpretation.
 
 ## Privacy
 

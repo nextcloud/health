@@ -14,7 +14,7 @@ namespace OCA\Health\Types;
  * @psalm-type HealthMetricDefinition = array{
  *   metricKey: string,
  *   category: 'journal'|'measurement'|'daily_value',
- *   valueType: 'scale'|'event'|'numeric'|'composite',
+ *   valueType: 'scale'|'event'|'numeric'|'counter'|'composite',
  *   minimum: int|null,
  *   maximum: int|null,
  *   allowedOptions: list<string>|null,
