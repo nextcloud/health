@@ -56,5 +56,5 @@ This file is generated from multiple sources. Included packages:
 	- version: 7.3.6
 	- license: MIT
 - vue-router
-	- version: 5.2.0
+	- version: 5.3.1
 	- license: MIT
