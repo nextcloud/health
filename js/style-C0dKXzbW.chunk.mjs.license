@@ -16,7 +16,6 @@ SPDX-FileCopyrightText: GitHub Inc.
 SPDX-FileCopyrightText: Guillaume Chau <guillaume.b.chau@gmail.com>
 SPDX-FileCopyrightText: Matt Zabriskie
 SPDX-FileCopyrightText: Nextcloud GmbH and Nextcloud contributors
-SPDX-FileCopyrightText: Varun A P
 SPDX-FileCopyrightText: atomiks
 SPDX-FileCopyrightText: escape-html developers
 SPDX-FileCopyrightText: health developers
@@ -43,11 +42,17 @@ This file is generated from multiple sources. Included packages:
 - @nextcloud/browser-storage
 	- version: 0.5.0
 	- license: GPL-3.0-or-later
+- @nextcloud/capabilities
+	- version: 1.2.1
+	- license: GPL-3.0-or-later
 - @nextcloud/dialogs
-	- version: 7.4.1
+	- version: 7.5.0
 	- license: AGPL-3.0-or-later
 - @nextcloud/event-bus
 	- version: 3.3.3
+	- license: GPL-3.0-or-later
+- @nextcloud/initial-state
+	- version: 3.0.0
 	- license: GPL-3.0-or-later
 - @nextcloud/l10n
 	- version: 3.4.1
@@ -105,9 +110,6 @@ This file is generated from multiple sources. Included packages:
 	- license: ISC
 - tabbable
 	- version: 6.5.0
-	- license: MIT
-- toastify-js
-	- version: 1.12.0
 	- license: MIT
 - vite
 	- version: 7.3.6
