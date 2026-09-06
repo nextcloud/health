@@ -64,7 +64,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 3.1.0
 	- license: GPL-3.0-or-later
 - @nextcloud/vue
-	- version: 9.9.0
+	- version: 9.11.0
 	- license: AGPL-3.0-or-later
 - @vitejs/plugin-vue
 	- version: 6.0.8
@@ -91,7 +91,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 1.19.0
 	- license: MIT
 - dompurify
-	- version: 3.4.13
+	- version: 3.4.14
 	- license: (MPL-2.0 OR Apache-2.0)
 - escape-html
 	- version: 1.0.3
