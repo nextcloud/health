@@ -88,6 +88,21 @@ class DailyValueMapper extends QBMapper {
 		}
 	}
 
+	public function findFirstForUserMetricOnOrAfter(string $userId, string $metricKey, string $date, string $throughDate): ?DailyValue {
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('*')->from($this->tableName)
+			->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR)))
+			->andWhere($qb->expr()->eq('metric_key', $qb->createNamedParameter($metricKey, IQueryBuilder::PARAM_STR)))
+			->andWhere($qb->expr()->gte('local_date', $qb->createNamedParameter($date, IQueryBuilder::PARAM_STR)))
+			->andWhere($qb->expr()->lte('local_date', $qb->createNamedParameter($throughDate, IQueryBuilder::PARAM_STR)))
+			->orderBy('local_date', 'ASC')->addOrderBy('id', 'ASC')->setMaxResults(1);
+		try {
+			return $this->findEntity($qb);
+		} catch (DoesNotExistException|MultipleObjectsReturnedException) {
+			return null;
+		}
+	}
+
 	public function findLatestForUserMetricDateRange(string $userId, string $metricKey, string $fromDate, string $toDate): ?DailyValue {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')->from($this->tableName)

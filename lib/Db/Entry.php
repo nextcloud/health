@@ -16,6 +16,7 @@ class Entry extends Entity {
 	protected ?string $optionValue = null;
 	protected ?string $context = null;
 	protected ?string $source = null;
+	protected ?string $clientOperationId = null;
 	protected ?DateTimeImmutable $recordedAt = null;
 	protected ?DateTimeImmutable $createdAt = null;
 	protected ?DateTimeImmutable $updatedAt = null;
@@ -76,6 +77,15 @@ class Entry extends Entity {
 
 	public function setSource(string $source): void {
 		$this->setter('source', [$source]);
+	}
+
+	/** @psalm-suppress PossiblyUnusedMethod Used by Nextcloud entity hydration. */
+	public function getClientOperationId(): ?string {
+		return $this->clientOperationId;
+	}
+
+	public function setClientOperationId(?string $clientOperationId): void {
+		$this->setter('clientOperationId', [$clientOperationId]);
 	}
 
 	public function getRecordedAt(): DateTimeImmutable {

@@ -47,6 +47,7 @@ class EntriesController extends OCSController {
 	 * @param string $context Entry context: `manual`, `checkin`, `checkout`, or `reminder`.
 	 * @param string|null $note Optional plain-text journal note of at most 1000 characters.
 	 * @param string $source Entry source: `web`, `api`, `mobile`, or `notification`. Defaults to `api`.
+	 * @param string|null $operationId Optional UUID v4 idempotency key for safely retrying creation.
 	 * @return DataResponse<Http::STATUS_CREATED, HealthEntry, array{}>
 	 * @throws OCSBadRequestException The entry fields are malformed or invalid.
 	 *
@@ -64,6 +65,7 @@ class EntriesController extends OCSController {
 		mixed $context = 'manual',
 		mixed $note = null,
 		mixed $source = 'api',
+		mixed $operationId = null,
 	): DataResponse {
 		try {
 			$entry = $this->entryService->create(
@@ -75,6 +77,7 @@ class EntriesController extends OCSController {
 				$recordedAt,
 				$note,
 				$source,
+				$operationId,
 			);
 		} catch (InvalidEntryException $exception) {
 			throw new OCSBadRequestException($exception->getMessage(), $exception);

@@ -75,7 +75,7 @@ namespace OCA\Health;
  * @psalm-type HealthGoalProgress = array{
  *   goalId: int, targetKey: string, metricKey: string, period: 'day'|'week'|'month'|'long_term',
  *   periodStart: string, periodEnd: string|null, periodKey: string, active: bool,
- *   remindersEnabled: bool, comparator: 'gte'|'lte', targetValue: float, currentValue: float|null,
+ *   remindersEnabled: bool, comparator: 'gte'|'lte', targetValue: float, currentValue: float|null, baselineValue: float|null,
  *   observedValue: float|null, progressRatio: float|null, remaining: float|null,
  *   status: 'in_progress'|'reached'|'within_limit'|'exceeded'|'not_reached'|'paused', effectiveFrom: string
  * }
@@ -116,7 +116,7 @@ namespace OCA\Health;
  * @psalm-type HealthStatisticsMetric = array{
  *   metricKey: string,
  *   category: 'journal'|'measurement'|'daily_value',
- *   valueType: 'scale'|'event'|'numeric'|'composite',
+ *   valueType: 'scale'|'event'|'numeric'|'counter'|'composite',
  *   canonicalUnit: string|null,
  *   minimum: int|null,
  *   maximum: int|null,

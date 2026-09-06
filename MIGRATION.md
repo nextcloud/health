@@ -195,3 +195,7 @@ The later design must be restartable or otherwise guarantee that interruption ca
 ## Saved Statistics views migration
 
 `Version3004Date20260902230000` is additive and creates `health_statistics_views` only when absent. It stores private reusable Statistics configuration, never derived statistics or Health values. It does not change legacy tables, journal rows, goals, settings, measurements, daily values, or existing Health data.
+
+## Offline replay identity migration
+
+`Version3005Date20260905190000` is additive and adds nullable `client_operation_id` columns plus owner-scoped unique replay indexes to the v3 entry and measurement tables. Existing rows remain null and unchanged. The migration stores no new Health values, creates no PWA-specific server records, and does not alter any released migration.

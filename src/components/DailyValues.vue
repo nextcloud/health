@@ -22,7 +22,7 @@ import MetricValueCard from './MetricValueCard.vue'
 import ModalActions from './ModalActions.vue'
 import { getEnabledMetricKeys } from '../api/configuration.ts'
 import { listDailyValues, upsertDailyValue } from '../api/dailyValues.ts'
-import { goalProgressForMetric, goalTargetByKey } from '../goals.ts'
+import { getProgressLabel, goalProgressForMetric, goalProgressPercentage, goalTargetByKey } from '../goals.ts'
 import { DAILY_VALUE_METRIC_KEYS, fromCanonical, getMetricLabel, getMetricUnits, getUnitLabel, hasDisplayUnit } from '../metrics.ts'
 import { normalizeWeightInput } from '../utils/weightInput.ts'
 
@@ -63,13 +63,22 @@ function edit(metricKey: DailyValueMetricKey) {
 function progressesFor(metricKey: DailyValueMetricKey): GoalProgress[] { return goalProgressForMetric(props.goalProgresses ?? [], metricKey) }
 function targetFor(progress: GoalProgress): GoalTarget | undefined { return goalTargetByKey(props.goalTargets ?? [], progress.targetKey) }
 function hasCompactProgress(metricKey: DailyValueMetricKey): boolean {
-	return progressesFor(metricKey).some((progress) => progress.comparator === 'gte' && progress.progressRatio !== null && targetFor(progress)?.kind !== 'latest_value')
+	return compactProgress(metricKey) !== undefined
 }
 function compactProgress(metricKey: DailyValueMetricKey): GoalProgress | undefined {
+	if (metricKey === 'weight') {
+		return progressesFor(metricKey).find((progress) => progress.period === 'long_term' && progress.progressRatio !== null && targetFor(progress)?.kind === 'latest_value')
+	}
 	return progressesFor(metricKey).find((progress) => progress.comparator === 'gte' && progress.progressRatio !== null && targetFor(progress)?.kind !== 'latest_value')
 }
 function compactProgressValue(metricKey: DailyValueMetricKey): number {
-	return Math.round(Math.max(0, Math.min(1, compactProgress(metricKey)?.progressRatio ?? 0)) * 100)
+	const progress = compactProgress(metricKey)
+	return progress === undefined ? 0 : goalProgressPercentage(progress)
+}
+function compactProgressLabel(metricKey: DailyValueMetricKey): string {
+	const progress = compactProgress(metricKey)
+	const target = progress === undefined ? undefined : targetFor(progress)
+	return progress === undefined || target === undefined ? '' : getProgressLabel(progress, target)
 }
 function compactProgressColor(metricKey: DailyValueMetricKey): string {
 	const percentage = compactProgressValue(metricKey)
@@ -85,6 +94,10 @@ async function save() {
 		: Number(numericValue.value)
 	if (value === null || !Number.isFinite(value)) {
 		inputError.value = t('health', 'Enter a valid number.')
+		return
+	}
+	if (editingKey.value === 'fruit' && (!Number.isInteger(value) || value < 0)) {
+		inputError.value = t('health', 'Fruit must be a non-negative whole number.')
 		return
 	}
 	inputError.value = null
@@ -137,11 +150,12 @@ watch(() => [props.date, props.configuration] as const, load, { immediate: true 
 				<div v-if="hasCompactProgress(metricKey)" class="daily-values__goal-progress">
 					<DailyGoalPopover :progresses="progressesFor(metricKey)"
 						:targets="goalTargets ?? []" />
-					<div :aria-label="t('health', '{percent} percent of the goal reached', { percent: compactProgressValue(metricKey) })" role="img">
+					<div :aria-label="t('health', '{metric} progress toward the long-term goal: {percent} percent.', { metric: getMetricLabel(metricKey), percent: compactProgressValue(metricKey) })" role="img">
 						<NcProgressBar :aria-hidden="true"
 							:color="compactProgressColor(metricKey)"
 							:value="compactProgressValue(metricKey)" />
 					</div>
+					<span v-if="metricKey === 'weight'" class="daily-values__long-term-progress-text">{{ compactProgressLabel(metricKey) }}</span>
 				</div>
 				<DailyGoalPopover v-else-if="progressesFor(metricKey).length"
 					class="daily-values__goal-popover"
@@ -178,7 +192,7 @@ watch(() => [props.date, props.configuration] as const, load, { immediate: true 
 				<NcTextField v-model="numericValue"
 					:aria-describedby="hasDisplayUnit(editingKey) ? unitDescriptionId(editingKey) : undefined"
 					:label="getMetricLabel(editingKey)"
-					inputmode="decimal" />
+					:inputmode="editingKey === 'fruit' ? 'numeric' : 'decimal'" />
 				<span v-if="hasDisplayUnit(editingKey) && editingUnit" :id="unitDescriptionId(editingKey)" class="daily-values__unit">{{ getUnitLabel(editingUnit) }}</span>
 			</div>
 		</template>
@@ -306,6 +320,8 @@ watch(() => [props.date, props.configuration] as const, load, { immediate: true 
 }
 
 .daily-values__goal-progress { display: grid; grid-template-columns: var(--default-clickable-area) minmax(0, 1fr); align-items: center; width: min(100%, 12rem); margin: 8px auto 0; gap: 4px; }
+
+.daily-values__long-term-progress-text { grid-column: 1 / -1; color: var(--color-text-maxcontrast); font-size: var(--font-size-small); text-align: center; }
 
 .daily-values__job-value-progress { width: 100%; margin-top: var(--default-grid-baseline); }
 

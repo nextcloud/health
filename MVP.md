@@ -203,6 +203,34 @@ Optional durations may be added later.
 
 ---
 
+## Kilocalories
+
+Type:
+
+- daily numeric value
+
+Unit:
+
+- fixed canonical `kcal`
+
+Kilocalories accepts non-negative numeric values, including decimals. It has no unit selector because its stable metric meaning is specifically kilocalories per local day.
+
+---
+
+## Fruit
+
+Type:
+
+- accumulated daily counter
+
+Unit:
+
+- fixed canonical `pieces`
+
+Fruit accepts non-negative whole numbers. Journal supports direct count entry and the quick-entry PWA provides a preferred `+1` interaction.
+
+---
+
 ## Movement
 
 Type:
@@ -511,4 +539,8 @@ The MVP should feel useful even if the user never connects an external service o
 
 ## Goals slice
 
-The MVP goal slice supports one logical owner-scoped target for each target/period identity, historical revisions, derived day/week/month/long-term progress, pause and retirement, and opt-in Gentle reminders. Job Satisfaction is a daily integer scale from 1 to 5, disabled by default, available in the Journal and optional check-in/check-out routines.
+The MVP goal slice supports one logical owner-scoped target for each target/period identity, so one metric may have multiple meaningfully different periods without allowing an identical duplicate. It supports historical revisions, derived day/week/month/long-term progress, pause and retirement, and opt-in Gentle reminders. Long-term latest-value goals expose baseline-aware directional progress. Job Satisfaction is a daily integer scale from 1 to 5, disabled by default, available in the Journal and optional check-in/check-out routines.
+
+## Quick-entry PWA slice
+
+The Health app includes an installable PWA at `/apps/health/pwa/`. After initial loading and Nextcloud Login Flow v2 authorization, it can queue minimum write payloads in IndexedDB while offline and synchronize them through the existing owner-scoped Health API. Its equal-sized metric launcher grid opens entry dialogs that use direct buttons for finite choices, numeric Save plus direct increment for counters, and numeric inputs for arbitrary values. Its diagnostics are technical troubleshooting only and exclude Health and credential data. It does not display recorded Health values or derived data.

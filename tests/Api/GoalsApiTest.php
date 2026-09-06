@@ -207,7 +207,7 @@ class GoalsApiTest extends TestCase {
 		$goal = $this->createGoal(['targetKey' => 'weight', 'period' => 'long_term', 'comparator' => 'lte', 'targetValue' => 78]);
 		$this->upsertDailyValue(self::$userA, 'weight', 82, 'kg');
 		$belowGoal = $this->progressByTarget($this->progressAs(self::$userA, 'long_term'))['weight'];
-		self::assertSame('exceeded', $belowGoal['status']);
+		self::assertSame('in_progress', $belowGoal['status']);
 		self::assertEquals(82.0, $belowGoal['currentValue']);
 
 		$this->upsertDailyValue(self::$userA, 'weight', 86, 'kg');
@@ -216,6 +216,70 @@ class GoalsApiTest extends TestCase {
 		$aboveGoal = $this->progressByTarget($this->progressAs(self::$userA, 'long_term'))['weight'];
 		self::assertSame('reached', $aboveGoal['status']);
 		self::assertEquals(86.0, $aboveGoal['currentValue']);
+	}
+
+	public function testMultiplePeriodsForTheSameTargetPersistAndChangeIndependently(): void {
+		$daily = $this->createGoal(['targetKey' => 'steps', 'period' => 'day', 'targetValue' => 5000]);
+		$weekly = $this->createGoal(['targetKey' => 'steps', 'period' => 'week', 'targetValue' => 30000]);
+		self::assertNotSame($daily['id'], $weekly['id']);
+		self::assertSame(400, $this->requestAs(self::$userA, 'POST', 'goals', ['json' => $this->goalRequest(['targetKey' => 'steps', 'period' => 'day', 'targetValue' => 6000])])->getStatusCode());
+		$updated = $this->ocsData($this->requestAs(self::$userA, 'PUT', 'goals/' . $daily['id'], ['json' => ['targetValue' => 6000, 'remindersEnabled' => true]]));
+		self::assertEquals(6000.0, $updated['currentRevision']['targetValue']);
+		self::assertTrue($updated['remindersEnabled']);
+		self::assertEquals(30000.0, $this->goalById($weekly['id'])['currentRevision']['targetValue']);
+		$this->requestAs(self::$userA, 'DELETE', 'goals/' . $daily['id']);
+		self::assertSame($weekly['id'], $this->goalById($weekly['id'])['id']);
+		self::assertSame(404, $this->requestAs(self::$userB, 'PUT', 'goals/' . $weekly['id'], ['json' => ['targetValue' => 1]])->getStatusCode());
+
+		$dailyWeight = $this->createGoal(['targetKey' => 'weight', 'period' => 'day', 'comparator' => 'lte', 'targetValue' => 85]);
+		$longTermWeight = $this->createGoal(['targetKey' => 'weight', 'period' => 'long_term', 'comparator' => 'lte', 'targetValue' => 80]);
+		self::assertNotSame($dailyWeight['id'], $longTermWeight['id']);
+		self::assertSame(400, $this->requestAs(self::$userA, 'POST', 'goals', ['json' => $this->goalRequest(['targetKey' => 'weight', 'period' => 'long_term', 'comparator' => 'lte', 'targetValue' => 78])])->getStatusCode());
+		$this->upsertDailyValue(self::$userA, 'weight', 84, 'kg');
+		self::assertSame('reached', $this->progressByTarget($this->progressAs(self::$userA, 'day'))['weight']['status']);
+		self::assertSame('in_progress', $this->progressByTarget($this->progressAs(self::$userA, 'long_term'))['weight']['status']);
+		$changedLongTerm = $this->ocsData($this->requestAs(self::$userA, 'PUT', 'goals/' . $longTermWeight['id'], ['json' => ['targetValue' => 79, 'remindersEnabled' => true]]));
+		self::assertEquals(79.0, $changedLongTerm['currentRevision']['targetValue']);
+		self::assertTrue($changedLongTerm['remindersEnabled']);
+		self::assertEquals(85.0, $this->goalById($dailyWeight['id'])['currentRevision']['targetValue']);
+		self::assertFalse($this->goalById($dailyWeight['id'])['remindersEnabled']);
+		$this->requestAs(self::$userA, 'DELETE', 'goals/' . $dailyWeight['id']);
+		self::assertSame($longTermWeight['id'], $this->goalById($longTermWeight['id'])['id']);
+	}
+
+	public function testLongTermWeightJourneyProgressUsesItsBaselineAndDirection(): void {
+		$today = $this->today();
+		$start = (new DateTimeImmutable($today, new DateTimeZone('UTC')))->modify('-2 days')->format('Y-m-d');
+		$this->upsertDailyValue(self::$userA, 'weight', 90, 'kg', $start);
+		$below = $this->createGoal(['targetKey' => 'weight', 'period' => 'long_term', 'comparator' => 'lte', 'targetValue' => 80]);
+		$this->setRevisionStart($below['id'], $start);
+		$this->upsertDailyValue(self::$userA, 'weight', 85, 'kg', $today);
+		$progress = $this->progressByTarget($this->progressAs(self::$userA, 'long_term'))['weight'];
+		self::assertEquals(90.0, $progress['baselineValue']);
+		self::assertEquals(0.5, $progress['progressRatio']);
+		self::assertSame('in_progress', $progress['status']);
+
+		$this->upsertDailyValue(self::$userA, 'weight', 79, 'kg', $today);
+		$completed = $this->progressByTarget($this->progressAs(self::$userA, 'long_term'))['weight'];
+		self::assertEquals(1.0, $completed['progressRatio']);
+		self::assertSame('reached', $completed['status']);
+		$this->requestAs(self::$userA, 'DELETE', 'goals/' . $below['id']);
+		self::assertArrayNotHasKey('weight', $this->progressByTarget($this->progressAs(self::$userA, 'long_term')));
+
+		$this->upsertDailyValue(self::$userB, 'weight', 90, 'kg', $start);
+		$aboveResponse = $this->requestAs(self::$userB, 'POST', 'goals', ['json' => $this->goalRequest(['targetKey' => 'weight', 'period' => 'long_term', 'comparator' => 'gte', 'targetValue' => 100])]);
+		self::assertSame(201, $aboveResponse->getStatusCode());
+		$above = $this->ocsData($aboveResponse);
+		$this->setRevisionStart($above['id'], $start);
+		$this->upsertDailyValue(self::$userB, 'weight', 95, 'kg', $today);
+		$upward = $this->progressByTarget($this->progressAs(self::$userB, 'long_term'))['weight'];
+		self::assertEquals(0.5, $upward['progressRatio']);
+		self::assertSame('in_progress', $upward['status']);
+
+		$this->upsertDailyValue(self::$userB, 'weight', 101, 'kg', $today);
+		$upwardCompleted = $this->progressByTarget($this->progressAs(self::$userB, 'long_term'))['weight'];
+		self::assertEquals(1.0, $upwardCompleted['progressRatio']);
+		self::assertSame('reached', $upwardCompleted['status']);
 	}
 
 	public function testRevisionPreservesThePriorDailyTarget(): void {
@@ -266,9 +330,27 @@ class GoalsApiTest extends TestCase {
 		self::assertSame(201, $response->getStatusCode());
 	}
 
-	private function upsertDailyValue(string $userId, string $metricKey, int|float $numericValue, ?string $unit): void {
-		$response = $this->requestAs($userId, 'PUT', 'daily-values/' . $metricKey . '/' . $this->today(), ['json' => ['numericValue' => $numericValue, 'unit' => $unit]]);
+	private function upsertDailyValue(string $userId, string $metricKey, int|float $numericValue, ?string $unit, ?string $date = null): void {
+		$response = $this->requestAs($userId, 'PUT', 'daily-values/' . $metricKey . '/' . ($date ?? $this->today()), ['json' => ['numericValue' => $numericValue, 'unit' => $unit]]);
 		self::assertSame(200, $response->getStatusCode());
+	}
+
+	/** @return array<string, mixed> */
+	private function goalById(int $id): array {
+		foreach ($this->ocsData($this->requestAs(self::$userA, 'GET', 'goals'))['goals'] as $goal) {
+			if ($goal['id'] === $id) {
+				return $goal;
+			}
+		}
+		self::fail('Goal not found.');
+	}
+
+	private function setRevisionStart(int $goalId, string $date): void {
+		$qb = self::$db->getQueryBuilder();
+		$qb->update('health_goal_revisions')
+			->set('effective_from', $qb->createNamedParameter($date, IQueryBuilder::PARAM_STR))
+			->where($qb->expr()->eq('goal_id', $qb->createNamedParameter($goalId, IQueryBuilder::PARAM_INT)))
+			->executeStatement();
 	}
 
 	/** @param array{systolic: int|float, diastolic: int|float}|null $values */

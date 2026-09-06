@@ -1,12 +1,12 @@
 {
   "name": "health",
-  "version": "3.1.2",
+  "version": "3.2.0",
   "license": "AGPL-3.0-or-later",
   "type": "module",
   "scripts": {
-    "build": "vite build",
-    "dev": "vite --mode development build",
-    "lint": "eslint src",
+    "build": "vite build && vite build --config vite.pwa.config.ts && vite build --config vite.pwa-worker.config.ts",
+    "dev": "vite --mode development build && vite --mode development build --config vite.pwa.config.ts && vite --mode development build --config vite.pwa-worker.config.ts",
+    "lint": "eslint src vite.config.ts vite.pwa.config.ts vite.pwa-worker.config.ts",
     "prebuild": "npm run test:frontend",
     "stylelint": "stylelint src/**/*.vue src/**/*.scss src/**/*.css",
     "test:frontend": "node --test tests/frontend/*.test.mjs",

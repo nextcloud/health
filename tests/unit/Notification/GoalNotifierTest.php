@@ -11,6 +11,7 @@ use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\L10N\IFactory;
 use OCP\Notification\INotification;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class GoalNotifierTest extends TestCase {
@@ -51,19 +52,27 @@ class GoalNotifierTest extends TestCase {
 		}
 	}
 
-	public function testStepsReminderUsesTheCorrectTopicAndMetricIcon(): void {
+	/** @return iterable<string, array{string, string, string}> */
+	public static function metricReminders(): iterable {
+		yield 'steps' => ['steps', 'Steps', 'steps'];
+		yield 'kilocalories' => ['kilocalories', 'Kilocalories', 'kilocalories'];
+		yield 'fruit' => ['fruit', 'Fruit', 'fruit'];
+	}
+
+	#[DataProvider('metricReminders')]
+	public function testMetricReminderUsesTheCorrectTopicAndMetricIcon(string $targetKey, string $topic, string $icon): void {
 		$l10n = $this->l10n();
 		$factory = $this->createMock(IFactory::class);
 		$factory->expects(self::once())->method('get')->with(Application::APP_ID, 'en')->willReturn($l10n);
 		$urlGenerator = $this->createMock(IURLGenerator::class);
 		$urlGenerator->expects(self::once())->method('linkToRoute')->with('health.page.goals')->willReturn('/apps/health/goals');
-		$urlGenerator->expects(self::once())->method('imagePath')->with(Application::APP_ID, 'notifications/steps.svg')->willReturn('/apps/health/img/notifications/steps.svg');
-		$urlGenerator->expects(self::once())->method('getAbsoluteURL')->with('/apps/health/img/notifications/steps.svg')->willReturn('https://cloud.example/apps/health/img/notifications/steps.svg');
-		$notification = $this->notification('goal_reminder', ['targetKey' => 'steps']);
-		$notification->expects(self::once())->method('setParsedSubject')->with('Steps reminder')->willReturnSelf();
+		$urlGenerator->expects(self::once())->method('imagePath')->with(Application::APP_ID, 'notifications/' . $icon . '.svg')->willReturn('/apps/health/img/notifications/' . $icon . '.svg');
+		$urlGenerator->expects(self::once())->method('getAbsoluteURL')->with('/apps/health/img/notifications/' . $icon . '.svg')->willReturn('https://cloud.example/apps/health/img/notifications/' . $icon . '.svg');
+		$notification = $this->notification('goal_reminder', ['targetKey' => $targetKey]);
+		$notification->expects(self::once())->method('setParsedSubject')->with($topic . ' reminder')->willReturnSelf();
 		$notification->expects(self::once())->method('setParsedMessage')->with('Open Health to review your reminder.')->willReturnSelf();
 		$notification->expects(self::once())->method('setLink')->with('/apps/health/goals')->willReturnSelf();
-		$notification->expects(self::once())->method('setIcon')->with('https://cloud.example/apps/health/img/notifications/steps.svg')->willReturnSelf();
+		$notification->expects(self::once())->method('setIcon')->with('https://cloud.example/apps/health/img/notifications/' . $icon . '.svg')->willReturnSelf();
 
 		(new GoalNotifier($factory, $urlGenerator, new GoalTargetRegistry()))->prepare($notification, 'en');
 	}

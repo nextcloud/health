@@ -25,10 +25,12 @@ class GoalTargetRegistry {
 		'break.all' => ['targetKey' => 'break.all', 'metricKey' => 'break', 'category' => 'journal', 'periods' => ['day', 'week', 'month'], 'comparators' => ['gte', 'lte'], 'kind' => 'count', 'unit' => null, 'options' => ['short', 'regular', 'short_walk', 'long_walk', 'mindfulness', 'fresh_air'], 'minimum' => 1.0],
 		'break.mindfulness' => ['targetKey' => 'break.mindfulness', 'metricKey' => 'break', 'category' => 'journal', 'periods' => ['day', 'week', 'month'], 'comparators' => ['gte', 'lte'], 'kind' => 'count', 'unit' => null, 'options' => ['mindfulness'], 'minimum' => 1.0],
 		'steps' => ['targetKey' => 'steps', 'metricKey' => 'steps', 'category' => 'daily_value', 'periods' => ['day', 'week', 'month'], 'comparators' => ['gte', 'lte'], 'kind' => 'period_value', 'unit' => 'steps', 'minimum' => 1.0],
+		'kilocalories' => ['targetKey' => 'kilocalories', 'metricKey' => 'kilocalories', 'category' => 'daily_value', 'periods' => ['day', 'week', 'month'], 'comparators' => ['gte', 'lte'], 'kind' => 'period_value', 'unit' => 'kcal', 'minimum' => 0.000001],
+		'fruit' => ['targetKey' => 'fruit', 'metricKey' => 'fruit', 'category' => 'daily_value', 'periods' => ['day', 'week', 'month'], 'comparators' => ['gte', 'lte'], 'kind' => 'period_value', 'unit' => 'pieces', 'minimum' => 1.0],
 		'job_satisfaction' => ['targetKey' => 'job_satisfaction', 'metricKey' => 'job_satisfaction', 'category' => 'daily_value', 'periods' => ['day'], 'comparators' => ['gte', 'lte'], 'kind' => 'period_value', 'unit' => null, 'minimum' => 1.0, 'maximum' => 5.0],
 		'pulse' => ['targetKey' => 'pulse', 'metricKey' => 'pulse', 'category' => 'measurement', 'periods' => ['day', 'week', 'month'], 'comparators' => ['gte', 'lte'], 'kind' => 'threshold_occurrence', 'unit' => 'bpm', 'minimum' => 1.0],
 		'blood_pressure' => ['targetKey' => 'blood_pressure', 'metricKey' => 'blood_pressure', 'category' => 'measurement', 'periods' => ['day', 'week', 'month'], 'comparators' => ['gte'], 'kind' => 'count', 'unit' => null, 'minimum' => 1.0],
-		'weight' => ['targetKey' => 'weight', 'metricKey' => 'weight', 'category' => 'daily_value', 'periods' => ['long_term'], 'comparators' => ['gte', 'lte'], 'kind' => 'latest_value', 'unit' => 'kg', 'minimum' => 0.000001],
+		'weight' => ['targetKey' => 'weight', 'metricKey' => 'weight', 'category' => 'daily_value', 'periods' => ['day', 'week', 'month', 'long_term'], 'comparators' => ['gte', 'lte'], 'kind' => 'latest_value', 'unit' => 'kg', 'minimum' => 0.000001],
 	];
 
 	/** @return list<HealthGoalTarget> */

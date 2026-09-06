@@ -37,6 +37,8 @@ class MetricService {
 		'muscle_percentage' => ['metricKey' => 'muscle_percentage', 'category' => 'daily_value', 'valueType' => 'numeric', 'minimum' => null, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'percent', 'supportedUnits' => ['percent']],
 		'sins' => ['metricKey' => 'sins', 'category' => 'daily_value', 'valueType' => 'numeric', 'minimum' => null, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'count', 'supportedUnits' => ['count']],
 		'steps' => ['metricKey' => 'steps', 'category' => 'daily_value', 'valueType' => 'numeric', 'minimum' => null, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'steps', 'supportedUnits' => ['steps']],
+		'kilocalories' => ['metricKey' => 'kilocalories', 'category' => 'daily_value', 'valueType' => 'numeric', 'minimum' => 0, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'kcal', 'supportedUnits' => ['kcal']],
+		'fruit' => ['metricKey' => 'fruit', 'category' => 'daily_value', 'valueType' => 'counter', 'minimum' => 0, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'pieces', 'supportedUnits' => ['pieces']],
 		'job_satisfaction' => ['metricKey' => 'job_satisfaction', 'category' => 'daily_value', 'valueType' => 'scale', 'minimum' => self::SCALE_MINIMUM, 'maximum' => self::SCALE_MAXIMUM, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => null, 'supportedUnits' => []],
 	];
 
@@ -61,6 +63,8 @@ class MetricService {
 			'hydration' => 'water',
 			'break' => 'break',
 			'steps' => 'steps',
+			'kilocalories' => 'kilocalories',
+			'fruit' => 'fruit',
 			'job_satisfaction' => 'job-satisfaction',
 			'pulse' => 'pulse',
 			'blood_pressure' => 'blood-pressure',
@@ -108,8 +112,20 @@ class MetricService {
 
 	public function validateDailyValueNumericValue(string $metricKey, float $value): float {
 		$definition = $this->getDefinition($this->validateDailyValueMetricKey($metricKey));
+		if (!is_finite($value)) {
+			throw new InvalidEntryException('Daily values must be finite numbers.');
+		}
 		if ($definition['valueType'] === 'scale' && (!is_finite($value) || floor($value) !== $value || $value < self::SCALE_MINIMUM || $value > self::SCALE_MAXIMUM)) {
 			throw new InvalidEntryException('Daily scale values must be integers between 1 and 5.');
+		}
+		if ($definition['valueType'] === 'counter' && floor($value) !== $value) {
+			throw new InvalidEntryException('Daily counter values must be whole numbers.');
+		}
+		if ($definition['minimum'] !== null && $value < $definition['minimum']) {
+			throw new InvalidEntryException('Daily value is below the supported range.');
+		}
+		if ($definition['maximum'] !== null && $value > $definition['maximum']) {
+			throw new InvalidEntryException('Daily value is above the supported range.');
 		}
 		return $value;
 	}
