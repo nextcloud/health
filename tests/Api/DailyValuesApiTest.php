@@ -86,6 +86,27 @@ class DailyValuesApiTest extends TestCase {
 		self::assertSame(401, self::$http->request('PUT', 'daily-values/job_satisfaction/' . self::DATE, ['json' => ['numericValue' => 3, 'unit' => null]])->getStatusCode());
 	}
 
+	public function testKilocaloriesUseTheFixedCanonicalUnitAndAllowDecimals(): void {
+		$response = $this->requestAs(self::$userA, 'PUT', 'daily-values/kilocalories/' . self::DATE, ['json' => ['numericValue' => 2140.5, 'unit' => 'kcal']]);
+		self::assertSame(200, $response->getStatusCode());
+		$value = $this->ocsData($response);
+		self::assertSame('kilocalories', $value['metricKey']);
+		self::assertEquals(2140.5, $value['numericValue']);
+		self::assertSame(400, $this->requestAs(self::$userA, 'PUT', 'daily-values/kilocalories/' . self::DATE, ['json' => ['numericValue' => 10, 'unit' => 'kj']])->getStatusCode());
+		self::assertSame(400, $this->requestAs(self::$userA, 'PUT', 'daily-values/kilocalories/' . self::DATE, ['json' => ['numericValue' => -1, 'unit' => 'kcal']])->getStatusCode());
+	}
+
+	public function testFruitIsAnOwnerScopedNonNegativeWholeNumberCount(): void {
+		$response = $this->requestAs(self::$userA, 'PUT', 'daily-values/fruit/' . self::DATE, ['json' => ['numericValue' => 3, 'unit' => 'pieces']]);
+		self::assertSame(200, $response->getStatusCode());
+		self::assertSame('fruit', $this->ocsData($response)['metricKey']);
+		self::assertEquals(3.0, $this->ocsData($response)['numericValue']);
+		self::assertSame([], $this->ocsData($this->requestAs(self::$userB, 'GET', 'daily-values', ['query' => ['date' => self::DATE]]))['values']);
+		foreach ([-1, 1.5] as $invalid) {
+			self::assertSame(400, $this->requestAs(self::$userA, 'PUT', 'daily-values/fruit/' . self::DATE, ['json' => ['numericValue' => $invalid, 'unit' => 'pieces']])->getStatusCode());
+		}
+	}
+
 	private function upsert(string $userId, mixed $numericValue, mixed $unit, string $date = self::DATE): ResponseInterface {
 		return $this->requestAs($userId, 'PUT', 'daily-values/job_satisfaction/' . $date, ['json' => ['numericValue' => $numericValue, 'unit' => $unit]]);
 	}

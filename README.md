@@ -34,7 +34,7 @@ The Journal is the primary place to record and review health data for a selected
 It supports:
 
 - a Daily Note
-- Daily Values such as weight, body fat, waist, hip, muscle percentage, steps, and Job Satisfaction
+- Daily Values such as weight, body fat, waist, hip, muscle percentage, steps, fixed-unit kilocalories, whole-number Fruit counts, and Job Satisfaction
 - timestamped measurements such as temperature, oxygen saturation, blood glucose, pulse, and blood pressure
 - journal metrics such as stress, energy, mood, hydration, and breaks
 - compact create/edit modals
@@ -47,6 +47,8 @@ It supports:
 Goals are optional and remain separate from the underlying health data.
 
 Health supports daily, weekly, monthly, and long-term goals where meaningful. Progress is derived from recorded data rather than stored as a separate health value.
+
+Distinct periods for the same metric can coexist. Long-term Weight goals use baseline-aware progress in the correct increasing or decreasing direction.
 
 Optional “Gentle reminders” use deterministic rules. They do not use AI to judge health, infer causes, or tell users what they should feel.
 
@@ -73,6 +75,10 @@ Health integrates with the native Nextcloud Dashboard and provides a compact vie
 Daily Notes can optionally be included in Nextcloud Search.
 
 Search integration is disabled by default and searches only the signed-in user's Daily Notes.
+
+### Quick-entry PWA
+
+Health Settings links to an installable PWA built into this same app at `/apps/health/pwa/`. Its uniform icon-and-label metric launcher grid opens focused entry dialogs: finite scales and named event options save from direct buttons, counters offer both a numeric Save flow and `+1`, and arbitrary numbers retain touch-friendly numeric input. Its Taskbook-style header has sync, device actions, connection notices, and privacy-safe technical diagnostics. It works offline after its shell has loaded and synchronizes a durable local outbox through the normal Health API. It intentionally shows no current values, history, goals, Statistics, trends, or interpretation.
 
 ### API
 

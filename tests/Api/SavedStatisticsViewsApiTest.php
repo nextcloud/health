@@ -121,6 +121,12 @@ class SavedStatisticsViewsApiTest extends TestCase {
 		self::assertSame('Source', $this->ocsData($this->requestAs(self::$userA, 'GET', 'statistics/views/' . $source['id']))['title']);
 	}
 
+	public function testKilocaloriesAndFruitCanBeStoredInSavedStatisticsViews(): void {
+		$view = $this->createView(self::$userA, 'Nutrition', '🍎', ['kilocalories', 'fruit'], 'last_7_days');
+		self::assertSame(['kilocalories', 'fruit'], $view['metricKeys']);
+		self::assertSame($view, $this->ocsData($this->requestAs(self::$userA, 'GET', 'statistics/views/' . $view['id'])));
+	}
+
 	/** @param list<string> $metricKeys @return array<string, mixed> */
 	private function createView(string $userId, string $title, string $icon, array $metricKeys, string $period): array {
 		$response = $this->requestAs($userId, 'POST', 'statistics/views', ['json' => [

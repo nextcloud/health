@@ -44,6 +44,15 @@ class EntryMapper extends QBMapper {
 		return $this->findEntity($qb);
 	}
 
+	/** @throws DoesNotExistException|MultipleObjectsReturnedException */
+	public function findForUserOperation(string $userId, string $operationId): Entry {
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('*')->from($this->tableName)
+			->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR)))
+			->andWhere($qb->expr()->eq('client_operation_id', $qb->createNamedParameter($operationId, IQueryBuilder::PARAM_STR)));
+		return $this->findEntity($qb);
+	}
+
 	public function updateForUser(Entry $entry): Entry {
 		return $this->update($entry);
 	}

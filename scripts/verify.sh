@@ -71,12 +71,15 @@ section "PHP unit tests"
 run_nextcloud 'composer run test:unit -- --do-not-cache-result'
 
 section "OpenAPI generation"
+OPENAPI_FILES=("$REPO_ROOT"/openapi*.json)
+OPENAPI_BEFORE="$(git hash-object -- "${OPENAPI_FILES[@]}")"
 run_nextcloud 'composer run openapi'
 
 section "Generated OpenAPI artifacts"
-if [[ -n "$(git status --porcelain -- ':(glob)openapi*.json')" ]]; then
-	echo 'Generated OpenAPI artifacts differ from the committed/indexed state.' >&2
-	echo 'Include the regenerated openapi*.json files in the change before final verification.' >&2
+OPENAPI_AFTER="$(git hash-object -- "${OPENAPI_FILES[@]}")"
+if [[ "$OPENAPI_BEFORE" != "$OPENAPI_AFTER" ]]; then
+	echo 'OpenAPI generation changed an artifact during verification.' >&2
+	echo 'Regenerate openapi*.json and include the result in the change, then rerun verification.' >&2
 	exit 1
 fi
 

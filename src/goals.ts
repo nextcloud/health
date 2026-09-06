@@ -11,6 +11,8 @@ export function getGoalTargetLabel(targetKey: string): string {
 		case 'break.all': return t('health', 'Break')
 		case 'break.mindfulness': return t('health', 'Mindfulness')
 		case 'steps': return t('health', 'Steps')
+		case 'kilocalories': return t('health', 'Kilocalories')
+		case 'fruit': return t('health', 'Fruit')
 		case 'job_satisfaction': return t('health', 'Job Satisfaction')
 		case 'pulse': return t('health', 'Pulse')
 		case 'blood_pressure': return t('health', 'Blood pressure')
@@ -26,7 +28,7 @@ export function getGoalTargetMetricKey(targetKey: string): AllMetricKey {
 	if (targetKey.startsWith('break.')) {
 		return 'break'
 	}
-	if (targetKey === 'steps' || targetKey === 'job_satisfaction' || targetKey === 'pulse' || targetKey === 'blood_pressure' || targetKey === 'weight') {
+	if (targetKey === 'steps' || targetKey === 'kilocalories' || targetKey === 'fruit' || targetKey === 'job_satisfaction' || targetKey === 'pulse' || targetKey === 'blood_pressure' || targetKey === 'weight') {
 		return targetKey
 	}
 	return 'stress'
@@ -49,6 +51,12 @@ export function formatGoalValue(value: number, target: GoalTarget): string {
 	}
 	if (target.targetKey === 'weight') {
 		return `${value.toLocaleString(undefined, { maximumFractionDigits: 2 })} kg`
+	}
+	if (target.targetKey === 'kilocalories') {
+		return t('health', '{value} kcal', { value: value.toLocaleString(undefined, { maximumFractionDigits: 2 }) })
+	}
+	if (target.targetKey === 'fruit') {
+		return t('health', '{count} pieces', { count: value })
 	}
 	if (target.targetKey === 'pulse') {
 		return `${value.toLocaleString()} bpm`
@@ -74,7 +82,9 @@ export function goalDescription(goal: Goal, target: GoalTarget): string {
 
 export function getProgressLabel(progress: GoalProgress, target: GoalTarget): string {
 	if (target.kind === 'latest_value') {
-		return t('health', 'Current {current}, target {target}', { current: progress.currentValue === null ? '—' : formatGoalValue(progress.currentValue, target), target: formatGoalValue(progress.targetValue, target) })
+		return progress.baselineValue === null
+			? t('health', 'Current {current}, target {target}', { current: progress.currentValue === null ? '—' : formatGoalValue(progress.currentValue, target), target: formatGoalValue(progress.targetValue, target) })
+			: t('health', 'Started at {start}, current {current}, target {target}', { start: formatGoalValue(progress.baselineValue, target), current: progress.currentValue === null ? '—' : formatGoalValue(progress.currentValue, target), target: formatGoalValue(progress.targetValue, target) })
 	}
 	if (target.kind === 'threshold_occurrence') {
 		return progress.observedValue === null
@@ -89,6 +99,15 @@ export function getProgressLabel(progress: GoalProgress, target: GoalTarget): st
 
 export function getGoalStatusLabel(progress: GoalProgress): string {
 	return ({ in_progress: t('health', 'In progress'), reached: t('health', 'Reached'), within_limit: t('health', 'Within limit'), exceeded: t('health', 'Daily limit exceeded'), not_reached: t('health', 'Not reached'), paused: t('health', 'Paused') })[progress.status]
+}
+
+/**
+ * The server defines goal semantics; the client only converts its safe ratio for display.
+ *
+ * @param progress Server-derived progress data
+ */
+export function goalProgressPercentage(progress: GoalProgress): number {
+	return Math.round(Math.max(0, Math.min(1, progress.progressRatio ?? 0)) * 100)
 }
 
 export function goalProgressForMetric(progress: GoalProgress[], metricKey: string): GoalProgress[] {

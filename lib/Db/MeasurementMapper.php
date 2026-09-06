@@ -37,6 +37,16 @@ class MeasurementMapper extends QBMapper {
 	}
 
 	/** @return list<Measurement> */
+	public function findForUserOperation(string $userId, string $operationId): array {
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('*')->from($this->tableName)
+			->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR)))
+			->andWhere($qb->expr()->eq('client_operation_id', $qb->createNamedParameter($operationId, IQueryBuilder::PARAM_STR)))
+			->orderBy('id', 'ASC');
+		return $this->findEntities($qb);
+	}
+
+	/** @return list<Measurement> */
 	public function findForUserRange(string $userId, ?DateTimeImmutable $from, ?DateTimeImmutable $to): array {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')->from($this->tableName)

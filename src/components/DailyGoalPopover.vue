@@ -8,7 +8,7 @@ import NcPopover from '@nextcloud/vue/components/NcPopover'
 import NcProgressBar from '@nextcloud/vue/components/NcProgressBar'
 import GoalIndicator from './GoalIndicator.vue'
 import MetricIcon from './MetricIcon.vue'
-import { comparatorLabel, formatGoalValue, getGoalStatusLabel, getGoalTargetLabel, getGoalTargetMetricKey, getProgressLabel, goalTargetByKey } from '../goals.ts'
+import { comparatorLabel, formatGoalValue, getGoalStatusLabel, getGoalTargetLabel, getGoalTargetMetricKey, getProgressLabel, goalProgressPercentage, goalTargetByKey } from '../goals.ts'
 
 const props = defineProps<{ progresses: GoalProgress[], targets: GoalTarget[] }>()
 const buttonStatus = computed<'tertiary' | 'success' | 'error'>(() => {
@@ -22,12 +22,12 @@ const buttonStatus = computed<'tertiary' | 'success' | 'error'>(() => {
 })
 const accessibleLabel = computed(() => {
 	if (buttonStatus.value === 'success') {
-		return t('health', 'Daily goal reached')
+		return t('health', 'Goal reached')
 	}
 	if (buttonStatus.value === 'error') {
-		return t('health', 'Daily goal exceeded')
+		return t('health', 'Goal exceeded')
 	}
-	return t('health', 'Daily goal')
+	return t('health', 'Goal')
 })
 
 function targetFor(progress: GoalProgress): GoalTarget | undefined {
@@ -35,7 +35,7 @@ function targetFor(progress: GoalProgress): GoalTarget | undefined {
 }
 
 function progressValue(progress: GoalProgress): number {
-	return Math.round(Math.max(0, Math.min(1, progress.progressRatio ?? 0)) * 100)
+	return goalProgressPercentage(progress)
 }
 </script>
 
@@ -60,10 +60,10 @@ function progressValue(progress: GoalProgress): number {
 					{{ comparatorLabel(progress.comparator, targetFor(progress)) }} {{ formatGoalValue(progress.targetValue, targetFor(progress)!) }}
 				</p>
 				<div v-if="targetFor(progress)" class="daily-goal-popover__progress">
-					<span>{{ t('health', 'Today') }}</span>
+					<span>{{ progress.period === 'long_term' ? t('health', 'Long-term') : t('health', 'Today') }}</span>
 					<strong>{{ getProgressLabel(progress, targetFor(progress)!) }}</strong>
 					<div v-if="progress.progressRatio !== null"
-						:aria-label="t('health', '{percent} percent of the daily goal reached', { percent: progressValue(progress) })"
+						:aria-label="t('health', '{percent} percent of the goal reached', { percent: progressValue(progress) })"
 						role="img">
 						<NcProgressBar :aria-hidden="true" :value="progressValue(progress)" />
 					</div>
@@ -73,7 +73,7 @@ function progressValue(progress: GoalProgress): number {
 					<strong>{{ getGoalStatusLabel(progress) }}</strong>
 				</div>
 				<strong v-else-if="progress.status === 'reached'" class="daily-goal-popover__reached">
-					{{ t('health', 'Reached today') }}
+					{{ progress.period === 'long_term' ? t('health', 'Goal reached') : t('health', 'Reached today') }}
 				</strong>
 			</section>
 		</div>

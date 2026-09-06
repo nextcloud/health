@@ -26,7 +26,7 @@ use OCP\IDateTimeZone;
  *   goalId: int, targetKey: string, metricKey: string,
  *   period: 'day'|'week'|'month'|'long_term', periodStart: string, periodEnd: string|null,
  *   periodKey: string, active: bool, remindersEnabled: bool, comparator: 'gte'|'lte',
- *   targetValue: float, currentValue: float|null, observedValue: float|null,
+ *   targetValue: float, currentValue: float|null, baselineValue: float|null, observedValue: float|null,
  *   progressRatio: float|null, remaining: float|null,
  *   status: 'in_progress'|'reached'|'within_limit'|'exceeded'|'not_reached'|'paused',
  *   effectiveFrom: string, lastActivityAt: DateTimeImmutable|null
@@ -150,6 +150,9 @@ class GoalProgressService {
 	 * @psalm-suppress MixedReturnTypeCoercion Psalm loses this fixed internal shape while composing source results.
 	 */
 	private function evaluateGoal(string $userId, Goal $goal, array $selection): ?array {
+		if ($selection['period'] === 'long_term' && $goal->getRetiredAt() !== null) {
+			return null;
+		}
 		try {
 			$revision = $this->goalRevisionMapper->findForGoalPeriod($goal->getId(), $selection['periodStartKey']);
 		} catch (DoesNotExistException|MultipleObjectsReturnedException) {
@@ -166,6 +169,8 @@ class GoalProgressService {
 		$toUtc = $selection['periodEnd']?->setTimezone($this->utc);
 		/** @var float|null $observedValue */
 		$observedValue = null;
+		/** @var float|null $baselineValue */
+		$baselineValue = null;
 		/** @var DateTimeImmutable|null $lastActivityAt */
 		$lastActivityAt = null;
 
@@ -178,9 +183,21 @@ class GoalProgressService {
 			$lastActivityAt = $this->entryMapper->findLatestForUserMetricOptionsSince($userId, $target['metricKey'], $options, $fromUtc);
 		} elseif ($target['category'] === 'daily_value') {
 			if ($target['kind'] === 'latest_value') {
-				$value = $this->dailyValueMapper->findLatestForUserMetricOnOrBefore($userId, $target['metricKey'], $selection['periodStartKey']);
+				$value = $selection['period'] === 'long_term'
+					? $this->dailyValueMapper->findLatestForUserMetricOnOrBefore($userId, $target['metricKey'], $selection['periodStartKey'])
+					: $this->dailyValueMapper->findLatestForUserMetricDateRange(
+						$userId,
+						$target['metricKey'],
+						$selection['periodStartKey'],
+						$selection['periodEndKey'] ?? throw new \LogicException('Finite latest value goal must have a period end.'),
+					);
 				$currentValue = $value === null ? null : (float)$value->getNumericValue();
 				$lastActivityAt = $value?->getUpdatedAt();
+				if ($selection['period'] === 'long_term') {
+					$baseline = $this->dailyValueMapper->findLatestForUserMetricOnOrBefore($userId, $target['metricKey'], $revision->getEffectiveFrom())
+						?? $this->dailyValueMapper->findFirstForUserMetricOnOrAfter($userId, $target['metricKey'], $revision->getEffectiveFrom(), $selection['periodStartKey']);
+					$baselineValue = $baseline === null ? null : (float)$baseline->getNumericValue();
+				}
 			} else {
 				if ($selection['periodEndKey'] === null) {
 					throw new \LogicException('Daily value goal must have a finite period.');
@@ -210,7 +227,11 @@ class GoalProgressService {
 		}
 
 		$status = $this->status($goal, $target, $comparator, $currentValue, $targetValue, $selection['closed'], $selection['current']);
-		$minimumStyle = $comparator === 'gte' && $target['kind'] !== 'latest_value';
+		$progressRatio = $target['kind'] === 'latest_value'
+			? ($selection['period'] === 'long_term'
+				? $this->journeyProgress($baselineValue, $currentValue, $targetValue, $comparator)
+				: ($currentValue === null ? null : ($this->matches($currentValue, $targetValue, $comparator) ? 1.0 : 0.0)))
+			: ($comparator === 'gte' && $currentValue !== null ? min(max($currentValue / $targetValue, 0.0), 1.0) : null);
 		$goalId = $goal->getId();
 		$progress = [
 			'goalId' => $goalId,
@@ -225,14 +246,32 @@ class GoalProgressService {
 			'comparator' => $comparator,
 			'targetValue' => $targetValue,
 			'currentValue' => $currentValue,
+			'baselineValue' => $baselineValue,
 			'observedValue' => $observedValue,
-			'progressRatio' => $minimumStyle && $currentValue !== null ? min($currentValue / $targetValue, 1.0) : null,
-			'remaining' => $currentValue === null ? null : $targetValue - $currentValue,
+			'progressRatio' => $progressRatio,
+			'remaining' => $currentValue === null ? null : max($comparator === 'gte' ? $targetValue - $currentValue : $currentValue - $targetValue, 0.0),
 			'status' => $status,
 			'effectiveFrom' => $revision->getEffectiveFrom(),
 			'lastActivityAt' => $lastActivityAt,
 		];
 		return $progress;
+	}
+
+	/** @param 'gte'|'lte' $comparator */
+	private function journeyProgress(?float $baselineValue, ?float $currentValue, float $targetValue, string $comparator): ?float {
+		if ($baselineValue === null || $currentValue === null) {
+			return null;
+		}
+		if ($comparator === 'gte') {
+			if ($baselineValue >= $targetValue) {
+				return 1.0;
+			}
+			return min(max(($currentValue - $baselineValue) / ($targetValue - $baselineValue), 0.0), 1.0);
+		}
+		if ($baselineValue <= $targetValue) {
+			return 1.0;
+		}
+		return min(max(($baselineValue - $currentValue) / ($baselineValue - $targetValue), 0.0), 1.0);
 	}
 
 	/**
@@ -246,6 +285,15 @@ class GoalProgressService {
 		}
 		if ($target['kind'] === 'threshold_occurrence') {
 			if (($currentValue ?? 0.0) >= 1.0) {
+				return 'reached';
+			}
+			return $closed ? 'not_reached' : 'in_progress';
+		}
+		if ($target['kind'] === 'latest_value') {
+			if ($currentValue === null) {
+				return $closed ? 'not_reached' : 'in_progress';
+			}
+			if ($this->matches($currentValue, $targetValue, $comparator)) {
 				return 'reached';
 			}
 			return $closed ? 'not_reached' : 'in_progress';
@@ -288,6 +336,7 @@ class GoalProgressService {
 			'comparator' => $progress['comparator'],
 			'targetValue' => $progress['targetValue'],
 			'currentValue' => $progress['currentValue'],
+			'baselineValue' => $progress['baselineValue'],
 			'observedValue' => $progress['observedValue'],
 			'progressRatio' => $progress['progressRatio'],
 			'remaining' => $progress['remaining'],

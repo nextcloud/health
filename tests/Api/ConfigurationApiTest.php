@@ -135,6 +135,22 @@ class ConfigurationApiTest extends TestCase {
 		self::assertSame(400, $response->getStatusCode());
 	}
 
+	public function testNewDailyMetricsCanBeEnabledIndependentlyAndRemainOwnerScoped(): void {
+		$response = $this->requestAs(self::$userA, 'PUT', 'configuration', ['json' => ['metrics' => [
+			'kilocalories' => ['enabled' => true],
+			'fruit' => ['enabled' => true],
+		]]]);
+		self::assertSame(200, $response->getStatusCode());
+		$metrics = $this->ocsData($response)['metrics'];
+		self::assertTrue($metrics['kilocalories']['enabled']);
+		self::assertSame('kcal', $metrics['kilocalories']['displayUnit']);
+		self::assertTrue($metrics['fruit']['enabled']);
+		self::assertSame('pieces', $metrics['fruit']['displayUnit']);
+		$other = $this->ocsData($this->requestAs(self::$userB, 'GET', 'configuration'))['metrics'];
+		self::assertFalse($other['kilocalories']['enabled']);
+		self::assertFalse($other['fruit']['enabled']);
+	}
+
 	/** @param array<string, mixed> $options */
 	private function requestAs(string $userId, string $method, string $path, array $options = []): ResponseInterface {
 		$options['auth'] = [$userId, self::PASSWORD];

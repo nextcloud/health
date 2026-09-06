@@ -124,7 +124,7 @@ class StatisticsApiTest extends TestCase {
 	}
 
 	public function testStatisticsAggregateMeasurementsDailyValuesAndLogicalBloodPressure(): void {
-		$range = $this->statisticsAs(self::$userA, 'last_7_days', 'pulse,blood_pressure,job_satisfaction');
+		$range = $this->statisticsAs(self::$userA, 'last_7_days', 'pulse,blood_pressure,job_satisfaction,kilocalories,fruit');
 		$date = $range['from'];
 		$nextDate = (new DateTimeImmutable($date, new DateTimeZone('UTC')))->modify('+1 day')->format('Y-m-d');
 		$this->createMeasurement(self::$userA, 'pulse', 60, null, 'bpm', $date);
@@ -134,8 +134,11 @@ class StatisticsApiTest extends TestCase {
 		$this->createMeasurement(self::$userA, 'blood_pressure', null, ['systolic' => 130, 'diastolic' => 90], 'mmhg', $date);
 		$this->createDailyValue(self::$userA, 'job_satisfaction', 2, null, $date);
 		$this->createDailyValue(self::$userA, 'job_satisfaction', 4, null, $nextDate);
+		$this->createDailyValue(self::$userA, 'kilocalories', 2140.5, 'kcal', $date);
+		$this->createDailyValue(self::$userA, 'fruit', 3, 'pieces', $date);
+		$this->createDailyValue(self::$userB, 'fruit', 9, 'pieces', $date);
 
-		$statistics = $this->statisticsAs(self::$userA, 'last_7_days', 'pulse,blood_pressure,job_satisfaction');
+		$statistics = $this->statisticsAs(self::$userA, 'last_7_days', 'pulse,blood_pressure,job_satisfaction,kilocalories,fruit');
 		$pulse = $this->metric($statistics, 'pulse');
 		self::assertEquals(70.0, $this->point($pulse, $date)['value']);
 		self::assertSame(2, $pulse['summary']['count']);
@@ -155,6 +158,16 @@ class StatisticsApiTest extends TestCase {
 		self::assertEquals(4.0, $this->point($jobSatisfaction, $nextDate)['value']);
 		self::assertEquals(3.0, $jobSatisfaction['summary']['average']);
 		self::assertSame(2, $jobSatisfaction['summary']['count']);
+
+		$kilocalories = $this->metric($statistics, 'kilocalories');
+		self::assertSame('kcal', $kilocalories['canonicalUnit']);
+		self::assertEquals(2140.5, $this->point($kilocalories, $date)['value']);
+		self::assertSame(1, $kilocalories['summary']['count']);
+		$fruit = $this->metric($statistics, 'fruit');
+		self::assertSame('counter', $fruit['valueType']);
+		self::assertSame('pieces', $fruit['canonicalUnit']);
+		self::assertEquals(3.0, $this->point($fruit, $date)['value']);
+		self::assertSame(1, $fruit['summary']['count']);
 	}
 
 	public function testStatisticsReturnDailyGoalRevisionsWithoutRewritingHistory(): void {
@@ -203,6 +216,13 @@ class StatisticsApiTest extends TestCase {
 			'targetValue' => 80,
 			'remindersEnabled' => false,
 		]]));
+		$dailyWeightGoal = $this->ocsData($this->requestAs(self::$userA, 'POST', 'goals', ['json' => [
+			'targetKey' => 'weight',
+			'period' => 'day',
+			'comparator' => 'lte',
+			'targetValue' => 85,
+			'remindersEnabled' => true,
+		]]));
 		$this->ocsData($this->requestAs(self::$userA, 'POST', 'goals', ['json' => [
 			'targetKey' => 'steps',
 			'period' => 'day',
@@ -219,7 +239,9 @@ class StatisticsApiTest extends TestCase {
 
 		$statistics = $this->statisticsAs(self::$userA, 'last_7_days', 'weight,steps');
 		$weight = $this->metric($statistics, 'weight');
-		self::assertCount(2, $weight['goals']);
+		self::assertCount(3, $weight['goals']);
+		self::assertContains($weightGoal['id'], array_column($weight['goals'], 'goalId'));
+		self::assertContains($dailyWeightGoal['id'], array_column($weight['goals'], 'goalId'));
 		self::assertSame('weight', $weight['goals'][0]['metricKey']);
 		self::assertSame('latest_value', $weight['goals'][0]['kind']);
 		self::assertEquals(80.0, $weight['goals'][0]['targetValue']);
@@ -228,6 +250,7 @@ class StatisticsApiTest extends TestCase {
 		self::assertEquals(75.0, $weight['goals'][1]['targetValue']);
 		self::assertSame($today, $weight['goals'][1]['effectiveFrom']);
 		self::assertNull($weight['goals'][1]['effectiveTo']);
+		self::assertEquals(85.0, $weight['goals'][2]['targetValue']);
 		$steps = $this->metric($statistics, 'steps');
 		self::assertCount(1, $steps['goals']);
 		self::assertSame('steps', $steps['goals'][0]['metricKey']);

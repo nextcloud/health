@@ -35,12 +35,23 @@ class MeasurementService {
 	 * @psalm-return HealthMeasurement
 	 * @psalm-suppress MixedReturnTypeCoercion Psalm loses the discriminated response shape while composing persisted measurement rows.
 	 */
-	public function create(string $userId, mixed $metricKey, mixed $numericValue, mixed $values, mixed $unit, mixed $recordedAt, mixed $note, mixed $context = 'manual', mixed $source = 'api'): array {
+	public function create(string $userId, mixed $metricKey, mixed $numericValue, mixed $values, mixed $unit, mixed $recordedAt, mixed $note, mixed $context = 'manual', mixed $source = 'api', mixed $operationId = null): array {
 		$metricKey = $this->metricService->validateMeasurementMetricKey($metricKey);
 		$timestamp = $this->parseTimestamp($recordedAt);
 		$context = $this->validateContext($context);
 		$source = $this->validateSource($source);
 		$note = $this->validateNote($note);
+		$operationId = $this->validateOperationId($operationId);
+		if ($operationId !== null) {
+			$existing = $this->measurementMapper->findForUserOperation($userId, $operationId);
+			if ($existing !== []) {
+				$existingMetricKey = $existing[0]->getGroupId() === null ? $existing[0]->getMetricKey() : 'blood_pressure';
+				if ($existingMetricKey !== $metricKey) {
+					throw new InvalidEntryException('operationId is already used for another metric.');
+				}
+				return $existingMetricKey === 'blood_pressure' ? $this->formatBloodPressure($existing) : $this->formatSingle($existing[0]);
+			}
+		}
 		if ($metricKey === 'blood_pressure') {
 			if (!is_array($values) || !array_key_exists('systolic', $values) || !array_key_exists('diastolic', $values)) {
 				throw new InvalidEntryException('Blood pressure requires systolic and diastolic values.');
@@ -48,8 +59,8 @@ class MeasurementService {
 			$groupId = bin2hex(random_bytes(16));
 			/** @var non-empty-list<Measurement> $rows */
 			$rows = [
-				$this->newMeasurement($userId, 'blood_pressure_systolic', $this->unitConversionService->toCanonical('blood_pressure', $values['systolic'], $unit), $groupId, $context, $source, $timestamp, $note),
-				$this->newMeasurement($userId, 'blood_pressure_diastolic', $this->unitConversionService->toCanonical('blood_pressure', $values['diastolic'], $unit), $groupId, $context, $source, $timestamp, $note),
+				$this->newMeasurement($userId, 'blood_pressure_systolic', $this->unitConversionService->toCanonical('blood_pressure', $values['systolic'], $unit), $groupId, $context, $source, $timestamp, $note, $operationId),
+				$this->newMeasurement($userId, 'blood_pressure_diastolic', $this->unitConversionService->toCanonical('blood_pressure', $values['diastolic'], $unit), $groupId, $context, $source, $timestamp, $note, $operationId),
 			];
 			/** @psalm-suppress MixedReturnTypeCoercion Psalm loses the documented blood-pressure row shape at this private formatter boundary. */
 			return $this->formatBloodPressure($rows);
@@ -58,7 +69,7 @@ class MeasurementService {
 			throw new InvalidEntryException('Only blood pressure accepts composite values.');
 		}
 		$value = $this->unitConversionService->toCanonical($metricKey, $numericValue, $unit);
-		return $this->formatSingle($this->newMeasurement($userId, $metricKey, $value, null, $context, $source, $timestamp, $note));
+		return $this->formatSingle($this->newMeasurement($userId, $metricKey, $value, null, $context, $source, $timestamp, $note, $operationId));
 	}
 
 	/**
@@ -137,7 +148,7 @@ class MeasurementService {
 		}
 	}
 
-	private function newMeasurement(string $userId, string $metricKey, float $value, ?string $groupId, string $context, string $source, DateTimeImmutable $recordedAt, ?string $note): Measurement {
+	private function newMeasurement(string $userId, string $metricKey, float $value, ?string $groupId, string $context, string $source, DateTimeImmutable $recordedAt, ?string $note, ?string $operationId): Measurement {
 		$now = new DateTimeImmutable('now', $this->utc);
 		$item = new Measurement();
 		$item->setUserId($userId);
@@ -146,6 +157,7 @@ class MeasurementService {
 		$item->setGroupId($groupId);
 		$item->setContext($context);
 		$item->setSource($source);
+		$item->setClientOperationId($operationId);
 		$item->setRecordedAt($recordedAt);
 		$item->setCreatedAt($now);
 		$item->setUpdatedAt($now);
@@ -199,6 +211,15 @@ class MeasurementService {
 		if (!is_string($source) || !in_array($source, ['web', 'api', 'mobile', 'notification'], true)) {
 			throw new InvalidEntryException('Invalid measurement source.');
 		} return $source;
+	}
+	private function validateOperationId(mixed $operationId): ?string {
+		if ($operationId === null) {
+			return null;
+		}
+		if (!is_string($operationId) || preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iD', $operationId) !== 1) {
+			throw new InvalidEntryException('operationId must be a UUID v4.');
+		}
+		return strtolower($operationId);
 	}
 	private function validateNote(mixed $note): ?string {
 		if ($note === null) {

@@ -55,6 +55,7 @@ class EntryService {
 		mixed $recordedAt,
 		mixed $note,
 		mixed $source = 'api',
+		mixed $operationId = null,
 	): array {
 		$this->requireUserId($userId);
 		$validatedMetricKey = $this->metricService->validateJournalMetricKey($metricKey);
@@ -68,6 +69,18 @@ class EntryService {
 		$validatedSource = $this->validateSource($source);
 		$validatedRecordedAt = $this->parseTimestamp($recordedAt, 'recordedAt');
 		$validatedNote = $this->validateNote($note);
+		$validatedOperationId = $this->validateOperationId($operationId);
+		if ($validatedOperationId !== null) {
+			try {
+				$existing = $this->entryMapper->findForUserOperation($userId, $validatedOperationId);
+				if ($existing->getMetricKey() !== $validatedMetricKey) {
+					throw new InvalidEntryException('operationId is already used for another metric.');
+				}
+				return $this->formatEntry($existing);
+			} catch (DoesNotExistException|MultipleObjectsReturnedException) {
+				// The first delivery creates the canonical row below.
+			}
+		}
 		$now = new DateTimeImmutable('now', $this->utc);
 
 		$entry = new Entry();
@@ -77,6 +90,7 @@ class EntryService {
 		$entry->setOptionValue($validatedValue['optionValue']);
 		$entry->setContext($validatedContext);
 		$entry->setSource($validatedSource);
+		$entry->setClientOperationId($validatedOperationId);
 		$entry->setRecordedAt($validatedRecordedAt);
 		$entry->setCreatedAt($now);
 		$entry->setUpdatedAt($now);
@@ -221,6 +235,16 @@ class EntryService {
 		}
 
 		return $source;
+	}
+
+	private function validateOperationId(mixed $operationId): ?string {
+		if ($operationId === null) {
+			return null;
+		}
+		if (!is_string($operationId) || preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iD', $operationId) !== 1) {
+			throw new InvalidEntryException('operationId must be a UUID v4.');
+		}
+		return strtolower($operationId);
 	}
 
 	/** @throws EntryNotFoundException */

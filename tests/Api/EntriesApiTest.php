@@ -113,6 +113,19 @@ class EntriesApiTest extends TestCase {
 		self::assertArrayNotHasKey('userId', $entry);
 	}
 
+	public function testCreationOperationIdIsIdempotentAndOwnerScoped(): void {
+		$operationId = '00000000-0000-4000-8000-000000000001';
+		$first = $this->createAs(self::$userA, ['operationId' => $operationId]);
+		$retry = $this->createAs(self::$userA, ['operationId' => $operationId]);
+		$otherOwner = $this->createAs(self::$userB, ['operationId' => $operationId]);
+		self::assertSame(201, $first->getStatusCode());
+		self::assertSame($this->ocsData($first)['id'], $this->ocsData($retry)['id']);
+		self::assertNotSame($this->ocsData($first)['id'], $this->ocsData($otherOwner)['id']);
+		self::assertCount(1, $this->listAs(self::$userA)['entries']);
+		self::assertCount(1, $this->listAs(self::$userB)['entries']);
+		self::assertSame(400, $this->createAs(self::$userA, ['operationId' => 'invalid'])->getStatusCode());
+	}
+
 	#[DataProvider('validBoundaryProvider')]
 	public function testStressBoundaryValuesSucceed(int $value): void {
 		$response = $this->createAs(self::$userA, ['numericValue' => $value]);
