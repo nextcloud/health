@@ -1,6 +1,5 @@
 SPDX-License-Identifier: AGPL-3.0-or-later
 SPDX-License-Identifier: BSD-3-Clause
-SPDX-License-Identifier: GPL-3.0-or-later
 SPDX-License-Identifier: MIT
 SPDX-FileCopyrightText: Antoni Andre <antoniandre.web@gmail.com>
 SPDX-FileCopyrightText: Borys Serebrov
@@ -29,12 +28,6 @@ This file is generated from multiple sources. Included packages:
 - @floating-ui/utils
 	- version: 0.2.12
 	- license: MIT
-- @nextcloud/capabilities
-	- version: 1.2.1
-	- license: GPL-3.0-or-later
-- @nextcloud/initial-state
-	- version: 3.0.0
-	- license: GPL-3.0-or-later
 - @nextcloud/vue
 	- version: 9.9.0
 	- license: AGPL-3.0-or-later
