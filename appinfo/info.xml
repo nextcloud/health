@@ -4,11 +4,11 @@
 	<id>health</id>
 	<name>Health</name>
 	<summary>A private, configurable health and wellbeing journal for tracking personal metrics, habits, goals, and trends.</summary>
-	<description>Health helps users keep an eye on their personal health and wellbeing in everyday life and at work. The app provides a configurable journal for health metrics and habits such as stress, energy, mood, hydration, breaks, movement, sleep, and weight.
+	<description>Health helps users track personal health and wellbeing in everyday life and at work. The app provides a configurable journal for metrics and habits such as stress, energy, mood, hydration, breaks, movement, sleep, weight, and more.
 
-Users decide which areas they want to track and whether they want to receive reminders. Short check-ins, check-outs, and quick entries make the app easy to use with minimal effort. Daily, weekly, and monthly overviews, together with simple statistics, visualize trends, goal progress, and personal developments without providing medical diagnoses or automated health assessments.
+Users choose what they want to track and whether they want reminders. Quick entries, check-ins, and check-outs keep daily use simple, while daily, weekly, and monthly views and statistics show trends and goal progress without medical diagnoses or automated health assessments.
 
-Health is designed with a privacy-first and API-first approach. The Health application and API enforce user isolation so users can access only their own personal Health data. This application-level isolation is not a claim that data is cryptographically hidden from the Nextcloud server operator. The web interface is built on top of Nextcloud APIs, allowing the application to support external clients in the future.</description>
+For even faster mobile entry, Health includes an installable PWA with an offline-first quick-entry interface. It lets users record enabled metrics with large touch-friendly controls and sync changes back to Nextcloud when a connection is available.</description>
 	<version>3.2.0</version>
 	<licence>AGPL-3.0-or-later</licence>
 	<author mail="mail@datenangebot.de">Florian Steffens</author>
@@ -19,6 +19,7 @@ Health is designed with a privacy-first and API-first approach. The Health appli
     <screenshot>https://dl.datenangebot.de/nextcloud/health/health-2.png</screenshot>
     <screenshot>https://dl.datenangebot.de/nextcloud/health/health-3.png</screenshot>
     <screenshot>https://dl.datenangebot.de/nextcloud/health/health-4.png</screenshot>
+    <screenshot>https://dl.datenangebot.de/nextcloud/health/health-5.png</screenshot>
 	<dependencies>
 		<php min-version="8.2" max-version="8.5"/>
 		<nextcloud min-version="33" max-version="35"/>
