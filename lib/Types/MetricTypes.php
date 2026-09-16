@@ -18,7 +18,7 @@ namespace OCA\Health\Types;
  *   minimum: int|null,
  *   maximum: int|null,
  *   allowedOptions: list<string>|null,
- *   aggregation: 'average'|'count'|'daily',
+ *   aggregation: 'average'|'count'|'daily'|'sum',
  *   canonicalUnit: string|null,
  *   supportedUnits: list<string>
  * }

@@ -91,7 +91,7 @@ class RoutineService {
 		return $result;
 	}
 
-	/** @param array<string, array{enabled: bool, checkInEnabled: bool, checkOutEnabled: bool, displayUnit: string|null}> $configuration */
+	/** @param array<string, array{enabled: bool, checkInEnabled: bool, checkOutEnabled: bool, displayUnit: string|null, aggregation: 'average'|'count'|'daily'|'sum'}> $configuration */
 	private function assertRoutineMetric(array $configuration, string $metricKey, string $context): void {
 		$metric = $configuration[$metricKey] ?? null;
 		if ($metric === null || !$metric['enabled'] || ($context === 'checkin' ? !$metric['checkInEnabled'] : !$metric['checkOutEnabled'])) {

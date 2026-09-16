@@ -97,6 +97,7 @@ class StatisticsService {
 					$dateKeys,
 					$sourceData['numeric'][$metricKey] ?? [],
 					$sourceData['sourceCounts'][$metricKey],
+					$definition['aggregation'],
 				);
 			}
 
@@ -434,12 +435,12 @@ class StatisticsService {
 	 * @param array<string, list<float>> $values
 	 * @return array{series: list<array<string, mixed>>, summary: array<string, mixed>}
 	 */
-	private function numericStatistics(array $dateKeys, array $values, int $sourceCount): array {
+	private function numericStatistics(array $dateKeys, array $values, int $sourceCount, string $aggregation = 'average'): array {
 		$series = [];
 		$dailyValues = [];
 		foreach ($dateKeys as $dateKey) {
 			$rawValues = $values[$dateKey] ?? [];
-			$value = $rawValues === [] ? null : array_sum($rawValues) / count($rawValues);
+			$value = $rawValues === [] ? null : ($aggregation === 'sum' ? array_sum($rawValues) : array_sum($rawValues) / count($rawValues));
 			$series[] = ['date' => $dateKey, 'value' => $value, 'subseries' => null];
 			$dailyValues[] = $value;
 		}

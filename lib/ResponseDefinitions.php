@@ -53,7 +53,7 @@ namespace OCA\Health;
  * }
  * @psalm-type HealthConfiguration = array{
  *   profile: array{heightCm: float|null, heightDisplayUnit: 'cm'|'in', dateOfBirth: string|null, growthReferenceSex: 'female'|'male'|null},
- *   metrics: array<string, array{enabled: bool, checkInEnabled: bool, checkOutEnabled: bool, displayUnit: string|null}>,
+ *   metrics: array<string, array{enabled: bool, checkInEnabled: bool, checkOutEnabled: bool, displayUnit: string|null, aggregation: 'average'|'count'|'daily'|'sum'}>,
  *   searchDailyNotes: bool
  * }
  * @psalm-type HealthGoalRevision = array{

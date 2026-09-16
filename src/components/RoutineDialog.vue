@@ -33,6 +33,7 @@ import {
 	MEASUREMENT_METRIC_KEYS,
 	METRIC_KEYS,
 } from '../metrics.ts'
+import { normalizeWeightInput } from '../utils/weightInput.ts'
 
 const props = defineProps<{ open: boolean, context: 'check-in' | 'check-out', date: string, configuration: HealthConfiguration | null }>()
 const emit = defineEmits<{ 'update:open': [boolean], saved: [result: RoutineResult] }>()
@@ -46,8 +47,17 @@ const journalKeys = computed(() => METRIC_KEYS.filter((key) => isMetricEnabledFo
 const measurementKeys = computed(() => MEASUREMENT_METRIC_KEYS.filter((key) => isMetricEnabledForRoutine(props.configuration, key, props.context)))
 const dailyKeys = computed(() => DAILY_VALUE_METRIC_KEYS.filter((key) => isMetricEnabledForRoutine(props.configuration, key, props.context)))
 
-function hasNumericValue(value: string | undefined): boolean {
-	return value !== undefined && value.trim() !== '' && Number.isFinite(Number(value))
+function normalizedNumericValue(key: AllMetricKey, value: string | undefined): number | null {
+	if (value === undefined || value.trim() === '') {
+		return null
+	}
+
+	const numeric = key === 'weight' ? normalizeWeightInput(value) : Number(value)
+	return numeric !== null && Number.isFinite(numeric) ? numeric : null
+}
+
+function hasNumericValue(key: AllMetricKey, value: string | undefined): boolean {
+	return normalizedNumericValue(key, value) !== null
 }
 
 const hasInput = computed(() => {
@@ -56,10 +66,10 @@ const hasInput = computed(() => {
 	})
 	const hasMeasurementInput = measurementKeys.value.some((key) => {
 		return key === 'blood_pressure'
-			? hasNumericValue(systolic.value) && hasNumericValue(diastolic.value)
-			: hasNumericValue(numericValues.value[key])
+			? hasNumericValue(key, systolic.value) && hasNumericValue(key, diastolic.value)
+			: hasNumericValue(key, numericValues.value[key])
 	})
-	const hasDailyValueInput = dailyKeys.value.some((key) => hasNumericValue(numericValues.value[key]))
+	const hasDailyValueInput = dailyKeys.value.some((key) => hasNumericValue(key, numericValues.value[key]))
 
 	return hasJournalInput || hasMeasurementInput || hasDailyValueInput
 })
@@ -104,18 +114,24 @@ async function save() {
 	const measurements: Array<Record<string, unknown>> = []
 	for (const key of measurementKeys.value) {
 		if (key === 'blood_pressure') {
-			if (hasNumericValue(systolic.value) && hasNumericValue(diastolic.value)) {
-				measurements.push({ metricKey: key, values: { systolic: Number(systolic.value), diastolic: Number(diastolic.value) }, unit: unit(key) })
+			const systolicValue = normalizedNumericValue(key, systolic.value)
+			const diastolicValue = normalizedNumericValue(key, diastolic.value)
+			if (systolicValue !== null && diastolicValue !== null) {
+				measurements.push({ metricKey: key, values: { systolic: systolicValue, diastolic: diastolicValue }, unit: unit(key) })
 			}
-		} else if (hasNumericValue(numericValues.value[key])) {
-			measurements.push({ metricKey: key, numericValue: Number(numericValues.value[key]), unit: unit(key) })
+		} else {
+			const numericValue = normalizedNumericValue(key, numericValues.value[key])
+			if (numericValue !== null) {
+				measurements.push({ metricKey: key, numericValue, unit: unit(key) })
+			}
 		}
 	}
 
 	const dailyValues: Array<Record<string, unknown>> = []
 	for (const key of dailyKeys.value) {
-		if (hasNumericValue(numericValues.value[key])) {
-			dailyValues.push({ metricKey: key, numericValue: Number(numericValues.value[key]), unit: unit(key) })
+		const numericValue = normalizedNumericValue(key, numericValues.value[key])
+		if (numericValue !== null) {
+			dailyValues.push({ metricKey: key, numericValue, unit: unit(key) })
 		}
 	}
 

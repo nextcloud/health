@@ -23,8 +23,8 @@ import {
 import { t } from '@nextcloud/l10n'
 
 export const METRIC_KEYS = ['stress', 'energy', 'mood', 'hydration', 'break'] as const
-export const MEASUREMENT_METRIC_KEYS = ['temperature', 'oxygen_saturation', 'blood_glucose', 'pulse', 'blood_pressure'] as const
-export const DAILY_VALUE_METRIC_KEYS = ['weight', 'body_fat', 'waist', 'hip', 'muscle_percentage', 'sins', 'steps', 'kilocalories', 'fruit', 'job_satisfaction'] as const
+export const MEASUREMENT_METRIC_KEYS = ['temperature', 'oxygen_saturation', 'blood_glucose', 'pulse', 'blood_pressure', 'kilocalories'] as const
+export const DAILY_VALUE_METRIC_KEYS = ['weight', 'body_fat', 'waist', 'hip', 'muscle_percentage', 'sins', 'steps', 'fruit', 'job_satisfaction'] as const
 export const ALL_METRIC_KEYS = [...METRIC_KEYS, ...MEASUREMENT_METRIC_KEYS, ...DAILY_VALUE_METRIC_KEYS] as const
 export const SCALE_METRIC_KEYS = ['stress', 'energy', 'mood'] as const
 export const WATER_OPTIONS = ['small_glass', 'large_glass'] as const
@@ -46,6 +46,26 @@ export type TeaOption = typeof TEA_OPTIONS[number]
 export type BeverageOption = CoffeeOption | TeaOption
 export type BreakOption = typeof BREAK_OPTIONS[number]
 export type EventOption = typeof HYDRATION_OPTIONS[number] | typeof BREAK_OPTIONS[number]
+
+export interface PwaEventQuickAction {
+	actionKey: string
+	label: string
+	optionKeys: readonly string[]
+	mode: 'immediate-option' | 'options'
+	icon: 'metric' | 'option'
+}
+
+/**
+ * PWA-only interaction metadata remains attached to the shared event-option
+ * definitions. The PWA filters these actions through the server-provided
+ * allowed options before showing them.
+ */
+export const PWA_EVENT_QUICK_ACTIONS: Partial<Record<EventMetricKey, readonly PwaEventQuickAction[]>> = {
+	hydration: [
+		{ actionKey: 'water', label: 'Water', optionKeys: WATER_OPTIONS, mode: 'immediate-option', icon: 'metric' },
+		{ actionKey: 'coffee', label: 'Coffee', optionKeys: COFFEE_OPTIONS, mode: 'options', icon: 'option' },
+	],
+}
 
 export interface MetricValue {
 	numericValue: number | null

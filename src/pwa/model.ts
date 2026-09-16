@@ -1,12 +1,44 @@
-import type { AccountConfiguration, MetricDefinition } from './types.ts'
+import type { AccountConfiguration, MetricDefinition, PendingOperation } from './types.ts'
 
-import { getOptionSymbol } from '../metrics.ts'
+import { getOptionSymbol, PWA_EVENT_QUICK_ACTIONS } from '../metrics.ts'
 
 export type EntryControl = 'event' | 'counter' | 'scale' | 'numeric' | 'composite'
 export type QuickEntryMode = 'direct-options' | 'range-buttons' | 'direct-increment' | 'numeric-input' | 'composite-input'
 
+export interface QuickEntryAction {
+	id: string
+	metric: MetricDefinition
+	mode: 'metric' | 'immediate-option' | 'options'
+	label: string | null
+	optionKeys: string[] | null
+	icon: 'metric' | 'option'
+}
+
 export function enabledMetricDefinitions(account: AccountConfiguration | null): MetricDefinition[] {
 	return account?.metrics.filter((metric) => account.configuration[metric.metricKey]?.enabled === true) ?? []
+}
+
+/**
+ * Derive PWA launchers from enabled server definitions and the shared event
+ * option groups. No current values are included in this entry-only model.
+ *
+ * @param account Account configuration received from the Health API.
+ */
+export function quickEntryActions(account: AccountConfiguration | null): QuickEntryAction[] {
+	return enabledMetricDefinitions(account).flatMap<QuickEntryAction>((metric) => {
+		const groups = PWA_EVENT_QUICK_ACTIONS[metric.metricKey as keyof typeof PWA_EVENT_QUICK_ACTIONS]
+		if (groups === undefined) {
+			return [{ id: metric.metricKey, metric, mode: 'metric', label: null, optionKeys: null, icon: 'metric' }]
+		}
+
+		return groups.flatMap<QuickEntryAction>((group) => {
+			const optionKeys = group.optionKeys.filter((option) => metric.allowedOptions?.includes(option) === true)
+			if (optionKeys.length === 0) {
+				return []
+			}
+			return [{ id: `${metric.metricKey}-${group.actionKey}`, metric, mode: group.mode, label: group.label, optionKeys, icon: group.icon }]
+		})
+	})
 }
 
 export function entryControl(metric: MetricDefinition): EntryControl {
@@ -60,4 +92,36 @@ export function parseLocaleNumber(value: string, locale: string): number {
 	const decimal = parts.find((part) => part.type === 'decimal')?.value ?? '.'
 	const normalized = decimal === '.' ? value : value.replace(decimal, '.')
 	return Number(normalized.trim())
+}
+
+/**
+ * Build the canonical PWA operation for a numeric metric from server-owned
+ * metric metadata. Scale controls must not assume that every 1–5 metric is a
+ * journal entry: Job Satisfaction is a daily value.
+ *
+ * @param metric Server-owned metric definition.
+ * @param base Generated replay and creation metadata.
+ * @param base.operationId Stable client replay identity.
+ * @param base.createdAt Client creation timestamp.
+ * @param base.state Pending operation state.
+ * @param value Canonical numeric value selected by the user.
+ * @param localDate User-local date for Daily Values.
+ * @param recordedAt RFC3339 timestamp for journal and measurement records.
+ * @param unit Selected display unit or canonical unit.
+ */
+export function numericOperation(
+	metric: MetricDefinition,
+	base: { operationId: string, createdAt: string, state: 'pending' },
+	value: number,
+	localDate: string,
+	recordedAt: string,
+	unit: string | null,
+): PendingOperation {
+	if (metric.category === 'journal') {
+		return { ...base, metricKey: metric.metricKey, kind: 'journal', numericValue: value, optionValue: null, recordedAt }
+	}
+	if (metric.category === 'measurement') {
+		return { ...base, metricKey: metric.metricKey, kind: 'measurement', numericValue: value, values: null, unit, recordedAt }
+	}
+	return { ...base, metricKey: metric.metricKey, kind: 'daily_value', localDate, numericValue: value, unit }
 }

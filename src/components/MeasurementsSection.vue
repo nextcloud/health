@@ -10,7 +10,6 @@ import { computed, ref, watch } from 'vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcDialog from '@nextcloud/vue/components/NcDialog'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
-import NcTextArea from '@nextcloud/vue/components/NcTextArea'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
 import DailyGoalPopover from './DailyGoalPopover.vue'
 import DetailInformationPopover from './DetailInformationPopover.vue'
@@ -74,6 +73,19 @@ function display(measurement: Measurement): string {
 	}
 
 	return `${formatNumber(fromCanonical(measurement.metricKey, measurement.numericValue ?? 0, currentUnit))} ${getUnitLabel(currentUnit)}`
+}
+
+function hasSumAggregation(metricKey: MeasurementMetricKey): boolean {
+	return props.configuration?.metrics[metricKey]?.aggregation === 'sum'
+}
+
+function totalFor(metricKey: MeasurementMetricKey): number {
+	return valuesFor(metricKey).reduce((total, measurement) => total + (measurement.numericValue ?? 0), 0)
+}
+
+function displayTotal(metricKey: MeasurementMetricKey): string {
+	const currentUnit = displayUnit(metricKey)
+	return `${formatNumber(fromCanonical(metricKey, totalFor(metricKey), currentUnit))} ${getUnitLabel(currentUnit)}`
 }
 
 async function load() {
@@ -204,6 +216,11 @@ watch(() => [props.date, props.configuration] as const, load, { immediate: true 
 						:progresses="progressesFor(metricKey)"
 						:targets="goalTargets ?? []" />
 				</template>
+				<template #aggregate>
+					<span v-if="hasSumAggregation(metricKey) && valuesFor(metricKey).length > 0" class="measurements-section__total">
+						{{ t('health', 'Total: {value}', { value: displayTotal(metricKey) }) }}
+					</span>
+				</template>
 				<template #actions>
 					<NcButton
 						:aria-label="t('health', 'Add {metric} measurement', { metric: getMetricLabel(metricKey) })"
@@ -283,7 +300,7 @@ watch(() => [props.date, props.configuration] as const, load, { immediate: true 
 				inputmode="decimal" />
 			<span :id="unitDescriptionId(activeMetricKey)" class="measurements-section__unit">{{ getUnitLabel(unit) }}</span>
 		</div>
-		<NcTextArea v-model="note"
+		<NcTextField v-model="note"
 			:disabled="saving"
 			:label="t('health', 'Optional note')"
 			:maxlength="1000"
@@ -326,7 +343,9 @@ watch(() => [props.date, props.configuration] as const, load, { immediate: true 
 
 .measurements-section__list { margin: 0; padding: 0; list-style: none; }
 
-.measurements-section__item + .measurements-section__item { margin-top: var(--default-grid-baseline); }
+.measurements-section__item + .measurements-section__item { border-top: 1px solid var(--health-journal-separator, var(--color-border-dark)); }
+
+.measurements-section__total { color: var(--color-text-maxcontrast); font-variant-numeric: tabular-nums; }
 
 .measurements-section__detail { display: grid; grid-template-columns: 4.75rem minmax(0, 1fr) max-content; align-items: center; gap: 10px; min-height: var(--default-clickable-area); padding: 8px 0; }
 

@@ -5,15 +5,15 @@ declare(strict_types=1);
 /** @var array<string, string> $_ */
 ?>
 <!doctype html>
-<html lang="en">
+<html lang="<?= p($_['language']) ?>">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 	<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 	<meta name="theme-color" content="#171819" media="(prefers-color-scheme: dark)">
 	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-title" content="Health">
-	<title>Health</title>
+	<meta name="apple-mobile-web-app-title" content="<?= p($_['appName']) ?>">
+	<title><?= p($_['appName']) ?></title>
 	<link rel="manifest" href="manifest.webmanifest">
 	<link rel="icon" href="<?= p($_['iconUrl']) ?>">
 	<link rel="stylesheet" href="<?= p($_['styleUrl']) ?>">

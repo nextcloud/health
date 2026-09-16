@@ -12,6 +12,7 @@ use OCP\AppFramework\Http\Attribute\FrontpageRoute;
 use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -44,8 +45,11 @@ class PageControllerTest extends TestCase {
 		self::assertSame(TemplateResponse::RENDER_AS_BLANK, $shell->getRenderAs());
 		self::assertDoesNotMatchRegularExpression('/user|password|token|credential|health value/i', json_encode($shell->getParams(), JSON_THROW_ON_ERROR));
 		self::assertSame('/apps/health/img/app.svg', $shell->getParams()['darkIconUrl']);
+		self::assertSame('Health', $shell->getParams()['appName']);
 		$manifest = json_decode($controller->manifest()->render(), true, 8, JSON_THROW_ON_ERROR);
 		self::assertSame('/apps/health/pwa/', $manifest['scope']);
+		self::assertSame('/apps/health/img/pwa-192.png', $manifest['icons'][0]['src']);
+		self::assertSame('maskable', $manifest['icons'][2]['purpose']);
 		$worker = $controller->serviceWorker();
 		self::assertSame('/apps/health/pwa/', $worker->getHeaders()['Service-Worker-Allowed']);
 		self::assertStringContainsString('"scopePath":"/apps/health/pwa/"', $worker->render());
@@ -96,6 +100,9 @@ class PageControllerTest extends TestCase {
 		$urlGenerator->method('getAbsoluteURL')->willReturnCallback(static fn (string $url): string => 'https://cloud.example.test' . $url);
 		$appManager = $this->createMock(IAppManager::class);
 		$appManager->method('getAppPath')->with(Application::APP_ID)->willReturn(dirname(__DIR__, 3));
-		return new PageController($this->createMock(IRequest::class), $urlGenerator, $appManager);
+		$l10n = $this->createMock(IL10N::class);
+		$l10n->method('t')->with('Health')->willReturn('Health');
+		$l10n->method('getLanguageCode')->willReturn('en');
+		return new PageController($this->createMock(IRequest::class), $urlGenerator, $appManager, $l10n);
 	}
 }

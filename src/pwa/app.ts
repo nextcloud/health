@@ -4,10 +4,10 @@ import type { MetricDefinition, PendingOperation } from './types.ts'
 
 import { getMetricVisual } from '../metrics.ts'
 import { createDiagnostics, diagnosticsText } from './diagnostics.ts'
-import { translate } from './i18n.ts'
+import { translatePwa } from './i18n.ts'
 import { randomUuid } from './identity.ts'
 import { pollLogin, startLogin } from './loginFlow.ts'
-import { enabledMetricDefinitions, optionIcon, parseLocaleNumber, quickEntryMode, scaleChoices } from './model.ts'
+import { numericOperation, optionIcon, parseLocaleNumber, quickEntryActions, quickEntryMode, scaleChoices } from './model.ts'
 import { clearLocalData, getAccount, listOperations, putAccount, putOperation } from './storage.ts'
 import { SyncCoordinator } from './sync.ts'
 import { revoke } from './transport.ts'
@@ -43,7 +43,7 @@ const coordinator = new SyncCoordinator(() => account, (state) => {
 	render()
 })
 
-function s(message: string): string { return translate(message, account?.locale) }
+function s(message: string): string { return translatePwa(message, message, account?.locale) }
 function element<K extends keyof HTMLElementTagNameMap>(name: K, className?: string, text?: string): HTMLElementTagNameMap[K] {
 	const node = document.createElement(name)
 	if (className !== undefined) { node.className = className }
@@ -80,10 +80,6 @@ function icon(metric: MetricDefinition): SVGSVGElement {
 	svg.append(path)
 	return svg
 }
-function enabledMetrics(): MetricDefinition[] {
-	return enabledMetricDefinitions(account)
-}
-
 function appIcon(): HTMLElement {
 	const picture = element('picture', 'app-icon')
 	const dark = element('source')
@@ -103,10 +99,10 @@ function render(): void {
 	const connectionNotice = renderConnectionNotice()
 	if (connectionNotice !== null) { root.append(connectionNotice) }
 	const main = element('main')
-	const metrics = enabledMetrics()
-	if (metrics.length === 0) { main.append(element('p', 'empty', s('No metrics are enabled. Enable metrics in Health Settings, then synchronize.'))) }
+	const actions = quickEntryActions(account)
+	if (actions.length === 0) { main.append(element('p', 'empty', s('No metrics are enabled. Enable metrics in Health Settings, then synchronize.'))) }
 	const grid = element('div', 'metric-grid')
-	for (const metric of metrics) { grid.append(renderMetricLauncher(metric)) }
+	for (const action of actions) { grid.append(renderMetricLauncher(action)) }
 	main.append(grid)
 	root.append(main)
 }
@@ -164,19 +160,37 @@ function renderSetup(): HTMLElement {
 	return section
 }
 
-function renderMetricLauncher(metric: MetricDefinition): HTMLButtonElement {
-	const launcher = button('', () => openEntryModal(metric, launcher), 'metric-launcher')
-	launcher.dataset.metricKey = metric.metricKey
-	launcher.setAttribute('aria-label', s('Record {metric}').replace('{metric}', metricLabel(metric.metricKey)))
-	launcher.append(icon(metric), element('span', 'metric-launcher__label', metricLabel(metric.metricKey)))
+function quickActionLabel(action: ReturnType<typeof quickEntryActions>[number]): string {
+	return action.label === null ? metricLabel(action.metric.metricKey) : s(action.label)
+}
+
+function quickActionIcon(action: ReturnType<typeof quickEntryActions>[number]): HTMLElement | SVGSVGElement {
+	if (action.icon === 'metric') {
+		return icon(action.metric)
+	}
+	return element('span', 'option-icon', optionIcon(action.metric, action.optionKeys?.[0] ?? '') ?? '')
+}
+
+function renderMetricLauncher(action: ReturnType<typeof quickEntryActions>[number]): HTMLButtonElement {
+	const label = quickActionLabel(action)
+	const launcher = button('', () => {
+		if (action.mode === 'immediate-option') {
+			void completeImmediateAction(action.metric, launcher, () => queueJournal(action.metric, null, action.optionKeys?.[0] ?? null), () => undefined, () => showToast(s('Could not save. The entry remains queued.'), true))
+			return
+		}
+		openEntryModal(action.metric, launcher, action.optionKeys ?? undefined, action.id, label)
+	}, 'metric-launcher')
+	launcher.dataset.metricKey = action.id
+	launcher.setAttribute('aria-label', s('Record {metric}').replace('{metric}', label))
+	launcher.append(quickActionIcon(action), element('span', 'metric-launcher__label', label))
 	return launcher
 }
 
-function openEntryModal(metric: MetricDefinition, trigger: HTMLElement): void {
+function openEntryModal(metric: MetricDefinition, trigger: HTMLElement, directOptions = metric.allowedOptions ?? [], launcherId = metric.metricKey, title = metricLabel(metric.metricKey)): void {
 	const dialog = element('dialog', 'entry-dialog')
 	const content = element('div', 'entry-dialog__content')
 	const heading = element('h2', 'entry-dialog__heading')
-	heading.append(icon(metric), element('span', undefined, metricLabel(metric.metricKey)))
+	heading.append(icon(metric), element('span', undefined, title))
 	const error = element('p', 'entry-dialog__error')
 	error.hidden = true
 	content.append(heading, error)
@@ -191,10 +205,10 @@ function openEntryModal(metric: MetricDefinition, trigger: HTMLElement): void {
 	const mode = quickEntryMode(metric)
 	if (mode === 'direct-options') {
 		const options = element('div', 'option-grid')
-		for (const option of metric.allowedOptions ?? []) {
+		for (const option of directOptions) {
 			const label = optionLabel(option)
 			const optionButton = button('', () => action(optionButton, () => queueJournal(metric, null, option)), 'option-button')
-			optionButton.setAttribute('aria-label', `${metricLabel(metric.metricKey)}: ${label}`)
+			optionButton.setAttribute('aria-label', `${title}: ${label}`)
 			const optionSymbol = optionIcon(metric, option)
 			if (optionSymbol !== null) { optionButton.append(element('span', 'option-icon', optionSymbol)) }
 			optionButton.append(element('span', undefined, label))
@@ -204,7 +218,7 @@ function openEntryModal(metric: MetricDefinition, trigger: HTMLElement): void {
 	} else if (mode === 'range-buttons') {
 		const choices = element('div', 'option-grid option-grid--range')
 		for (const value of scaleChoices(metric)) {
-			const choice = button(String(value), () => action(choice, () => queueJournal(metric, value, null)), 'option-button option-button--number')
+			const choice = button(String(value), () => action(choice, () => queueNumeric(metric, value)), 'option-button option-button--number')
 			choice.setAttribute('aria-label', `${metricLabel(metric.metricKey)}: ${value}`)
 			choices.append(choice)
 		}
@@ -232,7 +246,7 @@ function openEntryModal(metric: MetricDefinition, trigger: HTMLElement): void {
 		content.append(numericForm(metric, input, error, closeAfterSuccess, dialog))
 	}
 	dialog.append(content)
-	showDialog(dialog, trigger, metric.metricKey)
+	showDialog(dialog, trigger, launcherId)
 	const focus = dialog.querySelector<HTMLElement>('input, button')
 	focus?.focus()
 }
@@ -328,9 +342,15 @@ function queueMeasurement(metric: MetricDefinition, numericValue: number | null,
 function queueIncrement(metric: MetricDefinition): Promise<void> { return enqueue({ ...base(metric), kind: 'daily_increment', localDate: localDate(), delta: 1, unit: metric.canonicalUnit, preparedNumericValue: null }) }
 function queueNumeric(metric: MetricDefinition, value: number): Promise<void> {
 	if (!Number.isFinite(value) || (metric.valueType === 'counter' && (!Number.isInteger(value) || value < 0))) { return Promise.resolve() }
-	if (metric.category === 'journal') { return queueJournal(metric, value, null) }
-	if (metric.category === 'measurement') { return queueMeasurement(metric, value, null) }
-	return enqueue({ ...base(metric), kind: 'daily_value', localDate: localDate(), numericValue: value, unit: account?.configuration[metric.metricKey]?.displayUnit ?? metric.canonicalUnit })
+	const now = new Date().toISOString()
+	return enqueue(numericOperation(
+		metric,
+		base(metric),
+		value,
+		localDate(),
+		now,
+		account?.configuration[metric.metricKey]?.displayUnit ?? metric.canonicalUnit,
+	))
 }
 
 async function connect(): Promise<void> {

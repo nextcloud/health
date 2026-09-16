@@ -206,6 +206,13 @@ class GoalProgressService {
 				$value = $this->dailyValueMapper->findLatestForUserMetricDateRange($userId, $target['metricKey'], $selection['periodStartKey'], $selection['periodEndKey']);
 				$lastActivityAt = $value?->getUpdatedAt();
 			}
+		} elseif ($target['kind'] === 'period_value') {
+			if ($toUtc === null) {
+				throw new \LogicException('Measurement value goal must have a finite period.');
+			}
+			$measurements = $this->measurementMapper->findForUserMetricRange($userId, $target['metricKey'], $fromUtc, $toUtc);
+			$currentValue = array_sum(array_map(static fn ($measurement): float => (float)$measurement->getNumericValue(), $measurements));
+			$lastActivityAt = $measurements === [] ? null : $measurements[0]->getRecordedAt();
 		} elseif ($target['kind'] === 'threshold_occurrence') {
 			if ($toUtc === null) {
 				throw new \LogicException('Threshold goal must have a finite period.');

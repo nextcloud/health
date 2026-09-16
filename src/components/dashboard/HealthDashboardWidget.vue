@@ -3,7 +3,7 @@ import type { DailyValue } from '../../api/dailyValues.ts'
 import type { Entry } from '../../api/entries.ts'
 import type { Measurement } from '../../api/measurements.ts'
 import type { RoutineResult } from '../../api/routines.ts'
-import type { AllMetricKey, DailyValueMetricKey, EventOption, Unit } from '../../metrics.ts'
+import type { AllMetricKey, DailyValueMetricKey, EventOption, MeasurementMetricKey, Unit } from '../../metrics.ts'
 
 import { showError, showSuccess } from '@nextcloud/dialogs'
 import { t } from '@nextcloud/l10n'
@@ -50,6 +50,10 @@ const savingActions = ref(0)
 const checkInOpen = ref(false)
 const checkOutOpen = ref(false)
 
+type MeasurementSummaryItem
+	= | { metricKey: MeasurementMetricKey, total: number }
+		| { metricKey: MeasurementMetricKey, measurement: Measurement }
+
 const journalSummary = computed(() => getEnabledMetricKeys(configuration.value, METRIC_KEYS).flatMap((metricKey) => {
 	const values = entries.value.filter((entry) => entry.metricKey === metricKey)
 	if (values.length === 0) {
@@ -62,11 +66,17 @@ const journalSummary = computed(() => getEnabledMetricKeys(configuration.value, 
 	return [{ metricKey, count: values.length, average }]
 }))
 
-const measurementSummary = computed(() => getEnabledMetricKeys(configuration.value, MEASUREMENT_METRIC_KEYS).flatMap((metricKey) => {
-	const latest = measurements.value
-		.filter((measurement) => measurement.metricKey === metricKey)
-		.sort((left, right) => new Date(right.recordedAt).getTime() - new Date(left.recordedAt).getTime())[0]
-	return latest === undefined ? [] : [{ metricKey, measurement: latest }]
+const measurementSummary = computed<MeasurementSummaryItem[]>(() => getEnabledMetricKeys(configuration.value, MEASUREMENT_METRIC_KEYS).flatMap<MeasurementSummaryItem>((metricKey) => {
+	const metricMeasurements = measurements.value.filter((measurement) => measurement.metricKey === metricKey)
+	if (metricMeasurements.length === 0) {
+		return []
+	}
+	if (configuration.value?.metrics[metricKey]?.aggregation === 'sum') {
+		return [{ metricKey, total: metricMeasurements.reduce((sum, measurement) => sum + (measurement.numericValue ?? 0), 0) }]
+	}
+	const latest = metricMeasurements
+		.sort((left, right) => new Date(right.recordedAt).getTime() - new Date(left.recordedAt).getTime())[0]!
+	return [{ metricKey, measurement: latest }]
 }))
 
 const dailyValueSummary = computed(() => getEnabledMetricKeys(configuration.value, DAILY_VALUE_METRIC_KEYS).flatMap((metricKey) => {
@@ -88,6 +98,11 @@ function displayMeasurement(measurement: Measurement): string {
 		return `${formatNumber(fromCanonical('blood_pressure', measurement.values.systolic, displayUnit))} / ${formatNumber(fromCanonical('blood_pressure', measurement.values.diastolic, displayUnit))} ${getUnitLabel(displayUnit)}`
 	}
 	return `${formatNumber(fromCanonical(measurement.metricKey, measurement.numericValue ?? 0, displayUnit))} ${getUnitLabel(displayUnit)}`
+}
+
+function displayMeasurementTotal(metricKey: MeasurementMetricKey, value: number): string {
+	const displayUnit = unit(metricKey)
+	return `${formatNumber(fromCanonical(metricKey, value, displayUnit))} ${getUnitLabel(displayUnit)}`
 }
 
 function displayDailyValue(metricKey: DailyValueMetricKey, value: DailyValue): string {
@@ -207,7 +222,7 @@ void load()
 			<div v-for="item in measurementSummary" :key="item.metricKey" class="health-dashboard__row">
 				<MetricIcon :metric-key="item.metricKey" />
 				<span>{{ getMetricLabel(item.metricKey) }}</span>
-				<span class="health-dashboard__value">{{ displayMeasurement(item.measurement) }}</span>
+				<span class="health-dashboard__value">{{ 'total' in item ? displayMeasurementTotal(item.metricKey, item.total) : displayMeasurement(item.measurement) }}</span>
 			</div>
 			<div v-for="item in dailyValueSummary" :key="item.metricKey" class="health-dashboard__row">
 				<MetricIcon :metric-key="item.metricKey" />

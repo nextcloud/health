@@ -243,7 +243,8 @@
                                             "enum": [
                                                 "average",
                                                 "count",
-                                                "daily"
+                                                "daily",
+                                                "sum"
                                             ]
                                         },
                                         "canonicalUnit": {
@@ -314,7 +315,8 @@
                                 "enabled",
                                 "checkInEnabled",
                                 "checkOutEnabled",
-                                "displayUnit"
+                                "displayUnit",
+                                "aggregation"
                             ],
                             "properties": {
                                 "enabled": {
@@ -329,6 +331,15 @@
                                 "displayUnit": {
                                     "type": "string",
                                     "nullable": true
+                                },
+                                "aggregation": {
+                                    "type": "string",
+                                    "enum": [
+                                        "average",
+                                        "count",
+                                        "daily",
+                                        "sum"
+                                    ]
                                 }
                             }
                         }

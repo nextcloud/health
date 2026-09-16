@@ -68,7 +68,7 @@ class MeasurementService {
 		if ($values !== null) {
 			throw new InvalidEntryException('Only blood pressure accepts composite values.');
 		}
-		$value = $this->unitConversionService->toCanonical($metricKey, $numericValue, $unit);
+		$value = $this->metricService->validateMeasurementNumericValue($metricKey, $this->unitConversionService->toCanonical($metricKey, $numericValue, $unit));
 		return $this->formatSingle($this->newMeasurement($userId, $metricKey, $value, null, $context, $source, $timestamp, $note, $operationId));
 	}
 
@@ -128,7 +128,7 @@ class MeasurementService {
 			return $this->formatBloodPressure($rows);
 		}
 		$metricKey = $measurement->getMetricKey();
-		$measurement->setNumericValue((string)$this->unitConversionService->toCanonical($metricKey, $numericValue, $unit));
+		$measurement->setNumericValue((string)$this->metricService->validateMeasurementNumericValue($metricKey, $this->unitConversionService->toCanonical($metricKey, $numericValue, $unit)));
 		$measurement->setRecordedAt($timestamp);
 		$measurement->setContext($context);
 		$measurement->setNote($note);

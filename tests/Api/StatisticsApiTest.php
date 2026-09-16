@@ -134,7 +134,9 @@ class StatisticsApiTest extends TestCase {
 		$this->createMeasurement(self::$userA, 'blood_pressure', null, ['systolic' => 130, 'diastolic' => 90], 'mmhg', $date);
 		$this->createDailyValue(self::$userA, 'job_satisfaction', 2, null, $date);
 		$this->createDailyValue(self::$userA, 'job_satisfaction', 4, null, $nextDate);
-		$this->createDailyValue(self::$userA, 'kilocalories', 2140.5, 'kcal', $date);
+		$this->createMeasurement(self::$userA, 'kilocalories', 450, null, 'kcal', $date);
+		$this->createMeasurement(self::$userA, 'kilocalories', 700.5, null, 'kcal', $date);
+		$this->createMeasurement(self::$userB, 'kilocalories', 900, null, 'kcal', $date);
 		$this->createDailyValue(self::$userA, 'fruit', 3, 'pieces', $date);
 		$this->createDailyValue(self::$userB, 'fruit', 9, 'pieces', $date);
 
@@ -160,9 +162,10 @@ class StatisticsApiTest extends TestCase {
 		self::assertSame(2, $jobSatisfaction['summary']['count']);
 
 		$kilocalories = $this->metric($statistics, 'kilocalories');
+		self::assertSame('measurement', $kilocalories['category']);
 		self::assertSame('kcal', $kilocalories['canonicalUnit']);
-		self::assertEquals(2140.5, $this->point($kilocalories, $date)['value']);
-		self::assertSame(1, $kilocalories['summary']['count']);
+		self::assertEquals(1150.5, $this->point($kilocalories, $date)['value']);
+		self::assertSame(2, $kilocalories['summary']['count']);
 		$fruit = $this->metric($statistics, 'fruit');
 		self::assertSame('counter', $fruit['valueType']);
 		self::assertSame('pieces', $fruit['canonicalUnit']);

@@ -86,14 +86,9 @@ class DailyValuesApiTest extends TestCase {
 		self::assertSame(401, self::$http->request('PUT', 'daily-values/job_satisfaction/' . self::DATE, ['json' => ['numericValue' => 3, 'unit' => null]])->getStatusCode());
 	}
 
-	public function testKilocaloriesUseTheFixedCanonicalUnitAndAllowDecimals(): void {
+	public function testKilocaloriesAreRejectedByTheDailyValueEndpoint(): void {
 		$response = $this->requestAs(self::$userA, 'PUT', 'daily-values/kilocalories/' . self::DATE, ['json' => ['numericValue' => 2140.5, 'unit' => 'kcal']]);
-		self::assertSame(200, $response->getStatusCode());
-		$value = $this->ocsData($response);
-		self::assertSame('kilocalories', $value['metricKey']);
-		self::assertEquals(2140.5, $value['numericValue']);
-		self::assertSame(400, $this->requestAs(self::$userA, 'PUT', 'daily-values/kilocalories/' . self::DATE, ['json' => ['numericValue' => 10, 'unit' => 'kj']])->getStatusCode());
-		self::assertSame(400, $this->requestAs(self::$userA, 'PUT', 'daily-values/kilocalories/' . self::DATE, ['json' => ['numericValue' => -1, 'unit' => 'kcal']])->getStatusCode());
+		self::assertSame(400, $response->getStatusCode());
 	}
 
 	public function testFruitIsAnOwnerScopedNonNegativeWholeNumberCount(): void {

@@ -1276,6 +1276,8 @@ Do not sacrifice understandable data for theoretical flexibility.
 
 ## Kilocalories, Fruit, and replay identity
 
-`kilocalories` and `fruit` are atomic `health_daily_values` metrics, so no metric-specific table is added. Kilocalories stores a non-negative canonical numeric `kcal` value per local date. Fruit stores a non-negative whole-number canonical `pieces` count per local date.
+`kilocalories` is an atomic `health_measurements` metric, so no metric-specific table is added. Each non-negative canonical `kcal` record has the ordinary owner-scoped Measurement timestamp. Its daily aggregation strategy is `sum`; this is the value used by Journal totals, goal progress, and day-based Statistics. Fruit remains an atomic `health_daily_values` metric with a non-negative whole-number canonical `pieces` count per local date.
+
+`Version3006Date20260915140000` preserves an existing v3 Daily Value calorie row and creates one corresponding Measurement with the same owner and numeric value. It uses noon in that owner’s Nextcloud timezone for `recorded_at`, preserving the original local-day meaning across offsets and DST. A deterministic owner-scoped operation ID prevents duplicate converted Measurements if migration execution is retried.
 
 Nullable `client_operation_id` columns on `health_entries` and `health_measurements` store only a client-generated UUID v4 replay identity. Owner-scoped unique indexes make retried timestamped writes idempotent without exposing or trusting a client user ID. Blood-pressure rows may share an operation ID because uniqueness also includes their atomic metric key. The replay identity is write metadata and is not returned as Health history.

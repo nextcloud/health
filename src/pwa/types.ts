@@ -8,6 +8,7 @@ export interface MetricDefinition {
 	minimum: number | null
 	maximum: number | null
 	allowedOptions: string[] | null
+	aggregation: 'average' | 'count' | 'daily' | 'sum'
 	canonicalUnit: string | null
 	supportedUnits: string[]
 }

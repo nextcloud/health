@@ -34,7 +34,8 @@ The Journal is the primary place to record and review health data for a selected
 It supports:
 
 - a Daily Note
-- Daily Values such as weight, body fat, waist, hip, muscle percentage, steps, fixed-unit kilocalories, whole-number Fruit counts, and Job Satisfaction
+- Daily Values such as weight, body fat, waist, hip, muscle percentage, steps, whole-number Fruit counts, and Job Satisfaction
+- timestamped Measurements such as fixed-unit Kilocalories, which aggregate to a daily sum
 - timestamped measurements such as temperature, oxygen saturation, blood glucose, pulse, and blood pressure
 - journal metrics such as stress, energy, mood, hydration, and breaks
 - compact create/edit modals
@@ -78,7 +79,7 @@ Search integration is disabled by default and searches only the signed-in user's
 
 ### Quick-entry PWA
 
-Health Settings links to an installable PWA built into this same app at `/apps/health/pwa/`. Its uniform icon-and-label metric launcher grid opens focused entry dialogs: finite scales and named event options save from direct buttons, counters offer both a numeric Save flow and `+1`, and arbitrary numbers retain touch-friendly numeric input. Its Taskbook-style header has sync, device actions, connection notices, and privacy-safe technical diagnostics. It works offline after its shell has loaded and synchronizes a durable local outbox through the normal Health API. It intentionally shows no current values, history, goals, Statistics, trends, or interpretation.
+Health Settings links to an installable PWA built into this same app at `/apps/health/pwa/`. Its uniform icon-and-label metric launcher grid has direct Water and Coffee actions derived from the shared hydration options: Water records one `small_glass`, while Coffee opens its supported coffee-type buttons and saves on selection. Other finite scales and named event options save from direct buttons, counters offer both a numeric Save flow and `+1`, and arbitrary numbers retain touch-friendly numeric input. Its Taskbook-style header has sync, device actions, connection notices, and privacy-safe technical diagnostics. It works offline after its shell has loaded and synchronizes a durable local outbox through the normal Health API. Its PWA strings use a bundled offline catalog; the main app uses normal Nextcloud localization. It intentionally shows no current values, history, goals, Statistics, trends, or interpretation.
 
 ### API
 

@@ -30,7 +30,10 @@ class DailyValueService {
 	public function list(string $userId, mixed $date): array {
 		$date = $this->validateDate($date);
 		$profile = $this->configurationService->get($userId)['profile'];
-		$values = $this->dailyValueMapper->findForUserDate($userId, $date);
+		$values = array_values(array_filter(
+			$this->dailyValueMapper->findForUserDate($userId, $date),
+			fn (DailyValue $value): bool => $this->metricService->getDefinition($value->getMetricKey())['category'] === 'daily_value',
+		));
 		$weight = null;
 		foreach ($values as $value) {
 			if ($value->getMetricKey() === 'weight') {

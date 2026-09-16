@@ -37,7 +37,7 @@ class MetricService {
 		'muscle_percentage' => ['metricKey' => 'muscle_percentage', 'category' => 'daily_value', 'valueType' => 'numeric', 'minimum' => null, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'percent', 'supportedUnits' => ['percent']],
 		'sins' => ['metricKey' => 'sins', 'category' => 'daily_value', 'valueType' => 'numeric', 'minimum' => null, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'count', 'supportedUnits' => ['count']],
 		'steps' => ['metricKey' => 'steps', 'category' => 'daily_value', 'valueType' => 'numeric', 'minimum' => null, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'steps', 'supportedUnits' => ['steps']],
-		'kilocalories' => ['metricKey' => 'kilocalories', 'category' => 'daily_value', 'valueType' => 'numeric', 'minimum' => 0, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'kcal', 'supportedUnits' => ['kcal']],
+		'kilocalories' => ['metricKey' => 'kilocalories', 'category' => 'measurement', 'valueType' => 'numeric', 'minimum' => 0, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'sum', 'canonicalUnit' => 'kcal', 'supportedUnits' => ['kcal']],
 		'fruit' => ['metricKey' => 'fruit', 'category' => 'daily_value', 'valueType' => 'counter', 'minimum' => 0, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'pieces', 'supportedUnits' => ['pieces']],
 		'job_satisfaction' => ['metricKey' => 'job_satisfaction', 'category' => 'daily_value', 'valueType' => 'scale', 'minimum' => self::SCALE_MINIMUM, 'maximum' => self::SCALE_MAXIMUM, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => null, 'supportedUnits' => []],
 	];
@@ -136,6 +136,20 @@ class MetricService {
 			throw new InvalidEntryException('Unsupported measurement metric key.');
 		}
 		return $metricKey;
+	}
+
+	public function validateMeasurementNumericValue(string $metricKey, float $value): float {
+		$definition = $this->getDefinition($this->validateMeasurementMetricKey($metricKey));
+		if (!is_finite($value)) {
+			throw new InvalidEntryException('Measurements must be finite numbers.');
+		}
+		if ($definition['minimum'] !== null && $value < $definition['minimum']) {
+			throw new InvalidEntryException('Measurement is below the supported range.');
+		}
+		if ($definition['maximum'] !== null && $value > $definition['maximum']) {
+			throw new InvalidEntryException('Measurement is above the supported range.');
+		}
+		return $value;
 	}
 
 	/** @return list<string> */
