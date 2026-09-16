@@ -217,6 +217,16 @@ Kilocalories accepts non-negative numeric values, including decimals. Every entr
 
 ---
 
+## Allergies
+
+Type:
+
+- timestamped option measurement
+
+Allergies records one selected, stable symptom key with an optional note. Multiple owner-scoped entries may be recorded on the same local day. Daily Journal and Statistics values are the count of recorded symptoms only; Health does not calculate severity, a score, or medical interpretation.
+
+---
+
 ## Fruit
 
 Type:

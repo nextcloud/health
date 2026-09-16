@@ -1,5 +1,5 @@
 export type MetricCategory = 'journal' | 'measurement' | 'daily_value'
-export type MetricValueType = 'scale' | 'event' | 'numeric' | 'counter' | 'composite'
+export type MetricValueType = 'scale' | 'event' | 'numeric' | 'counter' | 'composite' | 'option'
 
 export interface MetricDefinition {
 	metricKey: string
@@ -40,7 +40,7 @@ interface OperationBase {
 
 export type PendingOperation = OperationBase & (
 	| { kind: 'journal', numericValue: number | null, optionValue: string | null, recordedAt: string }
-	| { kind: 'measurement', numericValue: number | null, values: { systolic: number, diastolic: number } | null, unit: string | null, recordedAt: string }
+	| { kind: 'measurement', numericValue: number | null, optionValue: string | null, values: { systolic: number, diastolic: number } | null, unit: string | null, recordedAt: string, note: string | null }
 	| { kind: 'daily_value', localDate: string, numericValue: number, unit: string | null }
 	| { kind: 'daily_increment', localDate: string, delta: number, unit: string | null, preparedNumericValue: number | null }
 )

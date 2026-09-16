@@ -63,6 +63,14 @@ main { width:min(100%,54rem); margin:auto; padding:1rem; }
 
 .option-button--number { min-width:3rem; font-size:1.25rem; }
 
+.option-button--selected { color:var(--primary-text); background:var(--primary); border-color:var(--primary); }
+
+.allergy-symptom-groups { display:grid; gap:1rem; }
+
+.allergy-symptom-group { display:grid; gap:.5rem; }
+
+.allergy-symptom-group h3 { margin:0; font-size:1rem; }
+
 .option-icon { font-size:1.35rem; line-height:1; }
 
 .notice { display:flex; width:min(calc(100% - 2rem),52rem); align-items:center; justify-content:space-between; gap:.75rem; margin:1rem auto 0; padding:.8rem 1rem; background:var(--surface); border-radius:.65rem; }

@@ -2,7 +2,7 @@ import type { AccountConfiguration, MetricDefinition, PendingOperation } from '.
 
 import { getOptionSymbol, PWA_EVENT_QUICK_ACTIONS } from '../metrics.ts'
 
-export type EntryControl = 'event' | 'counter' | 'scale' | 'numeric' | 'composite'
+export type EntryControl = 'event' | 'counter' | 'scale' | 'numeric' | 'composite' | 'option'
 export type QuickEntryMode = 'direct-options' | 'range-buttons' | 'direct-increment' | 'numeric-input' | 'composite-input'
 
 export interface QuickEntryAction {
@@ -121,7 +121,7 @@ export function numericOperation(
 		return { ...base, metricKey: metric.metricKey, kind: 'journal', numericValue: value, optionValue: null, recordedAt }
 	}
 	if (metric.category === 'measurement') {
-		return { ...base, metricKey: metric.metricKey, kind: 'measurement', numericValue: value, values: null, unit, recordedAt }
+		return { ...base, metricKey: metric.metricKey, kind: 'measurement', numericValue: value, optionValue: null, values: null, unit, recordedAt, note: null }
 	}
 	return { ...base, metricKey: metric.metricKey, kind: 'daily_value', localDate, numericValue: value, unit }
 }

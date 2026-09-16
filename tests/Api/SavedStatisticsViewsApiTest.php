@@ -138,6 +138,20 @@ class SavedStatisticsViewsApiTest extends TestCase {
 		self::assertSame('this_month', $updated['period']);
 	}
 
+	public function testAllergiesCanBeStoredLoadedClonedAndEditedInSavedStatisticsViews(): void {
+		$view = $this->createView(self::$userA, 'Symptoms', '🌼', ['allergies'], 'last_7_days');
+		self::assertSame(['allergies'], $view['metricKeys']);
+		$clone = $this->createView(self::$userA, 'Symptoms copy', '🌸', $view['metricKeys'], $view['period']);
+		self::assertSame(['allergies'], $clone['metricKeys']);
+		$updated = $this->ocsData($this->requestAs(self::$userA, 'PUT', 'statistics/views/' . $clone['id'], ['json' => [
+			'title' => 'Symptoms adjusted',
+			'icon' => '🌻',
+			'metricKeys' => ['allergies'],
+			'period' => 'this_month',
+		]]));
+		self::assertSame(['allergies'], $updated['metricKeys']);
+	}
+
 	/** @param list<string> $metricKeys @return array<string, mixed> */
 	private function createView(string $userId, string $title, string $icon, array $metricKeys, string $period): array {
 		$response = $this->requestAs($userId, 'POST', 'statistics/views', ['json' => [

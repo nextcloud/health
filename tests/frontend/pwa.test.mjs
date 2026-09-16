@@ -39,6 +39,20 @@ test('maps server metric types to dialog entry modes without metric-key special 
 	assert.equal(optionIcon(unknownEvent, 'unrecognized'), null)
 })
 
+test('renders Allergy symptoms as an explicit note-capable option Measurement flow', async () => {
+	const source = await readFile(new URL('../../src/pwa/app.ts', import.meta.url), 'utf8')
+	const metrics = await readFile(new URL('../../src/metrics.ts', import.meta.url), 'utf8')
+	const transport = await readFile(new URL('../../src/pwa/transport.ts', import.meta.url), 'utf8')
+	assert.match(metrics, /ALLERGY_SYMPTOM_GROUPS/)
+	assert.match(metrics, /mdiFlowerPollen/)
+	assert.match(source, /metric\.valueType === 'option' && metric\.metricKey === 'allergies'/)
+	assert.match(source, /allergyMeasurementForm/)
+	assert.match(source, /getAllergySymptomGroupLabel/)
+	assert.match(source, /queueMeasurement\(metric, null, null, selected, noteInput\.value\.trim\(\) \|\| null\)/)
+	assert.match(transport, /optionValue: operation\.optionValue/)
+	assert.match(transport, /note: operation\.note/)
+})
+
 test('derives separate Water and Coffee PWA actions from shared hydration options', () => {
 	const hydration = definition('hydration', 'journal', 'event', { allowedOptions: ['small_glass', 'large_glass', 'coffee', 'cappuccino', 'espresso', 'tea'] })
 	const account = { metrics: [hydration], configuration: { hydration: { enabled: true } } }

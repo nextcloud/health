@@ -20,6 +20,17 @@ test('keeps the Kilocalories total in the aggregate and reuses Journal detail se
 
 test('offers enabled Kilocalories in the shared Statistics configuration selector', async () => {
 	const source = await readFile(new URL('../../src/components/statistics/StatisticsConfigurationFields.vue', import.meta.url), 'utf8')
-	assert.match(source, /'blood_pressure', 'kilocalories'/)
+	assert.match(source, /'blood_pressure', 'allergies', 'kilocalories'/)
 	assert.match(source, /getEnabledMetricKeys\(props\.configuration, ALL_METRIC_KEYS\)/)
+})
+
+test('offers enabled Allergies in Journal Measurements and the shared Statistics selector', async () => {
+	const [measurements, statistics] = await Promise.all([
+		readFile(new URL('../../src/components/MeasurementsSection.vue', import.meta.url), 'utf8'),
+		readFile(new URL('../../src/components/statistics/StatisticsConfigurationFields.vue', import.meta.url), 'utf8'),
+	])
+	assert.match(measurements, /activeMetricKey === 'allergies'/)
+	assert.match(measurements, /getOptionLabel\('allergies', measurement\.optionValue\)/)
+	assert.match(measurements, /getAllergySymptomGroupLabel/)
+	assert.match(statistics, /'blood_pressure', 'allergies', 'kilocalories'/)
 })

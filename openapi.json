@@ -26,6 +26,7 @@
                     "id",
                     "metricKey",
                     "numericValue",
+                    "optionValue",
                     "values",
                     "context",
                     "source",
@@ -46,6 +47,9 @@
                         ]
                     },
                     "numericValue": {
+                        "nullable": true
+                    },
+                    "optionValue": {
                         "nullable": true
                     },
                     "values": {
@@ -218,7 +222,8 @@
                                                 "event",
                                                 "numeric",
                                                 "counter",
-                                                "composite"
+                                                "composite",
+                                                "option"
                                             ]
                                         },
                                         "minimum": {
@@ -978,6 +983,7 @@
                     "id",
                     "metricKey",
                     "numericValue",
+                    "optionValue",
                     "values",
                     "context",
                     "source",
@@ -996,7 +1002,12 @@
                     },
                     "numericValue": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
+                    },
+                    "optionValue": {
+                        "type": "string",
+                        "nullable": true
                     },
                     "values": {
                         "nullable": true
@@ -1118,7 +1129,8 @@
                             "event",
                             "numeric",
                             "counter",
-                            "composite"
+                            "composite",
+                            "option"
                         ]
                     },
                     "canonicalUnit": {
@@ -3851,7 +3863,7 @@
             "post": {
                 "operationId": "measurements-create",
                 "summary": "Create a measurement",
-                "description": "Records one owner-scoped measurement. Blood pressure uses `values`; other metrics use `numericValue`.",
+                "description": "Records one owner-scoped measurement. Blood pressure uses `values`, option measurements use `optionValue`, and other metrics use `numericValue`.",
                 "tags": [
                     "measurements"
                 ],
@@ -3927,6 +3939,12 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "optionValue": {
+                                        "type": "string",
+                                        "nullable": true,
+                                        "default": null,
+                                        "description": "Stable option value for an option measurement such as `allergies`."
                                     },
                                     "unit": {
                                         "type": "string",
@@ -4153,6 +4171,12 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "optionValue": {
+                                        "type": "string",
+                                        "nullable": true,
+                                        "default": null,
+                                        "description": "Stable option value for an option measurement such as `allergies`."
                                     },
                                     "unit": {
                                         "type": "string",

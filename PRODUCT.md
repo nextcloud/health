@@ -38,6 +38,7 @@ Possible metrics include:
 - Weight
 - Kilocalories
 - Fruit
+- Allergies
 
 Only enabled metrics appear in the user's journal.
 

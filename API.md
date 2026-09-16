@@ -1131,7 +1131,7 @@ Every daily point has a `subseries` field. It is `null` for ordinary numeric met
 
 # 39. Daily Series and Goal Semantics
 
-Numeric scale and Measurement values use their registry aggregation for each local day. The standard numeric aggregation is arithmetic mean; Kilocalories uses `sum` across its timestamped `kcal` Measurements. A missing numeric day is represented by `value: null` and is excluded from numeric summaries.
+Numeric scale and Measurement values use their registry aggregation for each local day. The standard numeric aggregation is arithmetic mean; Kilocalories uses `sum` across its timestamped `kcal` Measurements. Allergies is an option Measurement whose daily value is the count of owner-scoped symptom records. A missing numeric or Allergy day is represented by `value: null` and is excluded from numeric summaries.
 
 Event metrics have a valid daily count of zero. Their series therefore contains zero-valued local days, and their average, minimum, and maximum include every day in the selected period.
 
@@ -1535,6 +1535,10 @@ The Configuration response profile contains canonical `heightCm`, the display pr
 ## Kilocalories Measurements and Fruit daily values
 
 Kilocalories uses `POST /measurements`: each non-negative numeric record has fixed unit `kcal` and an RFC3339 `recordedAt`; multiple owner-scoped records may be created for one local day. Day-based goal progress and Statistics use their sum. `PUT /daily-values/kilocalories/{date}` is intentionally rejected because Kilocalories is no longer a Daily Value. Existing v3 Daily Value calorie rows are converted by the forward migration to noon-local Measurements and are retained as source rows. Fruit continues to use `PUT /daily-values/fruit/{date}` and accepts a non-negative whole number with fixed unit `pieces`. Unsupported units, negative values, and fractional Fruit values return `400`.
+
+## Allergy symptom Measurements
+
+Allergies uses the generic `POST /measurements` and `PUT /measurements/{id}` endpoints with `metricKey: "allergies"`, `numericValue: null`, `values: null`, `unit: null`, and one canonical `optionValue`. Supported values are `sneezing`, `runny_nose`, `nasal_congestion`, `itchy_nose`, `itchy_eyes`, `watery_eyes`, `red_eyes`, `swollen_eyelids`, `cough`, `scratchy_throat`, `wheezing`, `shortness_of_breath`, `itchy_skin`, and `hives`. A note is optional. Labels and their nasal, eye, respiratory, and skin presentation groups are localized client concerns and are never persisted. Unknown option values return `400`; all records are owner-scoped. Daily Journal and Statistics values count entries without deriving severity or medical meaning.
 
 ## Idempotent timestamped writes
 

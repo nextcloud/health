@@ -90,6 +90,29 @@ class MeasurementsApiTest extends TestCase {
 		self::assertSame(200, $this->requestAs(self::$userA, 'DELETE', 'measurements/' . $id)->getStatusCode());
 	}
 
+	public function testAllergySymptomsAcceptOnlySupportedCanonicalOptionsAndRemainOwnerScoped(): void {
+		$first = $this->createAllergyAs(self::$userA, 'sneezing', 'After gardening');
+		$second = $this->createAllergyAs(self::$userA, 'watery_eyes', null, '2026-09-15T13:00:00Z');
+		self::assertSame(201, $first->getStatusCode());
+		self::assertSame(201, $second->getStatusCode());
+		$created = $this->ocsData($first);
+		self::assertSame('allergies', $created['metricKey']);
+		self::assertNull($created['numericValue']);
+		self::assertSame('sneezing', $created['optionValue']);
+		self::assertSame('After gardening', $created['note']);
+
+		$own = $this->ocsData($this->requestAs(self::$userA, 'GET', 'measurements', ['query' => ['from' => '2026-09-15T00:00:00Z', 'to' => '2026-09-16T00:00:00Z']]))['measurements'];
+		self::assertCount(2, $own);
+		self::assertSame([], $this->ocsData($this->requestAs(self::$userB, 'GET', 'measurements', ['query' => ['from' => '2026-09-15T00:00:00Z', 'to' => '2026-09-16T00:00:00Z']]))['measurements']);
+		self::assertSame(400, $this->createAllergyAs(self::$userA, 'pollen_score')->getStatusCode());
+
+		$replacement = ['numericValue' => null, 'values' => null, 'optionValue' => 'itchy_nose', 'unit' => null, 'recordedAt' => self::RECORDED_AT, 'note' => null, 'context' => 'manual'];
+		self::assertSame(404, $this->requestAs(self::$userB, 'PUT', 'measurements/' . $created['id'], ['json' => $replacement])->getStatusCode());
+		self::assertSame(404, $this->requestAs(self::$userB, 'DELETE', 'measurements/' . $created['id'])->getStatusCode());
+		self::assertSame(200, $this->requestAs(self::$userA, 'PUT', 'measurements/' . $created['id'], ['json' => $replacement])->getStatusCode());
+		self::assertSame(200, $this->requestAs(self::$userA, 'DELETE', 'measurements/' . $created['id'])->getStatusCode());
+	}
+
 	public function testUnauthenticatedMeasurementRequestsAreRejected(): void {
 		self::assertSame(401, self::$http->request('GET', 'measurements')->getStatusCode());
 		self::assertSame(401, self::$http->request('POST', 'measurements', ['json' => $this->request(450)])->getStatusCode());
@@ -117,6 +140,20 @@ class MeasurementsApiTest extends TestCase {
 
 	private function createAs(string $userId, int|float $numericValue, string $recordedAt = self::RECORDED_AT, string $unit = 'kcal'): ResponseInterface {
 		return $this->requestAs($userId, 'POST', 'measurements', ['json' => $this->request($numericValue, $recordedAt, $unit)]);
+	}
+
+	private function createAllergyAs(string $userId, string $optionValue, ?string $note = null, string $recordedAt = self::RECORDED_AT): ResponseInterface {
+		return $this->requestAs($userId, 'POST', 'measurements', ['json' => [
+			'metricKey' => 'allergies',
+			'numericValue' => null,
+			'values' => null,
+			'optionValue' => $optionValue,
+			'unit' => null,
+			'recordedAt' => $recordedAt,
+			'note' => $note,
+			'context' => 'manual',
+			'source' => 'api',
+		]]);
 	}
 
 	/** @return array<string, mixed> */

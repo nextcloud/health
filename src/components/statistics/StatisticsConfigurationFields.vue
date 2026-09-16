@@ -54,7 +54,7 @@ const selectedMetrics = computed({
 })
 const metricOptions = computed<StatisticsOption[]>(() => [
 	...metricOptionsFor(METRIC_KEYS, t('health', 'Journal Metrics')),
-	...metricOptionsFor(['temperature', 'oxygen_saturation', 'blood_glucose', 'pulse', 'blood_pressure', 'kilocalories'], t('health', 'Measurements')),
+	...metricOptionsFor(['temperature', 'oxygen_saturation', 'blood_glucose', 'pulse', 'blood_pressure', 'allergies', 'kilocalories'], t('health', 'Measurements')),
 	...metricOptionsFor(['weight', 'body_fat', 'waist', 'hip', 'muscle_percentage', 'sins', 'steps', 'job_satisfaction'], t('health', 'Daily Values')),
 ])
 const selectedPeriodLabel = computed(() => selectedPeriod.value.label)

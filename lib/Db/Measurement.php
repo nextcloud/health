@@ -16,6 +16,7 @@ class Measurement extends Entity {
 	protected ?string $userId = null;
 	protected ?string $metricKey = null;
 	protected ?string $numericValue = null;
+	protected ?string $optionValue = null;
 	protected ?string $groupId = null;
 	protected ?string $context = null;
 	protected ?string $source = null;
@@ -51,6 +52,12 @@ class Measurement extends Entity {
 	}
 	public function setNumericValue(string $value): void {
 		$this->setter('numericValue', [$value]);
+	}
+	public function getOptionValue(): ?string {
+		return $this->optionValue;
+	}
+	public function setOptionValue(?string $value): void {
+		$this->setter('optionValue', [$value]);
 	}
 	public function getGroupId(): ?string {
 		return $this->groupId;

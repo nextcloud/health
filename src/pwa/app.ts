@@ -2,7 +2,7 @@
 import type { AllMetricKey } from '../metrics.ts'
 import type { MetricDefinition, PendingOperation } from './types.ts'
 
-import { getMetricVisual } from '../metrics.ts'
+import { ALLERGY_SYMPTOM_GROUPS, getAllergySymptomGroupLabel, getMetricVisual } from '../metrics.ts'
 import { createDiagnostics, diagnosticsText } from './diagnostics.ts'
 import { translatePwa } from './i18n.ts'
 import { randomUuid } from './identity.ts'
@@ -57,11 +57,11 @@ function button(label: string, action: () => void, className = ''): HTMLButtonEl
 	return node
 }
 function metricLabel(key: string): string {
-	const labels: Record<string, string> = { stress: 'Stress', energy: 'Energy', mood: 'Mood', hydration: 'Hydration', break: 'Break', temperature: 'Temperature', oxygen_saturation: 'Oxygen saturation', blood_glucose: 'Blood glucose', pulse: 'Pulse', blood_pressure: 'Blood pressure', weight: 'Weight', body_fat: 'Body fat', waist: 'Waist circumference', hip: 'Hip circumference', muscle_percentage: 'Muscle percentage', sins: 'Sins', steps: 'Steps', kilocalories: 'Kilocalories', fruit: 'Fruit', job_satisfaction: 'Job Satisfaction' }
+	const labels: Record<string, string> = { stress: 'Stress', energy: 'Energy', mood: 'Mood', hydration: 'Hydration', break: 'Break', temperature: 'Temperature', oxygen_saturation: 'Oxygen saturation', blood_glucose: 'Blood glucose', pulse: 'Pulse', blood_pressure: 'Blood pressure', allergies: 'Allergies', weight: 'Weight', body_fat: 'Body fat', waist: 'Waist circumference', hip: 'Hip circumference', muscle_percentage: 'Muscle percentage', sins: 'Sins', steps: 'Steps', kilocalories: 'Kilocalories', fruit: 'Fruit', job_satisfaction: 'Job Satisfaction' }
 	return s(labels[key] ?? key.replaceAll('_', ' '))
 }
 function optionLabel(option: string): string {
-	const labels: Record<string, string> = { small_glass: 'Small glass', large_glass: 'Large glass', coffee: 'Coffee', cappuccino: 'Cappuccino', espresso: 'Espresso', double_espresso: 'Double espresso', latte_macchiato: 'Latte macchiato', cafe_au_lait: 'Café au lait', tea: 'Tea', other: 'Other', short: 'Short break', regular: 'Regular break', short_walk: 'Short walk', long_walk: 'Long walk', mindfulness: 'Mindfulness exercise', fresh_air: 'Air out & take a breath' }
+	const labels: Record<string, string> = { small_glass: 'Small glass', large_glass: 'Large glass', coffee: 'Coffee', cappuccino: 'Cappuccino', espresso: 'Espresso', double_espresso: 'Double espresso', latte_macchiato: 'Latte macchiato', cafe_au_lait: 'Café au lait', tea: 'Tea', other: 'Other', short: 'Short break', regular: 'Regular break', short_walk: 'Short walk', long_walk: 'Long walk', mindfulness: 'Mindfulness exercise', fresh_air: 'Air out & take a breath', sneezing: 'Sneezing', runny_nose: 'Runny nose', nasal_congestion: 'Nasal congestion', itchy_nose: 'Itchy nose', itchy_eyes: 'Itchy eyes', watery_eyes: 'Watery eyes', red_eyes: 'Red eyes', swollen_eyelids: 'Swollen eyelids', cough: 'Cough', scratchy_throat: 'Scratchy throat', wheezing: 'Wheezing', shortness_of_breath: 'Shortness of breath', itchy_skin: 'Itchy skin', hives: 'Hives' }
 	return s(labels[option] ?? option.replaceAll('_', ' '))
 }
 function localDate(): string {
@@ -203,7 +203,9 @@ function openEntryModal(metric: MetricDefinition, trigger: HTMLElement, directOp
 		void completeImmediateAction(metric, control, operation, closeAfterSuccess, showError)
 	}
 	const mode = quickEntryMode(metric)
-	if (mode === 'direct-options') {
+	if (metric.valueType === 'option' && metric.metricKey === 'allergies') {
+		content.append(allergyMeasurementForm(metric, error, closeAfterSuccess, dialog))
+	} else if (mode === 'direct-options') {
 		const options = element('div', 'option-grid')
 		for (const option of directOptions) {
 			const label = optionLabel(option)
@@ -263,6 +265,59 @@ function numericForm(metric: MetricDefinition, input: { label: HTMLLabelElement,
 			return
 		}
 		void saveForm(metric, form, () => queueNumeric(metric, value), closeAfterSuccess, () => {
+			error.textContent = s('Could not save. The entry remains queued.')
+			error.hidden = false
+		})
+	})
+	return form
+}
+
+function allergyMeasurementForm(metric: MetricDefinition, error: HTMLElement, closeAfterSuccess: () => void, dialog: HTMLDialogElement): HTMLFormElement {
+	const form = element('form', 'entry-dialog__form')
+	const symptomGroups = element('div', 'allergy-symptom-groups')
+	const note = element('label', 'allergy-note', s('Optional note'))
+	const noteInput = element('input')
+	noteInput.type = 'text'
+	noteInput.maxLength = 1000
+	noteInput.disabled = true
+	note.append(noteInput)
+	const actions = formActions(dialog)
+	const save = actions.querySelector<HTMLButtonElement>('.primary')
+	if (save !== null) { save.disabled = true }
+	let selected: string | null = null
+	const selectedButtons: HTMLButtonElement[] = []
+	for (const group of ALLERGY_SYMPTOM_GROUPS) {
+		const section = element('section', 'allergy-symptom-group')
+		section.append(element('h3', undefined, s(getAllergySymptomGroupLabel(group.key))))
+		const options = element('div', 'option-grid')
+		for (const symptom of group.options.filter((option) => metric.allowedOptions?.includes(option) === true)) {
+			const option = button(optionLabel(symptom), () => {
+				selected = symptom
+				for (const current of selectedButtons) {
+					const isSelected = current === option
+					current.classList.toggle('option-button--selected', isSelected)
+					current.setAttribute('aria-pressed', String(isSelected))
+				}
+				noteInput.disabled = false
+				if (save !== null) { save.disabled = false }
+				noteInput.focus()
+			}, 'option-button')
+			option.setAttribute('aria-pressed', 'false')
+			selectedButtons.push(option)
+			options.append(option)
+		}
+		section.append(options)
+		symptomGroups.append(section)
+	}
+	form.append(symptomGroups, note, actions)
+	form.addEventListener('submit', (event) => {
+		event.preventDefault()
+		if (selected === null) {
+			error.textContent = s('Choose a symptom.')
+			error.hidden = false
+			return
+		}
+		void saveForm(metric, form, () => queueMeasurement(metric, null, null, selected, noteInput.value.trim() || null), closeAfterSuccess, () => {
 			error.textContent = s('Could not save. The entry remains queued.')
 			error.hidden = false
 		})
@@ -338,7 +393,7 @@ async function enqueue(operation: PendingOperation): Promise<void> {
 }
 function base(metric: MetricDefinition): { operationId: string, metricKey: string, createdAt: string, state: 'pending' } { return { operationId: randomUuid(), metricKey: metric.metricKey, createdAt: new Date().toISOString(), state: 'pending' } }
 function queueJournal(metric: MetricDefinition, numericValue: number | null, optionValue: string | null): Promise<void> { return enqueue({ ...base(metric), kind: 'journal', numericValue, optionValue, recordedAt: new Date().toISOString() }) }
-function queueMeasurement(metric: MetricDefinition, numericValue: number | null, values: { systolic: number, diastolic: number } | null): Promise<void> { return enqueue({ ...base(metric), kind: 'measurement', numericValue, values, unit: account?.configuration[metric.metricKey]?.displayUnit ?? metric.canonicalUnit, recordedAt: new Date().toISOString() }) }
+function queueMeasurement(metric: MetricDefinition, numericValue: number | null, values: { systolic: number, diastolic: number } | null, optionValue: string | null = null, note: string | null = null): Promise<void> { return enqueue({ ...base(metric), kind: 'measurement', numericValue, optionValue, values, unit: account?.configuration[metric.metricKey]?.displayUnit ?? metric.canonicalUnit, recordedAt: new Date().toISOString(), note }) }
 function queueIncrement(metric: MetricDefinition): Promise<void> { return enqueue({ ...base(metric), kind: 'daily_increment', localDate: localDate(), delta: 1, unit: metric.canonicalUnit, preparedNumericValue: null }) }
 function queueNumeric(metric: MetricDefinition, value: number): Promise<void> {
 	if (!Number.isFinite(value) || (metric.valueType === 'counter' && (!Number.isInteger(value) || value < 0))) { return Promise.resolve() }

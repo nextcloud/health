@@ -58,7 +58,7 @@ export interface StatisticsSummary {
 export interface StatisticsMetric {
 	metricKey: AllMetricKey
 	category: StatisticsMetricCategory
-	valueType: 'scale' | 'event' | 'numeric' | 'composite'
+	valueType: 'scale' | 'event' | 'numeric' | 'counter' | 'composite' | 'option'
 	canonicalUnit: string | null
 	minimum: number | null
 	maximum: number | null

@@ -203,3 +203,7 @@ The later design must be restartable or otherwise guarantee that interruption ca
 ## Kilocalories Measurement migration
 
 `Version3006Date20260915140000` is a forward v3 data migration. It leaves every existing `health_daily_values` row unchanged and converts each owner-scoped `kilocalories` Daily Value into one `health_measurements` row with the same canonical numeric `kcal` value. The Measurement timestamp is noon on the source local date in the owner’s configured Nextcloud timezone, converted to UTC; this preserves the source local-day meaning through timezone offsets and daylight-saving changes. A deterministic UUID v4-shaped `client_operation_id` derived from the source Daily Value ID makes the conversion retry-safe. No Health values are logged.
+
+## Option Measurement migration
+
+`Version3007Date20260916120000` is additive and adds nullable `option_value` to `health_measurements`. It leaves all existing rows and columns unchanged. The field stores stable built-in option keys for generic option Measurements such as Allergies; it does not store translated labels or introduce a metric-specific table.

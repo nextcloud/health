@@ -59,11 +59,12 @@ class MeasurementsController extends OCSController {
 	/**
 	 * Create a measurement
 	 *
-	 * Records one owner-scoped measurement. Blood pressure uses `values`; other metrics use `numericValue`.
+	 * Records one owner-scoped measurement. Blood pressure uses `values`, option measurements use `optionValue`, and other metrics use `numericValue`.
 	 *
 	 * @param string $metricKey Stable measurement metric identifier.
 	 * @param int|float|null $numericValue Numeric value for a non-blood-pressure metric.
 	 * @param array{systolic: int|float, diastolic: int|float}|null $values Blood pressure values; required only for `blood_pressure`.
+	 * @param string|null $optionValue Stable option value for an option measurement such as `allergies`.
 	 * @param string|null $unit Supported unit for the metric.
 	 * @param string|null $recordedAt RFC3339 timestamp with an explicit timezone or offset.
 	 * @param string|null $note Optional plain-text note of at most 1000 characters.
@@ -77,9 +78,9 @@ class MeasurementsController extends OCSController {
 	 * 400: Invalid measurement data
 	 */
 	#[NoAdminRequired] #[OpenAPI] #[ApiRoute(verb: 'POST', url: '/api/v2/measurements')]
-	public function create(mixed $metricKey, mixed $numericValue = null, mixed $values = null, mixed $unit = null, mixed $recordedAt = null, mixed $note = null, mixed $context = 'manual', mixed $source = 'api', mixed $operationId = null): DataResponse {
+	public function create(mixed $metricKey, mixed $numericValue = null, mixed $values = null, mixed $optionValue = null, mixed $unit = null, mixed $recordedAt = null, mixed $note = null, mixed $context = 'manual', mixed $source = 'api', mixed $operationId = null): DataResponse {
 		try {
-			return new DataResponse($this->measurementService->create($this->userId(), $metricKey, $numericValue, $values, $unit, $recordedAt, $note, $context, $source, $operationId), 201);
+			return new DataResponse($this->measurementService->create($this->userId(), $metricKey, $numericValue, $values, $optionValue, $unit, $recordedAt, $note, $context, $source, $operationId), 201);
 		} catch (InvalidEntryException $exception) {
 			throw new OCSBadRequestException($exception->getMessage(), $exception);
 		}
@@ -93,6 +94,7 @@ class MeasurementsController extends OCSController {
 	 * @param int $id Measurement ID.
 	 * @param int|float|null $numericValue Numeric value for a non-blood-pressure metric.
 	 * @param array{systolic: int|float, diastolic: int|float}|null $values Blood pressure values; required only for `blood_pressure`.
+	 * @param string|null $optionValue Stable option value for an option measurement such as `allergies`.
 	 * @param string|null $unit Supported unit for the metric.
 	 * @param string|null $recordedAt RFC3339 timestamp with an explicit timezone or offset.
 	 * @param string|null $note Optional plain-text note of at most 1000 characters.
@@ -106,9 +108,9 @@ class MeasurementsController extends OCSController {
 	 * 404: Measurement not found
 	 */
 	#[NoAdminRequired] #[OpenAPI] #[ApiRoute(verb: 'PUT', url: '/api/v2/measurements/{id}', requirements: ['id' => '\\d+'])]
-	public function update(int $id, mixed $numericValue = null, mixed $values = null, mixed $unit = null, mixed $recordedAt = null, mixed $note = null, mixed $context = 'manual'): DataResponse {
+	public function update(int $id, mixed $numericValue = null, mixed $values = null, mixed $optionValue = null, mixed $unit = null, mixed $recordedAt = null, mixed $note = null, mixed $context = 'manual'): DataResponse {
 		try {
-			return new DataResponse($this->measurementService->update($this->userId(), $id, $numericValue, $values, $unit, $recordedAt, $note, $context));
+			return new DataResponse($this->measurementService->update($this->userId(), $id, $numericValue, $values, $optionValue, $unit, $recordedAt, $note, $context));
 		} catch (InvalidEntryException $exception) {
 			throw new OCSBadRequestException($exception->getMessage(), $exception);
 		} catch (EntryNotFoundException $exception) {

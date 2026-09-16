@@ -74,7 +74,7 @@ export async function sendOperation(account: AccountConfiguration, operation: Pe
 		return
 	}
 	if (operation.kind === 'measurement') {
-		await request(account, 'measurements', { method: 'POST', body: JSON.stringify({ metricKey: operation.metricKey, numericValue: operation.numericValue, values: operation.values, unit: operation.unit, context: 'manual', source: 'mobile', recordedAt: operation.recordedAt, note: null, operationId: operation.operationId }) })
+		await request(account, 'measurements', { method: 'POST', body: JSON.stringify({ metricKey: operation.metricKey, numericValue: operation.numericValue, optionValue: operation.optionValue, values: operation.values, unit: operation.unit, context: 'manual', source: 'mobile', recordedAt: operation.recordedAt, note: operation.note, operationId: operation.operationId }) })
 		return
 	}
 	if (operation.kind === 'daily_value') {

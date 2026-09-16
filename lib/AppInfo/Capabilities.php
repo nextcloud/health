@@ -37,7 +37,7 @@ class Capabilities implements ICapability {
 	 *     metrics: list<array{
 	 *       metricKey: string,
 	 *       category: 'journal'|'measurement'|'daily_value',
-	 *       valueType: 'scale'|'event'|'numeric'|'counter'|'composite',
+	 *       valueType: 'scale'|'event'|'numeric'|'counter'|'composite'|'option',
 	 *       minimum: int|null,
 	 *       maximum: int|null,
 	 *       allowedOptions: list<string>|null,

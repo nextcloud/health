@@ -41,7 +41,7 @@ class RoutineService {
 			}
 			foreach ($measurements as $item) {
 				$this->assertRoutineMetric($configuration, $item['metricKey'], $context);
-				$result['createdMeasurements'][] = $this->measurementService->create($userId, $item['metricKey'], $item['numericValue'], $item['values'], $item['unit'], $recordedAt, $item['note'], $context, 'web');
+				$result['createdMeasurements'][] = $this->measurementService->create($userId, $item['metricKey'], $item['numericValue'], $item['values'], null, $item['unit'], $recordedAt, $item['note'], $context, 'web');
 			}
 			foreach ($dailyValues as $item) {
 				$this->assertRoutineMetric($configuration, $item['metricKey'], $context);

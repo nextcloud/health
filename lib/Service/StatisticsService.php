@@ -98,6 +98,7 @@ class StatisticsService {
 					$sourceData['numeric'][$metricKey] ?? [],
 					$sourceData['sourceCounts'][$metricKey],
 					$definition['aggregation'],
+					$definition['valueType'] === 'option',
 				);
 			}
 
@@ -435,14 +436,25 @@ class StatisticsService {
 	 * @param array<string, list<float>> $values
 	 * @return array{series: list<array<string, mixed>>, summary: array<string, mixed>}
 	 */
-	private function numericStatistics(array $dateKeys, array $values, int $sourceCount, string $aggregation = 'average'): array {
+	private function numericStatistics(array $dateKeys, array $values, int $sourceCount, string $aggregation = 'average', bool $countRecords = false): array {
 		$series = [];
 		$dailyValues = [];
 		foreach ($dateKeys as $dateKey) {
 			$rawValues = $values[$dateKey] ?? [];
-			$value = $rawValues === [] ? null : ($aggregation === 'sum' ? array_sum($rawValues) : array_sum($rawValues) / count($rawValues));
+			$value = $rawValues === [] ? null : ($countRecords ? (float)count($rawValues) : match ($aggregation) {
+				'sum' => array_sum($rawValues),
+				default => array_sum($rawValues) / count($rawValues),
+			});
 			$series[] = ['date' => $dateKey, 'value' => $value, 'subseries' => null];
 			$dailyValues[] = $value;
+		}
+
+		if ($countRecords) {
+			$activeDays = count(array_filter($dailyValues, static fn (?float $value): bool => $value !== null));
+			return [
+				'series' => $series,
+				'summary' => ['average' => null, 'minimum' => null, 'maximum' => null, 'count' => $sourceCount, 'activeDays' => $activeDays, 'subseries' => null],
+			];
 		}
 
 		return [

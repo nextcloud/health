@@ -36,11 +36,11 @@ namespace OCA\Health;
  * }
  * @psalm-type HealthDailyValuesPage = array{values: list<HealthDailyValue>}
  * @psalm-type HealthSingleMeasurement = array{
- *   id: int, metricKey: string, numericValue: float, values: null, context: string,
+ *   id: int, metricKey: string, numericValue: float|null, optionValue: string|null, values: null, context: string,
  *   source: string, recordedAt: string, createdAt: string, updatedAt: string, note: string|null
  * }
  * @psalm-type HealthBloodPressureMeasurement = array{
- *   id: int, metricKey: 'blood_pressure', numericValue: null,
+ *   id: int, metricKey: 'blood_pressure', numericValue: null, optionValue: null,
  *   values: array{systolic: float, diastolic: float}, context: string,
  *   source: string, recordedAt: string, createdAt: string, updatedAt: string, note: string|null
  * }
@@ -116,7 +116,7 @@ namespace OCA\Health;
  * @psalm-type HealthStatisticsMetric = array{
  *   metricKey: string,
  *   category: 'journal'|'measurement'|'daily_value',
- *   valueType: 'scale'|'event'|'numeric'|'counter'|'composite',
+ *   valueType: 'scale'|'event'|'numeric'|'counter'|'composite'|'option',
  *   canonicalUnit: string|null,
  *   minimum: int|null,
  *   maximum: int|null,

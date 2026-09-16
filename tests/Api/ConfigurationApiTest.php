@@ -138,6 +138,7 @@ class ConfigurationApiTest extends TestCase {
 	public function testMetricsCanBeEnabledIndependentlyExposeAggregationAndRemainOwnerScoped(): void {
 		$response = $this->requestAs(self::$userA, 'PUT', 'configuration', ['json' => ['metrics' => [
 			'kilocalories' => ['enabled' => true],
+			'allergies' => ['enabled' => true],
 			'fruit' => ['enabled' => true],
 		]]]);
 		self::assertSame(200, $response->getStatusCode());
@@ -145,11 +146,15 @@ class ConfigurationApiTest extends TestCase {
 		self::assertTrue($metrics['kilocalories']['enabled']);
 		self::assertSame('kcal', $metrics['kilocalories']['displayUnit']);
 		self::assertSame('sum', $metrics['kilocalories']['aggregation']);
+		self::assertTrue($metrics['allergies']['enabled']);
+		self::assertNull($metrics['allergies']['displayUnit']);
+		self::assertSame('count', $metrics['allergies']['aggregation']);
 		self::assertTrue($metrics['fruit']['enabled']);
 		self::assertSame('pieces', $metrics['fruit']['displayUnit']);
 		self::assertSame('daily', $metrics['fruit']['aggregation']);
 		$other = $this->ocsData($this->requestAs(self::$userB, 'GET', 'configuration'))['metrics'];
 		self::assertFalse($other['kilocalories']['enabled']);
+		self::assertFalse($other['allergies']['enabled']);
 		self::assertFalse($other['fruit']['enabled']);
 	}
 
