@@ -1,0 +1,27 @@
+SPDX-License-Identifier: (MIT AND Zlib)
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: Arjun Barrett <arjunbarrett@gmail.com>
+SPDX-FileCopyrightText: Michaël Zasso
+SPDX-FileCopyrightText: The Babel Team (https://babel.dev/team)
+SPDX-FileCopyrightText: jspdf developers
+SPDX-FileCopyrightText: pako developers
+
+This file is generated from multiple sources. Included packages:
+- @babel/runtime
+	- version: 7.29.7
+	- license: MIT
+- fast-png
+	- version: 6.4.0
+	- license: MIT
+- fflate
+	- version: 0.8.3
+	- license: MIT
+- iobuffer
+	- version: 5.4.0
+	- license: MIT
+- jspdf
+	- version: 4.2.1
+	- license: MIT
+- pako
+	- version: 2.2.0
+	- license: (MIT AND Zlib)

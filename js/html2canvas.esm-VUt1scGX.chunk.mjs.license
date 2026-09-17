@@ -1,0 +1,7 @@
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: Niklas von Hertzen
+
+This file is generated from multiple sources. Included packages:
+- html2canvas
+	- version: 1.4.1
+	- license: MIT

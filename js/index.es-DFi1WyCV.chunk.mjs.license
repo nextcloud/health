@@ -1,0 +1,36 @@
+SPDX-License-Identifier: (MIT OR SEE LICENSE IN FEEL-FREE.md)
+SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: Braveg1rl <braveg1rl@outlook.com>
+SPDX-FileCopyrightText: Chris Dickinson <chris@neversaw.us>
+SPDX-FileCopyrightText: Denis Pushkarev
+SPDX-FileCopyrightText: Mario Klingemann
+SPDX-FileCopyrightText: Nicolas Froidure
+SPDX-FileCopyrightText: Sebastian Vollnhals <sebastian@vollnhals.info>
+SPDX-FileCopyrightText: The Babel Team (https://babel.dev/team)
+SPDX-FileCopyrightText: canvg developers
+
+This file is generated from multiple sources. Included packages:
+- @babel/runtime
+	- version: 7.29.7
+	- license: MIT
+- canvg
+	- version: 3.0.11
+	- license: MIT
+- core-js
+	- version: 3.50.0
+	- license: MIT
+- performance-now
+	- version: 2.1.0
+	- license: MIT
+- raf
+	- version: 3.4.1
+	- license: MIT
+- rgbcolor
+	- version: 1.0.1
+	- license: (MIT OR SEE LICENSE IN FEEL-FREE.md)
+- stackblur-canvas
+	- version: 2.7.0
+	- license: MIT
+- svg-pathdata
+	- version: 6.0.3
+	- license: MIT

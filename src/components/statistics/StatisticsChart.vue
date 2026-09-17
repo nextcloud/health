@@ -82,6 +82,8 @@ let themeObserver: MutationObserver | null = null
 let focusedIndex = -1
 const focusedDescription = ref('')
 
+defineExpose({ getImage: (): string | null => chart?.toBase64Image() ?? null })
+
 function axisIdForMetric(metricKey: AllMetricKey): string {
 	const definition = getChartableMetricDefinition(metricKey)
 	if (definition.chartType === 'stacked-bar') {
