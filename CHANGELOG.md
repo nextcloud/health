@@ -7,15 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.3.0]
+
 ### Added
 
 - Add fixed-unit daily Kilocalories and whole-number Fruit counter metrics across Journal, Goals, Statistics, saved views, reminders, and configuration.
 - Add an integrated offline-first Health quick-entry PWA with Login Flow v2 authentication and idempotent synchronization.
+- Add Allergies as an optional timestamped symptom measurement with owner-scoped Journal, Statistics, saved-view, configuration, and PWA support.
 
 ### Fixed
 
 - Show baseline-aware directional long-term Weight goal progress in today's Journal.
 - Allow independent goal periods for the same metric while rejecting identical target/period duplicates.
+- Store Kilocalories as timestamped measurements so multiple values recorded on one day aggregate correctly.
 
 ## [3.1.2]
 
