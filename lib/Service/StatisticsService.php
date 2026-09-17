@@ -26,6 +26,7 @@ use OCP\IDateTimeZone;
  * @psalm-import-type HealthGoalTarget from \OCA\Health\ResponseDefinitions
  * @psalm-import-type HealthStatisticsMetric from \OCA\Health\ResponseDefinitions
  * @psalm-import-type HealthStatisticsResponse from \OCA\Health\ResponseDefinitions
+ * @psalm-import-type HealthStatisticsSourceRecord from \OCA\Health\ResponseDefinitions
  */
 class StatisticsService {
 	private const DEFAULT_PERIOD = 'last_30_days';
@@ -123,6 +124,7 @@ class StatisticsService {
 			'from' => $selection['from']->format('Y-m-d'),
 			'to' => $selection['to']->format('Y-m-d'),
 			'metrics' => $result,
+			'sourceRecords' => $sourceData['records'],
 		];
 		return $response;
 	}
@@ -243,6 +245,7 @@ class StatisticsService {
 	 *   events: array<string, array<string, array<string, int>>>,
 	 *   eventGroups: array<string, array<string, list<string>>>,
 	 *   sourceCounts: array<string, int>,
+	 *   records: list<HealthStatisticsSourceRecord>,
 	 *   bloodPressure: array{
 	 *     systolic: array<string, list<float>>,
 	 *     diastolic: array<string, list<float>>,
@@ -255,6 +258,7 @@ class StatisticsService {
 		$events = [];
 		$eventGroups = [];
 		$sourceCounts = [];
+		$records = [];
 		$bloodPressure = ['systolic' => [], 'diastolic' => [], 'groups' => []];
 		$journalMetricKeys = [];
 		$dailyValueMetricKeys = [];
@@ -305,6 +309,7 @@ class StatisticsService {
 				}
 				$events[$metricKey][$dateKey][$subseriesKey] = ($events[$metricKey][$dateKey][$subseriesKey] ?? 0) + 1;
 				$sourceCounts[$metricKey]++;
+				$records[] = $this->sourceRecord($metricKey, $dateKey, null, $optionValue, null, $entry->getRecordedAt());
 				continue;
 			}
 
@@ -312,9 +317,11 @@ class StatisticsService {
 			if ($numericValue !== null) {
 				$this->appendNumericValue($numeric, $metricKey, $dateKey, (float)$numericValue);
 				$sourceCounts[$metricKey]++;
+				$records[] = $this->sourceRecord($metricKey, $dateKey, (float)$numericValue, null, null, $entry->getRecordedAt());
 			}
 		}
 
+		$bloodPressureRecords = [];
 		foreach ($this->measurementMapper->findForUserMetricsRange($userId, $measurementMetricKeys, $fromUtc, $toUtc) as $measurement) {
 			$dateKey = $measurement->getRecordedAt()->setTimezone($selection['timezone'])->format('Y-m-d');
 			if (!isset($knownDates[$dateKey])) {
@@ -330,16 +337,24 @@ class StatisticsService {
 				$this->appendBloodPressureValue($bloodPressure, $subseriesKey, $dateKey, (float)$measurement->getNumericValue());
 				$groupKey = $measurement->getGroupId() ?? 'measurement-' . $measurement->getId();
 				$bloodPressure['groups'][$groupKey] = true;
+				$bloodPressureRecords[$groupKey] ??= ['date' => $dateKey, 'recordedAt' => $measurement->getRecordedAt(), 'systolic' => null, 'diastolic' => null];
+				$bloodPressureRecords[$groupKey][$subseriesKey] = (float)$measurement->getNumericValue();
 				continue;
 			}
 
 			if (isset($numeric[$measurementKey])) {
 				$this->appendNumericValue($numeric, $measurementKey, $dateKey, (float)$measurement->getNumericValue());
 				$sourceCounts[$measurementKey]++;
+				$records[] = $this->sourceRecord($measurementKey, $dateKey, (float)$measurement->getNumericValue(), $measurement->getOptionValue(), null, $measurement->getRecordedAt());
 			}
 		}
 
 		$sourceCounts['blood_pressure'] = isset($definitions['blood_pressure']) ? count($bloodPressure['groups']) : 0;
+		foreach ($bloodPressureRecords as $record) {
+			if ($record['systolic'] !== null && $record['diastolic'] !== null) {
+				$records[] = $this->sourceRecord('blood_pressure', $record['date'], null, null, ['systolic' => $record['systolic'], 'diastolic' => $record['diastolic']], $record['recordedAt']);
+			}
+		}
 		foreach ($this->dailyValueMapper->findForUserMetricDateRange(
 			$userId,
 			$dailyValueMetricKeys,
@@ -351,15 +366,33 @@ class StatisticsService {
 			if (isset($numeric[$metricKey]) && isset($knownDates[$dateKey])) {
 				$this->appendNumericValue($numeric, $metricKey, $dateKey, (float)$dailyValue->getNumericValue());
 				$sourceCounts[$metricKey]++;
+				$records[] = $this->sourceRecord($metricKey, $dateKey, (float)$dailyValue->getNumericValue(), null, null, null);
 			}
 		}
 
+		usort($records, static fn (array $left, array $right): int => [$left['date'], $left['recordedAt'] === null ? 0 : 1, $left['recordedAt'] ?? '', $left['metricKey']] <=> [$right['date'], $right['recordedAt'] === null ? 0 : 1, $right['recordedAt'] ?? '', $right['metricKey']]);
 		return [
 			'numeric' => $numeric,
 			'events' => $events,
 			'eventGroups' => $eventGroups,
 			'sourceCounts' => $sourceCounts,
+			'records' => $records,
 			'bloodPressure' => $bloodPressure,
+		];
+	}
+
+	/**
+	 * @param array{systolic: float, diastolic: float}|null $values
+	 * @return HealthStatisticsSourceRecord
+	 */
+	private function sourceRecord(string $metricKey, string $date, ?float $numericValue, ?string $optionValue, ?array $values, ?DateTimeImmutable $recordedAt): array {
+		return [
+			'metricKey' => $metricKey,
+			'date' => $date,
+			'numericValue' => $numericValue,
+			'optionValue' => $optionValue,
+			'values' => $values,
+			'recordedAt' => $recordedAt === null ? null : $recordedAt->setTimezone($this->utc)->format(DATE_ATOM),
 		];
 	}
 

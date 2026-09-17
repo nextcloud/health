@@ -182,6 +182,14 @@ class StatisticsApiTest extends TestCase {
 		self::assertSame('pieces', $fruit['canonicalUnit']);
 		self::assertEquals(3.0, $this->point($fruit, $date)['value']);
 		self::assertSame(1, $fruit['summary']['count']);
+
+		$records = $statistics['sourceRecords'];
+		self::assertCount(12, $records);
+		self::assertSame($date, $records[0]['date']);
+		self::assertSame($nextDate, $records[array_key_last($records)]['date']);
+		self::assertSame([450.0, 700.5], array_values(array_map(static fn (array $record): ?float => $record['numericValue'], array_values(array_filter($records, static fn (array $record): bool => $record['metricKey'] === 'kilocalories')))));
+		self::assertSame(['sneezing', 'watery_eyes', 'itchy_nose'], array_values(array_map(static fn (array $record): ?string => $record['optionValue'], array_values(array_filter($records, static fn (array $record): bool => $record['metricKey'] === 'allergies')))));
+		self::assertFalse(in_array('weight', array_column($records, 'metricKey'), true));
 	}
 
 	public function testStatisticsReturnDailyGoalRevisionsWithoutRewritingHistory(): void {

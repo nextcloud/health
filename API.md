@@ -1125,6 +1125,8 @@ The response returns canonical values and contains one item for every requested 
 
 Each metric object contains the metric identity, its category and value type, the canonical unit when applicable, metric `minimum` and `maximum` when defined, daily `series`, `summary`, and the goal-revision segments that can be represented as chart thresholds. `summary.count` is the number of source records, not the number of day buckets; `activeDays` is the number of day buckets with a recorded numeric point or a non-zero event total. Event metrics and blood pressure provide summaries for their individual series through `summary.subseries`.
 
+The response also contains `sourceRecords`: the individual owner-scoped records used to build the selected metric series. Each record has its stable metric key, local `date`, a numeric value or option value, optional blood-pressure values, and `recordedAt` for timestamped records. Daily Values have no `recordedAt`. The records use the same selected-metric and half-open `[from, to)` filtering as the chart data; they are ordered by local day, then Daily Values before timestamped records, then timestamp and metric key. Notes are deliberately not included.
+
 Every daily point has a `subseries` field. It is `null` for ordinary numeric metrics. It is a map for event metrics and blood pressure, where one logical metric has multiple chart series. Hydration uses `water`, `coffee`, `tea`, and `other`; Break uses its configured event categories; blood pressure uses `systolic` and `diastolic`.
 
 ---

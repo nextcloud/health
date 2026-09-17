@@ -1197,7 +1197,8 @@
                     "period",
                     "from",
                     "to",
-                    "metrics"
+                    "metrics",
+                    "sourceRecords"
                 ],
                 "properties": {
                     "period": {
@@ -1224,6 +1225,62 @@
                         "items": {
                             "$ref": "#/components/schemas/StatisticsMetric"
                         }
+                    },
+                    "sourceRecords": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/StatisticsSourceRecord"
+                        }
+                    }
+                }
+            },
+            "StatisticsSourceRecord": {
+                "type": "object",
+                "required": [
+                    "metricKey",
+                    "date",
+                    "numericValue",
+                    "optionValue",
+                    "values",
+                    "recordedAt"
+                ],
+                "properties": {
+                    "metricKey": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "numericValue": {
+                        "type": "number",
+                        "format": "double",
+                        "nullable": true
+                    },
+                    "optionValue": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "values": {
+                        "type": "object",
+                        "nullable": true,
+                        "required": [
+                            "systolic",
+                            "diastolic"
+                        ],
+                        "properties": {
+                            "systolic": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "diastolic": {
+                                "type": "number",
+                                "format": "double"
+                            }
+                        }
+                    },
+                    "recordedAt": {
+                        "type": "string",
+                        "nullable": true
                     }
                 }
             },

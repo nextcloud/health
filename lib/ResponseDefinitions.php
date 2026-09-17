@@ -124,11 +124,20 @@ namespace OCA\Health;
  *   summary: HealthStatisticsSummary,
  *   goals: list<HealthStatisticsGoalSegment>
  * }
+ * @psalm-type HealthStatisticsSourceRecord = array{
+ *   metricKey: string,
+ *   date: string,
+ *   numericValue: float|null,
+ *   optionValue: string|null,
+ *   values: array{systolic: float, diastolic: float}|null,
+ *   recordedAt: string|null
+ * }
  * @psalm-type HealthStatisticsResponse = array{
  *   period: 'this_week'|'last_week'|'last_7_days'|'last_30_days'|'this_month'|'last_month'|'this_year'|'last_year',
  *   from: string,
  *   to: string,
- *   metrics: list<HealthStatisticsMetric>
+ *   metrics: list<HealthStatisticsMetric>,
+ *   sourceRecords: list<HealthStatisticsSourceRecord>
  * }
  * @psalm-type HealthSavedStatisticsView = array{
  *   id: int,

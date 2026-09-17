@@ -17,6 +17,7 @@ import SavedStatisticsViewActions from '../components/statistics/SavedStatistics
 import SavedStatisticsViewIcon from '../components/statistics/SavedStatisticsViewIcon.vue'
 import StatisticsChart from '../components/statistics/StatisticsChart.vue'
 import StatisticsConfigurationFields from '../components/statistics/StatisticsConfigurationFields.vue'
+import StatisticsMeasurements from '../components/statistics/StatisticsMeasurements.vue'
 import StatisticsSummaryBox from '../components/statistics/StatisticsSummaryBox.vue'
 import { getConfiguration, getEnabledMetricKeys } from '../api/configuration.ts'
 import { getStatistics } from '../api/statistics.ts'
@@ -275,6 +276,10 @@ onMounted(() => {
 						:metric="metric" />
 				</div>
 			</section>
+
+			<StatisticsMeasurements
+				:configuration="currentConfiguration"
+				:records="response.sourceRecords" />
 		</template>
 	</main>
 </template>

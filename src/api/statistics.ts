@@ -67,11 +67,21 @@ export interface StatisticsMetric {
 	goals: StatisticsGoalOverlay[]
 }
 
+export interface StatisticsSourceRecord {
+	metricKey: AllMetricKey
+	date: string
+	numericValue: number | null
+	optionValue: string | null
+	values: { systolic: number, diastolic: number } | null
+	recordedAt: string | null
+}
+
 export interface StatisticsResponse {
 	period: StatisticsPeriod
 	from: string
 	to: string
 	metrics: StatisticsMetric[]
+	sourceRecords: StatisticsSourceRecord[]
 }
 
 interface OcsResponse<T> {
