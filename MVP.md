@@ -207,13 +207,23 @@ Optional durations may be added later.
 
 Type:
 
-- daily numeric value
+- timestamped numeric measurement
 
 Unit:
 
 - fixed canonical `kcal`
 
-Kilocalories accepts non-negative numeric values, including decimals. It has no unit selector because its stable metric meaning is specifically kilocalories per local day.
+Kilocalories accepts non-negative numeric values, including decimals. Every entry has fixed canonical unit `kcal`; multiple entries can be recorded on the same local day and the day's value is their sum. Goals and day-based Statistics use that sum.
+
+---
+
+## Allergies
+
+Type:
+
+- timestamped option measurement
+
+Allergies records one selected, stable symptom key with an optional note. Multiple owner-scoped entries may be recorded on the same local day. Daily Journal and Statistics values are the count of recorded symptoms only; Health does not calculate severity, a score, or medical interpretation.
 
 ---
 
@@ -543,4 +553,4 @@ The MVP goal slice supports one logical owner-scoped target for each target/peri
 
 ## Quick-entry PWA slice
 
-The Health app includes an installable PWA at `/apps/health/pwa/`. After initial loading and Nextcloud Login Flow v2 authorization, it can queue minimum write payloads in IndexedDB while offline and synchronize them through the existing owner-scoped Health API. Its equal-sized metric launcher grid opens entry dialogs that use direct buttons for finite choices, numeric Save plus direct increment for counters, and numeric inputs for arbitrary values. Its diagnostics are technical troubleshooting only and exclude Health and credential data. It does not display recorded Health values or derived data.
+The Health app includes an installable PWA at `/apps/health/pwa/`. After initial loading and Nextcloud Login Flow v2 authorization, it can queue minimum write payloads in IndexedDB while offline and synchronize them through the existing owner-scoped Health API. Its equal-sized metric launcher grid has direct Water (one `small_glass`) and Coffee (supported coffee type) actions, as well as dialogs that use direct buttons for finite choices, numeric Save plus direct increment for counters, and numeric inputs for arbitrary values. Its diagnostics are technical troubleshooting only and exclude Health and credential data. It does not display recorded Health values or derived data.

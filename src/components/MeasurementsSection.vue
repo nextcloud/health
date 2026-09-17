@@ -10,7 +10,7 @@ import { computed, ref, watch } from 'vue'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcDialog from '@nextcloud/vue/components/NcDialog'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
-import NcTextArea from '@nextcloud/vue/components/NcTextArea'
+import NcSelect from '@nextcloud/vue/components/NcSelect'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
 import DailyGoalPopover from './DailyGoalPopover.vue'
 import DetailInformationPopover from './DetailInformationPopover.vue'
@@ -21,7 +21,7 @@ import { getEnabledMetricKeys } from '../api/configuration.ts'
 import { createMeasurement, deleteMeasurement, listMeasurements, updateMeasurement } from '../api/measurements.ts'
 import { goalProgressForMetric } from '../goals.ts'
 import { iconPaths } from '../icons.ts'
-import { fromCanonical, getMetricLabel, getMetricUnits, getUnitLabel, MEASUREMENT_METRIC_KEYS } from '../metrics.ts'
+import { ALLERGY_SYMPTOM_GROUPS, fromCanonical, getAllergySymptomGroupLabel, getMetricLabel, getMetricUnits, getOptionLabel, getUnitLabel, MEASUREMENT_METRIC_KEYS } from '../metrics.ts'
 import { getLocalDayRange, recordedAtForLocalDay } from '../utils/dates.ts'
 
 const props = defineProps<{
@@ -40,12 +40,20 @@ const systolic = ref('')
 const diastolic = ref('')
 const note = ref('')
 const unit = ref<Unit>('celsius')
+type AllergySymptomOption = { kind: 'symptom', id: string, label: string }
+type AllergySymptomGroup = { kind: 'group', id: string, label: string }
+type AllergySelectOption = AllergySymptomOption | AllergySymptomGroup
+const selectedAllergySymptom = ref<AllergySymptomOption | null>(null)
 const saving = ref(false)
 const deleting = ref(false)
 const expanded = ref<Record<string, boolean>>({})
 const enabledKeys = computed(() => getEnabledMetricKeys(props.configuration, MEASUREMENT_METRIC_KEYS))
 const activeMetricKey = computed<MeasurementMetricKey | null>(() => editing.value?.metricKey ?? creating.value)
 const dateFormatter = new Intl.DateTimeFormat(undefined, { dateStyle: 'full' })
+const allergySymptomOptions = computed<AllergySelectOption[]>(() => ALLERGY_SYMPTOM_GROUPS.flatMap((group) => [
+	{ kind: 'group' as const, id: group.key, label: getAllergySymptomGroupLabel(group.key) },
+	...group.options.map((option): AllergySymptomOption => ({ kind: 'symptom', id: option, label: getOptionLabel('allergies', option) })),
+]))
 
 function valuesFor(key: MeasurementMetricKey) {
 	return measurements.value.filter((measurement) => measurement.metricKey === key)
@@ -68,12 +76,28 @@ function formatNumber(value: number): string {
 }
 
 function display(measurement: Measurement): string {
+	if (measurement.metricKey === 'allergies') {
+		return getOptionLabel('allergies', measurement.optionValue)
+	}
 	const currentUnit = displayUnit(measurement.metricKey)
 	if (measurement.values !== null) {
 		return `${formatNumber(fromCanonical('blood_pressure', measurement.values.systolic, currentUnit))} / ${formatNumber(fromCanonical('blood_pressure', measurement.values.diastolic, currentUnit))} ${getUnitLabel(currentUnit)}`
 	}
 
 	return `${formatNumber(fromCanonical(measurement.metricKey, measurement.numericValue ?? 0, currentUnit))} ${getUnitLabel(currentUnit)}`
+}
+
+function hasSumAggregation(metricKey: MeasurementMetricKey): boolean {
+	return props.configuration?.metrics[metricKey]?.aggregation === 'sum'
+}
+
+function totalFor(metricKey: MeasurementMetricKey): number {
+	return valuesFor(metricKey).reduce((total, measurement) => total + (measurement.numericValue ?? 0), 0)
+}
+
+function displayTotal(metricKey: MeasurementMetricKey): string {
+	const currentUnit = displayUnit(metricKey)
+	return `${formatNumber(fromCanonical(metricKey, totalFor(metricKey), currentUnit))} ${getUnitLabel(currentUnit)}`
 }
 
 async function load() {
@@ -92,6 +116,7 @@ function resetDialog() {
 	systolic.value = ''
 	diastolic.value = ''
 	note.value = ''
+	selectedAllergySymptom.value = null
 }
 
 function open(metricKey: MeasurementMetricKey) {
@@ -107,6 +132,8 @@ function startEditing(measurement: Measurement) {
 	if (measurement.values !== null) {
 		systolic.value = String(fromCanonical('blood_pressure', measurement.values.systolic, unit.value))
 		diastolic.value = String(fromCanonical('blood_pressure', measurement.values.diastolic, unit.value))
+	} else if (measurement.metricKey === 'allergies') {
+		selectedAllergySymptom.value = allergySymptomOptions.value.find((option): option is AllergySymptomOption => option.kind === 'symptom' && option.id === measurement.optionValue) ?? null
 	} else {
 		value.value = String(fromCanonical(measurement.metricKey, measurement.numericValue ?? 0, unit.value))
 	}
@@ -121,7 +148,8 @@ async function save() {
 	const numeric = Number(value.value)
 	const systolicValue = Number(systolic.value)
 	const diastolicValue = Number(diastolic.value)
-	if ((activeMetricKey.value === 'blood_pressure' && (!Number.isFinite(systolicValue) || !Number.isFinite(diastolicValue))) || (activeMetricKey.value !== 'blood_pressure' && !Number.isFinite(numeric))) {
+	const isAllergy = activeMetricKey.value === 'allergies'
+	if ((activeMetricKey.value === 'blood_pressure' && (!Number.isFinite(systolicValue) || !Number.isFinite(diastolicValue))) || (!isAllergy && activeMetricKey.value !== 'blood_pressure' && !Number.isFinite(numeric)) || (isAllergy && selectedAllergySymptom.value === null)) {
 		return
 	}
 
@@ -130,9 +158,10 @@ async function save() {
 		if (editing.value === null) {
 			const created = await createMeasurement({
 				metricKey: activeMetricKey.value,
-				numericValue: activeMetricKey.value === 'blood_pressure' ? null : numeric,
+				numericValue: activeMetricKey.value === 'blood_pressure' || isAllergy ? null : numeric,
+				optionValue: isAllergy ? selectedAllergySymptom.value?.id ?? null : null,
 				values: activeMetricKey.value === 'blood_pressure' ? { systolic: systolicValue, diastolic: diastolicValue } : null,
-				unit: unit.value,
+				unit: isAllergy ? null : unit.value,
 				recordedAt: recordedAtForLocalDay(props.date),
 				note: note.value.trim() === '' ? null : note.value.trim(),
 				context: 'manual',
@@ -143,9 +172,10 @@ async function save() {
 		} else {
 			const current = editing.value
 			const updated = await updateMeasurement(current.id, {
-				numericValue: current.metricKey === 'blood_pressure' ? null : numeric,
+				numericValue: current.metricKey === 'blood_pressure' || current.metricKey === 'allergies' ? null : numeric,
+				optionValue: current.metricKey === 'allergies' ? selectedAllergySymptom.value?.id ?? null : null,
 				values: current.metricKey === 'blood_pressure' ? { systolic: systolicValue, diastolic: diastolicValue } : null,
-				unit: unit.value,
+				unit: current.metricKey === 'allergies' ? null : unit.value,
 				recordedAt: current.recordedAt,
 				note: note.value.trim() === '' ? null : note.value.trim(),
 				context: current.context as 'manual' | 'checkin' | 'checkout',
@@ -203,6 +233,11 @@ watch(() => [props.date, props.configuration] as const, load, { immediate: true 
 					<DailyGoalPopover v-if="progressesFor(metricKey).length"
 						:progresses="progressesFor(metricKey)"
 						:targets="goalTargets ?? []" />
+				</template>
+				<template #aggregate>
+					<span v-if="hasSumAggregation(metricKey) && valuesFor(metricKey).length > 0" class="measurements-section__total">
+						{{ t('health', 'Total: {value}', { value: displayTotal(metricKey) }) }}
+					</span>
 				</template>
 				<template #actions>
 					<NcButton
@@ -265,7 +300,24 @@ watch(() => [props.date, props.configuration] as const, load, { immediate: true 
 				· {{ new Date(editing.recordedAt).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }) }}
 			</template>
 		</p>
-		<div v-if="activeMetricKey === 'blood_pressure'" class="measurements-section__pressure">
+		<div v-if="activeMetricKey === 'allergies'" class="measurements-section__allergy-input">
+			<NcSelect
+				v-model="selectedAllergySymptom"
+				:clearable="true"
+				input-id="allergies-symptom"
+				:input-label="t('health', 'Symptom')"
+				:options="allergySymptomOptions"
+				:searchable="true"
+				label-outside
+				label="label"
+				:selectable="(option: AllergySelectOption) => option.kind === 'symptom'">
+				<template #option="option">
+					<strong v-if="option.kind === 'group'" class="measurements-section__symptom-group">{{ option.label }}</strong>
+					<span v-else>{{ option.label }}</span>
+				</template>
+			</NcSelect>
+		</div>
+		<div v-else-if="activeMetricKey === 'blood_pressure'" class="measurements-section__pressure">
 			<NcTextField v-model="systolic"
 				:aria-describedby="unitDescriptionId(activeMetricKey)"
 				:label="t('health', 'Systolic')"
@@ -283,7 +335,7 @@ watch(() => [props.date, props.configuration] as const, load, { immediate: true 
 				inputmode="decimal" />
 			<span :id="unitDescriptionId(activeMetricKey)" class="measurements-section__unit">{{ getUnitLabel(unit) }}</span>
 		</div>
-		<NcTextArea v-model="note"
+		<NcTextField v-model="note"
 			:disabled="saving"
 			:label="t('health', 'Optional note')"
 			:maxlength="1000"
@@ -326,7 +378,9 @@ watch(() => [props.date, props.configuration] as const, load, { immediate: true 
 
 .measurements-section__list { margin: 0; padding: 0; list-style: none; }
 
-.measurements-section__item + .measurements-section__item { margin-top: var(--default-grid-baseline); }
+.measurements-section__item + .measurements-section__item { border-top: 1px solid var(--health-journal-separator, var(--color-border-dark)); }
+
+.measurements-section__total { color: var(--color-text-maxcontrast); font-variant-numeric: tabular-nums; }
 
 .measurements-section__detail { display: grid; grid-template-columns: 4.75rem minmax(0, 1fr) max-content; align-items: center; gap: 10px; min-height: var(--default-clickable-area); padding: 8px 0; }
 
@@ -339,6 +393,13 @@ watch(() => [props.date, props.configuration] as const, load, { immediate: true 
 
 .measurements-section__input-with-unit,
 .measurements-section__pressure { display: grid; align-items: end; gap: 8px; }
+
+.measurements-section__allergy-input { margin-bottom: var(--default-grid-baseline); }
+
+.measurements-section__symptom-group { color: var(--color-text-maxcontrast); }
+
+/* NcSelect teleports its menu to body. Keep it above the NcDialog modal layer. */
+:global(.nc-select__dropdown.vs__dropdown-menu) { z-index: 10002 !important; }
 
 .measurements-section__input-with-unit { grid-template-columns: minmax(0, 1fr) max-content; }
 

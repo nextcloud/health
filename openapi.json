@@ -26,6 +26,7 @@
                     "id",
                     "metricKey",
                     "numericValue",
+                    "optionValue",
                     "values",
                     "context",
                     "source",
@@ -46,6 +47,9 @@
                         ]
                     },
                     "numericValue": {
+                        "nullable": true
+                    },
+                    "optionValue": {
                         "nullable": true
                     },
                     "values": {
@@ -218,7 +222,8 @@
                                                 "event",
                                                 "numeric",
                                                 "counter",
-                                                "composite"
+                                                "composite",
+                                                "option"
                                             ]
                                         },
                                         "minimum": {
@@ -243,7 +248,8 @@
                                             "enum": [
                                                 "average",
                                                 "count",
-                                                "daily"
+                                                "daily",
+                                                "sum"
                                             ]
                                         },
                                         "canonicalUnit": {
@@ -314,7 +320,8 @@
                                 "enabled",
                                 "checkInEnabled",
                                 "checkOutEnabled",
-                                "displayUnit"
+                                "displayUnit",
+                                "aggregation"
                             ],
                             "properties": {
                                 "enabled": {
@@ -329,6 +336,15 @@
                                 "displayUnit": {
                                     "type": "string",
                                     "nullable": true
+                                },
+                                "aggregation": {
+                                    "type": "string",
+                                    "enum": [
+                                        "average",
+                                        "count",
+                                        "daily",
+                                        "sum"
+                                    ]
                                 }
                             }
                         }
@@ -967,6 +983,7 @@
                     "id",
                     "metricKey",
                     "numericValue",
+                    "optionValue",
                     "values",
                     "context",
                     "source",
@@ -985,7 +1002,12 @@
                     },
                     "numericValue": {
                         "type": "number",
-                        "format": "double"
+                        "format": "double",
+                        "nullable": true
+                    },
+                    "optionValue": {
+                        "type": "string",
+                        "nullable": true
                     },
                     "values": {
                         "nullable": true
@@ -1107,7 +1129,8 @@
                             "event",
                             "numeric",
                             "counter",
-                            "composite"
+                            "composite",
+                            "option"
                         ]
                     },
                     "canonicalUnit": {
@@ -1174,7 +1197,8 @@
                     "period",
                     "from",
                     "to",
-                    "metrics"
+                    "metrics",
+                    "sourceRecords"
                 ],
                 "properties": {
                     "period": {
@@ -1201,6 +1225,62 @@
                         "items": {
                             "$ref": "#/components/schemas/StatisticsMetric"
                         }
+                    },
+                    "sourceRecords": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/StatisticsSourceRecord"
+                        }
+                    }
+                }
+            },
+            "StatisticsSourceRecord": {
+                "type": "object",
+                "required": [
+                    "metricKey",
+                    "date",
+                    "numericValue",
+                    "optionValue",
+                    "values",
+                    "recordedAt"
+                ],
+                "properties": {
+                    "metricKey": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "numericValue": {
+                        "type": "number",
+                        "format": "double",
+                        "nullable": true
+                    },
+                    "optionValue": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "values": {
+                        "type": "object",
+                        "nullable": true,
+                        "required": [
+                            "systolic",
+                            "diastolic"
+                        ],
+                        "properties": {
+                            "systolic": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "diastolic": {
+                                "type": "number",
+                                "format": "double"
+                            }
+                        }
+                    },
+                    "recordedAt": {
+                        "type": "string",
+                        "nullable": true
                     }
                 }
             },
@@ -3840,7 +3920,7 @@
             "post": {
                 "operationId": "measurements-create",
                 "summary": "Create a measurement",
-                "description": "Records one owner-scoped measurement. Blood pressure uses `values`; other metrics use `numericValue`.",
+                "description": "Records one owner-scoped measurement. Blood pressure uses `values`, option measurements use `optionValue`, and other metrics use `numericValue`.",
                 "tags": [
                     "measurements"
                 ],
@@ -3916,6 +3996,12 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "optionValue": {
+                                        "type": "string",
+                                        "nullable": true,
+                                        "default": null,
+                                        "description": "Stable option value for an option measurement such as `allergies`."
                                     },
                                     "unit": {
                                         "type": "string",
@@ -4142,6 +4228,12 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    "optionValue": {
+                                        "type": "string",
+                                        "nullable": true,
+                                        "default": null,
+                                        "description": "Stable option value for an option measurement such as `allergies`."
                                     },
                                     "unit": {
                                         "type": "string",

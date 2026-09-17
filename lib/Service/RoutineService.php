@@ -41,7 +41,7 @@ class RoutineService {
 			}
 			foreach ($measurements as $item) {
 				$this->assertRoutineMetric($configuration, $item['metricKey'], $context);
-				$result['createdMeasurements'][] = $this->measurementService->create($userId, $item['metricKey'], $item['numericValue'], $item['values'], $item['unit'], $recordedAt, $item['note'], $context, 'web');
+				$result['createdMeasurements'][] = $this->measurementService->create($userId, $item['metricKey'], $item['numericValue'], $item['values'], null, $item['unit'], $recordedAt, $item['note'], $context, 'web');
 			}
 			foreach ($dailyValues as $item) {
 				$this->assertRoutineMetric($configuration, $item['metricKey'], $context);
@@ -91,7 +91,7 @@ class RoutineService {
 		return $result;
 	}
 
-	/** @param array<string, array{enabled: bool, checkInEnabled: bool, checkOutEnabled: bool, displayUnit: string|null}> $configuration */
+	/** @param array<string, array{enabled: bool, checkInEnabled: bool, checkOutEnabled: bool, displayUnit: string|null, aggregation: 'average'|'count'|'daily'|'sum'}> $configuration */
 	private function assertRoutineMetric(array $configuration, string $metricKey, string $context): void {
 		$metric = $configuration[$metricKey] ?? null;
 		if ($metric === null || !$metric['enabled'] || ($context === 'checkin' ? !$metric['checkInEnabled'] : !$metric['checkOutEnabled'])) {

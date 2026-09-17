@@ -8,6 +8,8 @@ import { showError } from '@nextcloud/dialogs'
 import { t } from '@nextcloud/l10n'
 import { computed, inject, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import NcActionButton from '@nextcloud/vue/components/NcActionButton'
+import NcActions from '@nextcloud/vue/components/NcActions'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
@@ -17,6 +19,7 @@ import SavedStatisticsViewActions from '../components/statistics/SavedStatistics
 import SavedStatisticsViewIcon from '../components/statistics/SavedStatisticsViewIcon.vue'
 import StatisticsChart from '../components/statistics/StatisticsChart.vue'
 import StatisticsConfigurationFields from '../components/statistics/StatisticsConfigurationFields.vue'
+import StatisticsMeasurements from '../components/statistics/StatisticsMeasurements.vue'
 import StatisticsSummaryBox from '../components/statistics/StatisticsSummaryBox.vue'
 import { getConfiguration, getEnabledMetricKeys } from '../api/configuration.ts'
 import { getStatistics } from '../api/statistics.ts'
@@ -24,6 +27,7 @@ import { getSavedStatisticsView } from '../api/statisticsViews.ts'
 import { healthConfigurationKey } from '../configurationContext.ts'
 import { iconPaths } from '../icons.ts'
 import { ALL_METRIC_KEYS, METRIC_KEYS } from '../metrics.ts'
+import { exportCsv, exportPdf } from '../statisticsExport.ts'
 import { savedStatisticsViewsKey } from '../statisticsViewContext.ts'
 import { statisticsViewMode } from '../statisticsViews.ts'
 
@@ -53,6 +57,8 @@ const savedViewId = computed<number | null>(() => {
 })
 const displayedMetrics = computed(() => response.value?.metrics ?? [])
 const pageTitle = computed(() => savedView.value?.title ?? t('health', 'Statistics'))
+const chart = ref<InstanceType<typeof StatisticsChart> | null>(null)
+const exporting = ref<'pdf' | 'csv' | null>(null)
 let requestGeneration = 0
 let savedViewGeneration = 0
 
@@ -159,6 +165,23 @@ function saveCurrentView(): void {
 		period: period.value,
 	})
 }
+async function exportCurrent(format: 'pdf' | 'csv'): Promise<void> {
+	if (response.value === null || exporting.value !== null) {
+		return
+	}
+	exporting.value = format
+	try {
+		if (format === 'csv') {
+			exportCsv(pageTitle.value, response.value, currentConfiguration.value)
+		} else {
+			await exportPdf(pageTitle.value, response.value, currentConfiguration.value, chart.value?.getImage() ?? null)
+		}
+	} catch {
+		showError(t('health', format === 'pdf' ? 'PDF export failed' : 'CSV export failed'))
+	} finally {
+		exporting.value = null
+	}
+}
 
 watch(currentConfiguration, (nextConfiguration) => {
 	if (nextConfiguration === null || isSavedView.value) {
@@ -212,22 +235,42 @@ onMounted(() => {
 						{{ pageTitle }}
 					</h1>
 				</div>
-				<NcButton
-					v-if="!isSavedView"
-					:aria-label="t('health', 'Save the current Statistics configuration as a view')"
-					:disabled="selectedMetricKeys.length === 0"
-					:text="t('health', 'Save view')"
-					variant="primary"
-					@click="saveCurrentView">
-					<template #icon>
-						<NcIconSvgWrapper :path="iconPaths.plus" />
-					</template>
-				</NcButton>
+				<div v-if="!isSavedView" class="health-statistics__actions">
+					<NcButton
+						:aria-label="t('health', 'Save the current Statistics configuration as a view')"
+						:disabled="selectedMetricKeys.length === 0"
+						:text="t('health', 'Save view')"
+						variant="primary"
+						@click="saveCurrentView">
+						<template #icon>
+							<NcIconSvgWrapper :path="iconPaths.plus" />
+						</template>
+					</NcButton>
+					<NcActions
+						:aria-label="t('health', 'Statistics actions')"
+						force-menu
+						variant="secondary">
+						<NcActionButton :aria-busy="exporting === 'pdf'" :disabled="exporting !== null" @click="exportCurrent('pdf')">
+							<template #icon>
+								<NcLoadingIcon v-if="exporting === 'pdf'" /><NcIconSvgWrapper v-else :path="iconPaths.download" />
+							</template>
+							{{ t('health', 'Export to PDF') }}
+						</NcActionButton>
+						<NcActionButton :aria-busy="exporting === 'csv'" :disabled="exporting !== null" @click="exportCurrent('csv')">
+							<template #icon>
+								<NcLoadingIcon v-if="exporting === 'csv'" /><NcIconSvgWrapper v-else :path="iconPaths.download" />
+							</template>
+							{{ t('health', 'Export to CSV') }}
+						</NcActionButton>
+					</NcActions>
+				</div>
 				<SavedStatisticsViewActions
 					v-else-if="savedView !== null"
+					:exporting="exporting"
 					variant="secondary"
 					@delete="savedStatisticsViews?.openDelete(savedView)"
-					@edit="savedStatisticsViews?.openEdit(savedView)" />
+					@edit="savedStatisticsViews?.openEdit(savedView)"
+					@export="exportCurrent" />
 			</div>
 			<p v-if="isSavedView" class="health-statistics__saved-description">
 				{{ t('health', 'Saved Statistics view') }}
@@ -259,6 +302,7 @@ onMounted(() => {
 			</p>
 			<div class="health-statistics__charts">
 				<StatisticsChart
+					ref="chart"
 					:configuration="currentConfiguration"
 					:metrics="displayedMetrics" />
 			</div>
@@ -275,6 +319,10 @@ onMounted(() => {
 						:metric="metric" />
 				</div>
 			</section>
+
+			<StatisticsMeasurements
+				:configuration="currentConfiguration"
+				:records="response.sourceRecords" />
 		</template>
 	</main>
 </template>
@@ -304,6 +352,12 @@ onMounted(() => {
 
 .health-statistics__title-row {
 	justify-content: space-between;
+}
+
+.health-statistics__actions {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
 }
 
 .health-statistics__saved-description,

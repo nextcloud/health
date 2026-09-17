@@ -38,6 +38,7 @@ interface ChartAxis {
 	beginAtZero: boolean
 	minimum: number
 	maximum: number
+	integerTicks: boolean
 }
 
 interface LegendItem {
@@ -81,10 +82,15 @@ let themeObserver: MutationObserver | null = null
 let focusedIndex = -1
 const focusedDescription = ref('')
 
+defineExpose({ getImage: (): string | null => chart?.toBase64Image() ?? null })
+
 function axisIdForMetric(metricKey: AllMetricKey): string {
 	const definition = getChartableMetricDefinition(metricKey)
 	if (definition.chartType === 'stacked-bar') {
 		return 'event-count'
+	}
+	if (props.metrics.find((metric) => metric.metricKey === metricKey)?.valueType === 'option') {
+		return `count-${metricKey}`
 	}
 
 	const unit = displayUnitForMetric(props.configuration, metricKey)
@@ -110,24 +116,26 @@ function buildAxes(datasets: PlotDataset[]): ChartAxis[] {
 
 		const unit = displayUnitForMetric(props.configuration, metric.metricKey)
 		if (id === 'event-count') {
-			axes.set(id, { id, label: t('health', 'Events per day'), stacked: true, beginAtZero: true, minimum: 0, maximum: 1 })
+			axes.set(id, { id, label: t('health', 'Events per day'), stacked: true, beginAtZero: true, minimum: 0, maximum: 1, integerTicks: true })
+		} else if (metric.valueType === 'option') {
+			axes.set(id, { id, label: t('health', 'Entries per day'), stacked: false, beginAtZero: true, minimum: 0, maximum: 1, integerTicks: true })
 		} else if (id === 'scale-1-5') {
-			axes.set(id, { id, label: t('health', 'Scale 1–5'), stacked: false, beginAtZero: false, minimum: 0, maximum: 1 })
+			axes.set(id, { id, label: t('health', 'Scale 1–5'), stacked: false, beginAtZero: false, minimum: 0, maximum: 1, integerTicks: false })
 		} else if (id.startsWith('length-')) {
-			axes.set(id, { id, label: unit === null ? t('health', 'Length') : getUnitLabel(unit), stacked: false, beginAtZero: false, minimum: 0, maximum: 1 })
+			axes.set(id, { id, label: unit === null ? t('health', 'Length') : getUnitLabel(unit), stacked: false, beginAtZero: false, minimum: 0, maximum: 1, integerTicks: false })
 		} else if (id.startsWith('blood-pressure-')) {
-			axes.set(id, { id, label: unit === null ? getMetricLabel(metric.metricKey) : getUnitLabel(unit), stacked: false, beginAtZero: false, minimum: 0, maximum: 1 })
+			axes.set(id, { id, label: unit === null ? getMetricLabel(metric.metricKey) : getUnitLabel(unit), stacked: false, beginAtZero: false, minimum: 0, maximum: 1, integerTicks: false })
 		} else {
 			const label = unit === null ? getMetricLabel(metric.metricKey) : `${getMetricLabel(metric.metricKey)} (${getUnitLabel(unit)})`
-			axes.set(id, { id, label, stacked: false, beginAtZero: false, minimum: 0, maximum: 1 })
+			axes.set(id, { id, label, stacked: false, beginAtZero: false, minimum: 0, maximum: 1, integerTicks: false })
 		}
 	}
 
 	for (const axis of axes.values()) {
 		const visibleValues = visibleValuesForAxis(axis, datasets)
 		const range = getPaddedStatisticsScaleRange(visibleValues)
-		axis.minimum = range.minimum
-		axis.maximum = range.maximum
+		axis.minimum = axis.beginAtZero ? 0 : range.minimum
+		axis.maximum = axis.integerTicks ? Math.max(1, Math.ceil(range.maximum)) : range.maximum
 	}
 
 	return [...axes.values()]
@@ -345,7 +353,7 @@ function renderChart(): void {
 			max: axis.maximum,
 			display: index < 3,
 			title: { display: index < 3, text: axis.label, color: textColor },
-			ticks: { display: index < 3, color: textColor },
+			ticks: { display: index < 3, color: textColor, precision: axis.integerTicks ? 0 : undefined },
 			grid: { display: index === 0, color: gridColor },
 		}])) as Record<string, unknown>,
 	}

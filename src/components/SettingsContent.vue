@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HealthConfiguration, MetricConfiguration } from '../api/configuration.ts'
+import type { HealthConfiguration, MetricPreference } from '../api/configuration.ts'
 import type { AllMetricKey, Unit } from '../metrics.ts'
 
 import { showError, showSuccess } from '@nextcloud/dialogs'
@@ -101,7 +101,7 @@ function metricIsSaving(metricKey: AllMetricKey): boolean {
 	return savingMetrics.value[metricKey] === true
 }
 
-async function updateMetric(metricKey: AllMetricKey, patch: Partial<MetricConfiguration>) {
+async function updateMetric(metricKey: AllMetricKey, patch: Partial<MetricPreference>) {
 	if (configuration.value === null) {
 		return
 	}
@@ -114,7 +114,12 @@ async function updateMetric(metricKey: AllMetricKey, patch: Partial<MetricConfig
 	savingMetrics.value = { ...savingMetrics.value, [metricKey]: true }
 
 	try {
-		const canonical = await updateConfiguration({ metrics: { [metricKey]: next } })
+		const canonical = await updateConfiguration({ metrics: { [metricKey]: {
+			enabled: next.enabled,
+			checkInEnabled: next.checkInEnabled,
+			checkOutEnabled: next.checkOutEnabled,
+			displayUnit: next.displayUnit,
+		} } })
 		if (metricRequestVersions.get(metricKey) === version && configuration.value !== null) {
 			configuration.value.metrics[metricKey] = canonical.metrics[metricKey]
 			showSuccess(t('health', 'Settings saved.'))

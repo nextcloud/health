@@ -36,11 +36,11 @@ namespace OCA\Health;
  * }
  * @psalm-type HealthDailyValuesPage = array{values: list<HealthDailyValue>}
  * @psalm-type HealthSingleMeasurement = array{
- *   id: int, metricKey: string, numericValue: float, values: null, context: string,
+ *   id: int, metricKey: string, numericValue: float|null, optionValue: string|null, values: null, context: string,
  *   source: string, recordedAt: string, createdAt: string, updatedAt: string, note: string|null
  * }
  * @psalm-type HealthBloodPressureMeasurement = array{
- *   id: int, metricKey: 'blood_pressure', numericValue: null,
+ *   id: int, metricKey: 'blood_pressure', numericValue: null, optionValue: null,
  *   values: array{systolic: float, diastolic: float}, context: string,
  *   source: string, recordedAt: string, createdAt: string, updatedAt: string, note: string|null
  * }
@@ -53,7 +53,7 @@ namespace OCA\Health;
  * }
  * @psalm-type HealthConfiguration = array{
  *   profile: array{heightCm: float|null, heightDisplayUnit: 'cm'|'in', dateOfBirth: string|null, growthReferenceSex: 'female'|'male'|null},
- *   metrics: array<string, array{enabled: bool, checkInEnabled: bool, checkOutEnabled: bool, displayUnit: string|null}>,
+ *   metrics: array<string, array{enabled: bool, checkInEnabled: bool, checkOutEnabled: bool, displayUnit: string|null, aggregation: 'average'|'count'|'daily'|'sum'}>,
  *   searchDailyNotes: bool
  * }
  * @psalm-type HealthGoalRevision = array{
@@ -116,7 +116,7 @@ namespace OCA\Health;
  * @psalm-type HealthStatisticsMetric = array{
  *   metricKey: string,
  *   category: 'journal'|'measurement'|'daily_value',
- *   valueType: 'scale'|'event'|'numeric'|'counter'|'composite',
+ *   valueType: 'scale'|'event'|'numeric'|'counter'|'composite'|'option',
  *   canonicalUnit: string|null,
  *   minimum: int|null,
  *   maximum: int|null,
@@ -124,11 +124,20 @@ namespace OCA\Health;
  *   summary: HealthStatisticsSummary,
  *   goals: list<HealthStatisticsGoalSegment>
  * }
+ * @psalm-type HealthStatisticsSourceRecord = array{
+ *   metricKey: string,
+ *   date: string,
+ *   numericValue: float|null,
+ *   optionValue: string|null,
+ *   values: array{systolic: float, diastolic: float}|null,
+ *   recordedAt: string|null
+ * }
  * @psalm-type HealthStatisticsResponse = array{
  *   period: 'this_week'|'last_week'|'last_7_days'|'last_30_days'|'this_month'|'last_month'|'this_year'|'last_year',
  *   from: string,
  *   to: string,
- *   metrics: list<HealthStatisticsMetric>
+ *   metrics: list<HealthStatisticsMetric>,
+ *   sourceRecords: list<HealthStatisticsSourceRecord>
  * }
  * @psalm-type HealthSavedStatisticsView = array{
  *   id: int,

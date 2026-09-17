@@ -124,7 +124,7 @@ class StatisticsApiTest extends TestCase {
 	}
 
 	public function testStatisticsAggregateMeasurementsDailyValuesAndLogicalBloodPressure(): void {
-		$range = $this->statisticsAs(self::$userA, 'last_7_days', 'pulse,blood_pressure,job_satisfaction,kilocalories,fruit');
+		$range = $this->statisticsAs(self::$userA, 'last_7_days', 'pulse,blood_pressure,allergies,job_satisfaction,kilocalories,fruit');
 		$date = $range['from'];
 		$nextDate = (new DateTimeImmutable($date, new DateTimeZone('UTC')))->modify('+1 day')->format('Y-m-d');
 		$this->createMeasurement(self::$userA, 'pulse', 60, null, 'bpm', $date);
@@ -134,11 +134,17 @@ class StatisticsApiTest extends TestCase {
 		$this->createMeasurement(self::$userA, 'blood_pressure', null, ['systolic' => 130, 'diastolic' => 90], 'mmhg', $date);
 		$this->createDailyValue(self::$userA, 'job_satisfaction', 2, null, $date);
 		$this->createDailyValue(self::$userA, 'job_satisfaction', 4, null, $nextDate);
-		$this->createDailyValue(self::$userA, 'kilocalories', 2140.5, 'kcal', $date);
+		$this->createMeasurement(self::$userA, 'kilocalories', 450, null, 'kcal', $date);
+		$this->createMeasurement(self::$userA, 'kilocalories', 700.5, null, 'kcal', $date);
+		$this->createMeasurement(self::$userB, 'kilocalories', 900, null, 'kcal', $date);
+		$this->createAllergyMeasurement(self::$userA, 'sneezing', $date);
+		$this->createAllergyMeasurement(self::$userA, 'watery_eyes', $date);
+		$this->createAllergyMeasurement(self::$userA, 'itchy_nose', $nextDate);
+		$this->createAllergyMeasurement(self::$userB, 'hives', $date);
 		$this->createDailyValue(self::$userA, 'fruit', 3, 'pieces', $date);
 		$this->createDailyValue(self::$userB, 'fruit', 9, 'pieces', $date);
 
-		$statistics = $this->statisticsAs(self::$userA, 'last_7_days', 'pulse,blood_pressure,job_satisfaction,kilocalories,fruit');
+		$statistics = $this->statisticsAs(self::$userA, 'last_7_days', 'pulse,blood_pressure,allergies,job_satisfaction,kilocalories,fruit');
 		$pulse = $this->metric($statistics, 'pulse');
 		self::assertEquals(70.0, $this->point($pulse, $date)['value']);
 		self::assertSame(2, $pulse['summary']['count']);
@@ -160,14 +166,30 @@ class StatisticsApiTest extends TestCase {
 		self::assertSame(2, $jobSatisfaction['summary']['count']);
 
 		$kilocalories = $this->metric($statistics, 'kilocalories');
+		self::assertSame('measurement', $kilocalories['category']);
 		self::assertSame('kcal', $kilocalories['canonicalUnit']);
-		self::assertEquals(2140.5, $this->point($kilocalories, $date)['value']);
-		self::assertSame(1, $kilocalories['summary']['count']);
+		self::assertEquals(1150.5, $this->point($kilocalories, $date)['value']);
+		self::assertSame(2, $kilocalories['summary']['count']);
+		$allergies = $this->metric($statistics, 'allergies');
+		self::assertSame('option', $allergies['valueType']);
+		self::assertNull($allergies['canonicalUnit']);
+		self::assertEquals(2.0, $this->point($allergies, $date)['value']);
+		self::assertEquals(1.0, $this->point($allergies, $nextDate)['value']);
+		self::assertSame(3, $allergies['summary']['count']);
+		self::assertNull($allergies['summary']['average']);
 		$fruit = $this->metric($statistics, 'fruit');
 		self::assertSame('counter', $fruit['valueType']);
 		self::assertSame('pieces', $fruit['canonicalUnit']);
 		self::assertEquals(3.0, $this->point($fruit, $date)['value']);
 		self::assertSame(1, $fruit['summary']['count']);
+
+		$records = $statistics['sourceRecords'];
+		self::assertCount(12, $records);
+		self::assertSame($date, $records[0]['date']);
+		self::assertSame($nextDate, $records[array_key_last($records)]['date']);
+		self::assertSame([450.0, 700.5], array_values(array_map(static fn (array $record): ?float => $record['numericValue'], array_values(array_filter($records, static fn (array $record): bool => $record['metricKey'] === 'kilocalories')))));
+		self::assertSame(['sneezing', 'watery_eyes', 'itchy_nose'], array_values(array_map(static fn (array $record): ?string => $record['optionValue'], array_values(array_filter($records, static fn (array $record): bool => $record['metricKey'] === 'allergies')))));
+		self::assertFalse(in_array('weight', array_column($records, 'metricKey'), true));
 	}
 
 	public function testStatisticsReturnDailyGoalRevisionsWithoutRewritingHistory(): void {
@@ -288,6 +310,21 @@ class StatisticsApiTest extends TestCase {
 			'numericValue' => $numericValue,
 			'values' => $values,
 			'unit' => $unit,
+			'recordedAt' => $date . 'T12:00:00Z',
+			'note' => null,
+			'context' => 'manual',
+			'source' => 'api',
+		]]);
+		self::assertSame(201, $response->getStatusCode());
+	}
+
+	private function createAllergyMeasurement(string $userId, string $optionValue, string $date): void {
+		$response = $this->requestAs($userId, 'POST', 'measurements', ['json' => [
+			'metricKey' => 'allergies',
+			'numericValue' => null,
+			'values' => null,
+			'optionValue' => $optionValue,
+			'unit' => null,
 			'recordedAt' => $date . 'T12:00:00Z',
 			'note' => null,
 			'context' => 'manual',

@@ -8,7 +8,10 @@ export interface MetricConfiguration {
 	checkInEnabled: boolean
 	checkOutEnabled: boolean
 	displayUnit: Unit | null
+	aggregation: 'average' | 'count' | 'daily' | 'sum'
 }
+
+export type MetricPreference = Pick<MetricConfiguration, 'enabled' | 'checkInEnabled' | 'checkOutEnabled' | 'displayUnit'>
 
 export interface HealthConfiguration {
 	profile: { heightCm: number | null, heightDisplayUnit: 'cm' | 'in', dateOfBirth: string | null, growthReferenceSex: 'female' | 'male' | null }
@@ -37,6 +40,6 @@ export async function getConfiguration(): Promise<HealthConfiguration> {
 	return (await axios.get<OcsResponse<HealthConfiguration>>(url, { headers })).data.ocs.data
 }
 
-export async function updateConfiguration(request: Partial<{ profile: { height: number | null, heightUnit: 'cm' | 'in', dateOfBirth: string | null, growthReferenceSex: 'female' | 'male' | null }, metrics: Partial<Record<AllMetricKey, Partial<MetricConfiguration>>>, searchDailyNotes: boolean }>): Promise<HealthConfiguration> {
+export async function updateConfiguration(request: Partial<{ profile: { height: number | null, heightUnit: 'cm' | 'in', dateOfBirth: string | null, growthReferenceSex: 'female' | 'male' | null }, metrics: Partial<Record<AllMetricKey, Partial<MetricPreference>>>, searchDailyNotes: boolean }>): Promise<HealthConfiguration> {
 	return (await axios.put<OcsResponse<HealthConfiguration>>(url, request, { headers })).data.ocs.data
 }

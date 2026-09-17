@@ -9,8 +9,8 @@ import { test } from 'node:test'
 
 import { isShellNavigation, isStaticAsset } from '../../src/pwa/cachePolicy.ts'
 import { createDiagnostics, diagnosticsText } from '../../src/pwa/diagnostics.ts'
-import { enabledMetricDefinitions, entryControl, optionIcon, parseLocaleNumber, quickEntryMode, scaleChoices } from '../../src/pwa/model.ts'
-import { ApiError } from '../../src/pwa/transport.ts'
+import { enabledMetricDefinitions, entryControl, numericOperation, optionIcon, parseLocaleNumber, quickEntryActions, quickEntryMode, scaleChoices } from '../../src/pwa/model.ts'
+import { ApiError, sendOperation } from '../../src/pwa/transport.ts'
 import { processQueue } from '../../src/pwa/sync.ts'
 
 const definition = (metricKey, category, valueType, overrides = {}) => ({ metricKey, category, valueType, minimum: null, maximum: null, allowedOptions: null, canonicalUnit: null, supportedUnits: [], ...overrides })
@@ -37,6 +37,71 @@ test('maps server metric types to dialog entry modes without metric-key special 
 	assert.equal(quickEntryMode(weight), 'numeric-input')
 	assert.equal(optionIcon(hydration, 'coffee'), '☕️')
 	assert.equal(optionIcon(unknownEvent, 'unrecognized'), null)
+})
+
+test('renders Allergy symptoms as an explicit note-capable option Measurement flow', async () => {
+	const source = await readFile(new URL('../../src/pwa/app.ts', import.meta.url), 'utf8')
+	const metrics = await readFile(new URL('../../src/metrics.ts', import.meta.url), 'utf8')
+	const transport = await readFile(new URL('../../src/pwa/transport.ts', import.meta.url), 'utf8')
+	assert.match(metrics, /ALLERGY_SYMPTOM_GROUPS/)
+	assert.match(metrics, /mdiFlowerPollen/)
+	assert.match(source, /metric\.valueType === 'option' && metric\.metricKey === 'allergies'/)
+	assert.match(source, /allergyMeasurementForm/)
+	assert.match(source, /getAllergySymptomGroupLabel/)
+	assert.match(source, /queueMeasurement\(metric, null, null, selected, noteInput\.value\.trim\(\) \|\| null\)/)
+	assert.match(transport, /optionValue: operation\.optionValue/)
+	assert.match(transport, /note: operation\.note/)
+})
+
+test('derives separate Water and Coffee PWA actions from shared hydration options', () => {
+	const hydration = definition('hydration', 'journal', 'event', { allowedOptions: ['small_glass', 'large_glass', 'coffee', 'cappuccino', 'espresso', 'tea'] })
+	const account = { metrics: [hydration], configuration: { hydration: { enabled: true } } }
+	const actions = quickEntryActions(account)
+	assert.deepEqual(actions.map(({ id, mode, optionKeys }) => ({ id, mode, optionKeys })), [
+		{ id: 'hydration-water', mode: 'immediate-option', optionKeys: ['small_glass', 'large_glass'] },
+		{ id: 'hydration-coffee', mode: 'options', optionKeys: ['coffee', 'cappuccino', 'espresso'] },
+	])
+})
+
+test('routes Job Satisfaction scale selections as canonical daily-value operations', async () => {
+	const jobSatisfaction = definition('job_satisfaction', 'daily_value', 'scale', { minimum: 1, maximum: 5 })
+	const operation = numericOperation(jobSatisfaction, {
+		operationId: 'bfbd0b44-6038-41f4-b683-26983f551990',
+		createdAt: '2026-09-15T12:00:00Z',
+		state: 'pending',
+	}, 4, '2026-09-15', '2026-09-15T12:00:00Z', null)
+	assert.deepEqual(operation, {
+		operationId: 'bfbd0b44-6038-41f4-b683-26983f551990',
+		metricKey: 'job_satisfaction',
+		createdAt: '2026-09-15T12:00:00Z',
+		state: 'pending',
+		kind: 'daily_value',
+		localDate: '2026-09-15',
+		numericValue: 4,
+		unit: null,
+	})
+
+	const originalFetch = globalThis.fetch
+	const requests = []
+	globalThis.fetch = async (input, init) => {
+		requests.push({ url: String(input), method: init.method, body: JSON.parse(init.body) })
+		return new Response(JSON.stringify({ ocs: { data: {} } }), { status: 200 })
+	}
+	try {
+		await sendOperation({
+			serverUrl: 'https://cloud.example.test',
+			apiBaseUrl: 'https://cloud.example.test/ocs/v2.php/apps/health/api/v2/',
+			loginName: 'alice',
+			appPassword: 'app-password',
+		}, operation)
+	} finally {
+		globalThis.fetch = originalFetch
+	}
+	assert.deepEqual(requests, [{
+		url: 'https://cloud.example.test/ocs/v2.php/apps/health/api/v2/daily-values/job_satisfaction/2026-09-15',
+		method: 'PUT',
+		body: { numericValue: 4, unit: null },
+	}])
 })
 
 test('removes queued operations only after a confirmed send and retains a failed operation for retry', async () => {
@@ -80,13 +145,13 @@ test('PWA home uses one equal-sized metric launcher pattern and opens Taskbook-s
 	const styles = await readFile(new URL('../../src/pwa/styles.css', import.meta.url), 'utf8')
 	const shell = await readFile(new URL('../../templates/pwa.php', import.meta.url), 'utf8')
 	assert.match(source, /renderMetricLauncher/)
-	assert.match(source, /openEntryModal\(metric, launcher\)/)
+	assert.match(source, /openEntryModal\(action\.metric, launcher, action\.optionKeys \?\? undefined, action\.id, label\)/)
 	assert.match(source, /'metric-launcher'/)
 	assert.match(source, /dataset\.metricKey/)
 	assert.match(styles, /grid-auto-rows:9rem/)
 	assert.match(styles, /\.metric-launcher \{ display:flex; width:100%; height:100%/)
 	assert.match(source, /entry-dialog__heading/)
-	assert.match(source, /showDialog\(dialog, trigger, metric\.metricKey\)/)
+	assert.match(source, /showDialog\(dialog, trigger, launcherId\)/)
 	assert.match(source, /brand\.append\(appIcon\(\), heading\)/)
 	assert.match(source, /iconDarkUrl/)
 	assert.match(shell, /data-icon-dark-url/)
@@ -95,6 +160,9 @@ test('PWA home uses one equal-sized metric launcher pattern and opens Taskbook-s
 	assert.match(source, /Show diagnostics/)
 	assert.match(source, /Disconnect/)
 	assert.match(source, /option-grid/)
+	assert.match(source, /mode === 'immediate-option'/)
+	assert.match(source, /queueJournal\(action\.metric, null, action\.optionKeys/)
+	assert.match(source, /translatePwa/)
 	assert.doesNotMatch(source, /renderMetric\(metric\)/)
 	assert.doesNotMatch(source, /element\('select'/)
 	assert.doesNotMatch(source, /Choose an option/)
@@ -107,6 +175,7 @@ test('PWA dialog action matrix keeps Save flows explicit and closes only after d
 	assert.match(source, /numericForm\(metric, input, error, closeAfterSuccess, dialog\)/)
 	assert.match(source, /mode === 'direct-options'/)
 	assert.match(source, /mode === 'range-buttons'/)
+	assert.match(source, /queueNumeric\(metric, value\)/)
 	assert.match(source, /mode === 'composite-input'/)
 	assert.match(source, /await operation\(\)\n\t\tclose\(\)/)
 	assert.match(source, /catch \{\n\t\tcontrol\.disabled = false\n\t\treportError\(\)/)

@@ -30,6 +30,7 @@ class MetricService {
 		'blood_glucose' => ['metricKey' => 'blood_glucose', 'category' => 'measurement', 'valueType' => 'numeric', 'minimum' => null, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'count', 'canonicalUnit' => 'mmol_l', 'supportedUnits' => ['mmol_l', 'mg_dl']],
 		'pulse' => ['metricKey' => 'pulse', 'category' => 'measurement', 'valueType' => 'numeric', 'minimum' => null, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'count', 'canonicalUnit' => 'bpm', 'supportedUnits' => ['bpm']],
 		'blood_pressure' => ['metricKey' => 'blood_pressure', 'category' => 'measurement', 'valueType' => 'composite', 'minimum' => null, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'count', 'canonicalUnit' => 'mmhg', 'supportedUnits' => ['mmhg', 'kpa']],
+		'allergies' => ['metricKey' => 'allergies', 'category' => 'measurement', 'valueType' => 'option', 'minimum' => null, 'maximum' => null, 'allowedOptions' => ['sneezing', 'runny_nose', 'nasal_congestion', 'itchy_nose', 'itchy_eyes', 'watery_eyes', 'red_eyes', 'swollen_eyelids', 'cough', 'scratchy_throat', 'wheezing', 'shortness_of_breath', 'itchy_skin', 'hives'], 'aggregation' => 'count', 'canonicalUnit' => null, 'supportedUnits' => []],
 		'weight' => ['metricKey' => 'weight', 'category' => 'daily_value', 'valueType' => 'numeric', 'minimum' => null, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'kg', 'supportedUnits' => ['kg', 'lb', 'st']],
 		'body_fat' => ['metricKey' => 'body_fat', 'category' => 'daily_value', 'valueType' => 'numeric', 'minimum' => null, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'percent', 'supportedUnits' => ['percent']],
 		'waist' => ['metricKey' => 'waist', 'category' => 'daily_value', 'valueType' => 'numeric', 'minimum' => null, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'cm', 'supportedUnits' => ['cm', 'in']],
@@ -37,7 +38,7 @@ class MetricService {
 		'muscle_percentage' => ['metricKey' => 'muscle_percentage', 'category' => 'daily_value', 'valueType' => 'numeric', 'minimum' => null, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'percent', 'supportedUnits' => ['percent']],
 		'sins' => ['metricKey' => 'sins', 'category' => 'daily_value', 'valueType' => 'numeric', 'minimum' => null, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'count', 'supportedUnits' => ['count']],
 		'steps' => ['metricKey' => 'steps', 'category' => 'daily_value', 'valueType' => 'numeric', 'minimum' => null, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'steps', 'supportedUnits' => ['steps']],
-		'kilocalories' => ['metricKey' => 'kilocalories', 'category' => 'daily_value', 'valueType' => 'numeric', 'minimum' => 0, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'kcal', 'supportedUnits' => ['kcal']],
+		'kilocalories' => ['metricKey' => 'kilocalories', 'category' => 'measurement', 'valueType' => 'numeric', 'minimum' => 0, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'sum', 'canonicalUnit' => 'kcal', 'supportedUnits' => ['kcal']],
 		'fruit' => ['metricKey' => 'fruit', 'category' => 'daily_value', 'valueType' => 'counter', 'minimum' => 0, 'maximum' => null, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => 'pieces', 'supportedUnits' => ['pieces']],
 		'job_satisfaction' => ['metricKey' => 'job_satisfaction', 'category' => 'daily_value', 'valueType' => 'scale', 'minimum' => self::SCALE_MINIMUM, 'maximum' => self::SCALE_MAXIMUM, 'allowedOptions' => null, 'aggregation' => 'daily', 'canonicalUnit' => null, 'supportedUnits' => []],
 	];
@@ -64,6 +65,7 @@ class MetricService {
 			'break' => 'break',
 			'steps' => 'steps',
 			'kilocalories' => 'kilocalories',
+			'allergies' => 'allergies',
 			'fruit' => 'fruit',
 			'job_satisfaction' => 'job-satisfaction',
 			'pulse' => 'pulse',
@@ -136,6 +138,28 @@ class MetricService {
 			throw new InvalidEntryException('Unsupported measurement metric key.');
 		}
 		return $metricKey;
+	}
+
+	public function validateMeasurementNumericValue(string $metricKey, float $value): float {
+		$definition = $this->getDefinition($this->validateMeasurementMetricKey($metricKey));
+		if (!is_finite($value)) {
+			throw new InvalidEntryException('Measurements must be finite numbers.');
+		}
+		if ($definition['minimum'] !== null && $value < $definition['minimum']) {
+			throw new InvalidEntryException('Measurement is below the supported range.');
+		}
+		if ($definition['maximum'] !== null && $value > $definition['maximum']) {
+			throw new InvalidEntryException('Measurement is above the supported range.');
+		}
+		return $value;
+	}
+
+	public function validateMeasurementOptionValue(string $metricKey, mixed $optionValue): string {
+		$definition = $this->getDefinition($this->validateMeasurementMetricKey($metricKey));
+		if ($definition['valueType'] !== 'option' || !is_string($optionValue) || $definition['allowedOptions'] === null || !in_array($optionValue, $definition['allowedOptions'], true)) {
+			throw new InvalidEntryException('Unsupported option value for this measurement.');
+		}
+		return $optionValue;
 	}
 
 	/** @return list<string> */

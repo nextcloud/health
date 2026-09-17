@@ -15,6 +15,7 @@ const props = defineProps<{
 }>()
 
 const isEventMetric = computed(() => props.metric.valueType === 'event')
+const isCountMeasurement = computed(() => props.metric.valueType === 'option')
 const isBloodPressure = computed(() => props.metric.metricKey === 'blood_pressure')
 const unit = computed(() => displayUnitForMetric(props.configuration, props.metric.metricKey))
 const bloodPressureSummaries = computed(() => ({
@@ -23,7 +24,7 @@ const bloodPressureSummaries = computed(() => ({
 }))
 const hasData = computed(() => isBloodPressure.value
 	? (bloodPressureSummaries.value.systolic?.average ?? null) !== null || (bloodPressureSummaries.value.diastolic?.average ?? null) !== null
-	: props.metric.summary.average !== null)
+	: isCountMeasurement.value ? props.metric.summary.count > 0 : props.metric.summary.average !== null)
 const mainValue = computed(() => formatValue(props.metric.summary.average))
 const minimum = computed(() => formatValue(props.metric.summary.minimum))
 const maximum = computed(() => formatValue(props.metric.summary.maximum))
@@ -72,6 +73,10 @@ function formatValue(value: number | null): string {
 					<dd>{{ t('health', 'min {minimum} · max {maximum}', { minimum: formatValue(bloodPressureSummaries.diastolic?.minimum ?? null), maximum: formatValue(bloodPressureSummaries.diastolic?.maximum ?? null) }) }}</dd>
 				</div>
 			</dl>
+			<span class="statistics-summary-box__records">{{ recordCount }}</span>
+		</template>
+		<template v-else-if="hasData && isCountMeasurement">
+			<span class="statistics-summary-box__value">{{ t('health', '{count}×', { count: metric.summary.count }) }}</span>
 			<span class="statistics-summary-box__records">{{ recordCount }}</span>
 		</template>
 		<template v-else-if="hasData">

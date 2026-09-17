@@ -4,6 +4,7 @@
  */
 
 import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
 import { test } from 'node:test'
 
 import { normalizeWeightInput } from '../../src/utils/weightInput.ts'
@@ -19,4 +20,11 @@ test('rejects malformed Weight input rather than coercing it to another value', 
 	for (const input of ['82,,4', '82..4', 'abc', '82,4.5']) {
 		assert.equal(normalizeWeightInput(input), null)
 	}
+})
+
+test('morning routine reuses the Weight normalization before sending numeric values', async () => {
+	const source = await readFile(new URL('../../src/components/RoutineDialog.vue', import.meta.url), 'utf8')
+	assert.match(source, /import \{ normalizeWeightInput \} from '\.\.\/utils\/weightInput\.ts'/)
+	assert.match(source, /key === 'weight' \? normalizeWeightInput\(value\) : Number\(value\)/)
+	assert.match(source, /numericValue, unit: unit\(key\)/)
 })

@@ -35,7 +35,7 @@ class MeasurementService {
 	 * @psalm-return HealthMeasurement
 	 * @psalm-suppress MixedReturnTypeCoercion Psalm loses the discriminated response shape while composing persisted measurement rows.
 	 */
-	public function create(string $userId, mixed $metricKey, mixed $numericValue, mixed $values, mixed $unit, mixed $recordedAt, mixed $note, mixed $context = 'manual', mixed $source = 'api', mixed $operationId = null): array {
+	public function create(string $userId, mixed $metricKey, mixed $numericValue, mixed $values, mixed $optionValue, mixed $unit, mixed $recordedAt, mixed $note, mixed $context = 'manual', mixed $source = 'api', mixed $operationId = null): array {
 		$metricKey = $this->metricService->validateMeasurementMetricKey($metricKey);
 		$timestamp = $this->parseTimestamp($recordedAt);
 		$context = $this->validateContext($context);
@@ -53,14 +53,17 @@ class MeasurementService {
 			}
 		}
 		if ($metricKey === 'blood_pressure') {
+			if ($optionValue !== null) {
+				throw new InvalidEntryException('Blood pressure does not accept an option value.');
+			}
 			if (!is_array($values) || !array_key_exists('systolic', $values) || !array_key_exists('diastolic', $values)) {
 				throw new InvalidEntryException('Blood pressure requires systolic and diastolic values.');
 			}
 			$groupId = bin2hex(random_bytes(16));
 			/** @var non-empty-list<Measurement> $rows */
 			$rows = [
-				$this->newMeasurement($userId, 'blood_pressure_systolic', $this->unitConversionService->toCanonical('blood_pressure', $values['systolic'], $unit), $groupId, $context, $source, $timestamp, $note, $operationId),
-				$this->newMeasurement($userId, 'blood_pressure_diastolic', $this->unitConversionService->toCanonical('blood_pressure', $values['diastolic'], $unit), $groupId, $context, $source, $timestamp, $note, $operationId),
+				$this->newMeasurement($userId, 'blood_pressure_systolic', $this->unitConversionService->toCanonical('blood_pressure', $values['systolic'], $unit), null, $groupId, $context, $source, $timestamp, $note, $operationId),
+				$this->newMeasurement($userId, 'blood_pressure_diastolic', $this->unitConversionService->toCanonical('blood_pressure', $values['diastolic'], $unit), null, $groupId, $context, $source, $timestamp, $note, $operationId),
 			];
 			/** @psalm-suppress MixedReturnTypeCoercion Psalm loses the documented blood-pressure row shape at this private formatter boundary. */
 			return $this->formatBloodPressure($rows);
@@ -68,8 +71,19 @@ class MeasurementService {
 		if ($values !== null) {
 			throw new InvalidEntryException('Only blood pressure accepts composite values.');
 		}
-		$value = $this->unitConversionService->toCanonical($metricKey, $numericValue, $unit);
-		return $this->formatSingle($this->newMeasurement($userId, $metricKey, $value, null, $context, $source, $timestamp, $note, $operationId));
+		$definition = $this->metricService->getDefinition($metricKey);
+		if ($definition['valueType'] === 'option') {
+			if ($numericValue !== null || $unit !== null) {
+				throw new InvalidEntryException('Option measurements do not accept numeric values or units.');
+			}
+			$optionValue = $this->metricService->validateMeasurementOptionValue($metricKey, $optionValue);
+			return $this->formatSingle($this->newMeasurement($userId, $metricKey, 0.0, $optionValue, null, $context, $source, $timestamp, $note, $operationId));
+		}
+		if ($optionValue !== null) {
+			throw new InvalidEntryException('Numeric measurements do not accept an option value.');
+		}
+		$value = $this->metricService->validateMeasurementNumericValue($metricKey, $this->unitConversionService->toCanonical($metricKey, $numericValue, $unit));
+		return $this->formatSingle($this->newMeasurement($userId, $metricKey, $value, null, null, $context, $source, $timestamp, $note, $operationId));
 	}
 
 	/**
@@ -102,13 +116,16 @@ class MeasurementService {
 	 * @psalm-return HealthMeasurement
 	 * @psalm-suppress MixedReturnTypeCoercion Psalm loses the discriminated response shape while composing persisted measurement rows.
 	 */
-	public function update(string $userId, int $id, mixed $numericValue, mixed $values, mixed $unit, mixed $recordedAt, mixed $note, mixed $context): array {
+	public function update(string $userId, int $id, mixed $numericValue, mixed $values, mixed $optionValue, mixed $unit, mixed $recordedAt, mixed $note, mixed $context): array {
 		$measurement = $this->findForUser($id, $userId);
 		$timestamp = $this->parseTimestamp($recordedAt);
 		$context = $this->validateContext($context);
 		$note = $this->validateNote($note);
 		$groupId = $measurement->getGroupId();
 		if ($groupId !== null) {
+			if ($optionValue !== null) {
+				throw new InvalidEntryException('Blood pressure does not accept an option value.');
+			}
 			if (!is_array($values) || !array_key_exists('systolic', $values) || !array_key_exists('diastolic', $values)) {
 				throw new InvalidEntryException('Blood pressure requires systolic and diastolic values.');
 			}
@@ -128,7 +145,18 @@ class MeasurementService {
 			return $this->formatBloodPressure($rows);
 		}
 		$metricKey = $measurement->getMetricKey();
-		$measurement->setNumericValue((string)$this->unitConversionService->toCanonical($metricKey, $numericValue, $unit));
+		$definition = $this->metricService->getDefinition($metricKey);
+		if ($definition['valueType'] === 'option') {
+			if ($numericValue !== null || $values !== null || $unit !== null) {
+				throw new InvalidEntryException('Option measurements do not accept numeric values or units.');
+			}
+			$measurement->setOptionValue($this->metricService->validateMeasurementOptionValue($metricKey, $optionValue));
+		} else {
+			if ($optionValue !== null) {
+				throw new InvalidEntryException('Numeric measurements do not accept an option value.');
+			}
+			$measurement->setNumericValue((string)$this->metricService->validateMeasurementNumericValue($metricKey, $this->unitConversionService->toCanonical($metricKey, $numericValue, $unit)));
+		}
 		$measurement->setRecordedAt($timestamp);
 		$measurement->setContext($context);
 		$measurement->setNote($note);
@@ -148,12 +176,13 @@ class MeasurementService {
 		}
 	}
 
-	private function newMeasurement(string $userId, string $metricKey, float $value, ?string $groupId, string $context, string $source, DateTimeImmutable $recordedAt, ?string $note, ?string $operationId): Measurement {
+	private function newMeasurement(string $userId, string $metricKey, float $value, ?string $optionValue, ?string $groupId, string $context, string $source, DateTimeImmutable $recordedAt, ?string $note, ?string $operationId): Measurement {
 		$now = new DateTimeImmutable('now', $this->utc);
 		$item = new Measurement();
 		$item->setUserId($userId);
 		$item->setMetricKey($metricKey);
 		$item->setNumericValue((string)$value);
+		$item->setOptionValue($optionValue);
 		$item->setGroupId($groupId);
 		$item->setContext($context);
 		$item->setSource($source);
@@ -177,7 +206,7 @@ class MeasurementService {
 	private function formatSingle(Measurement $item): array {
 		$id = $item->getId();
 		/** @var HealthSingleMeasurement $measurement */
-		$measurement = ['id' => $id, 'metricKey' => $item->getMetricKey(), 'numericValue' => (float)$item->getNumericValue(), 'values' => null, 'context' => $item->getContext(), 'source' => $item->getSource(), 'recordedAt' => $item->getRecordedAt()->format('Y-m-d\TH:i:s\Z'), 'createdAt' => $item->getCreatedAt()->format('Y-m-d\TH:i:s\Z'), 'updatedAt' => $item->getUpdatedAt()->format('Y-m-d\TH:i:s\Z'), 'note' => $item->getNote()];
+		$measurement = ['id' => $id, 'metricKey' => $item->getMetricKey(), 'numericValue' => $item->getOptionValue() === null ? (float)$item->getNumericValue() : null, 'optionValue' => $item->getOptionValue(), 'values' => null, 'context' => $item->getContext(), 'source' => $item->getSource(), 'recordedAt' => $item->getRecordedAt()->format('Y-m-d\TH:i:s\Z'), 'createdAt' => $item->getCreatedAt()->format('Y-m-d\TH:i:s\Z'), 'updatedAt' => $item->getUpdatedAt()->format('Y-m-d\TH:i:s\Z'), 'note' => $item->getNote()];
 		return $measurement;
 	}
 
@@ -198,7 +227,7 @@ class MeasurementService {
 		$first = $items[0];
 		$id = $first->getId();
 		/** @var HealthBloodPressureMeasurement $measurement */
-		$measurement = ['id' => $id, 'metricKey' => 'blood_pressure', 'numericValue' => null, 'values' => ['systolic' => $systolic, 'diastolic' => $diastolic], 'context' => $first->getContext(), 'source' => $first->getSource(), 'recordedAt' => $first->getRecordedAt()->format('Y-m-d\TH:i:s\Z'), 'createdAt' => $first->getCreatedAt()->format('Y-m-d\TH:i:s\Z'), 'updatedAt' => $first->getUpdatedAt()->format('Y-m-d\TH:i:s\Z'), 'note' => $first->getNote()];
+		$measurement = ['id' => $id, 'metricKey' => 'blood_pressure', 'numericValue' => null, 'optionValue' => null, 'values' => ['systolic' => $systolic, 'diastolic' => $diastolic], 'context' => $first->getContext(), 'source' => $first->getSource(), 'recordedAt' => $first->getRecordedAt()->format('Y-m-d\TH:i:s\Z'), 'createdAt' => $first->getCreatedAt()->format('Y-m-d\TH:i:s\Z'), 'updatedAt' => $first->getUpdatedAt()->format('Y-m-d\TH:i:s\Z'), 'note' => $first->getNote()];
 		return $measurement;
 	}
 

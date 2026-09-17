@@ -218,6 +218,22 @@ class GoalsApiTest extends TestCase {
 		self::assertEquals(86.0, $aboveGoal['currentValue']);
 	}
 
+	public function testKilocalorieGoalUsesTheOwnerScopedDailyMeasurementSum(): void {
+		$this->createGoal(['targetKey' => 'kilocalories', 'period' => 'day', 'comparator' => 'gte', 'targetValue' => 2000]);
+		$this->createGoal(['targetKey' => 'kilocalories', 'period' => 'week', 'comparator' => 'lte', 'targetValue' => 2500]);
+		$this->createMeasurement(self::$userA, 'kilocalories', 450, null, 'kcal');
+		$this->createMeasurement(self::$userA, 'kilocalories', 700, null, 'kcal');
+		$this->createMeasurement(self::$userA, 'kilocalories', 830, null, 'kcal');
+		$this->createMeasurement(self::$userB, 'kilocalories', 900, null, 'kcal');
+
+		$daily = $this->progressByTarget($this->progressAs(self::$userA, 'day'))['kilocalories'];
+		self::assertEquals(1980.0, $daily['currentValue']);
+		self::assertSame('in_progress', $daily['status']);
+		$weekly = $this->progressByTarget($this->progressAs(self::$userA, 'week'))['kilocalories'];
+		self::assertEquals(1980.0, $weekly['currentValue']);
+		self::assertSame('within_limit', $weekly['status']);
+	}
+
 	public function testMultiplePeriodsForTheSameTargetPersistAndChangeIndependently(): void {
 		$daily = $this->createGoal(['targetKey' => 'steps', 'period' => 'day', 'targetValue' => 5000]);
 		$weekly = $this->createGoal(['targetKey' => 'steps', 'period' => 'week', 'targetValue' => 30000]);

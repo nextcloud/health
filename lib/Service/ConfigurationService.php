@@ -26,7 +26,10 @@ class ConfigurationService {
 		$metrics = [];
 		foreach (MetricService::getMetricDefinitions() as $definition) {
 			$metricKey = $definition['metricKey'];
-			$metrics[$metricKey] = $stored[$metricKey] ?? $this->defaultMetricConfiguration($definition);
+			$metrics[$metricKey] = [
+				...($stored[$metricKey] ?? $this->defaultMetricConfiguration($definition)),
+				'aggregation' => $definition['aggregation'],
+			];
 		}
 		$profile = $this->configurationMapper->findProfileForUser($userId) ?? ['heightCm' => null, 'heightDisplayUnit' => 'cm', 'dateOfBirth' => null, 'growthReferenceSex' => null];
 		/** @var HealthConfiguration $configuration */

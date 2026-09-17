@@ -5,6 +5,7 @@ import {
 	mdiBriefcase,
 	mdiEmoticonHappy,
 	mdiFire,
+	mdiFlowerPollen,
 	mdiFoodApple,
 	mdiFootPrint,
 	mdiGauge,
@@ -23,8 +24,8 @@ import {
 import { t } from '@nextcloud/l10n'
 
 export const METRIC_KEYS = ['stress', 'energy', 'mood', 'hydration', 'break'] as const
-export const MEASUREMENT_METRIC_KEYS = ['temperature', 'oxygen_saturation', 'blood_glucose', 'pulse', 'blood_pressure'] as const
-export const DAILY_VALUE_METRIC_KEYS = ['weight', 'body_fat', 'waist', 'hip', 'muscle_percentage', 'sins', 'steps', 'kilocalories', 'fruit', 'job_satisfaction'] as const
+export const MEASUREMENT_METRIC_KEYS = ['temperature', 'oxygen_saturation', 'blood_glucose', 'pulse', 'blood_pressure', 'allergies', 'kilocalories'] as const
+export const DAILY_VALUE_METRIC_KEYS = ['weight', 'body_fat', 'waist', 'hip', 'muscle_percentage', 'sins', 'steps', 'fruit', 'job_satisfaction'] as const
 export const ALL_METRIC_KEYS = [...METRIC_KEYS, ...MEASUREMENT_METRIC_KEYS, ...DAILY_VALUE_METRIC_KEYS] as const
 export const SCALE_METRIC_KEYS = ['stress', 'energy', 'mood'] as const
 export const WATER_OPTIONS = ['small_glass', 'large_glass'] as const
@@ -33,6 +34,12 @@ export const TEA_OPTIONS = ['tea'] as const
 export const BEVERAGE_OPTIONS = [...COFFEE_OPTIONS, ...TEA_OPTIONS] as const
 export const HYDRATION_OPTIONS = [...WATER_OPTIONS, ...COFFEE_OPTIONS, ...TEA_OPTIONS, 'other'] as const
 export const BREAK_OPTIONS = ['short', 'regular', 'short_walk', 'long_walk', 'mindfulness', 'fresh_air'] as const
+export const ALLERGY_SYMPTOM_GROUPS = [
+	{ key: 'nasal', options: ['sneezing', 'runny_nose', 'nasal_congestion', 'itchy_nose'] },
+	{ key: 'eyes', options: ['itchy_eyes', 'watery_eyes', 'red_eyes', 'swollen_eyelids'] },
+	{ key: 'respiratory', options: ['cough', 'scratchy_throat', 'wheezing', 'shortness_of_breath'] },
+	{ key: 'skin', options: ['itchy_skin', 'hives'] },
+] as const
 
 export type MetricKey = typeof METRIC_KEYS[number]
 export type MeasurementMetricKey = typeof MEASUREMENT_METRIC_KEYS[number]
@@ -46,6 +53,27 @@ export type TeaOption = typeof TEA_OPTIONS[number]
 export type BeverageOption = CoffeeOption | TeaOption
 export type BreakOption = typeof BREAK_OPTIONS[number]
 export type EventOption = typeof HYDRATION_OPTIONS[number] | typeof BREAK_OPTIONS[number]
+export type AllergySymptom = typeof ALLERGY_SYMPTOM_GROUPS[number]['options'][number]
+
+export interface PwaEventQuickAction {
+	actionKey: string
+	label: string
+	optionKeys: readonly string[]
+	mode: 'immediate-option' | 'options'
+	icon: 'metric' | 'option'
+}
+
+/**
+ * PWA-only interaction metadata remains attached to the shared event-option
+ * definitions. The PWA filters these actions through the server-provided
+ * allowed options before showing them.
+ */
+export const PWA_EVENT_QUICK_ACTIONS: Partial<Record<EventMetricKey, readonly PwaEventQuickAction[]>> = {
+	hydration: [
+		{ actionKey: 'water', label: 'Water', optionKeys: WATER_OPTIONS, mode: 'immediate-option', icon: 'metric' },
+		{ actionKey: 'coffee', label: 'Coffee', optionKeys: COFFEE_OPTIONS, mode: 'options', icon: 'option' },
+	],
+}
 
 export interface MetricValue {
 	numericValue: number | null
@@ -81,6 +109,7 @@ const METRIC_VISUALS: Record<AllMetricKey, MetricVisual> = {
 	blood_glucose: { color: '#D32F2F', iconPath: mdiBloodBag },
 	pulse: { color: '#D32F2F', iconPath: mdiHeartPulse },
 	blood_pressure: { color: '#7B5AA6', iconPath: mdiGauge },
+	allergies: { color: '#6C8E24', iconPath: mdiFlowerPollen },
 	weight: { color: '#546E7A', iconPath: mdiWeight },
 	body_fat: { color: '#8D6E63', iconPath: mdiWaterPercent },
 	waist: { color: '#5C6BC0', iconPath: mdiTapeMeasure },
@@ -108,6 +137,7 @@ const CHARTABLE_METRICS: Record<AllMetricKey, ChartableMetricDefinition> = {
 	blood_glucose: { chartType: 'line', compatibilityGroup: 'individual' },
 	pulse: { chartType: 'line', compatibilityGroup: 'individual' },
 	blood_pressure: { chartType: 'line', compatibilityGroup: 'blood_pressure' },
+	allergies: { chartType: 'line', compatibilityGroup: 'individual' },
 	weight: { chartType: 'line', compatibilityGroup: 'individual' },
 	body_fat: { chartType: 'line', compatibilityGroup: 'individual' },
 	waist: { chartType: 'line', compatibilityGroup: 'length' },
@@ -188,6 +218,8 @@ export function getMetricLabel(metricKey: string): string {
 			return t('health', 'Pulse')
 		case 'blood_pressure':
 			return t('health', 'Blood pressure')
+		case 'allergies':
+			return t('health', 'Allergies')
 		case 'weight':
 			return t('health', 'Weight')
 		case 'body_fat':
@@ -214,7 +246,7 @@ export function getMetricLabel(metricKey: string): string {
 }
 
 export function hasDisplayUnit(metricKey: AllMetricKey): boolean {
-	return metricKey !== 'sins' && metricKey !== 'steps' && metricKey !== 'job_satisfaction'
+	return metricKey !== 'allergies' && metricKey !== 'sins' && metricKey !== 'steps' && metricKey !== 'job_satisfaction'
 }
 
 export function getUnitLabel(unit: Unit): string {
@@ -222,7 +254,7 @@ export function getUnitLabel(unit: Unit): string {
 }
 
 export function getMetricUnits(metricKey: AllMetricKey): readonly Unit[] {
-	return ({ stress: [], energy: [], mood: [], hydration: [], break: [], temperature: ['celsius', 'fahrenheit'], oxygen_saturation: ['percent'], blood_glucose: ['mmol_l', 'mg_dl'], pulse: ['bpm'], blood_pressure: ['mmhg', 'kpa'], weight: ['kg', 'lb', 'st'], body_fat: ['percent'], waist: ['cm', 'in'], hip: ['cm', 'in'], muscle_percentage: ['percent'], sins: ['count'], steps: ['steps'], kilocalories: ['kcal'], fruit: ['pieces'], job_satisfaction: [] })[metricKey] as readonly Unit[]
+	return ({ stress: [], energy: [], mood: [], hydration: [], break: [], temperature: ['celsius', 'fahrenheit'], oxygen_saturation: ['percent'], blood_glucose: ['mmol_l', 'mg_dl'], pulse: ['bpm'], blood_pressure: ['mmhg', 'kpa'], allergies: [], weight: ['kg', 'lb', 'st'], body_fat: ['percent'], waist: ['cm', 'in'], hip: ['cm', 'in'], muscle_percentage: ['percent'], sins: ['count'], steps: ['steps'], kilocalories: ['kcal'], fruit: ['pieces'], job_satisfaction: [] })[metricKey] as readonly Unit[]
 }
 
 export function fromCanonical(metricKey: AllMetricKey, value: number, unit: Unit): number {
@@ -300,7 +332,35 @@ export function getOptionLabel(metricKey: string, optionValue: string | null): s
 		}
 	}
 
+	if (metricKey === 'allergies') {
+		switch (optionValue) {
+			case 'sneezing': return t('health', 'Sneezing')
+			case 'runny_nose': return t('health', 'Runny nose')
+			case 'nasal_congestion': return t('health', 'Nasal congestion')
+			case 'itchy_nose': return t('health', 'Itchy nose')
+			case 'itchy_eyes': return t('health', 'Itchy eyes')
+			case 'watery_eyes': return t('health', 'Watery eyes')
+			case 'red_eyes': return t('health', 'Red eyes')
+			case 'swollen_eyelids': return t('health', 'Swollen eyelids')
+			case 'cough': return t('health', 'Cough')
+			case 'scratchy_throat': return t('health', 'Scratchy throat')
+			case 'wheezing': return t('health', 'Wheezing')
+			case 'shortness_of_breath': return t('health', 'Shortness of breath')
+			case 'itchy_skin': return t('health', 'Itchy skin')
+			case 'hives': return t('health', 'Hives')
+		}
+	}
+
 	return t('health', 'Recorded event')
+}
+
+export function getAllergySymptomGroupLabel(groupKey: typeof ALLERGY_SYMPTOM_GROUPS[number]['key']): string {
+	return ({
+		nasal: t('health', 'Nasal symptoms'),
+		eyes: t('health', 'Eye symptoms'),
+		respiratory: t('health', 'Respiratory symptoms'),
+		skin: t('health', 'Skin symptoms'),
+	})[groupKey]
 }
 
 export function getEventChartSeriesLabel(metricKey: EventMetricKey, seriesKey: string): string {

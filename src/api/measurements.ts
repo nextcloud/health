@@ -3,8 +3,8 @@ import type { MeasurementMetricKey, Unit } from '../metrics.ts'
 import axios from '@nextcloud/axios'
 import { generateOcsUrl } from '@nextcloud/router'
 
-export interface Measurement { id: number, metricKey: MeasurementMetricKey, numericValue: number | null, values: { systolic: number, diastolic: number } | null, context: string, source: string, recordedAt: string, createdAt: string, updatedAt: string, note: string | null }
-export interface MeasurementRequest { metricKey: MeasurementMetricKey, numericValue: number | null, values: { systolic: number, diastolic: number } | null, unit: Unit, recordedAt: string, note: string | null, context: 'manual' | 'checkin' | 'checkout', source: 'web' }
+export interface Measurement { id: number, metricKey: MeasurementMetricKey, numericValue: number | null, optionValue: string | null, values: { systolic: number, diastolic: number } | null, context: string, source: string, recordedAt: string, createdAt: string, updatedAt: string, note: string | null }
+export interface MeasurementRequest { metricKey: MeasurementMetricKey, numericValue: number | null, optionValue: string | null, values: { systolic: number, diastolic: number } | null, unit: Unit | null, recordedAt: string, note: string | null, context: 'manual' | 'checkin' | 'checkout', source: 'web' }
 type OcsResponse<T> = { ocs: { data: T } }
 const headers = { Accept: 'application/json', 'OCS-APIRequest': 'true' }
 const url = generateOcsUrl('/apps/health/api/v2/measurements')

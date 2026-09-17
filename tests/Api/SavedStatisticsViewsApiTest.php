@@ -121,10 +121,35 @@ class SavedStatisticsViewsApiTest extends TestCase {
 		self::assertSame('Source', $this->ocsData($this->requestAs(self::$userA, 'GET', 'statistics/views/' . $source['id']))['title']);
 	}
 
-	public function testKilocaloriesAndFruitCanBeStoredInSavedStatisticsViews(): void {
+	public function testKilocaloriesCanBeStoredLoadedClonedAndEditedInSavedStatisticsViews(): void {
 		$view = $this->createView(self::$userA, 'Nutrition', '🍎', ['kilocalories', 'fruit'], 'last_7_days');
 		self::assertSame(['kilocalories', 'fruit'], $view['metricKeys']);
 		self::assertSame($view, $this->ocsData($this->requestAs(self::$userA, 'GET', 'statistics/views/' . $view['id'])));
+
+		$clone = $this->createView(self::$userA, 'Nutrition copy', '🍽️', $view['metricKeys'], $view['period']);
+		self::assertSame(['kilocalories', 'fruit'], $clone['metricKeys']);
+		$updated = $this->ocsData($this->requestAs(self::$userA, 'PUT', 'statistics/views/' . $clone['id'], ['json' => [
+			'title' => 'Nutrition adjusted',
+			'icon' => '🔥',
+			'metricKeys' => ['kilocalories'],
+			'period' => 'this_month',
+		]]));
+		self::assertSame(['kilocalories'], $updated['metricKeys']);
+		self::assertSame('this_month', $updated['period']);
+	}
+
+	public function testAllergiesCanBeStoredLoadedClonedAndEditedInSavedStatisticsViews(): void {
+		$view = $this->createView(self::$userA, 'Symptoms', '🌼', ['allergies'], 'last_7_days');
+		self::assertSame(['allergies'], $view['metricKeys']);
+		$clone = $this->createView(self::$userA, 'Symptoms copy', '🌸', $view['metricKeys'], $view['period']);
+		self::assertSame(['allergies'], $clone['metricKeys']);
+		$updated = $this->ocsData($this->requestAs(self::$userA, 'PUT', 'statistics/views/' . $clone['id'], ['json' => [
+			'title' => 'Symptoms adjusted',
+			'icon' => '🌻',
+			'metricKeys' => ['allergies'],
+			'period' => 'this_month',
+		]]));
+		self::assertSame(['allergies'], $updated['metricKeys']);
 	}
 
 	/** @param list<string> $metricKeys @return array<string, mixed> */

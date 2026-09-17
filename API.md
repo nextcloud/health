@@ -317,7 +317,8 @@ the configuration for every supported metric, and private integration preference
       "enabled": true,
       "checkInEnabled": true,
       "checkOutEnabled": false,
-      "displayUnit": null
+      "displayUnit": null,
+      "aggregation": "average"
     }
   },
   "searchDailyNotes": false
@@ -359,6 +360,11 @@ growth reference sex is `female` or `male`. The response has the same shape as
 `GET /api/v2/configuration`; height is always returned in canonical centimetres.
 The optional date and reference sex are stored for a future verified BMI-for-age
 reference and do not produce a diagnosis or an inferred value.
+
+Each returned metric configuration also contains its read-only registry
+`aggregation` (`average`, `count`, `daily`, or `sum`). Clients must not send it
+when updating preferences; it describes how Health derives summaries, including
+the daily `sum` for Kilocalories Measurements.
 
 Unknown metric keys, unsupported units, malformed dates, and invalid field types
 return a client error. Configuration is always scoped to the authenticated user.
@@ -1119,13 +1125,15 @@ The response returns canonical values and contains one item for every requested 
 
 Each metric object contains the metric identity, its category and value type, the canonical unit when applicable, metric `minimum` and `maximum` when defined, daily `series`, `summary`, and the goal-revision segments that can be represented as chart thresholds. `summary.count` is the number of source records, not the number of day buckets; `activeDays` is the number of day buckets with a recorded numeric point or a non-zero event total. Event metrics and blood pressure provide summaries for their individual series through `summary.subseries`.
 
+The response also contains `sourceRecords`: the individual owner-scoped records used to build the selected metric series. Each record has its stable metric key, local `date`, a numeric value or option value, optional blood-pressure values, and `recordedAt` for timestamped records. Daily Values have no `recordedAt`. The records use the same selected-metric and half-open `[from, to)` filtering as the chart data; they are ordered by local day, then Daily Values before timestamped records, then timestamp and metric key. Notes are deliberately not included.
+
 Every daily point has a `subseries` field. It is `null` for ordinary numeric metrics. It is a map for event metrics and blood pressure, where one logical metric has multiple chart series. Hydration uses `water`, `coffee`, `tea`, and `other`; Break uses its configured event categories; blood pressure uses `systolic` and `diastolic`.
 
 ---
 
 # 39. Daily Series and Goal Semantics
 
-Numeric scale and measurement values are aggregated as an arithmetic mean for each local day. A missing numeric day is represented by `value: null` and is excluded from numeric summaries.
+Numeric scale and Measurement values use their registry aggregation for each local day. The standard numeric aggregation is arithmetic mean; Kilocalories uses `sum` across its timestamped `kcal` Measurements. Allergies is an option Measurement whose daily value is the count of owner-scoped symptom records. A missing numeric or Allergy day is represented by `value: null` and is excluded from numeric summaries.
 
 Event metrics have a valid daily count of zero. Their series therefore contains zero-valued local days, and their average, minimum, and maximum include every day in the selected period.
 
@@ -1526,9 +1534,13 @@ The Configuration response profile contains canonical `heightCm`, the display pr
 
 `GET /goals` returns owner-scoped active and paused logical goals plus the public, non-personal target registry; retired identities are excluded from goal management. `POST /goals` creates an identity with `targetKey`, `period`, `comparator` (`gte` or `lte`), canonical `targetValue`, and `remindersEnabled`. Identity uniqueness is `(user, targetKey, period)`, so distinct daily, weekly, monthly, or long-term goals may coexist where supported while an identical target/period duplicate is rejected. `PUT /goals/{id}` updates the owner-scoped goal; `active: false` pauses without retiring it and `active: true` resumes that same identity. Value/direction changes create or update the current local-period revision, while target/period changes retire the old identity and create a new one. `DELETE /goals/{id}` retires rather than deletes history. `GET /goals/progress?period=day|week|month|long_term&date=YYYY-MM-DD` returns derived owner-scoped progress; finite dates are interpreted in the user's Nextcloud timezone and future periods are rejected. Long-term latest-value responses include `baselineValue` and a clamped directional `progressRatio`. Job Satisfaction uses the existing daily-value endpoint with `metricKey: "job_satisfaction"`, integer numeric values 1–5, and `unit: null`.
 
-## Kilocalories and Fruit daily values
+## Kilocalories Measurements and Fruit daily values
 
-Both metrics use the existing `PUT /daily-values/{metricKey}/{date}` and `GET /daily-values?date=YYYY-MM-DD` resources. `kilocalories` accepts a non-negative numeric value with fixed unit `kcal`. `fruit` accepts a non-negative whole number with fixed unit `pieces`. Unsupported units, negative values, and fractional Fruit values return `400`.
+Kilocalories uses `POST /measurements`: each non-negative numeric record has fixed unit `kcal` and an RFC3339 `recordedAt`; multiple owner-scoped records may be created for one local day. Day-based goal progress and Statistics use their sum. `PUT /daily-values/kilocalories/{date}` is intentionally rejected because Kilocalories is no longer a Daily Value. Existing v3 Daily Value calorie rows are converted by the forward migration to noon-local Measurements and are retained as source rows. Fruit continues to use `PUT /daily-values/fruit/{date}` and accepts a non-negative whole number with fixed unit `pieces`. Unsupported units, negative values, and fractional Fruit values return `400`.
+
+## Allergy symptom Measurements
+
+Allergies uses the generic `POST /measurements` and `PUT /measurements/{id}` endpoints with `metricKey: "allergies"`, `numericValue: null`, `values: null`, `unit: null`, and one canonical `optionValue`. Supported values are `sneezing`, `runny_nose`, `nasal_congestion`, `itchy_nose`, `itchy_eyes`, `watery_eyes`, `red_eyes`, `swollen_eyelids`, `cough`, `scratchy_throat`, `wheezing`, `shortness_of_breath`, `itchy_skin`, and `hives`. A note is optional. Labels and their nasal, eye, respiratory, and skin presentation groups are localized client concerns and are never persisted. Unknown option values return `400`; all records are owner-scoped. Daily Journal and Statistics values count entries without deriving severity or medical meaning.
 
 ## Idempotent timestamped writes
 
