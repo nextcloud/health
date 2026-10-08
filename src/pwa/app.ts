@@ -226,7 +226,7 @@ function openEntryModal(metric: MetricDefinition, trigger: HTMLElement, directOp
 		}
 		content.append(choices, modalCancel(dialog))
 	} else if (mode === 'direct-increment') {
-		const input = numericInput(s('Value'), 'numeric', metric.minimum ?? undefined, metric.maximum ?? undefined)
+		const input = numericInput(s('Value'), 'numeric')
 		const form = numericForm(metric, input, error, closeAfterSuccess, dialog)
 		const increment = button('+1', () => action(increment, () => queueIncrement(metric)), 'metric-action primary')
 		increment.setAttribute('aria-label', s('Add one {metric}').replace('{metric}', metricLabel(metric.metricKey)))
@@ -244,7 +244,7 @@ function openEntryModal(metric: MetricDefinition, trigger: HTMLElement, directOp
 		})
 		content.append(form)
 	} else {
-		const input = numericInput(s('Value'), 'decimal', metric.minimum ?? undefined, metric.maximum ?? undefined)
+		const input = numericInput(s('Value'), 'decimal')
 		content.append(numericForm(metric, input, error, closeAfterSuccess, dialog))
 	}
 	dialog.append(content)
@@ -372,15 +372,26 @@ async function saveForm(metric: MetricDefinition, form: HTMLFormElement, operati
 	}
 }
 
-function numericInput(labelText: string, inputMode: 'numeric' | 'decimal', minimum?: number, maximum?: number): { label: HTMLLabelElement, input: HTMLInputElement } {
+/**
+ * Build the entry field for a numeric metric.
+ *
+ * The field is a text input so that `parseLocaleNumber` receives exactly what
+ * the user typed. A `number` input applies its own sanitisation first, which
+ * silently rewrites grouped input such as the German `1.234,5` and leaves no
+ * way to recover the intended value. The range is enforced by
+ * `isValidNumericValue` on submit, and `inputMode` still selects the numeric
+ * keypad on touch devices.
+ *
+ * @param labelText Visible field label.
+ * @param inputMode Keypad requested for touch devices.
+ */
+function numericInput(labelText: string, inputMode: 'numeric' | 'decimal'): { label: HTMLLabelElement, input: HTMLInputElement } {
 	const label = element('label', undefined, labelText)
 	const input = element('input')
-	input.type = 'number'
+	input.type = 'text'
 	input.required = true
 	input.inputMode = inputMode
-	input.step = inputMode === 'numeric' ? '1' : 'any'
-	if (minimum !== undefined) { input.min = String(minimum) }
-	if (maximum !== undefined) { input.max = String(maximum) }
+	input.autocomplete = 'off'
 	label.append(input)
 	return { label, input }
 }
