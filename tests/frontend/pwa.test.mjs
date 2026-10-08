@@ -24,6 +24,21 @@ test('loads only enabled metric definitions and selects a control from API value
 	assert.equal(parseLocaleNumber('2140,5', 'de-DE'), 2140.5)
 })
 
+test('reads grouped numbers the way the account locale writes them', () => {
+	assert.equal(parseLocaleNumber('12.000', 'de-DE'), 12000)
+	assert.equal(parseLocaleNumber('1.234,5', 'de-DE'), 1234.5)
+	assert.equal(parseLocaleNumber('12,000', 'en-US'), 12000)
+	assert.equal(parseLocaleNumber('1,234.5', 'en-US'), 1234.5)
+	assert.equal(parseLocaleNumber('1 234,5', 'fr-FR'), 1234.5)
+	assert.equal(parseLocaleNumber('2140.5', 'en-US'), 2140.5)
+})
+
+test('rejects entries without digits instead of reading them as zero', () => {
+	assert.ok(Number.isNaN(parseLocaleNumber('', 'de-DE')))
+	assert.ok(Number.isNaN(parseLocaleNumber('   ', 'de-DE')))
+	assert.ok(Number.isNaN(parseLocaleNumber('abc', 'en-US')))
+})
+
 test('maps server metric types to dialog entry modes without metric-key special cases', () => {
 	const stress = definition('stress', 'journal', 'scale', { minimum: 1, maximum: 5 })
 	const hydration = definition('hydration', 'journal', 'event', { allowedOptions: ['small_glass', 'coffee', 'tea'] })
