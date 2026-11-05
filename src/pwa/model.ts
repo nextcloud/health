@@ -87,11 +87,25 @@ export function optionIcon(metric: MetricDefinition, option: string): string | n
 	return symbol === '•' ? null : symbol
 }
 
+/**
+ * Parse a number the way the account locale writes it.
+ *
+ * Group separators are removed before the decimal separator is canonicalised,
+ * so a grouped entry such as the German `12.000` is read as twelve thousand
+ * instead of twelve. Whitespace is dropped because several locales group with
+ * a no-break space that a keyboard does not produce.
+ *
+ * @param value Raw text entered by the user.
+ * @param locale Account locale, or the browser locale as a fallback.
+ */
 export function parseLocaleNumber(value: string, locale: string): number {
-	const parts = new Intl.NumberFormat(locale).formatToParts(1.1)
+	const parts = new Intl.NumberFormat(locale).formatToParts(11111.1)
 	const decimal = parts.find((part) => part.type === 'decimal')?.value ?? '.'
-	const normalized = decimal === '.' ? value : value.replace(decimal, '.')
-	return Number(normalized.trim())
+	const group = parts.find((part) => part.type === 'group')?.value ?? ''
+	const compact = value.replaceAll(/\s/gu, '')
+	const ungrouped = group === '' ? compact : compact.replaceAll(group, '')
+	const normalized = decimal === '.' ? ungrouped : ungrouped.replaceAll(decimal, '.')
+	return normalized === '' ? Number.NaN : Number(normalized)
 }
 
 /**
