@@ -22,7 +22,7 @@ For even faster mobile entry, Health includes an installable PWA with an offline
     <screenshot>https://dl.datenangebot.de/nextcloud/health/health-5.png</screenshot>
 	<dependencies>
 		<php min-version="8.2" max-version="8.5"/>
-		<nextcloud min-version="33" max-version="35"/>
+		<nextcloud min-version="33" max-version="36"/>
 	</dependencies>
 	<background-jobs>
 		<job>OCA\Health\BackgroundJob\GoalReminderJob</job>
