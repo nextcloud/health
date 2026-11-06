@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.3.1]
+
+### Fixed
+
+- Keep Statistics chart axes and tooltips readable in dark themes and refresh chart colors when the system theme changes ([#337](https://github.com/nextcloud/health/issues/337)).
+- Avoid converting Statistics display units twice in tooltips and accessible value announcements ([#336](https://github.com/nextcloud/health/issues/336)).
+- Parse grouped and decimal numbers in PWA entry fields according to the account locale ([#321](https://github.com/nextcloud/health/pull/321)).
+
+### Changed
+
+- Refresh bundled dependencies and development tooling.
+- Declare compatibility with Nextcloud 36.
+
 ## [3.3.0]
 
 ### Added

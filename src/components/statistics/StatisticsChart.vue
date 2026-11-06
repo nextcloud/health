@@ -79,6 +79,7 @@ const canvasLabel = computed(() => t('health', '{title} chart. Use the arrow key
 
 let chart: Chart | null = null
 let themeObserver: MutationObserver | null = null
+let colorScheme: MediaQueryList | null = null
 let focusedIndex = -1
 const focusedDescription = ref('')
 
@@ -246,6 +247,7 @@ function buildDatasets(): PlotDataset[] {
 				label: t('health', '{metric} – systolic', { metric: metricLabel }),
 				metricKey: metric.metricKey,
 				data: metric.series.map((point) => point.subseries?.systolic === null || point.subseries?.systolic === undefined ? null : displayValue(metric.metricKey, point.subseries.systolic)),
+				displayValues: true,
 				color,
 				type: 'line',
 				goal: false,
@@ -257,6 +259,7 @@ function buildDatasets(): PlotDataset[] {
 				label: t('health', '{metric} – diastolic', { metric: metricLabel }),
 				metricKey: metric.metricKey,
 				data: metric.series.map((point) => point.subseries?.diastolic === null || point.subseries?.diastolic === undefined ? null : displayValue(metric.metricKey, point.subseries.diastolic)),
+				displayValues: true,
 				color: colorWithAlpha(color, 0.64),
 				type: 'line',
 				goal: false,
@@ -271,6 +274,7 @@ function buildDatasets(): PlotDataset[] {
 			label: getMetricLabel(metric.metricKey),
 			metricKey: metric.metricKey,
 			data: metric.series.map((point) => point.value === null ? null : displayValue(metric.metricKey, point.value)),
+			displayValues: true,
 			color: getMetricVisual(metric.metricKey).color,
 			type: 'line',
 			goal: false,
@@ -284,20 +288,17 @@ function buildDatasets(): PlotDataset[] {
 	return datasets
 }
 
-function cssColor(variable: string, fallback: string): string {
-	const value = getComputedStyle(document.documentElement).getPropertyValue(variable).trim()
-	return value || fallback
-}
-
 function renderChart(): void {
 	if (canvas.value === null) {
 		return
 	}
 
 	chart?.destroy()
-	const textColor = cssColor('--color-main-text', '#222')
-	const gridColor = cssColor('--color-border-dark', '#d9d9d9')
-	const tooltipBackground = cssColor('--color-main-background', '#fff')
+	// Theme variables can be scoped to body or the chart's ancestors.
+	const styles = getComputedStyle(canvas.value)
+	const textColor = styles.getPropertyValue('--color-main-text').trim() || '#222'
+	const gridColor = styles.getPropertyValue('--color-border-dark').trim() || '#d9d9d9'
+	const tooltipBackground = styles.getPropertyValue('--color-main-background').trim() || '#fff'
 	const hasBarSeries = chartDatasets.value.some((dataset) => dataset.bar)
 	const datasets = chartDatasets.value.map((dataset) => {
 		if (dataset.goal) {
@@ -375,6 +376,7 @@ function renderChart(): void {
 					backgroundColor: tooltipBackground,
 					titleColor: textColor,
 					bodyColor: textColor,
+					footerColor: textColor,
 					borderColor: gridColor,
 					borderWidth: 1,
 					displayColors: false,
@@ -456,11 +458,14 @@ onMounted(() => {
 	renderChart()
 	themeObserver = new MutationObserver(() => renderChart())
 	themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'style', 'data-theme'] })
-	themeObserver.observe(document.body, { attributes: true, attributeFilter: ['class', 'style', 'data-theme'] })
+	themeObserver.observe(document.body, { attributes: true, attributeFilter: ['class', 'style', 'data-theme', 'data-themes'] })
+	colorScheme = window.matchMedia('(prefers-color-scheme: dark)')
+	colorScheme.addEventListener('change', renderChart)
 })
 
 onBeforeUnmount(() => {
 	themeObserver?.disconnect()
+	colorScheme?.removeEventListener('change', renderChart)
 	chart?.destroy()
 })
 </script>
