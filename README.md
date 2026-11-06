@@ -6,7 +6,7 @@ Health is a community-maintained Nextcloud app for privately recording everyday 
 
 Version 3 is a substantial rewrite of the original Nextcloud Health app. The new direction focuses on a calm personal journal: record values, review them over time, set optional goals, and use reminders when helpful — without diagnoses, automated medical interpretation, causal claims, or a universal “health score”.
 
-The current release is **3.3.0**. It adds Allergies tracking and completes the new Kilocalories, Fruit, and offline-first quick-entry PWA workflow across the Journal, Goals, Statistics, configuration, reminders, and saved views.
+The current release is **3.3.1**. This bug fix release corrects Statistics chart colors in dark themes, display units in chart tooltips and accessible announcements, and localized number entry in the quick-entry PWA. See the [changelog](CHANGELOG.md#331) for details.
 
 > Health is not a medical device and does not provide medical advice, diagnosis, or treatment recommendations.
 
