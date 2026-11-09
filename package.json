@@ -21,11 +21,11 @@
     "@nextcloud/axios": "^2.6.0",
     "@nextcloud/dialogs": "^7.5.0",
     "@nextcloud/l10n": "^3.4.1",
-    "@nextcloud/router": "^3.2.0",
+    "@nextcloud/router": "^3.1.0",
     "@nextcloud/vue": "^9.13.1",
     "chart.js": "^4.5.1",
     "jspdf": "^4.2.1",
-    "vue": "^3.5.42",
+    "vue": "^3.5.43",
     "vue-router": "^5.3.1"
   },
   "devDependencies": {
